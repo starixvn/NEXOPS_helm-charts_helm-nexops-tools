@@ -13,8 +13,8 @@ enterpriseEdition:
     pullPolicy: Always
 
 image:
-  repository: portainer/portainer-ce
-  tag: 2.19.4
+  repository: hub.lumigame.com/base/portainer
+  tag: server-2.19.4
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -77,3 +77,5 @@ persistence:
   annotations: {}
   storageClass:
   existingClaim:
+
+createNamespace: false
