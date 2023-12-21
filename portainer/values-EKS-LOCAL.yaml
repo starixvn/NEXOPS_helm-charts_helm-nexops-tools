@@ -78,4 +78,3 @@ persistence:
   storageClass:
   existingClaim:
 
-createNamespace: false
