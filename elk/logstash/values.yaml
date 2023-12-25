@@ -38,6 +38,15 @@ logstashPipeline:
         tags => ["eks-logging", "ekslocal"]
       }
 
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-local-eks/dataplane"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-dataplane", "ekslocal"]
+      }      
+
 
       http {
         port => 8080
@@ -78,11 +87,14 @@ logstashPipeline:
               }           
             }
           }
+
         }
 
     }
 
     output {
+
+      # Cloudtrail
       if [type] == "cloudtrail" {
         if "awslocal" in [tags] {
           elasticsearch {
@@ -92,7 +104,7 @@ logstashPipeline:
             index => "logstash-cloudtrail-awslocal-%{+YYYY.MM.dd}"
           }
         }
-      }
+      # CloudWatch
       else if [type] == "cloudwatch" {
         if "eks-logging" in [tags] {
           if "ekslocal" in [tags] {
@@ -122,9 +134,20 @@ logstashPipeline:
               }
             }                  
           }
-          # else if "eksuat" in [tags]
+          #else if "eksuat" {}
+        }
+        else if "eks-dataplane" in [tags] {
+          if "ekslocal" in [tags] {
+              elasticsearch {
+                hosts => "elasticsearch-master:9200"
+                user => "logstash"
+                password => "logstash"
+                index => "logstash-dataplane-ekslocal-%{+YYYY.MM.dd}"
+              }            
+          }
         }
       }
+      
 
       else {
         elasticsearch {
