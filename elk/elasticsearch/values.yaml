@@ -81,8 +81,8 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 
-image: "hub.lumigame.com/base/elk/elasticsearch-sg"
-imageTag: "7.17.6-eks"
+image: "hub.lumigame.com/base/elk/elasticsearch"
+imageTag: "7.17.6"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations:

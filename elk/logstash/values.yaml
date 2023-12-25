@@ -26,6 +26,7 @@ logstashPipeline:
         type => "cloudtrail"
         codec => "cloudtrail"
         region => "ap-east-1"
+        tags => ["cloudtrail, "awslocal"]
       }
       
       cloudwatch_logs {
@@ -34,7 +35,7 @@ logstashPipeline:
         access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
         secret_access_key => "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"
         type => "cloudwatch"
-        tags => "eks-logging"
+        tags => ["eks-logging", "ekslocal"]
       }
 
 
@@ -74,41 +75,45 @@ logstashPipeline:
 
     output {
       if [type] == "cloudtrail" {
-        elasticsearch {
-          hosts => "elasticsearch-master:9200"
-          user => "logstash"
-          password => "logstash"
-          index => "filebeat-cloudtrail-%{+YYYY.MM.dd}"
+        if "awslocal" in [tags] {
+          elasticsearch {
+            hosts => "elasticsearch-master:9200"
+            user => "logstash"
+            password => "logstash"
+            index => "logstash-cloudtrail-awslocal-%{+YYYY.MM.dd}"
+          }
         }
       }
-
       else if [type] == "cloudwatch" {
         if "eks-logging" in [tags] {
-          if "cloud-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
-              user => "logstash"
-              password => "logstash"
-              index => "filebeat-eks-cloud-controller-manager-%{+YYYY.MM.dd}"
+          if "ekslocal" in [tags] {
+            if "cloud-controller-manager" in [tags] {
+              elasticsearch {
+                hosts => "elasticsearch-master:9200"
+                user => "logstash"
+                password => "logstash"
+                index => "logstash-eks-cloud-controller-manager-ekslocal-%{+YYYY.MM.dd}"
+              }
             }
-          }
-          else if "kube-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
-              user => "logstash"
-              password => "logstash"
-              index => "filebeat-eks-kube-controller-manager-%{+YYYY.MM.dd}"
+            else if "kube-controller-manager" in [tags] {
+              elasticsearch {
+                hosts => "elasticsearch-master:9200"
+                user => "logstash"
+                password => "logstash"
+                index => "logstash-eks-kube-controller-manager-ekslocal-%{+YYYY.MM.dd}"
+              }
             }
-          }
 
-          else if "kube-scheduler" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
-              user => "logstash"
-              password => "logstash"
-              index => "filebeat-eks-kube-scheduler-%{+YYYY.MM.dd}"
-            }
-          }                  
+            else if "kube-scheduler" in [tags] {
+              elasticsearch {
+                hosts => "elasticsearch-master:9200"
+                user => "logstash"
+                password => "logstash"
+                index => "logstash-eks-kube-scheduler-ekslocal-%{+YYYY.MM.dd}"
+              }
+            }                  
+          }
+          # else if "eksuat" in [tags]
         }
       }
 
@@ -117,7 +122,7 @@ logstashPipeline:
           hosts => "elasticsearch-master:9200"
           user => "logstash"
           password => "logstash"
-          index => "filebeat-unknown-%{+YYYY.MM.dd}"
+          index => "logstash-unknown-%{+YYYY.MM.dd}"
         }        
       }
     }
