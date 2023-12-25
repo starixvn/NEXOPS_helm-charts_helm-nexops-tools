@@ -26,7 +26,7 @@ logstashPipeline:
         type => "cloudtrail"
         codec => "cloudtrail"
         region => "ap-east-1"
-        tags => ["cloudtrail, "awslocal"]
+        tags => ["awslocal"]
       }
       
       cloudwatch_logs {
