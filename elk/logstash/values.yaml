@@ -92,6 +92,11 @@ logstashPipeline:
               }           
             }
           }
+          else if "eks-dataplane" in [tags] {
+            json {
+              source => "message"
+            }
+          }
 
         }
 
