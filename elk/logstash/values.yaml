@@ -19,6 +19,7 @@ logstashPipeline:
     input
 
     {
+      # CloudTrail AWS LOCAL
       s3 {
         access_key_id => "AKIAYP7ZS6XE3XSZVOHN"
         secret_access_key => "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"
@@ -29,6 +30,7 @@ logstashPipeline:
         tags => ["awslocal"]
       }
       
+      # CloudWatch Control Plane Logs AWS LOCAL
       cloudwatch_logs {
         log_group => ["/aws/eks/lumi-local-eks/cluster"]
         region => "ap-east-1"
@@ -38,6 +40,7 @@ logstashPipeline:
         tags => ["eks-controlplane", "ekslocal", "awslocal"]
       }
 
+      # CloudWatch Data Plane Logs AWS LOCAL
       cloudwatch_logs {
         log_group => ["/aws/containerinsights/lumi-local-eks/dataplane"]
         region => "ap-east-1"
@@ -47,6 +50,7 @@ logstashPipeline:
         tags => ["eks-dataplane", "ekslocal", "awslocal"]
       }
 
+      # CloudWatch Container Logs AWS LOCAL
       cloudwatch_logs {
         log_group => ["/aws/containerinsights/lumi-local-eks/application"]
         region => "ap-east-1"
@@ -54,6 +58,16 @@ logstashPipeline:
         secret_access_key => "O6v7o/FCasj3huZg8JgI2btypno7SibGmR3yn1f4"
         type => "cloudwatch"
         tags => ["eks-containers", "ekslocal", "awslocal"]
+      }      
+
+      # CloudWatch WorkerNodes Logs AWS LOCAL
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-local-eks/host"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-workernode", "ekslocal", "awslocal"]
       }      
 
 
@@ -108,6 +122,12 @@ logstashPipeline:
           }
 
           else if "eks-containers" in [tags] {
+            json {
+              source => "message"
+            }            
+          }
+
+          else if "eks-workernode" in [tags] {
             json {
               source => "message"
             }            
@@ -178,6 +198,14 @@ logstashPipeline:
               user => "logstash"
               password => "logstash"
               index => "logstash-container-logs-ekslocal-%{+YYYY.MM.dd}"
+            }             
+          }
+          else if "eks-workernode" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-worker-node-logs-ekslocal-%{+YYYY.MM.dd}"
             }             
           }
         }
