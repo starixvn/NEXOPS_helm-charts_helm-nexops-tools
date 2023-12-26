@@ -118,7 +118,7 @@ data:
         Name                cloudwatch_logs
         Match               application.*
         region              ap-east-1
-        log_group_name      /aws/containerinsights/lumi-local-eks/application
+        log_group_name      /aws/containerinsights/lumi-uat-eks/application
         log_stream_prefix   ${HOST_NAME}-
         auto_create_group   true
 
@@ -173,7 +173,7 @@ data:
         Name                cloudwatch_logs
         Match               dataplane.*
         region              ap-east-1
-        log_group_name      /aws/containerinsights/lumi-local-eks/dataplane
+        log_group_name      /aws/containerinsights/lumi-uat-eks/dataplane
         log_stream_prefix   ${HOST_NAME}-
         auto_create_group   true
 
@@ -232,7 +232,7 @@ data:
         Name                cloudwatch_logs
         Match               host.*
         region              ap-east-1
-        log_group_name      /aws/containerinsights/lumi-local-eks/host
+        log_group_name      /aws/containerinsights/lumi-uat-eks/host
         log_stream_prefix   ${HOST_NAME}.
         auto_create_group   true
 
