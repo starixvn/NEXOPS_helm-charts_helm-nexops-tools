@@ -35,7 +35,7 @@ logstashPipeline:
         access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
         secret_access_key => "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"
         type => "cloudwatch"
-        tags => ["eks-logging", "ekslocal"]
+        tags => ["eks-controlplane", "ekslocal", "awslocal"]
       }
 
       cloudwatch_logs {
@@ -44,7 +44,7 @@ logstashPipeline:
         access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
         secret_access_key => "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"
         type => "cloudwatch"
-        tags => ["eks-dataplane", "ekslocal"]
+        tags => ["eks-dataplane", "ekslocal", "awslocal"]
       }      
 
 
@@ -55,6 +55,8 @@ logstashPipeline:
     }
 
     filter {
+
+        # filter CloudTrail
         if [type] == "cloudtrail" {
           if [eventName] == "UpdateInstanceInformation" {
             drop {}
@@ -67,10 +69,13 @@ logstashPipeline:
           if [requestParameters][bucketName] == "nexdr" or [requestParameters][bucketName] == "nexec2" {
             drop {}
           }
-
         }
+
+        # Filter CloudWatch
         else if [type] == "cloudwatch" {
-          if "eks-logging" in [tags] {
+
+          # Filter EKS Logging
+          if "eks-controlplane" in [tags] {
             if [cloudwatch_logs][log_stream] =~ /cloud-controller-manager.*/ {
               mutate {
                 add_tag => ["cloud-controller-manager"]
@@ -104,48 +109,51 @@ logstashPipeline:
             index => "logstash-cloudtrail-awslocal-%{+YYYY.MM.dd}"
           }
         }
+      }
       # CloudWatch
       else if [type] == "cloudwatch" {
-        if "eks-logging" in [tags] {
-          if "ekslocal" in [tags] {
-            if "cloud-controller-manager" in [tags] {
-              elasticsearch {
-                hosts => "elasticsearch-master:9200"
-                user => "logstash"
-                password => "logstash"
-                index => "logstash-eks-cloud-controller-manager-ekslocal-%{+YYYY.MM.dd}"
-              }
-            }
-            else if "kube-controller-manager" in [tags] {
-              elasticsearch {
-                hosts => "elasticsearch-master:9200"
-                user => "logstash"
-                password => "logstash"
-                index => "logstash-eks-kube-controller-manager-ekslocal-%{+YYYY.MM.dd}"
-              }
-            }
 
-            else if "kube-scheduler" in [tags] {
-              elasticsearch {
-                hosts => "elasticsearch-master:9200"
-                user => "logstash"
-                password => "logstash"
-                index => "logstash-eks-kube-scheduler-ekslocal-%{+YYYY.MM.dd}"
-              }
-            }                  
+        # Output logs for EKSLOCAL
+        if "ekslocal" in [tags] {
+
+          # EKS Control Plane logging
+          if "cloud-controller-manager" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-cloud-controller-manager-ekslocal-%{+YYYY.MM.dd}"
+            }
           }
-          #else if "eksuat" {}
-        }
-        else if "eks-dataplane" in [tags] {
-          if "ekslocal" in [tags] {
-              elasticsearch {
-                hosts => "elasticsearch-master:9200"
-                user => "logstash"
-                password => "logstash"
-                index => "logstash-dataplane-ekslocal-%{+YYYY.MM.dd}"
-              }            
+          else if "kube-controller-manager" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-kube-controller-manager-ekslocal-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-scheduler" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-kube-scheduler-ekslocal-%{+YYYY.MM.dd}"
+            }
+          }
+
+          # EKS Data Plane logging
+          else if "eks-dataplane" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-dataplane-ekslocal-%{+YYYY.MM.dd}"
+            } 
           }
         }
+        #else if "eksuat" in [tags] {}
+        #else if "eksprod" in [tags] {}
       }
       
 
@@ -157,7 +165,6 @@ logstashPipeline:
           index => "logstash-unknown-%{+YYYY.MM.dd}"
           }        
         }
-      }
     }
 
 # Allows you to add any pattern files in your custom pattern dir
