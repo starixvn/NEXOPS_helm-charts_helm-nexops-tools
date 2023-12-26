@@ -21,8 +21,8 @@ logstashPipeline:
     {
       # CloudTrail AWS LOCAL
       s3 {
-        access_key_id => "AKIAYP7ZS6XE3XSZVOHN"
-        secret_access_key => "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"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
         bucket => "aws-cloudtrail-logs-nex-aws-management-events"
         type => "cloudtrail"
         codec => "cloudtrail"
