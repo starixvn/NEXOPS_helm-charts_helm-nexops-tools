@@ -101,7 +101,7 @@ logstashPipeline:
               }           
             }
           }
-          else if "eks-dataplane" in [tags] {
+          else if "eks-dataplane" in [tags] or "eks-containers" in [tags] {
             json {
               source => "message"
             }
