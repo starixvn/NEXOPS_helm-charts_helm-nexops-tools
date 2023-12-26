@@ -45,6 +45,15 @@ logstashPipeline:
         secret_access_key => "O6v7o/FCasj3huZg8JgI2btypno7SibGmR3yn1f4"
         type => "cloudwatch"
         tags => ["eks-dataplane", "ekslocal", "awslocal"]
+      }
+
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-local-eks/application"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-containers", "ekslocal", "awslocal"]
       }      
 
 
@@ -155,6 +164,15 @@ logstashPipeline:
               password => "logstash"
               index => "logstash-dataplane-ekslocal-%{+YYYY.MM.dd}"
             } 
+          }
+
+          else if "eks-containers" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-container-logs-ekslocal-%{+YYYY.MM.dd}"
+            }             
           }
         }
         #else if "eksuat" in [tags] {}
