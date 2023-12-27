@@ -29,7 +29,19 @@ logstashPipeline:
         region => "ap-east-1"
         tags => ["awslocal"]
       }
-      
+
+      # # CloudTrail AWS KBT
+      # s3 {
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   bucket => "vnteam-aws-cloudtrail-logs-aws-management-events"
+      #   type => "cloudtrail"
+      #   codec => "cloudtrail"
+      #   region => "ap-northeast-1"
+      #   tags => ["awskbt"]      
+      # }
+
+      ###### AWS LOCAL
       # CloudWatch Control Plane Logs AWS LOCAL
       cloudwatch_logs {
         log_group => ["/aws/eks/lumi-local-eks/cluster"]
@@ -69,6 +81,90 @@ logstashPipeline:
         type => "cloudwatch"
         tags => ["eks-workernode", "ekslocal", "awslocal"]
       }      
+
+
+      # ###### AWS UAT
+      # # CloudWatch Control Plane Logs AWS UAT
+      # cloudwatch_logs {
+      #   log_group => ["/aws/eks/lumi-uat-eks/cluster"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-controlplane", "eksuat", "awskbt"]
+      # }
+
+      # # CloudWatch Data Plane Logs AWS UAT
+      # cloudwatch_logs {
+      #   log_group => ["/aws/containerinsights/lumi-uat-eks/dataplane"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-dataplane", "eksuat", "awskbt"]
+      # }
+
+      # # CloudWatch Container Logs AWS UAT
+      # cloudwatch_logs {
+      #   log_group => ["/aws/containerinsights/lumi-uat-eks/application"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-containers", "eksuat", "awskbt"]
+      # }      
+
+      # # CloudWatch WorkerNodes Logs AWS UAT
+      # cloudwatch_logs {
+      #   log_group => ["/aws/containerinsights/lumi-uat-eks/host"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-workernode", "eksuat", "awskbt"]
+      # }  
+
+
+      # ###### AWS PROD
+      # # CloudWatch Control Plane Logs AWS PROD
+      # cloudwatch_logs {
+      #   log_group => ["/aws/eks/lumi-prod-eks/cluster"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-controlplane", "eksprod", "awskbt"]
+      # }
+
+      # # CloudWatch Data Plane Logs AWS PROD
+      # cloudwatch_logs {
+      #   log_group => ["/aws/containerinsights/lumi-prod-eks/dataplane"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-dataplane", "eksprod", "awskbt"]
+      # }
+
+      # # CloudWatch Container Logs AWS PROD
+      # cloudwatch_logs {
+      #   log_group => ["/aws/containerinsights/lumi-prod-eks/application"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-containers", "eksprod", "awskbt"]
+      # }      
+
+      # # CloudWatch WorkerNodes Logs AWS PROD
+      # cloudwatch_logs {
+      #   log_group => ["/aws/containerinsights/lumi-prod-eks/host"]
+      #   region => "ap-northeast-1"
+      #   access_key_id => ""
+      #   secret_access_key => ""
+      #   type => "cloudwatch"
+      #   tags => ["eks-workernode", "eksprod", "awskbt"]
+      # } 
 
 
       http {
@@ -141,6 +237,8 @@ logstashPipeline:
 
       # Cloudtrail
       if [type] == "cloudtrail" {
+
+        # CloudTrail AWS LOCAL
         if "awslocal" in [tags] {
           elasticsearch {
             hosts => "elasticsearch-master:9200"
@@ -148,6 +246,16 @@ logstashPipeline:
             password => "logstash"
             index => "logstash-cloudtrail-awslocal-%{+YYYY.MM.dd}"
           }
+        }
+
+        # CloudTrail AWS KBT
+        else if "awskbt" in [tags] {
+          elasticsearch {
+            hosts => "elasticsearch-master:9200"
+            user => "logstash"
+            password => "logstash"
+            index => "logstash-cloudtrail-awskbt-%{+YYYY.MM.dd}"
+          }          
         }
       }
       # CloudWatch
@@ -209,8 +317,117 @@ logstashPipeline:
             }             
           }
         }
-        #else if "eksuat" in [tags] {}
-        #else if "eksprod" in [tags] {}
+
+        # Output logs for EKSUAT
+        else if "eksuat" in [tags] {
+        
+          if "cloud-controller-manager" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-cloud-controller-manager-eksuat-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-controller-manager" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-kube-controller-manager-eksuat-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-scheduler" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-kube-scheduler-eksuat-%{+YYYY.MM.dd}"
+            }
+          }
+
+          # EKS Data Plane logging
+          else if "eks-dataplane" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-dataplane-eksuat-%{+YYYY.MM.dd}"
+            } 
+          }
+
+          else if "eks-containers" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-container-logs-eksuat-%{+YYYY.MM.dd}"
+            }             
+          }
+          else if "eks-workernode" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-worker-node-logs-eksuat-%{+YYYY.MM.dd}"
+            }             
+          }        
+        }
+
+        # Output logs for EKSPROD
+        else if "eksprod" in [tags] {
+          if "cloud-controller-manager" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-cloud-controller-manager-eksprod-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-controller-manager" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-kube-controller-manager-eksprod-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-scheduler" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-eks-kube-scheduler-eksprod-%{+YYYY.MM.dd}"
+            }
+          }
+
+          # EKS Data Plane logging
+          else if "eks-dataplane" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-dataplane-eksprod-%{+YYYY.MM.dd}"
+            } 
+          }
+
+          else if "eks-containers" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-container-logs-eksprod-%{+YYYY.MM.dd}"
+            }             
+          }
+          else if "eks-workernode" in [tags] {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-worker-node-logs-eksprod-%{+YYYY.MM.dd}"
+            }             
+          }
+        }
       }
       
 
