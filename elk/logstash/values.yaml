@@ -84,88 +84,88 @@ logstashPipeline:
       }      
 
 
-      # ###### AWS UAT
-      # # CloudWatch Control Plane Logs AWS UAT
-      # cloudwatch_logs {
-      #   log_group => ["/aws/eks/lumi-uat-eks/cluster"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-controlplane", "eksuat", "awskbt"]
-      # }
+      ###### AWS UAT
+      # CloudWatch Control Plane Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/eks/lumi-uat-eks/cluster"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-controlplane", "eksuat", "awskbt"]
+      }
 
-      # # CloudWatch Data Plane Logs AWS UAT
-      # cloudwatch_logs {
-      #   log_group => ["/aws/containerinsights/lumi-uat-eks/dataplane"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-dataplane", "eksuat", "awskbt"]
-      # }
+      # CloudWatch Data Plane Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-uat-eks/dataplane"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-dataplane", "eksuat", "awskbt"]
+      }
 
-      # # CloudWatch Container Logs AWS UAT
-      # cloudwatch_logs {
-      #   log_group => ["/aws/containerinsights/lumi-uat-eks/application"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-containers", "eksuat", "awskbt"]
-      # }      
+      # CloudWatch Container Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-uat-eks/application"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-containers", "eksuat", "awskbt"]
+      }      
 
-      # # CloudWatch WorkerNodes Logs AWS UAT
-      # cloudwatch_logs {
-      #   log_group => ["/aws/containerinsights/lumi-uat-eks/host"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-workernode", "eksuat", "awskbt"]
-      # }  
+      # CloudWatch WorkerNodes Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-uat-eks/host"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-workernode", "eksuat", "awskbt"]
+      }  
 
 
-      # ###### AWS PROD
-      # # CloudWatch Control Plane Logs AWS PROD
-      # cloudwatch_logs {
-      #   log_group => ["/aws/eks/lumi-prod-eks/cluster"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-controlplane", "eksprod", "awskbt"]
-      # }
+      ###### AWS PROD
+      # CloudWatch Control Plane Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/eks/lumi-prod-eks/cluster"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-controlplane", "eksprod", "awskbt"]
+      }
 
-      # # CloudWatch Data Plane Logs AWS PROD
-      # cloudwatch_logs {
-      #   log_group => ["/aws/containerinsights/lumi-prod-eks/dataplane"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-dataplane", "eksprod", "awskbt"]
-      # }
+      # CloudWatch Data Plane Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-prod-eks/dataplane"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-dataplane", "eksprod", "awskbt"]
+      }
 
-      # # CloudWatch Container Logs AWS PROD
-      # cloudwatch_logs {
-      #   log_group => ["/aws/containerinsights/lumi-prod-eks/application"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-containers", "eksprod", "awskbt"]
-      # }      
+      # CloudWatch Container Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-prod-eks/application"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-containers", "eksprod", "awskbt"]
+      }      
 
-      # # CloudWatch WorkerNodes Logs AWS PROD
-      # cloudwatch_logs {
-      #   log_group => ["/aws/containerinsights/lumi-prod-eks/host"]
-      #   region => "ap-northeast-1"
-      #   access_key_id => ""
-      #   secret_access_key => ""
-      #   type => "cloudwatch"
-      #   tags => ["eks-workernode", "eksprod", "awskbt"]
-      # } 
+      # CloudWatch WorkerNodes Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-prod-eks/host"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-workernode", "eksprod", "awskbt"]
+      } 
 
 
       http {
