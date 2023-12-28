@@ -35,7 +35,7 @@ logstashPipeline:
       s3 {
         access_key_id => "AKIAQG7QGZI4UIDXBN73"
         secret_access_key => "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"
-        bucket => "vnteam-aws-cloudtrail-logs-aws-management-events"
+        bucket => "vnteam-aws-cloudtrail-logs-management-events"
         type => "cloudtrail"
         codec => "cloudtrail"
         region => "ap-northeast-1"
