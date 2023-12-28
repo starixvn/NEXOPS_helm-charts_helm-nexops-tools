@@ -189,6 +189,10 @@ logstashPipeline:
           if [requestParameters][bucketName] == "nexdr" or [requestParameters][bucketName] == "nexec2" {
             drop {}
           }
+          mutate {
+            convert ["[responseElements][networkInterface][tagSet][items][value]", "string"]
+          }
+
         }
 
         # Filter CloudWatch
