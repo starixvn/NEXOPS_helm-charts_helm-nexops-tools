@@ -190,7 +190,7 @@ logstashPipeline:
             drop {}
           }
           mutate {
-            convert ["[responseElements][networkInterface][tagSet][items][value]", "string"]
+            convert ["responseElements.networkInterface.tagSet.items.value", "string"]
           }
 
         }
