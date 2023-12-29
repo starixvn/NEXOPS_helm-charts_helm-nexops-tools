@@ -185,8 +185,11 @@ logstashPipeline:
             if [sourceIPAddress] == "cloudtrail.amazonaws.com" and [requestParameters][bucketName] == "aws-cloudtrail-logs-nex-aws-management-events" {
               drop {}
             }
+            else if [sourceIPAddress] == "cloudtrail.amazonaws.com" and [requestParameters][bucketName] == "vnteam-aws-cloudtrail-logs-management-events" {
+              drop {}
+            }
           }
-          if [requestParameters][bucketName] == "nexdr" or [requestParameters][bucketName] == "nexec2" {
+          if [requestParameters][bucketName] == "nexdr" or [requestParameters][bucketName] == "nexec2" or [requestParameters][bucketName] =~ /spnk.*/ {
             drop {}
           }
           mutate {
@@ -194,6 +197,7 @@ logstashPipeline:
               "[responseElements][networkInterface][tagSet][items][value]" => "string"
             }
           }
+
 
         }
 
