@@ -301,7 +301,7 @@ images:
 ingress:
   alb:
     httpRedirect: false
-  enabled: false
+  enabled: true
   regexPathStyle: nginx
   hostname: "sentry-k8s.lumigame.com"
   ingressClassName: "haproxy"
