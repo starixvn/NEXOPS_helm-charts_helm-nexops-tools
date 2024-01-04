@@ -2540,7 +2540,7 @@ rabbitmq:
   terminationGracePeriodSeconds: 120
   tolerations: []
   topologySpreadConstraints: []
-  ulimitNofiles: "65536"
+  ulimitNofiles: ""
   updateStrategy:
     type: RollingUpdate
   vhost: /
