@@ -1886,7 +1886,7 @@ postgresql:
       labels: {}
       mountPath: /bitnami/postgresql
       selector: {}
-      size: 5Gi
+      size: 3Gi
       storageClass: ""
       subPath: ""
     pgHbaConfiguration: ""
@@ -1998,7 +1998,7 @@ postgresql:
       labels: {}
       mountPath: /bitnami/postgresql
       selector: {}
-      size: 5Gi
+      size: 3Gi
       storageClass: ""
       subPath: ""
     podAffinityPreset: ""
@@ -2445,7 +2445,7 @@ rabbitmq:
     labels: {}
     mountPath: /bitnami/rabbitmq/mnesia
     selector: {}
-    size: 5Gi
+    size: 2Gi
     storageClass: ""
     subPath: ""
   plugins: rabbitmq_management rabbitmq_peer_discovery_k8s
@@ -2662,7 +2662,7 @@ redis:
       medium: ""
       path: /data
       selector: {}
-      size: 5Gi
+      size: 1Gi
       sizeLimit: ""
       storageClass: ""
       subPath: ""
@@ -2877,7 +2877,7 @@ redis:
       medium: ""
       path: /data
       selector: {}
-      size: 5Gi
+      size: 1Gi
       sizeLimit: ""
       storageClass: ""
       subPath: ""
