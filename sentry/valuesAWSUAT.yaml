@@ -310,11 +310,11 @@ ingress:
     httpRedirect: false
   enabled: true
   #regexPathStyle: nginx
-  hostname: "sentry-k8s.lumigame.com"
+  hostname: "sentry-eksuat.sportsfun.app"
   ingressClassName: "haproxy"
-  annotations:
-    haproxy.org/ssl-redirect: "true"
-    haproxy.org/ssl-certificate: "default/lumigame-cert"
+  # annotations:
+  #   haproxy.org/ssl-redirect: "true"
+  #   haproxy.org/ssl-certificate: "default/lumigame-cert"
 kafka:
   advertisedListeners: []
   affinity: {}
