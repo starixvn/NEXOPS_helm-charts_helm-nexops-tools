@@ -248,7 +248,8 @@ hooks:
     env: []
     image:
       imagePullSecrets: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     podAnnotations: {}
     resources:
       limits:
@@ -260,7 +261,8 @@ hooks:
   dbInit:
     affinity: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     podAnnotations: {}
     resources:
       limits:
@@ -277,7 +279,8 @@ hooks:
     affinity: {}
     kafka:
       enabled: true
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     podAnnotations: {}
     resources:
       limits:
@@ -302,7 +305,7 @@ ingress:
   alb:
     httpRedirect: false
   enabled: true
-  regexPathStyle: nginx
+  #regexPathStyle: nginx
   hostname: "sentry-k8s.lumigame.com"
   ingressClassName: "haproxy"
 kafka:
@@ -681,7 +684,8 @@ kafka:
     extraVolumeMounts: []
     extraVolumes: []
     initContainers: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     numPartitions: 1
     parallel: 1
     podAnnotations: {}
@@ -1457,7 +1461,7 @@ nginx:
     command:
     - sleep
     enabled: false
-  enabled: true
+  enabled: false
   existingServerBlockConfigmap: '{{ template "sentry.fullname" . }}'
   extraContainerPorts: []
   extraDeploy: []
@@ -3147,7 +3151,8 @@ sentry:
   cron:
     affinity: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     sidecars: []
@@ -3166,7 +3171,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3181,7 +3187,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3196,7 +3203,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3211,7 +3219,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3226,7 +3235,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
