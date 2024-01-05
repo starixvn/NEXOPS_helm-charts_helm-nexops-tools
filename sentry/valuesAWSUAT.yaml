@@ -312,6 +312,9 @@ ingress:
   #regexPathStyle: nginx
   hostname: "sentry-eksuat.sportsfun.app"
   ingressClassName: "haproxy"
+  annotations:
+    #haproxy.org/ssl-certificate: default/lumigame-cert
+    haproxy.org/ssl-redirect: 'false'
 kafka:
   advertisedListeners: []
   affinity: {}
