@@ -1660,16 +1660,17 @@ postgresql:
     database: sentry
     enablePostgresUser: true
     existingSecret: ""
-    password: ""
-    postgresPassword: ""
-    replicationPassword: ""
+    password: "passwdpostgres"
+    postgresPassword: "passwdpostgres"
+    replicationPassword: "passwdpostgres"
     replicationUsername: repl_user
     secretKeys:
       adminPasswordKey: postgres-password
       replicationPasswordKey: replication-password
       userPasswordKey: password
     usePasswordFiles: false
-    username: ""
+    username: "userpostgres"
+
   clusterDomain: cluster.local
   common:
     exampleValue: common-chart
@@ -1678,15 +1679,15 @@ postgresql:
       imageRegistry: ""
       postgresql:
         auth:
-          database: ""
+          database: "sentry"
           existingSecret: ""
-          password: ""
-          postgresPassword: ""
+          password: "passwdpostgres"
+          postgresPassword: "passwdpostgres"
           secretKeys:
-            adminPasswordKey: ""
-            replicationPasswordKey: ""
-            userPasswordKey: ""
-          username: ""
+            adminPasswordKey: "postgres-password"
+            replicationPasswordKey: "replication-password"
+            userPasswordKey: "password"
+          username: "userpostgres"
         service:
           ports:
             postgresql: ""
