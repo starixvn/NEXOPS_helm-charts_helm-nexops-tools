@@ -196,7 +196,8 @@ clickhouse:
       type: RollingUpdate
   timezone: UTC
 config:
-  configYml: {}
+  configYml:
+    mail.backend: "dummy"
   relay: |
     # No YAML relay config given
     # Enable full logging and backraces:
