@@ -1390,7 +1390,8 @@ metrics:
     periodSeconds: 5
     successThreshold: 1
     timeoutSeconds: 2
-  nodeSelector: {}
+  nodeSelector:
+    sentry: "yes"
   readinessProbe:
     enabled: true
     failureThreshold: 3
@@ -3259,7 +3260,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3274,7 +3276,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3289,7 +3292,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3304,7 +3308,8 @@ sentry:
       targetCPUUtilizationPercentage: 50
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3314,7 +3319,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3324,7 +3330,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3334,7 +3341,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3345,7 +3353,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3355,7 +3364,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3365,7 +3375,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3375,7 +3386,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3385,7 +3397,8 @@ sentry:
     affinity: {}
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3477,7 +3490,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3488,7 +3502,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3497,7 +3512,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3506,7 +3522,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3515,7 +3532,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3524,7 +3542,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3536,7 +3555,8 @@ snuba:
     containerSecurityContext: {}
     env: []
     maxBatchSize: "3"
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3545,7 +3565,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3554,7 +3575,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3563,7 +3585,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3572,7 +3595,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3581,7 +3605,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3590,7 +3615,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3599,7 +3625,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3608,7 +3635,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3619,7 +3647,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3628,7 +3657,8 @@ snuba:
     autoOffsetReset: earliest
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     replicas: 1
     resources: {}
     securityContext: {}
@@ -3666,7 +3696,8 @@ symbolicator:
       #     retention: 1w
     containerSecurityContext: {}
     env: []
-    nodeSelector: {}
+    nodeSelector:
+      sentry: "yes"
     probeInitialDelaySeconds: 10
     replicas: 1
     resources: {}
@@ -3693,7 +3724,8 @@ vroom:
   env: []
   init:
     resources: {}
-  nodeSelector: {}
+  nodeSelector:
+    sentry: "yes"
   probeFailureThreshold: 5
   probeInitialDelaySeconds: 10
   probePeriodSeconds: 10
