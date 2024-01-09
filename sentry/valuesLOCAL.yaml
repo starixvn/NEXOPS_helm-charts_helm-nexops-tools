@@ -133,7 +133,7 @@ clickhouse:
         accessModes:
         - ReadWriteOnce
         enabled: true
-        storage: 5Gi
+        storage: 15Gi
       enabled: true
       logsPersistentVolume:
         accessModes:
@@ -1898,7 +1898,7 @@ postgresql:
       labels: {}
       mountPath: /bitnami/postgresql
       selector: {}
-      size: 3Gi
+      size: 5Gi
       storageClass: ""
       subPath: ""
     pgHbaConfiguration: ""
@@ -2010,7 +2010,7 @@ postgresql:
       labels: {}
       mountPath: /bitnami/postgresql
       selector: {}
-      size: 3Gi
+      size: 5Gi
       storageClass: ""
       subPath: ""
     podAffinityPreset: ""
@@ -2457,7 +2457,7 @@ rabbitmq:
     labels: {}
     mountPath: /bitnami/rabbitmq/mnesia
     selector: {}
-    size: 2Gi
+    size: 8Gi
     storageClass: ""
     subPath: ""
   plugins: rabbitmq_management rabbitmq_peer_discovery_k8s
@@ -2674,7 +2674,7 @@ redis:
       medium: ""
       path: /data
       selector: {}
-      size: 1Gi
+      size: 8Gi
       sizeLimit: ""
       storageClass: ""
       subPath: ""
@@ -2889,7 +2889,7 @@ redis:
       medium: ""
       path: /data
       selector: {}
-      size: 1Gi
+      size: 8Gi
       sizeLimit: ""
       storageClass: ""
       subPath: ""
@@ -3844,7 +3844,7 @@ zookeeper:
     enabled: true
     existingClaim: ""
     selector: {}
-    size: 5Gi
+    size: 8Gi
     storageClass: ""
   podAffinityPreset: ""
   podAnnotations: {}
