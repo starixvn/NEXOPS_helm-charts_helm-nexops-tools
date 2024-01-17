@@ -154,7 +154,7 @@ clickhouse:
     securityContext: {}
     tcp_port: "9000"
     updateStrategy: RollingUpdate
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   enabled: true
   global: {}
   serviceAccount:
@@ -360,7 +360,7 @@ kafka:
   authorizerClassName: ""
   autoCreateTopicsEnable: true
   brokerRackAssignment: ""
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   command:
   - /scripts/setup.sh
   common:
@@ -884,7 +884,7 @@ kafka:
     autopurge:
       purgeInterval: 0
       snapRetainCount: 3
-    clusterDomain: cluster.local
+    clusterDomain: lumi.local
     command:
     - /scripts/setup.sh
     common:
@@ -1161,7 +1161,7 @@ memcached:
     minReplicas: 3
     targetCPU: 50
     targetMemory: 50
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   command: []
   common:
     exampleValue: common-chart
@@ -1439,7 +1439,7 @@ nginx:
       tag: 2.40.1-debian-11-r8
     interval: 60
     repository: ""
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   command: []
   common:
     exampleValue: common-chart
@@ -1668,7 +1668,7 @@ postgresql:
     usePasswordFiles: false
     username: "userpostgres"
 
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   common:
     exampleValue: common-chart
     global:
@@ -2131,7 +2131,7 @@ rabbitmq:
         password: ""
       sslOptionsVerify: verify_peer
     username: guest
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   clustering:
     addressType: hostname
     enabled: true
@@ -2576,7 +2576,7 @@ redis:
     password: ""
     sentinel: false
     usePasswordFiles: false
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   common:
     exampleValue: common-chart
     global:
@@ -3717,7 +3717,7 @@ zookeeper:
   autopurge:
     purgeInterval: 0
     snapRetainCount: 3
-  clusterDomain: cluster.local
+  clusterDomain: lumi.local
   command:
   - /scripts/setup.sh
   common:
