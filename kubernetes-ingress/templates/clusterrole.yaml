@@ -95,10 +95,7 @@ rules:
   - get
   - list
   - watch
-  - create
   - update
-  - patch
-  - delete
 {{- if .Values.controller.kubernetesGateway.enabled }}
 - apiGroups:
   - "gateway.networking.k8s.io"
@@ -119,16 +116,5 @@ rules:
   - tcproutes/status
   verbs:
   - update
-{{- end }}
-{{- if .Values.controller.techdump.enabled }}
-- apiGroups:
-  - "apps"
-  resources:
-  - replicasets
-  - deployments
-  - daemonsets
-  verbs:
-  - get
-  - list
 {{- end }}
 {{- end -}}

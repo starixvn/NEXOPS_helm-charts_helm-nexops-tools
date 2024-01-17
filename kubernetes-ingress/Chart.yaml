@@ -1,8 +1,8 @@
 annotations:
   artifacthub.io/changes: |
-    - Remove unneeded initContainers from CRD job (#215)
+    - Use Ingress Controller 1.10.8 version for base image
 apiVersion: v2
-appVersion: 1.10.10
+appVersion: 1.10.8
 description: A Helm chart for HAProxy Kubernetes Ingress Controller
 home: https://github.com/haproxytech/helm-charts/tree/main/kubernetes-ingress
 icon: https://raw.githubusercontent.com/haproxytech/helm-charts/main/kubernetes-ingress/chart-icon.png
@@ -17,4 +17,4 @@ name: kubernetes-ingress
 sources:
 - https://github.com/haproxytech/kubernetes-ingress
 type: application
-version: 1.35.5
+version: 1.33.1
