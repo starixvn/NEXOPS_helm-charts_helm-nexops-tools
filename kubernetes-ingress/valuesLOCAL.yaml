@@ -315,6 +315,17 @@ controller:
   ## Custom configuration for Controller
   ## ref: https://github.com/haproxytech/kubernetes-ingress/tree/master/documentation
   config: {}
+    timeout-connect: "5s"
+    scale-server-slots: "7"
+    maxconn: "20000"
+    stats-config-snippet: |
+      stats auth lumi:lum!onRock
+      stats refresh 300s
+      stats show-legends
+      stats show-node
+      stats show-modules
+    forwarded-for: "true"
+    dontlognull: "true"
   #   timeout-connect: "250ms"
   #   servers-increment: "10"
   #   servers-increment-max-disabled: "10"
