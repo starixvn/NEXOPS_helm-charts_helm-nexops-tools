@@ -314,7 +314,7 @@ controller:
 
   ## Custom configuration for Controller
   ## ref: https://github.com/haproxytech/kubernetes-ingress/tree/master/documentation
-  config: {}
+  config:
     timeout-connect: "5s"
     scale-server-slots: "7"
     maxconn: "20000"
@@ -382,7 +382,7 @@ controller:
     ## Service nodePorts to use for http, https and stat
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/
     ## If empty, random ports will be used
-    nodePorts: {}
+    nodePorts: 
       http: 31080
       https: 31443
       stat: 31024
