@@ -312,9 +312,6 @@ ingress:
   #regexPathStyle: nginx
   hostname: "sentry-k8s.lumigame.com"
   ingressClassName: "haproxy"
-  annotations:
-    haproxy.org/ssl-redirect: "true"
-    haproxy.org/ssl-certificate: "default/lumigame-cert"
 kafka:
   advertisedListeners: []
   affinity: {}
