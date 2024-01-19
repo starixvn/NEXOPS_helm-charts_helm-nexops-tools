@@ -67,7 +67,7 @@ controller:
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
   kind: Deployment    # can be 'Deployment' or 'DaemonSet'
-  replicaCount: 2
+  replicaCount: 3
 
   ## minReadySeconds setting of Deployment or DaemonSet
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
@@ -271,7 +271,8 @@ controller:
 
   ## Pod Node assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-  nodeSelector: {}
+  nodeSelector:
+    haproxy-ingress: "yes"
 
   ## Node Taints and Tolerations for pod-node cheduling through attraction/repelling
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
