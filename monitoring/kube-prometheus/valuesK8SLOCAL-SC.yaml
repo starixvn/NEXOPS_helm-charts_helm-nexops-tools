@@ -18,7 +18,7 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  storageClass: ""
+  storageClass: "longhorn"
 
 ## @section Common parameters
 ##
@@ -1071,7 +1071,7 @@ prometheus:
     ## If undefined (the default) or set to null, no storageClassName spec is
     ## set, choosing the default provisioner.
     ##
-    storageClass: ""
+    storageClass: "longhorn"
     ## @param prometheus.persistence.accessModes Persistent Volume Access Modes
     ##
     accessModes:
