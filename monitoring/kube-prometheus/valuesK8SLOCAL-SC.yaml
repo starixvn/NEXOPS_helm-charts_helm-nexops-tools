@@ -1161,7 +1161,7 @@ prometheus:
   ## @param prometheus.additionalScrapeConfigs.internal.jobList A list of Prometheus scrape jobs
   ##
   additionalScrapeConfigs:
-    enabled: true
+    enabled: false
     type: external
     external:
       ## Name of the secret that Prometheus should use for the additional scrape configuration
