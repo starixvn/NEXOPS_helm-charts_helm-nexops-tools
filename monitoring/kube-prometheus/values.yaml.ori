@@ -67,7 +67,7 @@ operator:
   image:
     registry: docker.io
     repository: bitnami/prometheus-operator
-    tag: 0.70.0-debian-11-r1
+    tag: 0.69.1-debian-11-r0
     digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -347,7 +347,8 @@ operator:
   ## @param operator.nodeSelector Prometheus Operator Node labels for pod assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    nexops-tools: "yes"
   ## @param operator.tolerations Prometheus Operator Tolerations for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -534,7 +535,7 @@ prometheus:
   image:
     registry: docker.io
     repository: bitnami/prometheus
-    tag: 2.48.0-debian-11-r0
+    tag: 2.47.2-debian-11-r2
     digest: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -608,7 +609,7 @@ prometheus:
   service:
     ## @param prometheus.service.type Kubernetes service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param prometheus.service.ports.http Prometheus service port
     ##
     ports:
@@ -835,7 +836,8 @@ prometheus:
   ## @param prometheus.nodeSelector Prometheus Node labels for pod assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    nexops-tools: "yes"
   ## @param prometheus.topologySpreadConstraints Prometheus Topology Spread Constraints for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
   ## The value is evaluated as a template
@@ -1001,7 +1003,7 @@ prometheus:
   scrapeConfigNamespaceSelector: {}
   ## @param prometheus.retention Metrics retention days
   ##
-  retention: 10d
+  retention: 7d
   ## @param prometheus.retentionSize Maximum size of metrics
   ##
   retentionSize: ""
@@ -1062,7 +1064,7 @@ prometheus:
   persistence:
     ## @param prometheus.persistence.enabled Use PVCs to persist data. If the storageSpec is provided this will not take effect.
     ##
-    enabled: false
+    enabled: true
     ## @param prometheus.persistence.storageClass Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -1076,7 +1078,7 @@ prometheus:
       - ReadWriteOnce
     ## @param prometheus.persistence.size Persistent Volume Size
     ##
-    size: 8Gi
+    size: 12Gi
     ## @param prometheus.persistence.annotations Persistent Volume Claim annotations
     ##
     annotations: {}
@@ -1159,15 +1161,15 @@ prometheus:
   ## @param prometheus.additionalScrapeConfigs.internal.jobList A list of Prometheus scrape jobs
   ##
   additionalScrapeConfigs:
-    enabled: false
+    enabled: true
     type: external
     external:
       ## Name of the secret that Prometheus should use for the additional scrape configuration
       ##
-      name: ""
+      name: "additional-scrape-configs"
       ## Name of the key inside the secret to be used for the additional scrape configuration.
       ##
-      key: ""
+      key: "prometheus-additional.yml"
     internal:
       jobList: []
   ## @param prometheus.additionalScrapeConfigsExternal.enabled Deprecated: Enable additional scrape configs that are managed externally to this chart
@@ -1609,7 +1611,7 @@ prometheus:
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
-  enabled: true
+  enabled: false
   ## Bitnami Alertmanager image version
   ## ref: https://hub.docker.com/r/bitnami/prometheus-operator/tags/
   ## @param alertmanager.image.registry [default: REGISTRY_NAME] Prometheus image registry
@@ -1621,7 +1623,7 @@ alertmanager:
   image:
     registry: docker.io
     repository: bitnami/alertmanager
-    tag: 0.26.0-debian-11-r45
+    tag: 0.26.0-debian-11-r44
     digest: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -2209,7 +2211,7 @@ kubelet:
 blackboxExporter:
   ## @param blackboxExporter.enabled Enable Blackbox Exporter deployment
   ##
-  enabled: true
+  enabled: false
   ## Bitnami Alertmanager image version
   ## ref: https://hub.docker.com/r/bitnami/prometheus-operator/tags/
   ## @param blackboxExporter.image.registry [default: REGISTRY_NAME] Blackbox Exporter image registry
@@ -2222,7 +2224,7 @@ blackboxExporter:
   image:
     registry: docker.io
     repository: bitnami/blackbox-exporter
-    tag: 0.24.0-debian-11-r141
+    tag: 0.24.0-debian-11-r140
     digest: ""
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -2462,7 +2464,8 @@ blackboxExporter:
   ## @param blackboxExporter.nodeSelector Node labels for Blackbox Exporter pods assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    haproxy: "yes"
   ## @param blackboxExporter.tolerations Tolerations for Blackbox Exporter pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -2891,3 +2894,5 @@ kubeProxy:
 rbac:
   create: true
   pspEnabled: true
+
+
