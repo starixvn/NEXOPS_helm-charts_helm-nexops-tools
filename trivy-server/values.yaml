@@ -14,7 +14,7 @@ replicaCount: 1
 
 persistence:
   enabled: true
-  storageClass: ""
+  storageClass: "longhorn"
   accessMode: ReadWriteOnce
   size: 5Gi
 
@@ -113,11 +113,11 @@ trivy:
   cache:
     redis:
       enabled: true
-      url: "redis://redis-server.trivy-stack.svc.lumi.local:6379"  # e.g. redis://redis.redis.svc:6379
-      ttl: ""  # e.g 3600s, 24h
+      url: "redis://redis-server.trivy-stack.svc.lumi.local:6379" # e.g. redis://redis.redis.svc:6379
+      ttl: "" # e.g 3600s, 24h
   serviceAccount:
     annotations: {}
-      # eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME
+    # eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME
   # If you want to add custom labels to your statefulset and podTemplate
   labels: {}
   # serverToken is the token to authenticate Trivy client with Trivy server.
@@ -141,16 +141,16 @@ ingress:
   # From Kubernetes 1.18+ this field is supported in case your ingress controller supports it. When set, you do not need to add the ingress class as annotation.
   ingressClassName: "haproxy"
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   hosts:
-    - host: trivy.lumigame.com
+  - host: trivy.lumigame.com
   path: "/"
   # type is only needed for networking.k8s.io/v1 in k8s 1.19+
   pathType: Prefix
   tls: []
   #  - secretName: trivy-example-tls
-  #    hosts:
-  #      - trivy.example.com
+#    hosts:
+#      - trivy.example.com
 
 # httpProxy the URL of the HTTP proxy server
 httpProxy:
