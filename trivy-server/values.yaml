@@ -83,9 +83,9 @@ trivy:
   # Directly in this file
   #
   # TRIVY_USERNAME
-  registryUsername: "nexops"
+  registryUsername: ""
   # TRIVY_PASSWORD
-  registryPassword: "1qaz@WSX"
+  registryPassword: ""
   #
   # Or
   # From an existing secret
@@ -121,7 +121,7 @@ trivy:
   # If you want to add custom labels to your statefulset and podTemplate
   labels: {}
   # serverToken is the token to authenticate Trivy client with Trivy server.
-  serverToken: ""
+  serverToken: "H5nF5ywy262wt881ZWpq"
   # existingSecret if an existing secret has been created outside the chart.
   # Overrides gitHubToken, registryUsername, registryPassword, serverToken
   existingSecret: ""
