@@ -210,7 +210,7 @@ persistence:
       storageClass: "longhorn"
       subPath: ""
       accessMode: ReadWriteOnce
-      size: 2Gi
+      size: 4Gi
       annotations: {}
     # If external Redis is used, the following settings for Redis will
     # be ignored
