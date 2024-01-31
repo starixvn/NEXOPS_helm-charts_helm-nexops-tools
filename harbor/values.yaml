@@ -210,7 +210,7 @@ persistence:
       storageClass: "longhorn"
       subPath: ""
       accessMode: ReadWriteOnce
-      size: 1Gi
+      size: 2Gi
       annotations: {}
     # If external Redis is used, the following settings for Redis will
     # be ignored
@@ -226,7 +226,7 @@ persistence:
       storageClass: "longhorn"
       subPath: ""
       accessMode: ReadWriteOnce
-      size: 5Gi
+      size: 4Gi
       annotations: {}
   # Define which storage backend is used for registry to store
   # images and charts. Refer to
