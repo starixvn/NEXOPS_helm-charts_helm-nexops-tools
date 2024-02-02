@@ -194,7 +194,7 @@ persistence:
       storageClass: "longhorn"
       subPath: ""
       accessMode: ReadWriteOnce
-      size: 40Gi
+      size: 100Gi
       annotations: {}
     jobservice:
       jobLog:
