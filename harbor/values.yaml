@@ -785,7 +785,7 @@ database:
       repository: goharbor/harbor-db
       tag: v2.10.0
     # The initial superuser password for internal database
-    password: "changeit"
+    password: "postgrespassword"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
     # More details see:
     # https://github.com/goharbor/harbor/issues/15034
@@ -844,7 +844,7 @@ database:
   # The maximum number of open connections to the database per pod (core+exporter).
   # If it <= 0, then there is no limit on the number of open connections.
   # Note: the default number of connections is 1024 for postgre of harbor.
-  maxOpenConns: 900
+  maxOpenConns: 1024
   ## Additional deployment annotations
   podAnnotations: {}
   ## Additional deployment labels
