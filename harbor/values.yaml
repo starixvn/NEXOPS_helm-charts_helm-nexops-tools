@@ -785,7 +785,7 @@ database:
       repository: goharbor/harbor-db
       tag: v2.10.0
     # The initial superuser password for internal database
-    password: "postgrespassword"
+    password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
     # More details see:
     # https://github.com/goharbor/harbor/issues/15034
