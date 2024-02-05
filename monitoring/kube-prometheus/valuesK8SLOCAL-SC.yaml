@@ -1003,7 +1003,7 @@ prometheus:
   scrapeConfigNamespaceSelector: {}
   ## @param prometheus.retention Metrics retention days
   ##
-  retention: 14d
+  retention: 3d
   ## @param prometheus.retentionSize Maximum size of metrics
   ##
   retentionSize: ""
@@ -1075,10 +1075,10 @@ prometheus:
     ## @param prometheus.persistence.accessModes Persistent Volume Access Modes
     ##
     accessModes:
-      - ReadWriteOnce
+    - ReadWriteOnce
     ## @param prometheus.persistence.size Persistent Volume Size
     ##
-    size: 20Gi
+    size: 10Gi
     ## @param prometheus.persistence.annotations Persistent Volume Claim annotations
     ##
     annotations: {}
@@ -1967,11 +1967,11 @@ alertmanager:
       repeat_interval: 12h
       receiver: 'null'
       routes:
-        - match:
-            alertname: Watchdog
-          receiver: 'null'
+      - match:
+          alertname: Watchdog
+        receiver: 'null'
     receivers:
-      - name: 'null'
+    - name: 'null'
   ## @param alertmanager.templateFiles Extra files to be added inside the `alertmanager-{{ template "kube-prometheus.alertmanager.fullname" . }}` secret.
   ##
   templateFiles: {}
@@ -2063,7 +2063,7 @@ alertmanager:
     ## @param alertmanager.persistence.accessModes Persistent Volume Access Modes
     ##
     accessModes:
-      - ReadWriteOnce
+    - ReadWriteOnce
     ## @param alertmanager.persistence.size Persistent Volume Size
     ##
     size: 8Gi
@@ -2313,7 +2313,7 @@ blackboxExporter:
   customStartupProbe: {}
   ## @param blackboxExporter.configuration [object] Blackbox Exporter configuration
   ##
-  configuration:  |
+  configuration: |
     "modules":
       "http_2xx":
         "http":
@@ -2602,10 +2602,10 @@ kubeApiServer:
     relabelings: []
     ## @param kubeApiServer.serviceMonitor.labels Extra labels for the ServiceMonitor
     ##
-    labels: { }
+    labels: {}
     ## @param kubeApiServer.serviceMonitor.annotations Extra annotations for the ServiceMonitor
     ##
-    annotations: { }
+    annotations: {}
     ## @param kubeApiServer.serviceMonitor.sampleLimit Per-scrape limit on number of scraped samples that will be accepted.
     ##
     sampleLimit: ""
@@ -2672,10 +2672,10 @@ kubeControllerManager:
     relabelings: []
     ## @param kubeControllerManager.serviceMonitor.labels Extra labels for the ServiceMonitor
     ##
-    labels: { }
+    labels: {}
     ## @param kubeControllerManager.serviceMonitor.annotations Extra annotations for the ServiceMonitor
     ##
-    annotations: { }
+    annotations: {}
     ## @param kubeControllerManager.serviceMonitor.sampleLimit Per-scrape limit on number of scraped samples that will be accepted.
     ##
     sampleLimit: ""

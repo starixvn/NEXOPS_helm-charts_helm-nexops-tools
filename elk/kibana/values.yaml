@@ -1,4 +1,3 @@
----
 elasticsearchHosts: "http://elasticsearch-master:9200"
 
 replicas: 1
@@ -7,8 +6,8 @@ replicas: 1
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
 extraEnvs:
-  - name: "NODE_OPTIONS"
-    value: "--max-old-space-size=1800"
+- name: "NODE_OPTIONS"
+  value: "--max-old-space-size=1800"
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
@@ -34,8 +33,8 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 
-image: "hub.lumigame.com/base/kibana-sg"
-imageTag: "7.17.6-eks"
+image: "hub.lumigame.com/base/elk/kibana"
+imageTag: "7.17.6"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
@@ -90,7 +89,7 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-      - ALL
+    - ALL
   # readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -106,17 +105,15 @@ priorityClassName: ""
 
 httpPort: 5601
 
-extraVolumes:
-  []
-  # - name: extras
-  #   emptyDir: {}
+extraVolumes: []
+# - name: extras
+#   emptyDir: {}
 
-extraVolumeMounts:
-  []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
-  #
+extraVolumeMounts: []
+# - name: extras
+#   mountPath: /usr/share/extras
+#   readOnly: true
+#
 
 extraContainers: []
 # - name: dummy-init
@@ -137,16 +134,14 @@ service:
   port: 5601
   nodePort: "30536"
   labels: {}
-  annotations:
-    {}
-    # cloud.google.com/load-balancer-type: "Internal"
-    # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
-    # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
-  loadBalancerSourceRanges:
-    []
-    # 0.0.0.0/0
+  annotations: {}
+  # cloud.google.com/load-balancer-type: "Internal"
+  # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+  # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+  # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
+  loadBalancerSourceRanges: []
+  # 0.0.0.0/0
   httpPortName: http
 
 ingress:
@@ -157,13 +152,13 @@ ingress:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: logs.lumigame.com
-      paths:
-        - path: /
-  #tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  - host: logs.lumigame.com
+    paths:
+    - path: /
+    #tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 readinessProbe:
   failureThreshold: 3
@@ -181,14 +176,13 @@ affinity: {}
 nameOverride: ""
 fullnameOverride: ""
 
-lifecycle:
-  {}
-  # preStop:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-  # postStart:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+lifecycle: {}
+# preStop:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+# postStart:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 
 # Deprecated - use only with versions < 6.6
 elasticsearchURL: "" # "http://elasticsearch-master:9200"

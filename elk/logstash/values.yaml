@@ -506,7 +506,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "hub.lumigame.com/base/elk/logstash"
-imageTag: "7.17.6-eks"
+imageTag: "7.17.6"
 imagePullPolicy: "Always"
 imagePullSecrets: []
 
