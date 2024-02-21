@@ -745,7 +745,7 @@ trivy:
   # Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`. Defaults to `vuln`.
   securityCheck: "vuln"
   # The duration to wait for scan completion
-  timeout: 5m0s
+  timeout: 10m0s
   resources:
     requests:
       cpu: 200m
