@@ -361,6 +361,9 @@ controller:
     ## Must be <namespace>/<service_name>
     pathOverride: ""
 
+  containerPorts:
+    - name: redis
+      containerPort: 6379
   ## Controller Service configuration
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
@@ -418,7 +421,11 @@ controller:
     ## Additional tcp ports to expose
     ## This is especially useful for TCP services:
     ## https://github.com/haproxytech/kubernetes-ingress/blob/master/documentation/controller.md
-    tcpPorts: []
+    tcpPorts: #[]
+      - name: tcp-redis
+        protocol: TCP
+        port: 6379
+        targetPort: redis
     #  - name: http-alt
     #    port: 8080
     #    targetPort: http-alt
