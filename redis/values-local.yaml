@@ -524,7 +524,7 @@ master:
   service:
     ## @param master.service.type Redis&reg; master service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param master.service.ports.redis Redis&reg; master service port
     ##
     ports:
@@ -986,7 +986,7 @@ replica:
   service:
     ## @param replica.service.type Redis&reg; replicas service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param replica.service.ports.redis Redis&reg; replicas service port
     ##
     ports:
