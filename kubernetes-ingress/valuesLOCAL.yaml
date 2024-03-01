@@ -361,9 +361,9 @@ controller:
     ## Must be <namespace>/<service_name>
     pathOverride: ""
 
-  containerPorts:
-    - name: redis
-      containerPort: 6379
+  # containerPorts:
+  #   - name: redis
+  #     containerPort: 6379
   ## Controller Service configuration
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
