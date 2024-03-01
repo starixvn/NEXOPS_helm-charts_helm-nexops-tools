@@ -48,7 +48,7 @@ commonAnnotations: {}
 secretAnnotations: {}
 ## @param clusterDomain Kubernetes cluster domain name
 ##
-clusterDomain: cluster.local
+clusterDomain: lumi.local
 ## @param extraDeploy Array of extra objects to deploy with the release
 ##
 extraDeploy: []
