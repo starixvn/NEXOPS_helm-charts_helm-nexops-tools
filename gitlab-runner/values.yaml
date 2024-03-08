@@ -352,15 +352,12 @@ runners:
         image = "hub.lumigame.com/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
         cpu_request = "100m"
-        memory_limit = "256Mi"
+        memory_limit = "500Mi"
         memory_request = "128Mi"
-        service_cpu_limit = "3000m"
-        service_cpu_request = "2000m"
-        service_memory_limit = "500Mi"
-        helper_cpu_limit = "100m"
-        helper_cpu_request = "25m"
-        helper_memory_limit = "128Mi"
-        helper_memory_request = "64Mi"
+        service_cpu_limit = "1"
+        service_memory_limit = "1Gi"
+        helper_cpu_limit = "500m"
+        helper_memory_limit = "100Mi"
       [runners.cache]
         Type = "s3"
         Path = "runner"
@@ -374,6 +371,10 @@ runners:
         name = "hub.lumigame.com/base/docker:24-dind-alpine"
         command = ["--experimental"]
         alias = "docker"
+    [runners.kubernetes.node_selector]
+      "node-role.kubernetes.io/runner" = "yes"
+    [runners.kubernetes.node_tolerations]
+      "cattle.io/os=runner" = "NoSchedule"
       [[runners.kubernetes.volumes.empty_dir]]
         name = "docker-certs"
         mount_path = "/certs/client"
