@@ -640,14 +640,17 @@ podLabels: {}
 ## implementing "custom.metrics.k8s.io" using supported third party adapter
 ## Example: https://github.com/directxman12/k8s-prometheus-adapter
 ##
-#hpa: {}
-  # minReplicas: 1
-  # maxReplicas: 10
-  # metrics:
-  # - type: Pods
-  #   pods:
-  #     metricName: gitlab_runner_jobs
-  #     targetAverageValue: 400m
+hpa:
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: External
+    external:
+      metric:
+        name: gitlab_runner_jobs_builds_concurrent_saturation
+      target:
+        type: AverageValue
+        value: 0.4
 
 ## Configure priorityClassName for manager pod. See k8s docs for more info on how pod priority works:
 ##  https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
