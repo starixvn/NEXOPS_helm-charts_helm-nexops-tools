@@ -363,7 +363,6 @@ runners:
         # helper_memory_limit = "100Mi"
       [runners.cache]
         Type = "s3"
-        Path = "runner"
         Shared = true
         [runners.cache.s3]
           ServerAddress = "minio-api.lumigame.com"
