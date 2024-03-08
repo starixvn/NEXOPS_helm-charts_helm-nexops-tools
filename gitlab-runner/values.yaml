@@ -351,8 +351,8 @@ runners:
         namespace = "{{.Release.Namespace}}"
         image = "hub.lumigame.com/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
-        # cpu_limit = "1"
-        # memory_limit = "500Mi"
+        cpu_limit = "0.5"
+        memory_limit = "500Mi"
         # service_cpu_limit = "1"
         # service_memory_limit = "1Gi"
         # helper_cpu_limit = "500m"
