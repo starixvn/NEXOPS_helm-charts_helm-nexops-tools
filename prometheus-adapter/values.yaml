@@ -96,9 +96,9 @@ dnsConfig: {}
   #     value: "2"
   #   - name: edns0
 
-resources:
-  limits:
-    memory: 1000Mi
+resources: {}
+  # limits:
+  #   memory: 1000Mi
 
 # Configure liveness probe
 # https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe
