@@ -328,7 +328,7 @@ runners:
   config: |
     [[runners]]
       environment = [
-        "FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY=false",
+        # "FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY=false",
         "DOCKER_HOST=tcp://localhost:2376",
         "DOCKER_TLS_VERIFY=1",
         "DOCKER_TLS_CERTDIR=/certs",
