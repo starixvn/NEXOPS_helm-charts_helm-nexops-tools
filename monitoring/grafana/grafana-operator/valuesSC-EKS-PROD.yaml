@@ -600,7 +600,7 @@ grafana:
     ingressClassName: "haproxy"
     ## @param grafana.ingress.host The host under which the grafana instance should be reachable. If empty the parameter will not be set.
     ##
-    host: grafana-sc.sportsfun.app
+    host: g-lumi.sportsfun.app
     ## @param grafana.ingress.path The path for the ingress instance to forward to the grafana app
     ##
     path: /
