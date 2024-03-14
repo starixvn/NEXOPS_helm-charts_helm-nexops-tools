@@ -287,7 +287,7 @@ service:
   ## @param service.nodePorts.redis Node port for Redis
   ##
   nodePorts:
-    redis: ""
+    redis: "30479"
   ## @param service.extraPorts Extra ports to expose in the service (normally used with the `sidecar` value)
   ##
   extraPorts: []
@@ -303,7 +303,7 @@ service:
   ## Setting this to LoadBalancer may require corresponding service annotations for loadbalancer creation to succeed.
   ## Currently supported types are ClusterIP (default) and LoadBalancer
   ##
-  type: ClusterIP
+  type: NodePort #ClusterIP
   ## @param service.clusterIP Service Cluster IP
   ## e.g.:
   ## clusterIP: None
