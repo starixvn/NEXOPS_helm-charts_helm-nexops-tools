@@ -674,7 +674,7 @@ grafana:
       level: "warn"
     database:
       wal: "false"
-      host: "mysql"
+      host: "grafana-mysql-eks-prod"
       name: "grafana_db"
       password: "LZk36O1^ur$6"
       type: "mysql"
