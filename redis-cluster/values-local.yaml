@@ -21,7 +21,7 @@ global:
   imagePullSecrets: []
   storageClass: ""
   redis:
-    password: ""
+    password: "foo1@bared"
 ## @section Redis&reg; Cluster Common parameters
 ##
 
@@ -287,7 +287,7 @@ service:
   ## @param service.nodePorts.redis Node port for Redis
   ##
   nodePorts:
-    redis: ""
+    redis: "30479"
   ## @param service.extraPorts Extra ports to expose in the service (normally used with the `sidecar` value)
   ##
   extraPorts: []
@@ -303,7 +303,7 @@ service:
   ## Setting this to LoadBalancer may require corresponding service annotations for loadbalancer creation to succeed.
   ## Currently supported types are ClusterIP (default) and LoadBalancer
   ##
-  type: ClusterIP
+  type: NodePort #ClusterIP
   ## @param service.clusterIP Service Cluster IP
   ## e.g.:
   ## clusterIP: None
@@ -819,7 +819,7 @@ cluster:
   ##
   ## @param cluster.nodes The number of master nodes should always be >= 3, otherwise cluster creation will fail
   ##
-  nodes: 6
+  nodes: 3
   ## @param cluster.replicas Number of replicas for every master in the cluster
   ## Parameter to be passed as --cluster-replicas to the redis-cli --cluster create
   ## 1 means that we want a replica for every master created
