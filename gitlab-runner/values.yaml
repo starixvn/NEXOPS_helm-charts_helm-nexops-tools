@@ -355,7 +355,7 @@ runners:
         namespace = "{{.Release.Namespace}}"
         image = "hub.lumigame.com/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
-        cpu_limit = "0.5"
+        # cpu_limit = "0.5"
         # memory_limit = "500Mi"
         poll_timeout = 3600
         poll_interval = 5
