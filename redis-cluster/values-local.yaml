@@ -281,7 +281,7 @@ service:
   ## @param service.ports.redis Kubernetes Redis service port
   ##
   ports:
-    redis: 6379
+    redis: 30479
   ## Node ports to expose
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ## @param service.nodePorts.redis Node port for Redis
@@ -670,7 +670,8 @@ redis:
   ## @param redis.nodeSelector Node labels for Redis&reg; pods assignment
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   ##
-  nodeSelector: {}
+  nodeSelector: #{}
+    core-services: "yes"
   ## @param redis.tolerations Tolerations for Redis&reg; pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -772,7 +773,8 @@ updateJob:
   ## @param updateJob.nodeSelector Node labels for update job pods assignment
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   ##
-  nodeSelector: {}
+  nodeSelector: #{}
+    core-services: "yes"
   ## @param updateJob.tolerations Tolerations for update job pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
