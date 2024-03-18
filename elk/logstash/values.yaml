@@ -510,7 +510,7 @@ logstashPipeline:
 
       if "nexcel_haproxy_local" in [tags] {
         elasticsearch {
-          hosts => "elasticsearch:9200"
+          hosts => "elasticsearch-master:9200"
           user => "logstash"
           password => "logstash"
           index => "%{[@metadata][beat]}-haproxy-gw-%{+YYYY.MM.dd}"
