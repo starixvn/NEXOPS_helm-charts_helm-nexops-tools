@@ -441,6 +441,14 @@ logstashPipeline:
               password => "logstash"
               index => "logstash-worker-node-logs-eksuat-%{+YYYY.MM.dd}"
             }             
+          }
+          else {
+            elasticsearch {
+              hosts => "elasticsearch-master:9200"
+              user => "logstash"
+              password => "logstash"
+              index => "logstash-unknown-eksuat-%{+YYYY.MM.dd}"
+            }             
           }        
         }
 
