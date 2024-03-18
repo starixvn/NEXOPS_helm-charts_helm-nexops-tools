@@ -832,7 +832,7 @@ cluster:
   externalAccess:
     ## @param cluster.externalAccess.enabled Enable access to the Redis
     ##
-    enabled: false
+    enabled: true
     ## @param cluster.externalAccess.hostMode Set cluster preferred endpoint type as hostname
     ## ref: https://github.com/redis/redis/pull/9530
     ##
@@ -847,7 +847,7 @@ cluster:
       ## @param cluster.externalAccess.service.type Type for the services used to expose every Pod
       ## At this moment only LoadBalancer is supported
       ##
-      type: LoadBalancer
+      type: NodePort
       ## @param cluster.externalAccess.service.port Port for the services used to expose every Pod
       ##
       port: 6379
