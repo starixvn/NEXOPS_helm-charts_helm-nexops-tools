@@ -848,8 +848,6 @@ cluster:
       ## At this moment only LoadBalancer is supported
       ##
       type: NodePort
-      nodePorts:
-        redis: "30499"
       ## @param cluster.externalAccess.service.port Port for the services used to expose every Pod
       ##
       port: 6379
