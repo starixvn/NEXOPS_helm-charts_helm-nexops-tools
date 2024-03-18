@@ -616,8 +616,8 @@ httpPort: 9600
 extraPorts:
   - name: httplog
     containerPort: 8080
-  - name: beats
-    containerPort: 5000
+  # - name: beats
+  #   containerPort: 5000
 
 updateStrategy: RollingUpdate
 
@@ -702,10 +702,10 @@ service:
   type: ClusterIP
   # loadBalancerIP: ""
   ports:
-    # - name: beats
-    #   port: 5044
-    #   protocol: TCP
-    #   targetPort: 5044
+    - name: beats
+      port: 5044
+      protocol: TCP
+      targetPort: 5044
     - name: httplog
       port: 8080
       protocol: TCP
@@ -714,10 +714,6 @@ service:
       port: 9600
       protocol: TCP
       targetPort: 9600
-    - name: beats
-      port: 5000
-      protocol: TCP
-      targetPort: 5000
 
 ingress:
   enabled: false
