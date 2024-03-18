@@ -281,7 +281,7 @@ service:
   ## @param service.ports.redis Kubernetes Redis service port
   ##
   ports:
-    redis: 30479
+    redis: 6379
   ## Node ports to expose
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ## @param service.nodePorts.redis Node port for Redis
