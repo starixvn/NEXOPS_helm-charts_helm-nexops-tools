@@ -850,7 +850,7 @@ cluster:
       type: NodePort #LoadBalancer
       ## @param cluster.externalAccess.service.port Port for the services used to expose every Pod
       ##
-      port: 6379
+      port: 6779
       ## @param cluster.externalAccess.service.loadBalancerIP Array of load balancer IPs for each Redis&reg; node. Length must be the same as cluster.nodes
       ##
       loadBalancerIP: []
