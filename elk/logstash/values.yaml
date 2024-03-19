@@ -259,7 +259,7 @@ logstashPipeline:
           }
 
           grok {
-            match => {"captured_request_headers" => "%{DATA:referrer}\|%{GREEDYDATA:user-agent}\|%{DATA:XForwardedFor}\|%{IP:TrueClientIP}"}
+            match => {"captured_request_headers" => "%{DATA:referrer}\|%{GREEDYDATA:user-agent}\|(%{GREEDYDATA:XForwardedFor}|%{IP:TrueClientIP})"}
           }
           mutate {
             remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
@@ -272,7 +272,7 @@ logstashPipeline:
               "time_backend_response" => "integer"
             }
 
-            rename => {"syslog_server" => "HAP"}
+            rename => {"syslog_server" => "SyslogSrv"}
           }
 
           date {
