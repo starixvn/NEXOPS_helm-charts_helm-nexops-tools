@@ -526,7 +526,7 @@ logstashPipeline:
         }
       }
 
-      if "lumi_haproxy_local" in [tags] {
+      if "haproxy_access" in [tags] {
         elasticsearch {
           hosts => "elasticsearch-master:9200"
           user => "logstash"
