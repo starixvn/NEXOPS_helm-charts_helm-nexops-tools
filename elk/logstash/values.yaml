@@ -306,6 +306,33 @@ logstashPipeline:
               drop {}
             }
           }
+          else if "hap-ing" in [tags] {
+
+            grok {
+              match => ["message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}"]
+            }
+
+            grok {
+              match => ["message", "%{HAPROXYDATE:accept_date}"]
+            }
+
+            mutate {
+              remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
+              remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beconn","client_port","haproxy_milliseconds","@version"]
+              remove_field => ["haproxy_minute","haproxy_second","actconn","program","haproxy_year","feconn","http_version"]
+              remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","bytes_read","timestamp8601"]
+              
+              convert => {
+                "http_status_code" => "integer"
+                "time_backend_response" => "integer"
+              }
+
+              rename => {"syslog_server" => "haproxy-ing-pod"}
+            }
+            if [http_status_code] == 200 and  [time_backend_response] < 5000 {
+              drop {}
+            }
+          }
 
         }
     }
