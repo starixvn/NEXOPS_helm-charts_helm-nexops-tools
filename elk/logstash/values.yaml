@@ -520,7 +520,7 @@ logstashPipeline:
         }
       }
 
-      if "nexcel_haproxy_local" in [tags] {
+      if "lumi_haproxy_local" in [tags] {
         elasticsearch {
           hosts => "elasticsearch-master:9200"
           user => "logstash"
