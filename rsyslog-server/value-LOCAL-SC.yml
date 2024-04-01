@@ -149,7 +149,7 @@ spec:
         spec:
           containers:
           - name: cronjob-logrotate
-            image: docker.io/kicm/logrotate
+            image: hub.lumigame.com/base/logrotate:latest
             imagePullPolicy: IfNotPresent
             volumeMounts:
             - name: logrotate-conf
