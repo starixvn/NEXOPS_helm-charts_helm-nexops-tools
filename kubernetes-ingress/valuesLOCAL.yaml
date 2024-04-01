@@ -327,6 +327,7 @@ controller:
       stats show-modules
     forwarded-for: "true"
     dontlognull: "true"
+    syslog-server: address:rsyslog-service.logging, facility:local1
   #   timeout-connect: "250ms"
   #   servers-increment: "10"
   #   servers-increment-max-disabled: "10"
