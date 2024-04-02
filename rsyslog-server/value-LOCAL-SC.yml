@@ -143,11 +143,11 @@ metadata:
   namespace: logging
 spec:
   schedule: "0 19 * * *"
+  timeZone: "Asia/Bangkok"
   jobTemplate:
     spec:
       template:
         spec:
-          timeZone: "Asia/Bangkok"
           containers:
           - name: cronjob-logrotate
             image: hub.lumigame.com/base/logrotate:latest
