@@ -5,8 +5,8 @@ metadata:
   namespace: "logging"
 spec:
   # storageClassName: longhorn-rwx
-  # accessModes:
-  #   - ReadWriteMany
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
