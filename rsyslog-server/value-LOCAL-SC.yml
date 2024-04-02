@@ -147,6 +147,7 @@ spec:
     spec:
       template:
         spec:
+          timeZone: "Asia/Bangkok"
           containers:
           - name: cronjob-logrotate
             image: hub.lumigame.com/base/logrotate:latest
