@@ -373,7 +373,7 @@ runners:
       [[runners.kubernetes.services]]
         environment = ["HEALTHCHECK_TCP_PORT=2376"]
         name = "hub.lumigame.com/base/docker:24-dind-alpine"
-        command = ["--experimental"]
+        command = ["--experimental", "--mtu=1450"]
         alias = "docker"
     [runners.kubernetes.node_selector]
       "node-role.kubernetes.io/runner" = "yes"
