@@ -33,7 +33,7 @@ data:
         storage.backlog.mem_limit 5M
 
     @INCLUDE hap-ing.conf
-    @INCLUDE hap-gw.conf
+    # @INCLUDE hap-gw.conf
 
   hap-ing.conf: |
 
