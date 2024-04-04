@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: fluent-bit-hap-config
+  name: fluent-bit-config
   namespace: logging
 data:
   fluent-bit.conf: |
@@ -95,20 +95,26 @@ spec:
         volumeMounts:
           - name: rsyslog-data
             mountPath: "/logs"
-          - name: fluent-bit-hap-config
+          - name: flbeat-config
             mountPath: /fluent-bit/etc/
         securityContext:
           allowPrivilegeEscalation: false
           runAsUser: 0
+        resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       volumes:
         - name: rsyslog-data
           persistentVolumeClaim:
             claimName: rsyslog-data-pvc
-        - name: fluent-bit-hap-config
+        - name: flbeat-config
           configMap:
-            name: fluent-bit-hap-config
+            name: fluent-bit-config
 ---
 apiVersion: v1
 kind: Service
