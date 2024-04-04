@@ -10,45 +10,56 @@ spec:
   resources:
     requests:
       storage: 10Gi
+---
 
-# ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-hap-config
+  namespace: logging
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush                     5
+        Grace                     30
+        Log_Level                 info
+        Daemon                    off
+        HTTP_Server               On
+        HTTP_Listen               0.0.0.0
+        HTTP_Port                 2023
+        storage.path              /var/fluent-bit/state/flb-storage/
+        storage.sync              normal
+        storage.checksum          off
+        storage.backlog.mem_limit 5M
 
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: filebeat-config
-#   namespace: "logging"
-#   labels:
-#     app: filebeat
-# data:
-#   filebeat.yml: |
-#     filebeat.inputs:
-#     - type: log
-#       paths:
-#         - /logs/haproxy/hap-gw.log
-#       exclude_lines: [".png", ".css", ".gif", ".jpg", ".js", ".ico", ".json", ".mp3", ".ttf"]
-#       tags: ["lumi_haproxy_local", "haproxy_access", "local", "hap-gw"]
-#     - type: log
-#       paths:
-#         - /logs/haproxy/hap-ing.log
-#       exclude_lines: [".png", ".css", ".gif", ".jpg", ".js", ".ico", ".json", ".mp3", ".ttf"]
-#       tags: ["lumi_haproxy_local", "haproxy_access", "local", "hap-ing"]
-#     output:
-#       logstash:
-#         hosts: ["logstash-logstash:5000"]
+    @INCLUDE hap-ing.conf
+    @INCLUDE hap-gw.conf
 
-#     filebeat.config.modules:
-#       # Glob pattern for configuration loading
-#       path: ${path.config}/modules.d/*.yml
-#       # Set to true to enable config reloading
-#       reload.enabled: false
-#     logging:
-#       ### Filebeat log
-#       level: info
+  hap-ing.conf: |
+
+    [INPUT]
+        Name                tail
+        Tag                 hap-ing.*
+        Path                /logs/hap-ing.log
+        Mem_Buf_Limit       50MB
+        Skip_Long_Lines     On
+        Refresh_Interval    10
+        Rotate_Wait         30
+        storage.type        filesystem
+        Read_from_Head      True
+
+    [OUTPUT]
+        Name                cloudwatch_logs
+        Match               hap-ing.*
+        region              ap-northeast-1
+        log_group_name      /aws/uat/haproxy-ing
+
+
+
+
 
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,14 +90,13 @@ spec:
         volumeMounts:
           - name: rsyslog-data
             mountPath: "/logs"
-      # - name: filebeat-sidecar
-      #   image: hub.lumigame.com/base/filebeat:8.8.2 
-      #   volumeMounts:
-      #     - name: rsyslog-data
-      #       mountPath: "/logs"
-      #     - name: filebeat-config
-      #       mountPath: /usr/share/filebeat/filebeat.yml
-      #       subPath: filebeat.yml
+      - name: fluentbit-sidecar
+        image: public.ecr.aws/aws-observability/aws-for-fluent-bit:stable
+        volumeMounts:
+          - name: rsyslog-data
+            mountPath: "/logs"
+          - name: fluent-bit-hap-config
+            mountPath: /fluent-bit/etc/
         securityContext:
           allowPrivilegeEscalation: false
           runAsUser: 0
@@ -96,9 +106,9 @@ spec:
         - name: rsyslog-data
           persistentVolumeClaim:
             claimName: rsyslog-data-pvc
-        # - name: filebeat-config
-        #   configMap:
-        #     name: filebeat-config
+        - name: fluent-bit-hap-config
+          configMap:
+            name: fluent-bit-hap-config
 ---
 apiVersion: v1
 kind: Service
