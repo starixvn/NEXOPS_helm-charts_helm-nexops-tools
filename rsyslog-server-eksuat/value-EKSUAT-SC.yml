@@ -53,6 +53,8 @@ data:
         Match               hap-ing.*
         region              ap-northeast-1
         log_group_name      /aws/uat/haproxy-ing
+        log_stream_prefix   haproxy-ing.
+
 
 
 
