@@ -749,6 +749,8 @@ extraPorts:
     containerPort: 8080
   - name: beats
     containerPort: 5000
+  - name: tcp
+    containerPort: 5044
 
 updateStrategy: RollingUpdate
 
