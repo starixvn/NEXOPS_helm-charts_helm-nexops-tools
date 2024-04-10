@@ -335,6 +335,14 @@ logstashPipeline:
           }
 
         }
+        if [host] =~ /vault/ {
+          json {
+              source => "message"
+            }
+          mutate {
+            add_tag => ["vault-server"]
+          }
+        }
     }
 
 
@@ -578,6 +586,15 @@ logstashPipeline:
             }         
           }
         }
+      }
+
+      else if "vault-server" in [tags] {
+        elasticsearch {
+          hosts => "elasticsearch-master:9200"
+          user => "logstash"
+          password => "logstash"
+          index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
+          }         
       }
       
 
