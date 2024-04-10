@@ -847,6 +847,10 @@ service:
       port: 9600
       protocol: TCP
       targetPort: 9600
+    - name: tcp
+      port: 5044
+      protocol: TCP
+      targetPort: 5044
 
 ingress:
   enabled: false
