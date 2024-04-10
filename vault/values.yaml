@@ -841,6 +841,7 @@ server:
         #telemetry {
         #  unauthenticated_metrics_access = "true"
         #}
+        x_forwarded_for_authorized_addrs = ["10.233.120.123", "10.233.75.178", "10.233.75.191"]
       }
       storage "file" {
         path = "/vault/data"
