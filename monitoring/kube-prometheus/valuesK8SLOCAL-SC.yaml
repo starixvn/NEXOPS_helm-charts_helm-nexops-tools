@@ -609,7 +609,7 @@ prometheus:
   service:
     ## @param prometheus.service.type Kubernetes service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param prometheus.service.ports.http Prometheus service port
     ##
     ports:
@@ -621,10 +621,10 @@ prometheus:
     ## @param prometheus.service.nodePorts.http Specify the nodePort value for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ## e.g:
-    ## nodePort: 30090
+    #nodePort: 30062
     ##
     nodePorts:
-      http: ""
+      http: "30062"
     ## @param prometheus.service.loadBalancerIP `loadBalancerIP` if service type is `LoadBalancer`
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
     ##
@@ -1161,7 +1161,7 @@ prometheus:
   ## @param prometheus.additionalScrapeConfigs.internal.jobList A list of Prometheus scrape jobs
   ##
   additionalScrapeConfigs:
-    enabled: false
+    enabled: true
     type: external
     external:
       ## Name of the secret that Prometheus should use for the additional scrape configuration
@@ -1169,7 +1169,7 @@ prometheus:
       name: "additional-scrape-configs"
       ## Name of the key inside the secret to be used for the additional scrape configuration.
       ##
-      key: "prometheus-additional.yml"
+      key: "prometheus-vault.yml"
     internal:
       jobList: []
   ## @param prometheus.additionalScrapeConfigsExternal.enabled Deprecated: Enable additional scrape configs that are managed externally to this chart
