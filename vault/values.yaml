@@ -858,10 +858,10 @@ server:
       #}
 
       # Example configuration for enabling Prometheus metrics in your config.
-      # telemetry {
-      #   prometheus_retention_time = "30s"
-      #   disable_hostname = true
-      # }
+      telemetry {
+        prometheus_retention_time = "30s"
+        disable_hostname = true
+      }
 
   # Run Vault in "HA" mode. There are no storage requirements unless the audit log
   # persistence is required.  In HA mode Vault will configure itself to use Consul
