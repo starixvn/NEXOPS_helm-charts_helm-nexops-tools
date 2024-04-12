@@ -578,10 +578,12 @@ logstashPipeline:
           #   }  
           # }
           else if "hap-ing" in [tags] {
-            elasticsearch {
-              hosts => "10.70.70.140:31920"
+            opensearch {
+              hosts => ["https://10.70.70.140:31920"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
             }  
           }
