@@ -569,24 +569,24 @@ logstashPipeline:
               index => "%{[@metadata][beat]}-haproxy-gw-local-%{+YYYY.MM.dd}"
             }         
           }
-          else if "hap-ing" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
-              user => "logstash"
-              password => "logstash"
-              index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
-            }  
-          }
           # else if "hap-ing" in [tags] {
-          #   opensearch {
-          #     hosts => ["https://10.70.70.140:31920"]
+          #   elasticsearch {
+          #     hosts => "elasticsearch-master:9200"
           #     user => "logstash"
           #     password => "logstash"
-          #     ssl => true
-          #     ssl_certificate_verification => false
           #     index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
           #   }  
           # }
+          else if "hap-ing" in [tags] {
+            opensearch {
+              hosts => ["https://10.70.70.140:31920"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
+            }  
+          }
           else {
             elasticsearch {
               hosts => "elasticsearch-master:9200"
