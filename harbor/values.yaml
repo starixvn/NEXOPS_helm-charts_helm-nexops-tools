@@ -404,7 +404,7 @@ nginx:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
@@ -440,7 +440,7 @@ portal:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
@@ -482,7 +482,7 @@ core:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
@@ -579,7 +579,7 @@ jobservice:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints:
@@ -634,7 +634,7 @@ registry:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
@@ -757,7 +757,7 @@ trivy:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
@@ -807,7 +807,7 @@ database:
     - key: harbor-node
       value: "yes"
       operator: Equal
-      effect: NoSchedule
+      effect: NoExecute
     affinity: {}
     ## The priority class to run the pod as
     priorityClassName:
@@ -873,7 +873,7 @@ redis:
     - key: harbor-node
       value: "yes"
       operator: Equal
-      effect: NoSchedule
+      effect: NoExecute
     affinity: {}
     ## The priority class to run the pod as
     priorityClassName:
@@ -937,7 +937,7 @@ exporter:
   - key: harbor-node
     value: "yes"
     operator: Equal
-    effect: NoSchedule
+    effect: NoExecute
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
