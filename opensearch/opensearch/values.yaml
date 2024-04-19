@@ -395,7 +395,8 @@ readinessProbe:
 schedulerName: ""
 
 imagePullSecrets: []
-nodeSelector: {}
+nodeSelector:
+  nexops-tools: "yes"
 tolerations: []
 
 # Enabling this will publically expose your OpenSearch instance.
