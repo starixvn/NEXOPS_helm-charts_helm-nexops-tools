@@ -305,6 +305,10 @@ logstashPipeline:
             if [referrer] == "hub.lumigame.com" and [http_status_code] == 401 and [http_verb] == "GET" {
               drop {}
             }
+
+            if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
+              drop {}
+            }
           }
           else if "hap-ing" in [tags] {
 
@@ -673,7 +677,7 @@ podAnnotations: {}
 # additionals labels
 labels: {}
 
-logstashJavaOpts: "-Xmx4g -Xms4g"
+logstashJavaOpts: "-Xmx6g -Xms6g"
 
 resources:
   # requests:
@@ -681,7 +685,7 @@ resources:
   #   memory: "1536Mi"
   limits:
     cpu: "2000m"
-    memory: "4096Mi"
+    memory: "6000Mi"
 
 volumeClaimTemplate:
   accessModes: ["ReadWriteOnce"]
