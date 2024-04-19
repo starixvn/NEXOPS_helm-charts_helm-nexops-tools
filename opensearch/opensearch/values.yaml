@@ -131,9 +131,9 @@ hostAliases: []
 #   - "bar.local"
 
 image:
-  repository: "opensearchproject/opensearch"
+  repository: "hub.lumigame.com/base/opensearchproject/opensearch"
   # override image tag, which is .Chart.AppVersion by default
-  tag: ""
+  tag: "2.13.0"
   pullPolicy: "IfNotPresent"
 
 podAnnotations: {}

@@ -9,9 +9,9 @@ opensearchHosts: "https://opensearch-cluster-lumi.logging.svc.lumi.local:9200"
 replicaCount: 1
 
 image:
-  repository: "opensearchproject/opensearch-dashboards"
+  repository: "hub.lumigame.com/base/opensearchproject/opensearch-dashboards"
   # override image tag, which is .Chart.AppVersion by default
-  tag: ""
+  tag: "2.13.0"
   pullPolicy: "IfNotPresent"
 
 startupProbe:
