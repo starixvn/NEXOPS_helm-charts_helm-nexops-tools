@@ -145,15 +145,11 @@ openSearchAnnotations: {}
 # additionals labels
 labels: {}
 
-opensearchJavaOpts: "-Xmx4000M -Xms4000M"
+opensearchJavaOpts: ""
 
 resources:
-  requests:
-    cpu: "1000m"
-    memory: "100Mi"
   limits:
-    cpu: "3000m"
-    memory: "4000Mi"
+    memory: "4Gi"
 
 initResources: {}
 #  limits:
