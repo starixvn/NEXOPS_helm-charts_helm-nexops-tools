@@ -357,20 +357,24 @@ logstashPipeline:
 
         # CloudTrail AWS LOCAL
         if "awslocal" in [tags] {
-          elasticsearch {
-            hosts => "elasticsearch-master:9200"
+          opensearch {
+            hosts => ["https://opensearch-cluster-lumi:9200"]
             user => "logstash"
             password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
             index => "logstash-cloudtrail-awslocal-%{+YYYY.MM.dd}"
           }
         }
 
         # CloudTrail AWS KBT
         else if "awskbt" in [tags] {
-          elasticsearch {
-            hosts => "elasticsearch-master:9200"
+          opensearch {
+            hosts => ["https://opensearch-cluster-lumi:9200"]
             user => "logstash"
             password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
             index => "logstash-cloudtrail-awskbt-%{+YYYY.MM.dd}"
           }          
         }
@@ -383,53 +387,65 @@ logstashPipeline:
 
           # EKS Control Plane logging
           if "cloud-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-cloud-controller-manager-ekslocal-%{+YYYY.MM.dd}"
             }
           }
           else if "kube-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-kube-controller-manager-ekslocal-%{+YYYY.MM.dd}"
             }
           }
           else if "kube-scheduler" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-kube-scheduler-ekslocal-%{+YYYY.MM.dd}"
             }
           }
 
           # EKS Data Plane logging
           else if "eks-dataplane" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-dataplane-ekslocal-%{+YYYY.MM.dd}"
             } 
           }
 
           else if "eks-containers" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-container-logs-ekslocal-%{+YYYY.MM.dd}"
             }             
           }
           else if "eks-workernode" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-worker-node-logs-ekslocal-%{+YYYY.MM.dd}"
             }             
           }
@@ -439,61 +455,75 @@ logstashPipeline:
         else if "eksuat" in [tags] {
         
           if "cloud-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-cloud-controller-manager-eksuat-%{+YYYY.MM.dd}"
             }
           }
           else if "kube-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-kube-controller-manager-eksuat-%{+YYYY.MM.dd}"
             }
           }
           else if "kube-scheduler" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-kube-scheduler-eksuat-%{+YYYY.MM.dd}"
             }
           }
 
           # EKS Data Plane logging
           else if "eks-dataplane" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-dataplane-eksuat-%{+YYYY.MM.dd}"
             } 
           }
 
           else if "eks-containers" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-container-logs-eksuat-%{+YYYY.MM.dd}"
             }             
           }
           else if "eks-workernode" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-worker-node-logs-eksuat-%{+YYYY.MM.dd}"
             }             
           }
           else {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-unknown-eksuat-%{+YYYY.MM.dd}"
             }             
           }        
@@ -502,61 +532,75 @@ logstashPipeline:
         # Output logs for EKSPROD
         else if "eksprod" in [tags] {
           if "cloud-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-cloud-controller-manager-eksprod-%{+YYYY.MM.dd}"
             }
           }
           else if "kube-controller-manager" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-kube-controller-manager-eksprod-%{+YYYY.MM.dd}"
             }
           }
           else if "kube-scheduler" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-eks-kube-scheduler-eksprod-%{+YYYY.MM.dd}"
             }
           }
 
           # EKS Data Plane logging
           else if "eks-dataplane" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-dataplane-eksprod-%{+YYYY.MM.dd}"
             } 
           }
 
           else if "eks-containers" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-container-logs-eksprod-%{+YYYY.MM.dd}"
             }             
           }
           else if "eks-workernode" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-worker-node-logs-eksprod-%{+YYYY.MM.dd}"
             }             
           }
           else {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "logstash-unknown-eksprod-%{+YYYY.MM.dd}"
             }             
           }          
@@ -566,24 +610,18 @@ logstashPipeline:
       if "haproxy_access" in [tags] {
         if "local" in [tags] {
           if "hap-gw" in [tags] {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "%{[@metadata][beat]}-haproxy-gw-local-%{+YYYY.MM.dd}"
             }         
           }
-          # else if "hap-ing" in [tags] {
-          #   elasticsearch {
-          #     hosts => "elasticsearch-master:9200"
-          #     user => "logstash"
-          #     password => "logstash"
-          #     index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
-          #   }  
-          # }
           else if "hap-ing" in [tags] {
             opensearch {
-              hosts => ["https://10.70.70.140:31920"]
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -592,10 +630,12 @@ logstashPipeline:
             }  
           }
           else {
-            elasticsearch {
-              hosts => "elasticsearch-master:9200"
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
               user => "logstash"
               password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
               index => "%{[@metadata][beat]}-unknown-haproxy-local-%{+YYYY.MM.dd}"
             }         
           }
@@ -603,20 +643,24 @@ logstashPipeline:
       }
 
       else if "vault-server" in [tags] {
-        elasticsearch {
-          hosts => "elasticsearch-master:9200"
+        opensearch {
+          hosts => ["https://opensearch-cluster-lumi:9200"]
           user => "logstash"
           password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
           index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
-          }         
+        }         
       }
       
 
       else {
-        elasticsearch {
-          hosts => "elasticsearch-master:9200"
+        opensearch {
+          hosts => ["https://opensearch-cluster-lumi:9200"]
           user => "logstash"
           password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
           index => "logstash-unknown-%{+YYYY.MM.dd}"
           }        
         }
