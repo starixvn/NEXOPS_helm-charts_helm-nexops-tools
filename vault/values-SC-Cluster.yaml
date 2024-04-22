@@ -22,7 +22,7 @@ injector:
       operator: Equal
       value: linux
   nodeSelector:
-    node-role.kubernetes.io/vault: "yes"
+    vault-workload: "yes"
 
 server:
   # Use the Enterprise Image
@@ -41,7 +41,7 @@ server:
       operator: Equal
       value: linux
   nodeSelector:
-    node-role.kubernetes.io/vault: "yes"
+    vault-workload: "yes"
 
 
   # For HA configuration and because we need to manually init the vault,
@@ -56,18 +56,18 @@ server:
 
   # extraEnvironmentVars is a list of extra environment variables to set with the stateful set. These could be
   # used to include variables required for auto-unseal.
-  extraEnvironmentVars:
-    VAULT_CACERT: /vault/userconfig/tls-ca/ca.crt
+  # extraEnvironmentVars:
+  #   VAULT_CACERT: /vault/userconfig/tls-ca/ca.crt
 
-  # extraVolumes is a list of extra volumes to mount. These will be exposed
-  # to Vault in the path `/vault/userconfig/<name>/`.
-  extraVolumes:
-    - type: secret
-      name: tls-server
-    - type: secret
-      name: tls-ca
-    - type: secret
-      name: kms-creds
+  # # extraVolumes is a list of extra volumes to mount. These will be exposed
+  # # to Vault in the path `/vault/userconfig/<name>/`.
+  # extraVolumes:
+  #   - type: secret
+  #     name: tls-server
+  #   - type: secret
+  #     name: tls-ca
+  #   - type: secret
+  #     name: kms-creds
 
   dataStorage:
     enabled: true
