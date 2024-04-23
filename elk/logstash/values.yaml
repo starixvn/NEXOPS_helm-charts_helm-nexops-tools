@@ -339,7 +339,15 @@ logstashPipeline:
           }
 
         }
-        if [host] =~ /vault/ {
+        if [host] =~ /vault-cluster/ {
+          json {
+              source => "message"
+            }
+          mutate {
+            add_tag => ["vault-cluster-server"]
+          }
+        }
+        else if [host] =~ /vault/ {
           json {
               source => "message"
             }
@@ -653,6 +661,16 @@ logstashPipeline:
         }         
       }
       
+      else if "vault-cluster-server" in [tags] {
+        opensearch {
+          hosts => ["https://opensearch-cluster-lumi:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-vault-cluster-audit-local-%{+YYYY.MM.dd}"
+        }         
+      }
 
       else {
         opensearch {
