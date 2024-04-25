@@ -63,8 +63,14 @@ server:
 
   # extraEnvironmentVars is a list of extra environment variables to set with the stateful set. These could be
   # used to include variables required for auto-unseal.
-  # extraEnvironmentVars:
-  #   VAULT_CACERT: /vault/userconfig/tls-ca/ca.crt
+  extraEnvironmentVars:
+    - envName: AWS_ACCESS_KEY_ID
+      secretName: eks-creds
+      secretKey: AWS_ACCESS_KEY_ID
+    - envName: AWS_SECRET_ACCESS_KEY
+      secretName: eks-creds
+      secretKey: AWS_SECRET_ACCESS_KEY
+    
 
   # # extraVolumes is a list of extra volumes to mount. These will be exposed
   # # to Vault in the path `/vault/userconfig/<name>/`.
@@ -118,6 +124,11 @@ server:
           # tls_cert_file = "/vault/userconfig/tls-server/fullchain.pem"
           # tls_key_file = "/vault/userconfig/tls-server/server.key"
           # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
+        }
+
+        seal "awskms" {
+          region     = "ap-east-1"
+          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
         }
 
         telemetry {
