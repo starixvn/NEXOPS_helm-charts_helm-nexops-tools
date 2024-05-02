@@ -120,7 +120,6 @@ spec:
           - /fluent-bit/bin/fluent-bit
         args:
           - --workdir=/fluent-bit/etc
-          - --config=/fluent-bit/etc/conf/*.conf
         volumeMounts:
           - name: rsyslog-data
             mountPath: "/logs"
