@@ -63,7 +63,7 @@ metadata:
   name: logrotate-config
   namespace: logging
 data:
-  my_logs.conf: |
+  logrotate.conf: |
     /logs/*/*.log {
         size 100M
         missingok
