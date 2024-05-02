@@ -54,7 +54,7 @@ data:
         region              ap-northeast-1
         log_group_name      /aws/uat/haproxy-ing
         log_stream_prefix   haproxy-ing.
-
+        auto_create_group   On
 ---
 
 apiVersion: v1
@@ -110,7 +110,17 @@ spec:
             mountPath: "/logs"
 
       - name: fluentbit-sidecar
-        image: public.ecr.aws/aws-observability/aws-for-fluent-bit:stable
+        image: cr.fluentbit.io/fluent/fluent-bit
+        env:
+          - name: AWS_ACCESS_KEY_ID
+            value: "AKIAQG7QGZI4UIDXBN73"
+          - name: AWS_SECRET_ACCESS_KEY
+            value: "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"
+        command:
+          - /fluent-bit/bin/fluent-bit
+        args:
+          - --workdir=/fluent-bit/etc
+          - --config=/fluent-bit/etc/conf/fluent-bit.conf
         volumeMounts:
           - name: rsyslog-data
             mountPath: "/logs"
