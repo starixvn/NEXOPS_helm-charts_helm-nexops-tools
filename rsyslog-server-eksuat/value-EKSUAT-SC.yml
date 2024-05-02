@@ -55,9 +55,25 @@ data:
         log_group_name      /aws/uat/haproxy-ing
         log_stream_prefix   haproxy-ing.
 
+---
 
-
-
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logrotate-config
+  namespace: logging
+data:
+  my_logs.conf: |
+    /logs/*/*.log {
+        size 100M
+        missingok
+        rotate 2
+        compress
+        dateformat -%Y%m%d_%H%M%S
+        notifempty
+        copytruncate
+        su root root
+    }
 
 
 
@@ -92,6 +108,7 @@ spec:
         volumeMounts:
           - name: rsyslog-data
             mountPath: "/logs"
+
       - name: fluentbit-sidecar
         image: public.ecr.aws/aws-observability/aws-for-fluent-bit:stable
         volumeMounts:
@@ -99,6 +116,20 @@ spec:
             mountPath: "/logs"
           - name: flbeat-config
             mountPath: /fluent-bit/etc/
+
+      - name: logrotate
+        image: skymatic/logrotate:latest
+        env:
+          - name: CRON_SCHEDULE
+            value: "0 * * * *"
+        volumeMounts:
+        - name: logrotate-conf
+          mountPath: /etc/logrotate.conf
+          subPath: logrotate.conf
+          readOnly: true
+        - name: rsyslog-data
+          mountPath: /logs
+
         securityContext:
           allowPrivilegeEscalation: false
           runAsUser: 0
@@ -107,6 +138,7 @@ spec:
               memory: 200Mi
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
+
       volumes:
         - name: rsyslog-data
           persistentVolumeClaim:
@@ -114,6 +146,9 @@ spec:
         - name: flbeat-config
           configMap:
             name: fluent-bit-config
+        - name: logrotate-conf
+          configMap:
+            name: logrotate-config
 ---
 apiVersion: v1
 kind: Service
@@ -130,25 +165,7 @@ spec:
   selector:
     app: "rsyslog"
 
-# ---
 
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: logrotate-config
-#   namespace: logging
-# data:
-#   my_logs.conf: |
-#     /logs/*/*.log {
-#         daily
-#         missingok
-#         rotate 3
-#         compress
-#         dateformat -%Y%m%d_%H%M%S
-#         notifempty
-#         copytruncate
-#         su root root
-#     }
 
 
 # ---
