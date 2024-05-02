@@ -120,12 +120,12 @@ spec:
           - /fluent-bit/bin/fluent-bit
         args:
           - --workdir=/fluent-bit/etc
-          - --config=/fluent-bit/etc/conf/fluent-bit.conf
+          - --config=/fluent-bit/etc/conf/*.conf
         volumeMounts:
           - name: rsyslog-data
             mountPath: "/logs"
           - name: flbeat-config
-            mountPath: /fluent-bit/etc/
+            mountPath: /fluent-bit/etc/conf
 
       - name: logrotate
         image: skymatic/logrotate:latest
