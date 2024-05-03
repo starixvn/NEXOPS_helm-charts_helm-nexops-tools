@@ -260,6 +260,15 @@ logstashPipeline:
             }            
           }
 
+          else if "haproxy_access" in [tags] and "eksuat" in [tags] {
+            json {
+              source => "message"
+            }
+            grok {
+              match => ["log","%{HAPROXYHTTP}","log","%{HAPROXYTCP}"]
+            }  
+          }
+
         }
         if "haproxy_access" in [tags] {
           if "hap-gw" in [tags] {
