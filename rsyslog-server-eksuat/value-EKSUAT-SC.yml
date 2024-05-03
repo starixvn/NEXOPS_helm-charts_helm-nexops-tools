@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: fluent-bit
+  name: fluent-bit-rsyslog
   namespace: logging
 
 
@@ -168,7 +168,7 @@ spec:
         - name: logrotate-conf
           configMap:
             name: logrotate-config
-      serviceAccountName: fluent-bit
+      serviceAccountName: fluent-bit-rsyslog
 ---
 apiVersion: v1
 kind: Service
