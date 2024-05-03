@@ -58,7 +58,7 @@ data:
     [SERVICE]
         Flush                     5
         Grace                     30
-        Log_Level                 debug
+        Log_Level                 info
         Daemon                    off
         HTTP_Server               On
         HTTP_Listen               0.0.0.0
@@ -69,7 +69,7 @@ data:
         storage.backlog.mem_limit 5M
 
     @INCLUDE hap-ing.conf
-    # @INCLUDE hap-gw.conf
+    @INCLUDE hap-gw.conf
 
   hap-ing.conf: |
 
@@ -89,7 +89,29 @@ data:
         Match               hap-ing.*
         region              ap-northeast-1
         log_group_name      /aws/uat/haproxy-ing
-        log_stream_prefix   haproxy-ing.
+        log_stream_prefix   ${HOST_NAME}-ing.
+        auto_create_group   On
+
+
+  hap-gw.conf: |
+
+    [INPUT]
+        Name                tail
+        Tag                 hap-gw.*
+        Path                /logs/haproxy/hap-gw.log
+        Mem_Buf_Limit       50MB
+        Skip_Long_Lines     On
+        Refresh_Interval    10
+        Rotate_Wait         30
+        storage.type        filesystem
+        Read_from_Head      True
+
+    [OUTPUT]
+        Name                cloudwatch_logs
+        Match               hap-gw.*
+        region              ap-northeast-1
+        log_group_name      /aws/uat/haproxy-gw
+        log_stream_prefix   ${HOST_NAME}-gw.
         auto_create_group   On
 ---
 
