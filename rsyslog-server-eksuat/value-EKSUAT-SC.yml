@@ -1,9 +1,9 @@
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: fluent-bit-rsyslog
-  namespace: logging
+# ---
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: fluent-bit-rsyslog
+#   namespace: logging
 
 ---
 
@@ -147,11 +147,6 @@ spec:
 
       - name: fluentbit-sidecar
         image: cr.fluentbit.io/fluent/fluent-bit:3.0.2
-        env:
-          - name: AWS_ACCESS_KEY_ID
-            value: "AKIAQG7QGZI4UIDXBN73"
-          - name: AWS_SECRET_ACCESS_KEY
-            value: "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"
         volumeMounts:
           - name: rsyslog-data
             mountPath: /logs
