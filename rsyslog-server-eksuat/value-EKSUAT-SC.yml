@@ -169,6 +169,18 @@ spec:
 
       - name: fluentbit-sidecar
         image: cr.fluentbit.io/fluent/fluent-bit:3.0.2
+        env:
+            - name: HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: CI_VERSION
+              value: "k8s/1.3.17"
         volumeMounts:
           - name: rsyslog-data
             mountPath: /logs
