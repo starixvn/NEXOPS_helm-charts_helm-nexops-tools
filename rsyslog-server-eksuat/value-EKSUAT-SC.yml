@@ -146,7 +146,7 @@ spec:
             mountPath: "/logs"
 
       - name: fluentbit-sidecar
-        image: public.ecr.aws/aws-observability/aws-for-fluent-bit:stable
+        image: cr.fluentbit.io/fluent/fluent-bit:3.0.2
         env:
           - name: AWS_ACCESS_KEY_ID
             value: "AKIAQG7QGZI4UIDXBN73"
@@ -156,7 +156,12 @@ spec:
           - name: rsyslog-data
             mountPath: /logs
           - name: flbeat-config
-            mountPath: /fluent-bit/etc
+            mountPath: /fluent-bit/etc/conf
+        command:
+          - /fluent-bit/bin/fluent-bit
+        args:
+          - --workdir=/fluent-bit/etc
+          - --config=/fluent-bit/etc/conf/fluent-bit.conf
         resources:
             limits:
               memory: 200Mi
