@@ -1,0 +1,279 @@
+# ---
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: fluent-bit-rsyslog
+#   namespace: logging
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: fluent-bit-rsyslog-role
+rules:
+  - apiGroups: [""]
+    resources:
+      - namespaces
+      - pods
+    verbs: ["get", "list", "watch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: fluent-bit-rsyslog-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: fluent-bit-rsyslog-role
+subjects:
+  - kind: ServiceAccount
+    name: fluent-bit-rsyslog-prod
+    namespace: logging
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: rsyslog-data-pvc
+  namespace: "logging"
+spec:
+  # storageClassName: longhorn-rwx
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: logging
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush                     5
+        Grace                     30
+        Log_Level                 info
+        Daemon                    off
+        HTTP_Server               On
+        HTTP_Listen               0.0.0.0
+        HTTP_Port                 2023
+        storage.path              /var/fluent-bit/state/flb-storage/
+        storage.sync              normal
+        storage.checksum          off
+        storage.backlog.mem_limit 5M
+
+    @INCLUDE hap-ing.conf
+    @INCLUDE hap-gw.conf
+
+  hap-ing.conf: |
+
+    [INPUT]
+        Name                tail
+        Tag                 hap-ing.*
+        Path                /logs/haproxy/hap-ing.log
+        Mem_Buf_Limit       50MB
+        Skip_Long_Lines     On
+        Refresh_Interval    10
+        Rotate_Wait         30
+        storage.type        filesystem
+        Read_from_Head      True
+
+    [OUTPUT]
+        Name                cloudwatch_logs
+        Match               hap-ing.*
+        region              ap-northeast-1
+        log_group_name      /aws/prod/haproxy-ing
+        log_stream_prefix   ${HOST_NAME}-ing.
+        auto_create_group   On
+
+
+  hap-gw.conf: |
+
+    [INPUT]
+        Name                tail
+        Tag                 hap-gw.*
+        Path                /logs/haproxy/hap-gw.log
+        Mem_Buf_Limit       50MB
+        Skip_Long_Lines     On
+        Refresh_Interval    10
+        Rotate_Wait         30
+        storage.type        filesystem
+        Read_from_Head      True
+
+    [OUTPUT]
+        Name                cloudwatch_logs
+        Match               hap-gw.*
+        region              ap-northeast-1
+        log_group_name      /aws/prod/haproxy-gw
+        log_stream_prefix   ${HOST_NAME}-gw.
+        auto_create_group   On
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logrotate-config
+  namespace: logging
+data:
+  logrotate.conf: |
+    /logs/*/*.log {
+        size 100M
+        missingok
+        rotate 2
+        compress
+        dateformat -%Y%m%d_%H%M%S
+        notifempty
+        copytruncate
+        su root root
+    }
+
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsyslog-deployment
+  namespace: logging
+  labels:
+    app: rsyslog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsyslog
+  template:
+    metadata:
+      labels:
+        app: rsyslog
+    spec:
+      nodeSelector:
+        nexops: "yes"
+      containers:
+      - name: rsyslog-server
+        image: hub.lumigame.com/base/rsyslog-server:v1.5
+        ports:
+        - containerPort: 514
+        resources:
+          limits:
+            cpu: 1
+        volumeMounts:
+          - name: rsyslog-data
+            mountPath: "/logs"
+
+      - name: fluentbit-sidecar
+        image: cr.fluentbit.io/fluent/fluent-bit:3.0.2
+        env:
+            - name: HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: CI_VERSION
+              value: "k8s/1.3.17"
+        volumeMounts:
+          - name: rsyslog-data
+            mountPath: /logs
+          - name: flbeat-config
+            mountPath: /fluent-bit/etc/conf
+        command:
+          - /fluent-bit/bin/fluent-bit
+        args:
+          - --workdir=/fluent-bit/etc
+          - --config=/fluent-bit/etc/conf/fluent-bit.conf
+        resources:
+            limits:
+              memory: 200Mi
+
+      - name: logrotate
+        image: skymatic/logrotate:latest
+        env:
+          - name: CRON_SCHEDULE
+            value: "0 * * * *"
+        volumeMounts:
+        - name: logrotate-conf
+          mountPath: /etc/logrotate.conf
+          subPath: logrotate.conf
+          readOnly: true
+        - name: rsyslog-data
+          mountPath: /logs
+        resources:
+            limits:
+              memory: 200Mi
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+
+      volumes:
+        - name: rsyslog-data
+          persistentVolumeClaim:
+            claimName: rsyslog-data-pvc
+        - name: flbeat-config
+          configMap:
+            name: fluent-bit-config
+        - name: logrotate-conf
+          configMap:
+            name: logrotate-config
+      serviceAccountName: fluent-bit-rsyslog-prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "rsyslog-service"
+  namespace: "logging"
+spec:
+  ports:
+    - port: 514
+      targetPort: 514
+      protocol: UDP
+      nodePort: 30161
+  type: NodePort
+  selector:
+    app: "rsyslog"
+
+
+
+
+# ---
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: logrotate-cj
+#   namespace: logging
+# spec:
+#   schedule: "0 19 * * *"
+#   timeZone: "Asia/Bangkok"
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           containers:
+#           - name: cronjob-logrotate
+#             image: hub.lumigame.com/base/logrotate:latest
+#             imagePullPolicy: IfNotPresent
+#             volumeMounts:
+#             - name: logrotate-conf
+#               mountPath: /etc/logrotate.d
+#             - name: app-logs
+#               mountPath: /logs
+#           volumes:
+#           - name: logrotate-conf
+#             configMap:
+#               name: logrotate-config
+#           - name: app-logs
+#             persistentVolumeClaim:
+#               claimName: rsyslog-data-pvc
+#           restartPolicy: OnFailure
+
+
+
+
