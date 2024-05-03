@@ -58,7 +58,7 @@ data:
     [SERVICE]
         Flush                     5
         Grace                     30
-        Log_Level                 info
+        Log_Level                 debug
         Daemon                    off
         HTTP_Server               On
         HTTP_Listen               0.0.0.0
@@ -173,10 +173,6 @@ spec:
           readOnly: true
         - name: rsyslog-data
           mountPath: /logs
-
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 0
         resources:
             limits:
               memory: 200Mi
