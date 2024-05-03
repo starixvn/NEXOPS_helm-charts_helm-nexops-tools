@@ -76,7 +76,7 @@ data:
     [INPUT]
         Name                tail
         Tag                 hap-ing.*
-        Path                /logs/hap-ing.log
+        Path                /logs/haproxy/hap-ing.log
         Mem_Buf_Limit       50MB
         Skip_Long_Lines     On
         Refresh_Interval    10
