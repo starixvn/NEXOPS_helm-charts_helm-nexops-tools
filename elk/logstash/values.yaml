@@ -168,6 +168,18 @@ logstashPipeline:
       } 
 
 
+      # CloudWatch HaProxy Ingress EKS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/uat/haproxy-ing"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-ing", "eksuat", "awskbt", "haproxy_access"]
+      }
+
+
+
       http {
         port => 8080
         add_field => { "[@metadata][input-http]" => "" }
@@ -646,6 +658,18 @@ logstashPipeline:
               ssl_certificate_verification => false
               index => "%{[@metadata][beat]}-unknown-haproxy-local-%{+YYYY.MM.dd}"
             }         
+          }
+        }
+        else if "eksuat" in [tags] {
+          if "hap-ing" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "%{[@metadata][beat]}-haproxy-ing-eksuat-%{+YYYY.MM.dd}"
+            }  
           }
         }
       }
