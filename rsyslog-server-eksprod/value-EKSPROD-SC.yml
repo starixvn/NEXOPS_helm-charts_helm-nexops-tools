@@ -84,20 +84,6 @@ data:
         storage.type        filesystem
         Read_from_Head      True
 
-    [FILTER]
-        Name                grep
-        Match               hap-ing.*
-        Exclude             $http_request .ico
-        Exclude             $http_request .png
-        Exclude             $http_request .mp3
-        Exclude             $http_request .js
-        Exclude             $http_request .css
-        Exclude             $http_request .gif
-        Exclude             $http_request .jpg
-        Exclude             $http_request .json
-        Exclude             $http_request .ttf
-        Exclude             $http_request .svg
-        Exclude             $http_request .xml
 
 
 
@@ -123,21 +109,6 @@ data:
         storage.type        filesystem
         Read_from_Head      True
 
-
-    [FILTER]
-        Name                grep
-        Match               hap-gw.*
-        Exclude             $http_request .ico
-        Exclude             $http_request .png
-        Exclude             $http_request .mp3
-        Exclude             $http_request .js
-        Exclude             $http_request .css
-        Exclude             $http_request .gif
-        Exclude             $http_request .jpg
-        Exclude             $http_request .json
-        Exclude             $http_request .ttf
-        Exclude             $http_request .svg
-        Exclude             $http_request .xml
 
 
     [OUTPUT]
