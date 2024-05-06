@@ -189,6 +189,28 @@ logstashPipeline:
       }
 
 
+      # CloudWatch HaProxy Gateway EKS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/uat/haproxy-gw"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-gw", "eksuat", "awskbt", "haproxy_access"]
+      }
+
+      # CloudWatch HaProxy Gateway EKS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/prod/haproxy-gw"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-gw", "eksprod", "awskbt", "haproxy_access"]
+      }
+
+
+
 
       http {
         port => 8080
@@ -270,7 +292,7 @@ logstashPipeline:
             }            
           }
 
-          else if "haproxy_access" in [tags] and "eksprod" in [tags] {
+          else if "haproxy_access" in [tags] {
             json {
               source => "message"
             }
@@ -368,8 +390,16 @@ logstashPipeline:
               drop {}
             }
           }
+          if [type] == "cloudwatch" {
+            if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf)$/ {
+              drop {}
+            }
+
+          }
 
         }
+
+        
         if [host] =~ /vault-cluster/ {
           json {
               source => "message"
@@ -690,7 +720,63 @@ logstashPipeline:
               index => "logstash-haproxy-ing-eksprod-%{+YYYY.MM.dd}"
             }  
           }
+          else if "hap-gw" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-gw-eksprod-%{+YYYY.MM.dd}"
+            }  
+          }
+
+          else {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "%{[@metadata][beat]}-unknown-haproxy-eksprod-%{+YYYY.MM.dd}"
+            }         
+          }
         }
+
+
+        else if "eksuat" in [tags] {
+          if "hap-ing" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-ing-eksuat-%{+YYYY.MM.dd}"
+            }  
+          }
+          else if "hap-gw" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-gw-eksuat-%{+YYYY.MM.dd}"
+            }  
+          }
+          else {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "%{[@metadata][beat]}-unknown-haproxy-eksuat-%{+YYYY.MM.dd}"
+            }         
+          }
+        }
+
       }
 
       else if "vault-server" in [tags] {
