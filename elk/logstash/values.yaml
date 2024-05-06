@@ -364,6 +364,10 @@ logstashPipeline:
             if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
               drop {}
             }
+
+            if [backend_name] == "grafana_be" {
+              drop {}
+            }
           }
           else if "hap-ing" in [tags] {
 
@@ -393,7 +397,7 @@ logstashPipeline:
             }
           }
           if [type] == "cloudwatch" {
-            if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf)$/ {
+            if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp)$/ {
               drop {}
             }
 
