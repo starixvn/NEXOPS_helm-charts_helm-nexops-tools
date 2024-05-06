@@ -314,7 +314,7 @@ logstashPipeline:
             }
 
             grok {
-              match => {"captured_request_headers" => "%{DATA:referrer}\|%{GREEDYDATA:user-agent}\|(%{GREEDYDATA:XForwardedFor}|%{IP:TrueClientIP})"}
+              match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"}
             }
             mutate {
               remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
@@ -338,9 +338,7 @@ logstashPipeline:
                 source => "TrueClientIP"
             }
 
-            geoip {
-                source => "XForwardedFor"
-            }
+
 
             if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
               drop {}
