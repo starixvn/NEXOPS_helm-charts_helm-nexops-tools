@@ -353,9 +353,9 @@ logstashPipeline:
             }
 
 
-            if [http_status_code] == 200 and  [time_backend_response] < 5000 {
-              drop {}
-            }
+            # if [http_status_code] == 200 and  [time_backend_response] < 5000 {
+            #   drop {}
+            # }
 
             if [referrer] == "hub.lumigame.com" and [http_status_code] == 401 and [http_verb] == "GET" {
               drop {}
