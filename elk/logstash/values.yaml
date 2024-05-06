@@ -338,6 +338,10 @@ logstashPipeline:
                 source => "TrueClientIP"
             }
 
+            geoip {
+                source => "XForwardedFor"
+            }
+
             if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
               drop {}
             }
