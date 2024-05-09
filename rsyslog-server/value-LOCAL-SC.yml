@@ -124,7 +124,7 @@ metadata:
 data:
   my_logs.conf: |
     /logs/*/*.log {
-        daily
+        size 1G
         missingok
         rotate 3
         compress
