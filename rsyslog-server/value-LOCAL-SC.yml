@@ -142,7 +142,7 @@ metadata:
   name: logrotate-cj
   namespace: logging
 spec:
-  schedule: "0 19 * * *"
+  schedule: "0 * * * *"
   timeZone: "Asia/Bangkok"
   jobTemplate:
     spec:
