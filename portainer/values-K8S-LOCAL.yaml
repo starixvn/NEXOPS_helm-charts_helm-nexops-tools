@@ -20,7 +20,7 @@ image:
 imagePullSecrets: []
 
 nodeSelector:
-  nexops-logs: "yes"
+  nexops-tools: "yes"
 
 serviceAccount:
   annotations: {}
