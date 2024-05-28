@@ -46,7 +46,7 @@ commonLabels: {}
 extraDeploy: []
 ## @param clusterDomain Kubernetes cluster domain name
 ##
-clusterDomain: cluster.local
+clusterDomain: starix.nexprod
 
 ## @section Prometheus Operator Parameters
 ##
@@ -1001,10 +1001,10 @@ prometheus:
   scrapeConfigNamespaceSelector: {}
   ## @param prometheus.retention Metrics retention days
   ##
-  retention: 7d
+  retention: 3d
   ## @param prometheus.retentionSize Maximum size of metrics
   ##
-  retentionSize: ""
+  retentionSize: "10GB"
   ## @param prometheus.disableCompaction Disable the compaction of the Prometheus TSDB
   ## See https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
   ## ref: https://prometheus.io/docs/prometheus/latest/storage/#compaction
@@ -1069,7 +1069,7 @@ prometheus:
     ## If undefined (the default) or set to null, no storageClassName spec is
     ## set, choosing the default provisioner.
     ##
-    storageClass: ""
+    storageClass: "longhorn"
     ## @param prometheus.persistence.accessModes Persistent Volume Access Modes
     ##
     accessModes:
