@@ -389,7 +389,7 @@ config:
         Path /var/log/containers/l1-*.log, /var/log/containers/l2-*.log, /var/log/containers/gn-*.log
         multiline.parser docker, cri
         Tag kube.container.*
-        DB /var/fluent-bit/state/flb_container_tail.db
+        DB /var/fluent-bit/state/flb_container.db
         Mem_Buf_Limit 5MB
         Skip_Long_Lines On
         Refresh_Interval 10
