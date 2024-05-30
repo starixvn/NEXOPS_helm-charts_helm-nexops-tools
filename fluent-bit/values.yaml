@@ -429,8 +429,8 @@ config:
         Match kube.*
         Host opensearch-cluster-lumi.logging.svc.lumi.local
         Port 9200
-        HTTP_User nexops
-        HTTP_Passwd "6O^8CfRDXIsQXsrMqE+n"
+        HTTP_User admin
+        HTTP_Passwd Y8cY3sn7hCwSmJLff2U7fkNG
         Logstash_Format On
         Retry_Limit False
         Suppress_Type_Name On
