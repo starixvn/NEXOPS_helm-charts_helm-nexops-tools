@@ -311,7 +311,8 @@ injector:
   # Example:
   # nodeSelector:
   #   beta.kubernetes.io/arch: amd64
-  nodeSelector: {}
+  nodeSelector: 
+    vault-node: "yes"
 
   # Priority class for injector pods
   priorityClassName: ""
@@ -634,7 +635,8 @@ server:
   # Example:
   # nodeSelector:
   #   beta.kubernetes.io/arch: amd64
-  nodeSelector: {}
+  nodeSelector: 
+    vault-node: "yes"
 
   # Enables network policy for server pods
   networkPolicy:
@@ -1149,7 +1151,8 @@ csi:
     # Example:
     # nodeSelector:
     #   beta.kubernetes.io/arch: amd64
-    nodeSelector: {}
+    nodeSelector:
+      vault-node: "yes"
 
     # Affinity Settings
     # This should be either a multi-line string or YAML matching the PodSpec's affinity field.
