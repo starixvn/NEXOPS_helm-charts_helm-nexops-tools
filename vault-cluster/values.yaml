@@ -88,7 +88,8 @@ injector:
     memRequest: "64Mi"
     # ephemeralLimit: "128Mi"
     # ephemeralRequest: "64Mi"
-
+  nodeSelector:
+    vault-workload: "yes"
     # Default template type for secrets when no custom template is specified.
     # Possible values include: "json" and "map".
     template: "map"
@@ -402,7 +403,8 @@ server:
   #   limits:
   #     memory: 256Mi
   #     cpu: 250m
-
+  nodeSelector:
+    vault-workload: "yes"
   # Ingress allows ingress services to be created to allow external access
   # from Kubernetes to access Vault pods.
   # If deployment is on OpenShift, the following block is ignored.
