@@ -39,11 +39,11 @@ server:
   resources:
     limits:
       memory: 4Gi
-  tolerations:
-    - effect: NoSchedule
-      key: cattle.io/os
-      operator: Equal
-      value: linux
+  #tolerations:
+  #  - effect: NoSchedule
+  #    key: cattle.io/os
+  #    operator: Equal
+  #    value: linux
   nodeSelector:
     vault-workload: "yes"
 
