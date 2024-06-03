@@ -311,7 +311,7 @@ injector:
   # Example:
   # nodeSelector:
   #   beta.kubernetes.io/arch: amd64
-  nodeSelector: 
+  nodeSelector:
     vault-node: "yes"
 
   # Priority class for injector pods
@@ -408,7 +408,7 @@ server:
   # If deployment is on OpenShift, the following block is ignored.
   # In order to expose the service, use the route section below
   ingress:
-    enabled: true
+    enabled: false
     labels: {}
       # traffic: external
     annotations: {}
@@ -635,7 +635,7 @@ server:
   # Example:
   # nodeSelector:
   #   beta.kubernetes.io/arch: amd64
-  nodeSelector: 
+  nodeSelector:
     vault-node: "yes"
 
   # Enables network policy for server pods
@@ -838,9 +838,10 @@ server:
         address = "[::]:8200"
         cluster_address = "[::]:8201"
         # Enable unauthenticated metrics access (necessary for Prometheus Operator)
-        #telemetry {
-        #  unauthenticated_metrics_access = "true"
-        #}
+        telemetry {
+          unauthenticated_metrics_access = "true"
+        }
+        x_forwarded_for_authorized_addrs = ["10.233.75.178", "10.233.120.123", "10.233.75.191"]
       }
       storage "file" {
         path = "/vault/data"
@@ -857,10 +858,10 @@ server:
       #}
 
       # Example configuration for enabling Prometheus metrics in your config.
-      #telemetry {
-      #  prometheus_retention_time = "30s"
-      #  disable_hostname = true
-      #}
+      telemetry {
+        prometheus_retention_time = "24h",
+        disable_hostname = true
+      }
 
   # Run Vault in "HA" mode. There are no storage requirements unless the audit log
   # persistence is required.  In HA mode Vault will configure itself to use Consul
