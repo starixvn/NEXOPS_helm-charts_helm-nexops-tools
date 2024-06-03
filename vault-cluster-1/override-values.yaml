@@ -20,11 +20,11 @@ injector:
       limits:
         memory: 256Mi
         cpu: 250m
-  tolerations:
-    - effect: NoSchedule
-      key: cattle.io/os
-      operator: Equal
-      value: linux
+  #tolerations:
+  #  - effect: NoSchedule
+  #    key: cattle.io/os
+  #    operator: Equal
+  #    value: linux
   nodeSelector:
     nexops-tools: "yes"
 
@@ -105,7 +105,7 @@ server:
   # Run Vault in "HA" mode.
   ha:
     enabled: true
-    replicas: 3
+    replicas: 1
     raft:
       enabled: true
       setNodeId: true
