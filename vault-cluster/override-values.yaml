@@ -63,13 +63,13 @@ server:
 
   # extraEnvironmentVars is a list of extra environment variables to set with the stateful set. These could be
   # used to include variables required for auto-unseal.
-  extraSecretEnvironmentVars:
-    - envName: AWS_ACCESS_KEY_ID
-      secretName: eks-creds
-      secretKey: AWS_ACCESS_KEY_ID
-    - envName: AWS_SECRET_ACCESS_KEY
-      secretName: eks-creds
-      secretKey: AWS_SECRET_ACCESS_KEY
+  #extraSecretEnvironmentVars:
+  #  - envName: AWS_ACCESS_KEY_ID
+  #    secretName: eks-creds
+  #    secretKey: AWS_ACCESS_KEY_ID
+  #  - envName: AWS_SECRET_ACCESS_KEY
+  #    secretName: eks-creds
+  #    secretKey: AWS_SECRET_ACCESS_KEY
     
 
   # # extraVolumes is a list of extra volumes to mount. These will be exposed
@@ -126,10 +126,10 @@ server:
           # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
         }
 
-        seal "awskms" {
-          region     = "ap-east-1"
-          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
-        }
+        #seal "awskms" {
+        #  region     = "ap-east-1"
+        #  kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
+        #}
 
         telemetry {
           prometheus_retention_time = "24h",
