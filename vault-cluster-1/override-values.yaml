@@ -104,7 +104,7 @@ server:
 
   # Run Vault in "HA" mode.
   ha:
-    enabled: true
+    enabled: false
     replicas: 1
     raft:
       enabled: true
@@ -126,10 +126,10 @@ server:
           # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
         }
 
-        seal "awskms" {
-          region     = "ap-east-1"
-          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
-        }
+        #seal "awskms" {
+        #  region     = "ap-east-1"
+        #  kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
+        #}
 
         telemetry {
           prometheus_retention_time = "24h",
