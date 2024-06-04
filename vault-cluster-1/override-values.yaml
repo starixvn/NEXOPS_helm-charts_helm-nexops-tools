@@ -39,9 +39,9 @@ server:
     enabled: true
     ingressClassName: "haproxy"
     hosts:
-      - host: "portainer-k3s.nexdev.net"
+      - host: "vault-k3s.nexdev.net"
         paths:
-      - path: "/"
+        - path: "/"
           pathType: "Prefix"
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
