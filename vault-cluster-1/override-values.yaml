@@ -38,11 +38,10 @@ ui:
   ingress:
     enabled: "true"
     ingressClassName: "haproxy"
-    hosts:
-      - host: "vault-k3s.nexdev.net"
-        paths:
-        - path: "/"
-          pathType: "Prefix"
+    hosts: "vault-k3s.nexdev.net"
+        #paths:
+        #- path: "/"
+        #  pathType: "Prefix"
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
   # These Resource Limits are in line with node requirements in the
