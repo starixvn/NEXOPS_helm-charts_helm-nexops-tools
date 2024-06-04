@@ -33,7 +33,12 @@ server:
   image:
     repository: "hashicorp/vault"
     tag: "1.15.2"
-
+  ingress:
+    enabled: true
+    ingressClassName: "haproxy"
+    host: "vault-k3s.nexdev.net"
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
   # These Resource Limits are in line with node requirements in the
   # Vault Reference Architecture for a Small Cluster
   resources:
@@ -147,6 +152,7 @@ server:
           }
 
         }
+
 
 # Vault UI
 #ui:
