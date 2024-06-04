@@ -33,10 +33,9 @@ server:
   image:
     repository: "hashicorp/vault"
     tag: "1.15.2"
-  service:
-    type: ClusterIP
+  serviceType: ClusterIP
   ingress:
-    enabled: true
+    enabled: "true"
     ingressClassName: "haproxy"
     hosts:
       - host: "vault-k3s.nexdev.net"
