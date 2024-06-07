@@ -39,8 +39,8 @@ ui:
     enabled: "true"
     ingressClassName: "haproxy"
     hosts: 
-      - host: vault-k3s.nexdev.net
-      paths:
+      - host: "vault-k3s.nexdev.net"
+        paths:
         - path: "/"
           pathType: "Prefix"
     annotations:
