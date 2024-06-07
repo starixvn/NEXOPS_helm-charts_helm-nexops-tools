@@ -47,7 +47,12 @@ server:
   nodeSelector:
     vault-workload: "yes"
 
-
+  ingress:
+    enabled: true
+    ingressClassName: "haproxy"
+    host: "vault-k3s.nexdev.net"
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
   # For HA configuration and because we need to manually init the vault,
   # we need to define custom readiness/liveness Probe settings
   readinessProbe:
@@ -126,6 +131,11 @@ server:
           # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
         }
 
+        #seal "awskms" {
+        #  region     = "ap-east-1"
+        #  kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
+        #}
+
         telemetry {
           prometheus_retention_time = "24h",
           disable_hostname = true
@@ -163,13 +173,8 @@ ui:
   ingress:
     enabled: true
     ingressClassName: "haproxy"
-    hosts:
-      - host: "vault-k3s.nexdev.net"
-        paths:
-        - path: "/"
-          pathType: "Prefix"
-    annotations:
-      ingress.kubernetes.io/ssl-redirect: "true"
+    hosts: "vault-k3s.nexdev.net"
+        
   # For Added Security, edit the below
   #loadBalancerSourceRanges:
   #   - < Your IP RANGE Ex. 10.0.0.0/16 >
