@@ -47,6 +47,12 @@ server:
   nodeSelector:
     vault-workload: "yes"
 
+  ingress:
+    enabled: true
+    ingressClassName: "haproxy"
+    host: "vault-k3s.nexdev.net"
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
   # For HA configuration and because we need to manually init the vault,
   # we need to define custom readiness/liveness Probe settings
   readinessProbe:
@@ -164,6 +170,8 @@ ui:
   #serviceType: "NodePort"
   #serviceNodePort: 30999
   #externalPort: 8200
+  service:
+    type: ClusterIP
   ingress:
     enabled: true
     ingressClassName: "haproxy"
