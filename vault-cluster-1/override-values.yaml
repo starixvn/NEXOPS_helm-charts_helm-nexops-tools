@@ -109,8 +109,8 @@ server:
 
   # Run Vault in "HA" mode.
   ha:
-    enabled: false
-    replicas: 1
+    enabled: true
+    replicas: 2
     raft:
       enabled: true
       setNodeId: true
@@ -173,8 +173,8 @@ ui:
   ingress:
     enabled: true
     ingressClassName: "haproxy"
-    hosts: "vault-k3s.nexdev.net"
-        
+    hosts: 
+      - host: vault-k3s.nexdev.net
   # For Added Security, edit the below
   #loadBalancerSourceRanges:
   #   - < Your IP RANGE Ex. 10.0.0.0/16 >

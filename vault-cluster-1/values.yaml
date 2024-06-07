@@ -430,7 +430,7 @@ server:
     # configure the ingress to point to the Vault active service.
     activeService: true
     hosts:
-      - host: chart-example.local
+      - host: vault-k3s.nexdev.net
         paths: []
     ## Extra paths to prepend to the host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -462,7 +462,7 @@ server:
 
     labels: {}
     annotations: {}
-    host: chart-example.local
+    host: vault-k3s.nexdev.net
     # tls will be passed directly to the route's TLS config, which
     # can be used to configure other termination methods that terminate
     # TLS at the router
