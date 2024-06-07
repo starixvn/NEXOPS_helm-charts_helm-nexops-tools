@@ -39,9 +39,9 @@ ui:
     enabled: "true"
     ingressClassName: "haproxy"
     hosts: "vault-k3s.nexdev.net"
-        #paths:
-        #- path: "/"
-        #  pathType: "Prefix"
+      paths:
+        - path: "/"
+          pathType: "Prefix"
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
   # These Resource Limits are in line with node requirements in the
@@ -70,6 +70,13 @@ ui:
 
   updateStrategyType: "RollingUpdate"
 
+  extraSecretEnvironmentVars:
+    - envName: AWS_ACCESS_KEY_ID
+      secretName: eks-creds
+      secretKey: AWS_ACCESS_KEY_ID
+    - envName: AWS_SECRET_ACCESS_KEY
+      secretName: eks-creds
+      secretKey: AWS_SECRET_ACCESS_KEY
 
   # extraEnvironmentVars is a list of extra environment variables to set with the stateful set. These could be
   # used to include variables required for auto-unseal.
@@ -130,6 +137,11 @@ ui:
           # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
         }
 
+        seal "awskms" {
+          region     = "ap-east-1"
+          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
+        }
+
         telemetry {
           prometheus_retention_time = "24h",
           disable_hostname = true
@@ -157,7 +169,6 @@ ui:
           }
 
         }
-
 
 # Vault UI
 #ui:
