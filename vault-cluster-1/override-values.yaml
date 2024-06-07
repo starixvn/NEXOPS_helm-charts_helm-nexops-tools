@@ -166,7 +166,7 @@ server:
 
 # Vault UI
 ui:
-  #enabled: true
+  enabled: true
   #serviceType: "NodePort"
   #serviceNodePort: 30999
   #externalPort: 8200
