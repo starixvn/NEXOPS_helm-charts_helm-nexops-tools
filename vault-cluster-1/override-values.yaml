@@ -110,7 +110,7 @@ server:
   # Run Vault in "HA" mode.
   ha:
     enabled: false
-    replicas: 3
+    replicas: 1
     raft:
       enabled: true
       setNodeId: true
