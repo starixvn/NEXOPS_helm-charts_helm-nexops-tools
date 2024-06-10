@@ -143,19 +143,19 @@ server:
         storage "raft" {
           path = "/vault/data"
             retry_join {
-            leader_api_addr = "http://vault-nexprod-0.vault-cluster-internal:8200"
+            leader_api_addr = "http://vault-nexprod-0.vault-nexprod-internal:8200"
             # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
             # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
             # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
           retry_join {
-            leader_api_addr = "http://vault-nexprod-1.vault-cluster-internal:8200"
+            leader_api_addr = "http://vault-nexprod-1.vault-nexprod-internal:8200"
             # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
             # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
             # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
           retry_join {
-            leader_api_addr = "http://vault-nexprod-2.vault-cluster-internal:8200"
+            leader_api_addr = "http://vault-nexprod-2.vault-nexprod-internal:8200"
             # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
             # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
             # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
