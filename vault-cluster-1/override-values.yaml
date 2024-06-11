@@ -49,8 +49,9 @@ server:
 
   ingress:
     enabled: true
+    activeService: false
     ingressClassName: "haproxy"
-    host: "vault-k3s.nexdev.net"
+    host: "vault.nexdev.net"
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
   # For HA configuration and because we need to manually init the vault,
@@ -177,7 +178,7 @@ ui:
     enabled: true
     ingressClassName: "haproxy"
     hosts:
-      - host: vault-k3s.nexdev.net
+      - host: vault.nexdev.net
   # For Added Security, edit the below
   #loadBalancerSourceRanges:
   #   - < Your IP RANGE Ex. 10.0.0.0/16 >
