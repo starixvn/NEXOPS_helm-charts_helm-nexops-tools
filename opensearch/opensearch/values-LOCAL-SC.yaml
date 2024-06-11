@@ -19,7 +19,7 @@ roles:
   - data
   - remote_cluster_client
 
-replicas: 1
+replicas: 3
 
 # if not set, falls back to parsing .Values.imageTag, then .Chart.appVersion.
 majorVersion: ""
