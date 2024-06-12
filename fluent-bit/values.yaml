@@ -422,6 +422,15 @@ config:
         Use_Tag_For_Meta On
         Buffer_Size 0
 
+    [FILTER]
+        Name                grep
+        Match               kube.*
+        Exclude             $log \\\"GET\ /\ HTTP/1\.1\\\"\ 200\ 612\ \\\"-\\\"
+        Exclude             $log \\\"GET\ /\ HTTP/1\.1\\\"\ 200\ 58\ \\\"-\\\"
+        Exclude             $log \\\"GET\ /\ HTTP/1\.0\\\"\ 200\ 45\ \\\"-\\\"
+        Exclude             $log \\\"GET\ /\ HTTP/1\.0\\\"\ 200\ 3050\ \\\"-\\\"
+        Exclude             $log \\\"GET\ /\ HTTP/1\.0\\\"\ 200\ 331\ \\\"-\\\"
+
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
