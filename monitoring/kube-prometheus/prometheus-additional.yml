@@ -1,14 +1,29 @@
-- job_name: resource-usage-prod
-  scrape_interval: 5s
-  metrics_path: /metrics
+# - job_name: resource-usage-prod
+#   scrape_interval: 5s
+#   metrics_path: /metrics
+#   scheme: http
+#   static_configs:
+#     - targets: ['10.88.55.100:9100', '10.88.56.100:9100', '10.88.55.108:9100', '10.88.55.107:9100']
+#       labels:
+#         type: resource
+#         env: prod
+#   relabel_configs:
+#     - source_labels: [__address__]
+#       regex: (.*):(9100)
+#       target_label: instance
+#       replacement: '${1}'
+- job_name: vault-cluster
+  metrics_path: /v1/sys/metrics
+  params:
+    format: ['prometheus']
   scheme: http
   static_configs:
-    - targets: ['10.88.55.100:9100', '10.88.56.100:9100', '10.88.55.108:9100', '10.88.55.107:9100']
+  - targets: ['vault-cluster.vault:8200']
+
+- job_name: l1-streaming-server-local-service
+  scrape_interval: 5s
+  static_configs:
+    - targets: ['l1-streaming-server-local-service.l1:5000']
       labels:
-        type: resource
-        env: prod
-  relabel_configs:
-    - source_labels: [__address__]
-      regex: (.*):(9100)
-      target_label: instance
-      replacement: '${1}'
+        env: local
+

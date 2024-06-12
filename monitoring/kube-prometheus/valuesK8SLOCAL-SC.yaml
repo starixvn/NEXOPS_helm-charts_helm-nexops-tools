@@ -1169,7 +1169,7 @@ prometheus:
       name: "additional-scrape-configs"
       ## Name of the key inside the secret to be used for the additional scrape configuration.
       ##
-      key: "prometheus-vault.yml"
+      key: "prometheus-additional.yml"
     internal:
       jobList: []
   ## @param prometheus.additionalScrapeConfigsExternal.enabled Deprecated: Enable additional scrape configs that are managed externally to this chart
