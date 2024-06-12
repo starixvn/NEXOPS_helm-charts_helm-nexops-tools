@@ -412,7 +412,7 @@ config:
         tls.verify Off
         Merge_Log On
         Merge_Log_Key exts
-        Keep_Log Off
+        Keep_Log On
         K8S-Logging.Parser On
         K8S-Logging.Exclude On
         Labels On
