@@ -425,10 +425,9 @@ config:
     [FILTER]
         Name                grep
         Match               kube.*
-        Exclude             $log \"GET / HTTP/1.0\" 200
-        Exclude             $log \"GET / HTTP/1.1\" 200
+        Exclude             $log \"GET / HTTP/1.[01]\" 200
         Exclude             $log \"statusCode\":200
-        Exclude             $log \"GET /docs HTTP/1.1\" 200 OK
+        Exclude             $log \"GET /docs HTTP/1.[01]\" 200 OK
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
