@@ -427,7 +427,7 @@ config:
         Match               kube.*
         Exclude             $log \"GET / HTTP/1.0\" 200
         Exclude             $log \"GET / HTTP/1.1\" 200
-        Exclude             $exts.res.statusCode 200
+        Exclude             $log \"statusCode\":200
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
