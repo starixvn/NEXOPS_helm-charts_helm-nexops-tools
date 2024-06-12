@@ -426,6 +426,7 @@ config:
         Name                grep
         Match               kube.*
         Exclude             $log \\\"GET\ /\ HTTP/1\.1\\\"\ 200\ 
+        Exclude             $log \\\"GET\ /\ HTTP/1\.0\\\"\ 200\ 
         Exclude             $log \\\"GET\ /\ HTTP/1\.0\\\"\ 200\ 612\ \\\"-\\\"
         Exclude             $log \\\"GET\ /\ HTTP/1\.1\\\"\ 200\ 58\ \\\"-\\\"
         Exclude             $log \\\"GET\ /\ HTTP/1\.0\\\"\ 200\ 45\ \\\"-\\\"
