@@ -423,6 +423,12 @@ config:
         Buffer_Size 0
 
     [FILTER]
+        Name                lua
+        Match               kube.*
+        code                function strip_ansi_color_code(tag, timestamp, record) if type(record["log"]) == "string" then record["log"] = record["log"]:gsub('[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]', '') return 2, 0, record end return 0, 0, 0 end
+        call                strip_ansi_color_code
+
+    [FILTER]
         Name                grep
         Match               kube.*
         Exclude             $log \"GET / HTTP/1.[01]\" 200
