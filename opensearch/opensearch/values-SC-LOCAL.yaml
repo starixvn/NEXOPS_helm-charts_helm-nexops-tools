@@ -105,8 +105,8 @@ config:
 extraEnvs: 
   - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
     value: Y8cY3sn7hCwSmJLff2U7fkNG
-  # - name: DISABLE_INSTALL_DEMO_CONFIG
-  #   value: "true"
+  - name: DISABLE_INSTALL_DEMO_CONFIG
+    value: "true"
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 # Chart version 2.18.0 and App Version OpenSearch 2.12.0 onwards a custom strong password needs to be provided in order to setup demo admin user.
