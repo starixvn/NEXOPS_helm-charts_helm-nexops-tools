@@ -15,6 +15,7 @@ logstashPipeline:
       }
       tcp {
         port => 5044
+        add_tag => ["tcp"]
       }
 
     }
@@ -24,23 +25,32 @@ logstashPipeline:
 
   vault_filter.conf: |
     filter {
-      if [host] =~ /vault-cluster/ {
-        json {
-            source => "message"
-          }
-        mutate {
-          add_tag => ["vault-cluster-server"]
-        }
+      json {
+        source => "message"
       }
-      else if [host] =~ /vault/ {
-        json {
-            source => "message"
-          }
-        mutate {
-          add_tag => ["vault-server"]
-        }
-      }
+      mutate {
+        add_tag => ["vault-cluster-server"]
     }
+
+  # vault_filter.conf: |
+  #   filter {
+  #     if [host] =~ /vault-cluster/ {
+  #       json {
+  #           source => "message"
+  #         }
+  #       mutate {
+  #         add_tag => ["vault-cluster-server"]
+  #       }
+  #     }
+  #     else if [host] =~ /vault/ {
+  #       json {
+  #           source => "message"
+  #         }
+  #       mutate {
+  #         add_tag => ["vault-server"]
+  #       }
+  #     }
+  #   }
 
 
   main_output.conf: |
