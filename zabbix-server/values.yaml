@@ -88,6 +88,8 @@ zabbixServer:
     # -- List of dockerconfig secrets names to use when pulling images
     pullSecrets: []
   # -- Automatically clean orphaned ha nodes from ha_nodes db table
+  nodeSelector:
+    zabbix: "yes"
   haNodesAutoClean:
     enabled: true
     image:
@@ -212,8 +214,6 @@ zabbixServer:
   readinessProbe: {}
   # -- The kubelet uses startup probes to know when a container application has started.  Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   startupProbe: {}
-  nodeSelector:
-    zabbix: "yes"
 
 # **PostgreSQL** configurations
 postgresql:
@@ -541,7 +541,7 @@ zabbixWeb:
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. 
     #More details: https://kubernetes.io/docs/concepts/services-networking/service/
-    type: NodePort #ClusterIP
+    type: ClusterIP #NodePort
     # -- clusterIP is the IP address of the service and is usually assigned randomly. 
     #If an address is specified manually, is in-range (as per system configuration), and is not in use, it will be allocated to the service.
     clusterIP:
@@ -627,8 +627,8 @@ zabbixWeb:
     successThreshold: 1
   # -- The kubelet uses startup probes to know when a container application has started.  Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   startupProbe: {}
-  nodeSelector:
-    zabbix: "yes"
+  #nodeSelector:
+  #  zabbix: "yes"
 
 # **Zabbix Web Service** configurations
 zabbixWebService:
@@ -808,14 +808,14 @@ zabbixJavaGateway:
 # Ingress configurations
 ingress:
   # -- Enables Ingress
-  enabled: false
+  enabled: true
   # -- Ingress annotations
   annotations: {}
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   # -- Ingress hosts
   hosts:
-    - host: chart-example.local
+    - host: zabbix-k3s.nexdev.net
       paths:
         - path: /
           pathType: ImplementationSpecific
