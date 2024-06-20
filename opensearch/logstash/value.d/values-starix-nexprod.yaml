@@ -19,38 +19,19 @@ logstashPipeline:
 
     }
 
-  # vault_input.conf: |
-  #   input {}
-
   vault_filter.conf: |
     filter {
-      json {
-        source => "message"
-      }
-      mutate {
-        add_tag => ["vault-cluster-server"]
-      }
-    }
 
-  # vault_filter.conf: |
-  #   filter {
-  #     if [host] =~ /vault-cluster/ {
-  #       json {
-  #           source => "message"
-  #         }
-  #       mutate {
-  #         add_tag => ["vault-cluster-server"]
-  #       }
-  #     }
-  #     else if [host] =~ /vault/ {
-  #       json {
-  #           source => "message"
-  #         }
-  #       mutate {
-  #         add_tag => ["vault-server"]
-  #       }
-  #     }
-  #   }
+      if [@metadata][input][tcp][source] =~ /vault/ {
+        json {
+          source => "message"
+        }
+        mutate {
+          add_tag => ["vault-server"]
+        }
+      }
+      
+    }
 
 
   main_output.conf: |
@@ -64,17 +45,6 @@ logstashPipeline:
           ssl => true
           ssl_certificate_verification => false
           index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
-        }         
-      }
-      
-      else if "vault-cluster-server" in [tags] {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-vault-cluster-audit-local-%{+YYYY.MM.dd}"
         }         
       }
 
