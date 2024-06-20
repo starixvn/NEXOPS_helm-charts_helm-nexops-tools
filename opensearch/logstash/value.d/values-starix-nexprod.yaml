@@ -22,6 +22,14 @@ logstashPipeline:
 
   vault_filter.conf: |
     filter {
+      if [@metadata][input][tcp][source] and ![host] {
+        mutate {
+          copy => {
+            "[@metadata][input][tcp][source][name]" => "[host][name]"
+            "[@metadata][input][tcp][source][ip]"   => "[host][ip]"
+          }
+        }
+      }
 
       if [@metadata][input][tcp][source] =~ /vault/ {
         json {
