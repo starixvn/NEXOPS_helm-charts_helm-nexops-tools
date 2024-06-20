@@ -20,7 +20,7 @@ global:
 #See more info in [Zabbix Life Cycle & Release Policy](https://www.zabbix.com/life_cycle_and_release_policy) page
 #When you want use a non-LTS version (example: 6.4.x), you have to set this yourself. You can change version
 #here or overwrite in each component (example: zabbixserver.image.tag, etc).
-zabbixImageTag: ubuntu-7.0.0
+zabbixImageTag: ubuntu-7.0-latest
 
 # **Zabbix Postgresql access / credentials** configurations
 # with this dict, you can set unified PostgreSQL access credentials, IP and so on for both Zabbix Server and Zabbix web frontend
@@ -190,7 +190,7 @@ zabbixServer:
   containerLabels: {}
   # -- Additional volumeMounts to the Zabbix Server container
   extraVolumeMounts:
-    - name: custom-script
+    - name: custom-scripts
       mountPath: /usr/lib/zabbix/
   # -- Additional containers to start within the Zabbix Server pod
   extraContainers: []
@@ -198,9 +198,9 @@ zabbixServer:
   extraInitContainers: []
   # -- Additional volumes to make available to the Zabbix Server pod
   extraVolumes:
-    - name: custom-script
+    - name: custom-scripts
       hostPath:
-        path: /var/www/zabbix_script/
+        path: /var/www/zabbix/custom-scripts/
         type: Directory
   # -- Additional specifications to the Zabbix Server pod
   extraPodSpecs: {}
@@ -212,6 +212,8 @@ zabbixServer:
   readinessProbe: {}
   # -- The kubelet uses startup probes to know when a container application has started.  Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   startupProbe: {}
+  nodeSelector:
+    zabbix: "yes"
 
 # **PostgreSQL** configurations
 postgresql:
@@ -239,7 +241,7 @@ postgresql:
     # -- Kubernetes uses volume access modes to match PersistentVolumeClaims and PersistentVolumes. See: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
     claim_access_mode: ReadWriteOnce
     # -- Storage PVC storageclass to use
-    storageClass: local-storage
+    storageClass: longhorn #local-storage
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
     # More details: https://kubernetes.io/docs/concepts/services-networking/service/
@@ -625,6 +627,8 @@ zabbixWeb:
     successThreshold: 1
   # -- The kubelet uses startup probes to know when a container application has started.  Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   startupProbe: {}
+  nodeSelector:
+    zabbix: "yes"
 
 # **Zabbix Web Service** configurations
 zabbixWebService:
@@ -856,7 +860,9 @@ route:
   annotations: {}
 
 # -- nodeSelector configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-nodeSelector: {}
+#nodeSelector: {}
+nodeSelector:
+  zabbix: "yes"
 
 # -- Tolerations configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
