@@ -15,7 +15,6 @@ logstashPipeline:
       }
       tcp {
         port => 5044
-        ecs_compatibility => "v8"
       }
 
     }
