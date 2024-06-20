@@ -860,9 +860,9 @@ route:
   annotations: {}
 
 # -- nodeSelector configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-#nodeSelector: {}
-nodeSelector:
-  zabbix: "yes"
+nodeSelector: {}
+#nodeSelector:
+#  zabbix: "yes"
 
 # -- Tolerations configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
