@@ -15,6 +15,7 @@ logstashPipeline:
       }
       tcp {
         port => 5044
+        ecs_compatibility => "v8"
       }
 
     }
@@ -23,6 +24,14 @@ logstashPipeline:
     filter {
 
       if [@metadata][input][tcp][source] =~ /vault/ {
+        json {
+          source => "message"
+        }
+        mutate {
+          add_tag => ["vault-server"]
+        }
+      }
+      else if [host] =~ /vault/ {
         json {
           source => "message"
         }
