@@ -191,19 +191,19 @@ zabbixServer:
   # -- Labels to add to the containers
   containerLabels: {}
   # -- Additional volumeMounts to the Zabbix Server container
-  extraVolumeMounts:
-    - name: custom-scripts
-      mountPath: /usr/lib/zabbix/
+  extraVolumeMounts: []
+    #- name: custom-scripts
+    #  mountPath: /usr/lib/zabbix/
   # -- Additional containers to start within the Zabbix Server pod
   extraContainers: []
   # -- Additional init containers to start within the Zabbix Server pod
   extraInitContainers: []
   # -- Additional volumes to make available to the Zabbix Server pod
-  extraVolumes:
-    - name: custom-scripts
-      hostPath:
-        path: /var/www/zabbix/custom-scripts/
-        type: Directory
+  extraVolumes: []
+    #- name: custom-scripts
+    #  hostPath:
+    #    path: /var/www/zabbix/custom-scripts/
+    #    type: Directory
   # -- Additional specifications to the Zabbix Server pod
   extraPodSpecs: {}
   # -- Security Context configurations. Reference: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
