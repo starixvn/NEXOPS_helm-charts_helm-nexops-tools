@@ -80,9 +80,9 @@ zabbixServer:
   resources: {}
   image:
     # -- Zabbix Server Docker image name
-    repository: hub.nexdev.net/base/zabbix/zabbix-server-pgsql-1 #zabbix/zabbix-server-pgsql
+    repository: hub.nexdev.net/base/zabbix/zabbix-server-pgsql #zabbix/zabbix-server-pgsql
     # -- Zabbix Server Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0-latest #null
+    tag: ubuntu-7.0.0-latest #null
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
