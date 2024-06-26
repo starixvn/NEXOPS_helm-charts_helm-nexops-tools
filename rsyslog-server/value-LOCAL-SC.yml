@@ -129,8 +129,6 @@ data:
         rotate 3
         compress
         dateformat -%Y%m%d_%H%M%S
-        notifempty
-        copytruncate
         su root root
     }
 
