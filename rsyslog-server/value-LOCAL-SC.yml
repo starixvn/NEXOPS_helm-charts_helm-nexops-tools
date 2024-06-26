@@ -128,6 +128,7 @@ data:
         missingok
         rotate 3
         compress
+        copytruncate
         dateformat -%Y%m%d_%H%M%S
         su root root
     }
