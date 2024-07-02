@@ -1,5 +1,5 @@
 image:
-  repository: verdaccio/verdaccio
+  repository: hub.nexdev.net/base/nexops-tools/verdaccio:5.24.1 #verdaccio/verdaccio
   # tag: 5.21.1
   pullPolicy: IfNotPresent
   pullSecrets: []
@@ -75,15 +75,15 @@ resources: {}
   #   memory: 512Mi
 
 ingress:
-  enabled: false
-  className: ""
+  enabled: true
+  className: "haproxy"
   paths:
     - /
   # Use this to define, ALB ingress's actions annotation based routing. Ex: for ssl-redirect
   # Ref: https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/tasks/ssl_redirect/
   extraPaths: []
-# hosts:
-#   - npm.blah.com
+ hosts:
+   - npm-k3s.nexdev.net
 # annotations:
 #   kubernetes.io/ingress.class: nginx
 # tls:
@@ -210,10 +210,10 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: longhorn
 
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 1Gi
   ## selector can be used to match an existing PersistentVolume
   ## selector:
   ##   matchLabels:
