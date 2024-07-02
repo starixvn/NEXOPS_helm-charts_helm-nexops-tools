@@ -79,7 +79,7 @@ config:
         Exclude             $log level=info
         Exclude             $log Found redis master
         Exclude             $log Identifying redis master 
-        Exclude             $log using sentinel (argocd-redis-ha) 
+        Exclude             $log using sentinel (argocd\-redis\-ha) 
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
