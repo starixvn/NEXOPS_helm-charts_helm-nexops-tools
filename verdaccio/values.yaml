@@ -1,6 +1,6 @@
 image:
-  repository: hub.nexdev.net/base/nexops-tools/verdaccio:5.24.1 #verdaccio/verdaccio
-  # tag: 5.21.1
+  repository: hub.nexdev.net/base/nexops-tools/verdaccio #verdaccio/verdaccio
+  tag: 5.24.1
   pullPolicy: IfNotPresent
   pullSecrets: []
     # - dockerhub-secret
