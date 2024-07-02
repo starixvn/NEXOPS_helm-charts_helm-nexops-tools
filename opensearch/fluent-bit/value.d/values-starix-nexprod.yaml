@@ -90,7 +90,7 @@ config:
         Logstash_Format On
         Retry_Limit False
         Suppress_Type_Name On
-        Logstash_Prefix fbit-container-nexops
+        Logstash_Prefix logstash-container-nexops
         Logstash_DateFormat %Y-%m-%d
         Trace_Error On
         Trace_Output On
