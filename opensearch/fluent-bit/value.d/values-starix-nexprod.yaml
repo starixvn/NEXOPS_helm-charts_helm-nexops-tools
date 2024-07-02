@@ -23,7 +23,7 @@ config:
     ## Collect container logs for Nexops Team
     [INPUT]
         Name tail
-        Path /var/log/containers/argocd-*.log
+        Path /var/log/containers/argocd-*.log, /var/log/containers/longhorn-*.log
         multiline.parser docker, cri
         Tag kube.container.nexops.*
         DB /var/fluent-bit/state/flb_container.db
@@ -77,6 +77,7 @@ config:
         Name                grep
         Match               kube.container.nexops.*
         Exclude             $log level=info
+        Exclude             $log \"GET (/[a-zA-Z0-9\-]*)+ HTTP/1.[01]\" 200
         Exclude             $log Found redis master
         Exclude             $log Identifying redis master 
         Exclude             $log using sentinel \(argocd\-redis\-ha\) 
