@@ -76,14 +76,14 @@ resources: {}
 
 ingress:
   enabled: true
-  className: "haproxy"
-  paths:
+  #className: "haproxy"
+  #paths:
     - /
   # Use this to define, ALB ingress's actions annotation based routing. Ex: for ssl-redirect
   # Ref: https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/tasks/ssl_redirect/
-  extraPaths: []
-  hosts:
-    - npm-k3s.nexdev.net
+  #extraPaths: []
+  #hosts:
+  #  - npm-k3s.nexdev.net
 # annotations:
 #   kubernetes.io/ingress.class: nginx
 # tls:
