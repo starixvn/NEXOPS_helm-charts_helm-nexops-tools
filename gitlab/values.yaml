@@ -82,8 +82,8 @@ global:
     class: ""
     annotations: {}
     enabled: true
-    tls: {}
-      # enabled: true
+    tls:
+      enabled: false
       # secretName: "gitlab-lumi-lumprod-wildcard-tls"
     path: /
     pathType: Prefix
