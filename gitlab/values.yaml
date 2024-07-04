@@ -78,13 +78,13 @@ global:
     apiVersion: ""
     configureCertmanager: false
     useNewIngressForCerts: false
-    provider: haproxy
-    class: "haproxy"
+    provider: ""
+    class: ""
     annotations: {}
     enabled: true
-    tls:
-      enabled: true
-      secretName: "gitlab-lumi-lumprod-wildcard-tls"
+    tls: {}
+      # enabled: true
+      # secretName: "gitlab-lumi-lumprod-wildcard-tls"
     path: /
     pathType: Prefix
 
@@ -987,7 +987,7 @@ nginx-ingress-geo:
   externalIpTpl: '{{ .Values.global.hosts.externalGeoIP }}'
 
 haproxy:
-  install: true
+  install: false
   controller:
     service:
       type: LoadBalancer
