@@ -78,7 +78,7 @@ global:
     apiVersion: ""
     configureCertmanager: false
     useNewIngressForCerts: false
-    provider: ""
+    provider: "haproxy"
     class: ""
     annotations: {}
     enabled: true
