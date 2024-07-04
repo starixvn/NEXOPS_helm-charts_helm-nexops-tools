@@ -1,5 +1,5 @@
 image:
-  repository: hub.nexdev.net/base/nexops-tools/verdaccio #verdaccio/verdaccio
+  repository: verdaccio/verdaccio
   tag: 5.24.1
   pullPolicy: IfNotPresent
   pullSecrets: []
@@ -75,21 +75,21 @@ resources: {}
   #   memory: 512Mi
 
 ingress:
-  enabled: true
-  #className: "haproxy"
-  #paths:
-  #  - /
+  enabled: false
+  className: "haproxy"
+  paths:
+    - /
   # Use this to define, ALB ingress's actions annotation based routing. Ex: for ssl-redirect
   # Ref: https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/tasks/ssl_redirect/
   #extraPaths: []
-  #hosts:
-  #  - npm-k3s.nexdev.net
-# annotations:
-#   kubernetes.io/ingress.class: nginx
-# tls:
-#   - secretName: secret
-#     hosts:
-#       - npm.blah.com
+  hosts:
+    - npm.blah.com
+ annotations:
+   kubernetes.io/ingress.class: nginx
+ tls:
+   - secretName: secret
+     hosts:
+       - npm.blah.com
 
 ## Service account
 serviceAccount:
@@ -197,7 +197,7 @@ configMap: |
   # log: {type: file, path: verdaccio.log, level: info}
 
 persistence:
-  enabled: true
+  enabled: false
   ## A manually managed Persistent Volume and Claim
   ## Requires Persistence.Enabled: true
   ## If defined, PVC must be created manually before volume will be bound
