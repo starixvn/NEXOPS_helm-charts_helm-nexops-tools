@@ -197,7 +197,7 @@ configMap: |
   # log: {type: file, path: verdaccio.log, level: info}
 
 persistence:
-  enabled: false
+  enabled: true
   ## A manually managed Persistent Volume and Claim
   ## Requires Persistence.Enabled: true
   ## If defined, PVC must be created manually before volume will be bound
@@ -213,7 +213,7 @@ persistence:
   storageClass: longhorn
 
   accessMode: ReadWriteOnce
-  size: 1Gi
+  size: 2Gi
   ## selector can be used to match an existing PersistentVolume
   ## selector:
   ##   matchLabels:
