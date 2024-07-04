@@ -118,6 +118,7 @@ server:
       config: |
         ui = true
         cluster_name = "vault-integrated-storage"
+        default_max_request_duration = "7200s"
         listener "tcp" {
           address = "[::]:8200"
           cluster_address = "[::]:8201"
