@@ -307,7 +307,8 @@ controller:
 
   ## Additional command line arguments to pass to Controller
   ## ref: https://github.com/haproxytech/kubernetes-ingress/blob/master/documentation/controller.md
-  extraArgs: []
+  extraArgs:
+    --disable-ipv6
   #  - --namespace-whitelist=default
   #  - --namespace-whitelist=namespace1
   #  - --namespace-blacklist=namespace2
