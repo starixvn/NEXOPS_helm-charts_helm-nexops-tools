@@ -79,7 +79,7 @@ global:
     configureCertmanager: false
     useNewIngressForCerts: false
     provider: "haproxy"
-    class: ""
+    class: "haproxy"
     annotations: {}
     enabled: true
     tls:
