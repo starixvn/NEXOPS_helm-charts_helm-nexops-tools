@@ -1,0 +1,187 @@
+global:
+  enabled: true
+  tlsDisable: true
+
+injector:
+  enabled: true
+  # Use the Vault K8s Image https://github.com/hashicorp/vault-k8s/
+  image:
+    repository: "hashicorp/vault-k8s"
+    tag: "1.4.1"
+
+  agentImage:
+    repository: "hashicorp/vault"
+    tag: "1.16.1"
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    operator: Equal
+    value: linux
+  nodeSelector:
+    nexops-tools: "yes"
+
+server:
+  # Use the Enterprise Image
+  image:
+    repository: "hashicorp/vault"
+    tag: "1.16.1"
+  resources:
+    limits:
+      memory: 4Gi
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    operator: Equal
+    value: linux
+  nodeSelector:
+    vault-workload: "yes"
+
+
+  ingress:
+    enabled: true
+    activeService: false
+    ingressClassName: "haproxy"
+    host: "vault.nexdev.net"
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+  # For HA configuration and because we need to manually init the vault,
+  # we need to define custom readiness/liveness Probe settings
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 60
+
+  updateStrategyType: "RollingUpdate"
+
+
+  # extraEnvironmentVars is a list of extra environment variables to set with the stateful set. These could be
+  # used to include variables required for auto-unseal.
+  extraSecretEnvironmentVars:
+    - envName: AWS_ACCESS_KEY_ID
+      secretName: eks-creds
+      secretKey: AWS_ACCESS_KEY_ID
+    - envName: AWS_SECRET_ACCESS_KEY
+      secretName: eks-creds
+      secretKey: AWS_SECRET_ACCESS_KEY
+
+  # # extraVolumes is a list of extra volumes to mount. These will be exposed
+  # # to Vault in the path `/vault/userconfig/<name>/`.
+  # extraVolumes:
+  #   - type: secret
+  #     name: tls-server
+  #   - type: secret
+  #     name: tls-ca
+  #   - type: secret
+  #     name: kms-creds
+
+  dataStorage:
+    enabled: true
+    # Size of the PVC created
+    size: 5Gi
+    # Location where the PVC will be mounted.
+    mountPath: "/vault/data"
+    # Name of the storage class to use.  If null it will use the
+    # configured default Storage Class.
+    storageClass: longhorn-stricted
+    # Access Mode of the storage device being used for the PVC
+    accessMode: ReadWriteOnce
+
+  # This configures the Vault Statefulset to create a PVC for audit logs.
+  # See https://www.vaultproject.io/docs/audit/index.html to know more
+  auditStorage:
+    enabled: false
+
+  standalone:
+    enabled: false
+
+  # Run Vault in "HA" mode.
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+      setNodeId: true
+
+      config: |
+        ui = true
+        cluster_name = "vault-integrated-storage"
+        # default_max_request_duration = "7200s"
+        
+        listener "tcp" {
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+          tls_disable = 1
+          # Enable unauthenticated metrics access (necessary for Prometheus Operator)
+          telemetry {
+            unauthenticated_metrics_access = "true"
+          }
+          # tls_cert_file = "/vault/userconfig/tls-server/fullchain.pem"
+          # tls_key_file = "/vault/userconfig/tls-server/server.key"
+          # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
+        }
+
+        seal "awskms" {
+          region     = "ap-east-1"
+          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
+        }
+
+        telemetry {
+          prometheus_retention_time = "24h",
+          disable_hostname = true
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+            retry_join {
+            leader_api_addr = "http://vault-nexprod-0.vault-nexprod-internal:8200"
+            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
+            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
+            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
+          }
+          retry_join {
+            leader_api_addr = "http://vault-nexprod-1.vault-nexprod-internal:8200"
+            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
+            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
+            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
+          }
+          retry_join {
+            leader_api_addr = "http://vault-nexprod-2.vault-nexprod-internal:8200"
+            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
+            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
+            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
+          }
+
+        }
+
+# Vault UI
+ui:
+  enabled: true
+  externalPort: 8200
+  targetPort: 8200
+  # The service should only contain selectors for active Vault pod
+  activeVaultPodOnly: false
+  #serviceType: "NodePort"
+  #serviceNodePort: 30999
+  #externalPort: 8200
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: "haproxy"
+    hosts:
+      - host: vault.nexdev.net
+  # For Added Security, edit the below
+  #loadBalancerSourceRanges:
+  #   - < Your IP RANGE Ex. 10.0.0.0/16 >
+  #   - < YOUR SINGLE IP Ex. 1.78.23.3/32 >
