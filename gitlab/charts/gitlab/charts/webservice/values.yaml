@@ -105,7 +105,8 @@ ingress:
   enabled:
   proxyConnectTimeout: 15
   proxyReadTimeout: 600
-  proxyBodySize: "512m"
+  proxyBodySize: "0"
+  proxyBuffering: "off"
   tls: {}
     # secretName:
     # smartcardSecretName:
