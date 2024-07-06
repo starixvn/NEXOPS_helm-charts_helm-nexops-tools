@@ -14,8 +14,8 @@ ingress:
   apiVersion:
   enabled:
   proxyReadTimeout: 900
-  proxyBodySize: "512m"
-  # proxyBuffering: "off"
+  proxyBodySize: "0"
+  proxyBuffering: "off"
   tls: {}
     # secretName:
     # enabled: true
