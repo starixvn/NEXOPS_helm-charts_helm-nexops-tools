@@ -81,7 +81,7 @@ networkpolicy:
 
 ingress:
   apiVersion:
-  enabled:
+  enabled: false
   proxyReadTimeout: 900
   proxyBodySize: "0"
   proxyBuffering: "off"
@@ -94,7 +94,7 @@ ingress:
 
 global:
   ingress:
-    enabled:
+    enabled: false
     annotations: {}
     tls: {}
       # secretName:

@@ -12,7 +12,7 @@ minioMc:
 
 ingress:
   apiVersion:
-  enabled:
+  enabled: false
   proxyReadTimeout: 900
   proxyBodySize: "0"
   proxyBuffering: "off"
@@ -31,7 +31,7 @@ priorityClassName: ""
 
 global:
   ingress:
-    enabled:
+    enabled: false
     annotations: {}
     tls: {}
       # secretName:

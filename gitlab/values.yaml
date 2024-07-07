@@ -225,8 +225,8 @@ global:
   ## https://docs.gitlab.com/charts/charts/globals#configure-minio-settings
   minio:
     enabled: true
-    ingress:
-      enabled: false
+    # ingress:
+    #   enabled: false
     credentials: {}
       # secret:
 
@@ -627,8 +627,8 @@ global:
   ## https://docs.gitlab.com/charts/charts/globals#configure-registry-settings
   registry:
     bucket: registry
-    ingress:
-      enabled: false
+    # ingress:
+    #   enabled: false
 
     certificate: {}
       # secret:
