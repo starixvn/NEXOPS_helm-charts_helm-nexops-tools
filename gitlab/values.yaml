@@ -773,7 +773,10 @@ global:
 
   ## https://docs.gitlab.com/charts/charts/globals#configure-webservice
   webservice:
-    workerTimeout: 60
+    workerTimeout: 300
+    extraEnv:
+      GITLAB_RAILS_RACK_TIMEOUT: "300"
+      GITLAB_RAILS_WAIT_TIMEOUT: "600"
 
   ## https://docs.gitlab.com/charts/charts/globals#custom-certificate-authorities
   # configuration of certificates container & custom CA injection
