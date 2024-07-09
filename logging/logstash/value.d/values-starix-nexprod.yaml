@@ -1,0 +1,83 @@
+logstashConfig:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+
+logstashPipeline:
+  logstash.conf: |
+    input {
+
+      http {
+        port => 8080
+        add_field => { "[@metadata][input-http]" => "" }
+      }
+      beats {
+        port => 5000
+      }
+      tcp {
+        port => 5044
+      }
+
+    }
+
+  vault_filter.conf: |
+    filter {
+      # if [@metadata][input][tcp][source] and ![host] {
+      #   mutate {
+      #     copy => {
+      #       "[@metadata][input][tcp][source][name]" => "[host][name]"
+      #       "[@metadata][input][tcp][source][ip]"   => "[host][ip]"
+      #     }
+      #   }
+      # }
+
+      if [@metadata][input][tcp][source][name] =~ /vault/ {
+        json {
+          source => "message"
+        }
+        mutate {
+          add_tag => ["vault-server"]
+          remove_field => ["[event][original]"]
+        }
+      }
+      
+    }
+
+
+  main_output.conf: |
+    output {
+
+      if "vault-server" in [tags] {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
+        }         
+      }
+
+      else {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-unknown-%{+YYYY.MM.dd}"
+        }        
+      }
+
+    }
+    
+
+
+logstashJavaOpts: "-Xmx3g -Xms3g"
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "4096Mi"
+  limits:
+    cpu: "1000m"
+    memory: "4096Mi"

@@ -1,0 +1,9 @@
+---
+singleNode: true
+
+extraEnvs:
+- name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+  value: Y8cY3sn7hCwSmJLff2U7fkNG
+
+persistence:
+  size: 8Gi
