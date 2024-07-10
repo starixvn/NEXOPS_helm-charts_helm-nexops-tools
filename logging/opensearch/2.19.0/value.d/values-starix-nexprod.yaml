@@ -6,7 +6,7 @@ extraEnvs:
   value: Y8cY3sn7hCwSmJLff2U7fkNG
 
 persistence:
-  size: 8Gi
+  size: 20Gi
 
 service:
   type: NodePort
