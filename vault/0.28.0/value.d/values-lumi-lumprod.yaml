@@ -15,7 +15,7 @@ server:
   ingress:
     enabled: true
     hosts: 
-    - host: "vault.{{info[org][env]['ingressDomain']}}"
+    - host: "vault.lumigame.com"
       paths: []
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
