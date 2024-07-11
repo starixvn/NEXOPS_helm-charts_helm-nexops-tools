@@ -48,7 +48,7 @@ commonAnnotations: {}
 secretAnnotations: {}
 ## @param clusterDomain Kubernetes cluster domain name
 ##
-clusterDomain: lumi.local
+clusterDomain: starix.nexprod
 ## @param extraDeploy Array of extra objects to deploy with the release
 ##
 extraDeploy: []
