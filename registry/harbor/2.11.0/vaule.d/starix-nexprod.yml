@@ -1,0 +1,92 @@
+expose:
+  ingress: 
+    hosts:
+      core: hub-k3s.nexdev.net
+externalURL: https://hub-k3s.nexdev.net
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: "local-path"
+      size: 270Gi
+    jobservice:
+      jobLog:
+        storageClass: "local-path"
+        size: 5Gi
+    database:
+      storageClass: "local-path"
+      size: 10Gi
+    redis:
+      storageClass: "local-path"
+      size: 30Gi
+    trivy:
+      storageClass: "local-path"
+      size: 10Gi
+
+cache:
+  enabled: true
+  expireHours: 8
+
+
+portal:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor
+core:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor
+jobservice:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor
+registry:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor
+trivy:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor
+  skipUpdate: false
+  skipJavaDBUpdate: false
+  offlineScan: false
+database:
+  internal:
+    nodeSelector:
+      harbor-workload: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor
+redis:
+  internal:
+    nodeSelector:
+      harbor-workload: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor
+exporter:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor
+
