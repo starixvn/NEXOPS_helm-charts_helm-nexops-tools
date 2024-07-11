@@ -2439,7 +2439,7 @@ rabbitmq:
     type: ""
     values: []
   nodeSelector:
-    sentry: "yes"
+    sentry-ha: "yes"
   onlineSchedulers: ""
   pdb:
     create: true
@@ -2659,7 +2659,7 @@ redis:
       type: ""
       values: []
     nodeSelector:
-      sentry: "yes"
+      sentry-ha: "yes"
     persistence:
       accessModes:
       - ReadWriteOnce
@@ -2874,7 +2874,7 @@ redis:
       type: ""
       values: []
     nodeSelector:
-      sentry: "yes"
+      sentry-ha: "yes"
     persistence:
       accessModes:
       - ReadWriteOnce
@@ -3825,7 +3825,7 @@ zookeeper:
     type: ""
     values: []
   nodeSelector:
-    sentry: "yes"
+    sentry-ha: "yes"
   pdb:
     create: false
     maxUnavailable: 1
