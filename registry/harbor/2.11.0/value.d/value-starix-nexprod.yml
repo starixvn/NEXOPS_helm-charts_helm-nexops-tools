@@ -1,5 +1,8 @@
 expose:
-  ingress: 
+  tls:
+    enabled: false
+  ingress:
+    className: "haproxy"
     hosts:
       core: hub-k3s.nexdev.net
 externalURL: https://hub-k3s.nexdev.net
