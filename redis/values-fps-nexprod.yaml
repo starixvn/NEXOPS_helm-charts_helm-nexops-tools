@@ -167,6 +167,7 @@ master:
   ##
   configuration: |-
     maxmemory 1000mb
+    maxclients 50000
   ## @param master.disableCommands Array with Redis&reg; commands to disable on master nodes
   ## Commands will be completely disabled by renaming each to an empty string.
   ## ref: https://redis.io/topics/security#disabling-of-specific-commands
