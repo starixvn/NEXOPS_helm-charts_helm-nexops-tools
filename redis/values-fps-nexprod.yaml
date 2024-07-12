@@ -535,7 +535,7 @@ master:
     ## NOTE: choose port between <30000-32767>
     ##
     nodePorts:
-      redis: "30381"
+      redis: "30385"
     ## @param master.service.externalTrafficPolicy Redis&reg; master service external traffic policy
     ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
@@ -997,7 +997,7 @@ replica:
     ## NOTE: choose port between <30000-32767>
     ##
     nodePorts:
-      redis: "30380"
+      redis: "30386"
     ## @param replica.service.externalTrafficPolicy Redis&reg; replicas service external traffic policy
     ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
