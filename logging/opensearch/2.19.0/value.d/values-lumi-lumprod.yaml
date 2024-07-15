@@ -7,3 +7,7 @@ extraEnvs:
 
 persistence:
   size: 30Gi
+
+service:
+  type: NodePort
+  nodePort: "30920"
