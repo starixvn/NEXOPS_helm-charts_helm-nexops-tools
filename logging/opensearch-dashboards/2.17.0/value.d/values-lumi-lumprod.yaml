@@ -1,5 +1,5 @@
 ---
-opensearchHosts: "https://opensearch-cluster-lumi:9200"
+# opensearchHosts: "https://opensearch-cluster-lumi:9200"
 resources:
   requests:
     cpu: "100m"
