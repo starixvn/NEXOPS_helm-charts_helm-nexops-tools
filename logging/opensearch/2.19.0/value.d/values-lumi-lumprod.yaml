@@ -1,9 +1,19 @@
 ---
 singleNode: true
 
+# clusterName: "opensearch-cluster"
+# nodeGroup: "lumi"
+# masterService: "opensearch-cluster-lumi"
+
 extraEnvs:
 - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
   value: Y8cY3sn7hCwSmJLff2U7fkNG
 
+opensearchJavaOpts: "-Xmx2G -Xms2G"
+
 persistence:
   size: 30Gi
+
+service:
+  type: NodePort
+  nodePort: "30920"

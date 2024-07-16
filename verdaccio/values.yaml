@@ -213,7 +213,7 @@ persistence:
   storageClass: longhorn
 
   accessMode: ReadWriteOnce
-  size: 2Gi
+  size: ""
   ## selector can be used to match an existing PersistentVolume
   ## selector:
   ##   matchLabels:
