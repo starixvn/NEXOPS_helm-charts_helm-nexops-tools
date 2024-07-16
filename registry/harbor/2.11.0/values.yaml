@@ -801,13 +801,13 @@ trivy:
   automountServiceAccountToken: false
   # replicas the number of Pod replicas
   replicas: 1
-  resources:
-    requests:
-      cpu: 200m
-      memory: 512Mi
-    limits:
-      cpu: 1
-      memory: 1Gi
+  # resources:
+  #   requests:
+  #     cpu: 200m
+  #     memory: 512Mi
+  #   limits:
+  #     cpu: 1
+  #     memory: 1Gi
   extraEnvVars: []
   nodeSelector: {}
   tolerations: []
@@ -832,13 +832,13 @@ trivy:
   #   image: busybox
   #   command: [ 'sh', '-c', "sleep 20" ]
   # debugMode the flag to enable Trivy debug mode with more verbose scanning log
-  debugMode: false
+  debugMode: true
   # vulnType a comma-separated list of vulnerability types. Possible values are `os` and `library`.
   vulnType: "os,library"
   # severity a comma-separated list of severities to be checked
   severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
   # ignoreUnfixed the flag to display only fixed vulnerabilities
-  ignoreUnfixed: false
+  ignoreUnfixed: true
   # insecure the flag to skip verifying registry certificate
   insecure: false
   # gitHubToken the GitHub access token to download Trivy DB
@@ -878,7 +878,7 @@ trivy:
   # Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`. Defaults to `vuln`.
   securityCheck: "vuln"
   # The duration to wait for scan completion
-  timeout: 5m0s
+  timeout: 10m0s
 
 database:
   # if external database is used, set "type" to "external"
