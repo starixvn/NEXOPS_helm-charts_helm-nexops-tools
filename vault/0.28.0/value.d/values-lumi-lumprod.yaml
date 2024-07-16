@@ -13,7 +13,7 @@ server:
     enabled: false
 
   ingress:
-    enabled: true
+    enabled: false
     hosts: 
     - host: "vault.lumigame.com"
       paths: []
@@ -23,7 +23,7 @@ server:
   # Run Vault in "HA" mode.
   ha:
     enabled: true
-    replicas: 3
+    replicas: 1
     raft:
       enabled: true
       setNodeId: true
