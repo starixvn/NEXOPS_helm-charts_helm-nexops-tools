@@ -68,7 +68,7 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-  tags: "job-test,docker,test"
+  tags: "job-test,test"
   name: "k8s-runner-test-jobs"
   cache:
     secretName: s3access
