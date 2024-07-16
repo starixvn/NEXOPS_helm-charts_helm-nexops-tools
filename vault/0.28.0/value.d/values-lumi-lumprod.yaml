@@ -13,7 +13,7 @@ server:
     enabled: false
 
   ingress:
-    enabled: false
+    enabled: true
     hosts: 
     - host: "vault.lumigame.com"
       paths: []
@@ -23,7 +23,7 @@ server:
   # Run Vault in "HA" mode.
   ha:
     enabled: true
-    replicas: 1
+    replicas: 3
     raft:
       enabled: true
       setNodeId: true
@@ -57,34 +57,21 @@ server:
         storage "raft" {
           path = "/vault/data"
             retry_join {
-            leader_api_addr = "http://vault-cluster-0.vault-cluster-internal:8200"
+            leader_api_addr = "http://vault-lumprod-0.vault-lumprod-internal:8200"
+            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
+            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
+            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
           retry_join {
-            leader_api_addr = "http://vault-cluster-1.vault-cluster-internal:8200"
+            leader_api_addr = "http://vault-lumprod-1.vault-lumprod-internal:8200"
+            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
+            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
+            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
           retry_join {
-            leader_api_addr = "http://vault-cluster-2.vault-cluster-internal:8200"
+            leader_api_addr = "http://vault-lumprod-2.vault-lumprod-internal:8200"
+            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
+            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
+            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
         }
-
-        # storage "raft" {
-        #   path = "/vault/data"
-        #     retry_join {
-        #     leader_api_addr = "http://vault-lumprod-0.vault-lumprod-internal:8200"
-        #     # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-        #     # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-        #     # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
-        #   }
-        #   retry_join {
-        #     leader_api_addr = "http://vault-lumprod-1.vault-lumprod-internal:8200"
-        #     # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-        #     # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-        #     # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
-        #   }
-        #   retry_join {
-        #     leader_api_addr = "http://vault-lumprod-2.vault-lumprod-internal:8200"
-        #     # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-        #     # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-        #     # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
-        #   }
-        # }
