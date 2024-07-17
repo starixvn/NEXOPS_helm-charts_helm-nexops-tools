@@ -4,8 +4,8 @@ expose:
   ingress:
     className: "haproxy"
     hosts:
-      core: hub.lumigame.com
-externalURL: https://hub.lumigame.com
+      core: hub-k3s.lumigame.com
+externalURL: https://hub-k3s.lumigame.com
 
 persistence:
   persistentVolumeClaim:
