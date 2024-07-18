@@ -4,7 +4,7 @@ trivy:
   cache:
     redis:
       enabled: true
-      url: "redis://{{.Release}}-master:6379"
+      url: "redis://trivy-lumi-lumprod-redis-master:6379"
       ttl: "3600s"
   serverToken: "H5nF5ywy262wt881ZWpq"
 
