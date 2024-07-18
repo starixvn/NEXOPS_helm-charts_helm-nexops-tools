@@ -161,8 +161,8 @@ noProxy:
 
 redis:
   clusterDomain: "lumi.lumprod"
-  usePassword: true
-  password: "hDc^^4q+LF@N"
+  usePassword: false
+  password: ""
   cluster:
     enabled: false
   master:
