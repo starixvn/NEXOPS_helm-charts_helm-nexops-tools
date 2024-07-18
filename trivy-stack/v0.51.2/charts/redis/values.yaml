@@ -193,12 +193,12 @@ securityContext:
   #   value: "10000"
 
 ## Use password authentication
-usePassword: true
+usePassword: false
 ## Redis password (both master and slave)
 ## Defaults to a random 10-character alphanumeric string if not set and usePassword is true
 ## ref: https://github.com/bitnami/bitnami-docker-redis#setting-the-server-password-on-first-run
 ##
-password: "hDc^^4q+LF@N"
+password: ""
 ## Use existing secret (ignores previous password)
 # existingSecret:
 ## Password key to be retrieved from Redis secret
@@ -296,7 +296,7 @@ master:
   ## Redis Master Service properties
   service:
     ##  Redis Master Service type
-    type: ClusterIP
+    type: NodePort
     port: 6379
 
     ## Specify the nodePort value for the LoadBalancer and NodePort service types.

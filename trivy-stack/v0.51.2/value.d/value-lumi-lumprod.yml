@@ -16,8 +16,6 @@ ingress:
 
 redis:
   clusterDomain: "lumi.lumprod"
-  usePassword: false
-  #password: "hDc^^4q+LF@N"
   cluster:
     enabled: false
   master:
