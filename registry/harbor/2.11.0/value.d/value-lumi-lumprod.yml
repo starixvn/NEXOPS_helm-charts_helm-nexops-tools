@@ -66,9 +66,9 @@ trivy:
   - effect: NoSchedule
     key: cattle.io/os
     value: harbor
-  skipUpdate: false
-  skipJavaDBUpdate: false
-  offlineScan: false
+  skipUpdate: true
+  skipJavaDBUpdate: true
+  offlineScan: true
 database:
   internal:
     nodeSelector:

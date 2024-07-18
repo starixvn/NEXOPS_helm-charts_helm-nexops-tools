@@ -836,7 +836,7 @@ trivy:
   # vulnType a comma-separated list of vulnerability types. Possible values are `os` and `library`.
   vulnType: "os,library"
   # severity a comma-separated list of severities to be checked
-  severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+  severity: "MEDIUM,HIGH,CRITICAL"
   # ignoreUnfixed the flag to display only fixed vulnerabilities
   ignoreUnfixed: true
   # insecure the flag to skip verifying registry certificate
