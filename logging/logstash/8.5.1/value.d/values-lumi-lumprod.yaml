@@ -5,7 +5,7 @@ resources:
     cpu: "100m"
     memory: "1536Mi"
   limits:
-    # cpu: "2"
+    cpu: "2"
     memory: "4096Mi"
 
 
@@ -806,7 +806,7 @@ logstashPipeline:
           ssl => true
           ssl_certificate_verification => false
           index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
-        }         
+        }
       }
       
       else if "vault-cluster-server" in [tags] {
@@ -817,17 +817,17 @@ logstashPipeline:
           ssl => true
           ssl_certificate_verification => false
           index => "logstash-vault-cluster-audit-local-%{+YYYY.MM.dd}"
-        }         
+        }
       }
 
-      # else {
-      #   opensearch {
-      #     hosts => ["https://opensearch-cluster-master:9200"]
-      #     user => "logstash"
-      #     password => "logstash"
-      #     ssl => true
-      #     ssl_certificate_verification => false
-      #     index => "logstash-unknown-%{+YYYY.MM.dd}"
-      #     }        
-      #   }
+      else {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-unknown-%{+YYYY.MM.dd}"
+        }
+      }
     }
