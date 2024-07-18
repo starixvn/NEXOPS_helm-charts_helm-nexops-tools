@@ -682,16 +682,16 @@ logstashPipeline:
               index => "logstash-worker-node-logs-eksprod-%{+YYYY.MM.dd}"
             }             
           }
-          # else {
-          #   opensearch {
-          #     hosts => ["https://opensearch-cluster-master:9200"]
-          #     user => "logstash"
-          #     password => "logstash"
-          #     ssl => true
-          #     ssl_certificate_verification => false
-          #     index => "logstash-unknown-eksprod-%{+YYYY.MM.dd}"
-          #   }             
-          # }          
+          else {
+            opensearch {
+              hosts => ["https://opensearch-cluster-master:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-unknown-eksprod-%{+YYYY.MM.dd}"
+            }             
+          }          
         }
       }
 
