@@ -5,7 +5,7 @@ resources:
     cpu: "100m"
     memory: "1536Mi"
   limits:
-    cpu: "2"
+    # cpu: "2"
     memory: "4096Mi"
 
 
