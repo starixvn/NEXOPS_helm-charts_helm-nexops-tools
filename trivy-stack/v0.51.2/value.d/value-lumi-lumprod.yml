@@ -1,0 +1,27 @@
+trivy:
+  debugMode: true
+  skipDBUpdate: false
+  cache:
+    redis:
+      enabled: true
+      url: "redis://redis-master:6379"
+      ttl: "3600s"
+  serverToken: "H5nF5ywy262wt881ZWpq"
+
+ingress:
+  enabled: true
+  ingressClassName: "haproxy"
+  hosts:
+  - host: trivy-k3s.lumigame.com
+
+redis:
+  clusterDomain: "lumi.lumprod"
+  usePassword: false
+  #password: "hDc^^4q+LF@N"
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      size: 10Gi
+  volumePermissions:
+    enabled: true

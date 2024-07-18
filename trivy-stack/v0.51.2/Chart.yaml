@@ -1,0 +1,17 @@
+apiVersion: v2
+appVersion: 0.51.2
+description: Trivy helm chart
+keywords:
+- scanner
+- trivy
+- vulnerability
+name: trivy
+sources:
+- https://github.com/aquasecurity/trivy
+version: 0.7.0
+dependencies:
+  - name: redis
+    version: "10.5.7"
+    repository: "file://./charts/redis"
+
+
