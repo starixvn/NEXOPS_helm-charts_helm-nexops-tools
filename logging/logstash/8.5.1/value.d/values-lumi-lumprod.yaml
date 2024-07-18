@@ -1,0 +1,814 @@
+logstashConfig:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+
+
+logstashPipeline:
+  logstash.conf: |
+    input {
+
+      http {
+        port => 8080
+        add_field => { "[@metadata][input-http]" => "" }
+      }
+      beats {
+        port => 5000
+      }
+      tcp {
+        port => 5044
+      }
+
+    }
+
+  aws_input.conf: |
+
+    input {
+      # CloudTrail AWS LOCAL
+      s3 {
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        bucket => "aws-cloudtrail-logs-nex-aws-management-events"
+        type => "cloudtrail"
+        codec => "cloudtrail"
+        region => "ap-east-1"
+        tags => ["awslocal"]
+      }
+
+      # tf.nexops Account
+      # CloudTrail AWS KBT
+      s3 {
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        bucket => "vnteam-aws-cloudtrail-logs-management-events"
+        type => "cloudtrail"
+        codec => "cloudtrail"
+        region => "ap-northeast-1"
+        tags => ["awskbt"]      
+      }
+
+      ###### AWS LOCAL
+      # CloudWatch Control Plane Logs AWS LOCAL
+      cloudwatch_logs {
+        log_group => ["/aws/eks/lumi-local-eks/cluster"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-controlplane", "ekslocal", "awslocal"]
+      }
+
+      # CloudWatch Data Plane Logs AWS LOCAL
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-local-eks/dataplane"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-dataplane", "ekslocal", "awslocal"]
+      }
+
+      # CloudWatch Container Logs AWS LOCAL
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-local-eks/application"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-containers", "ekslocal", "awslocal"]
+      }      
+
+      # CloudWatch WorkerNodes Logs AWS LOCAL
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-local-eks/host"]
+        region => "ap-east-1"
+        access_key_id => "AKIAYP7ZS6XE5FNUWD6C"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-workernode", "ekslocal", "awslocal"]
+      }      
+
+
+      ###### AWS UAT
+      # CloudWatch Control Plane Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/eks/lumi-uat-eks/cluster"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-controlplane", "eksuat", "awskbt"]
+      }
+
+      # CloudWatch Data Plane Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-uat-eks/dataplane"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-dataplane", "eksuat", "awskbt"]
+      }
+
+      # CloudWatch Container Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-uat-eks/application"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-containers", "eksuat", "awskbt"]
+      }      
+
+      # CloudWatch WorkerNodes Logs AWS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-uat-eks/host"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-workernode", "eksuat", "awskbt"]
+      }  
+
+
+      ###### AWS PROD
+      # CloudWatch Control Plane Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/eks/lumi-prod-eks/cluster"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-controlplane", "eksprod", "awskbt"]
+      }
+
+      # CloudWatch Data Plane Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-prod-eks/dataplane"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-dataplane", "eksprod", "awskbt"]
+      }
+
+      # CloudWatch Container Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-prod-eks/application"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-containers", "eksprod", "awskbt"]
+      }      
+
+      # CloudWatch WorkerNodes Logs AWS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/containerinsights/lumi-prod-eks/host"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["eks-workernode", "eksprod", "awskbt"]
+      } 
+
+
+      # CloudWatch HaProxy Ingress EKS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/uat/haproxy-ing"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-ing", "eksuat", "awskbt", "haproxy_access"]
+      }
+  
+      # CloudWatch HaProxy Ingress EKS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/prod/haproxy-ing"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-ing", "eksprod", "awskbt", "haproxy_access"]
+      }
+
+
+      # CloudWatch HaProxy Gateway EKS UAT
+      cloudwatch_logs {
+        log_group => ["/aws/uat/haproxy-gw"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-gw", "eksuat", "awskbt", "haproxy_access"]
+      }
+
+      # CloudWatch HaProxy Gateway EKS PROD
+      cloudwatch_logs {
+        log_group => ["/aws/prod/haproxy-gw"]
+        region => "ap-northeast-1"
+        access_key_id => "AKIAQG7QGZI4UIDXBN73"
+        secret_access_key => "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"
+        type => "cloudwatch"
+        tags => ["hap-gw", "eksprod", "awskbt", "haproxy_access"]
+      }
+      
+    }
+
+  main_filter.conf: |
+    filter {
+
+        # filter CloudTrail
+        if [type] == "cloudtrail" {
+          if [eventName] == "UpdateInstanceInformation" {
+            drop {}
+          }
+          else if [eventName] == "PutObject" {
+            if [sourceIPAddress] == "cloudtrail.amazonaws.com" and [requestParameters][bucketName] == "aws-cloudtrail-logs-nex-aws-management-events" {
+              drop {}
+            }
+            else if [sourceIPAddress] == "cloudtrail.amazonaws.com" and [requestParameters][bucketName] == "vnteam-aws-cloudtrail-logs-management-events" {
+              drop {}
+            }
+          }
+          if [requestParameters][bucketName] == "nexdr" or [requestParameters][bucketName] == "nexec2" or [requestParameters][bucketName] =~ /spnk.*/ {
+            drop {}
+          }
+          mutate {
+            convert => {
+              "[responseElements][networkInterface][tagSet][items][value]" => "string"
+            }
+          }
+        
+        }
+
+        # Filter CloudWatch
+        else if [type] == "cloudwatch" {
+
+          # Filter EKS Logging
+          if "eks-controlplane" in [tags] {
+            if [cloudwatch_logs][log_stream] =~ /cloud-controller-manager.*/ {
+              mutate {
+                add_tag => ["cloud-controller-manager"]
+              }
+            }
+            else if [cloudwatch_logs][log_stream] =~ /kube-controller-manager.*/ {
+              mutate {
+                add_tag => ["kube-controller-manager"]
+              }          
+            }
+            else if [cloudwatch_logs][log_stream] =~ /kube-scheduler.*/ {
+              mutate {
+                add_tag => ["kube-scheduler"]
+              }           
+            }
+          }
+          else if "eks-dataplane" in [tags]  {
+            json {
+              source => "message"
+            }
+          }
+
+          else if "eks-containers" in [tags] {
+            json {
+              source => "message"
+            }            
+          }
+
+          else if "eks-workernode" in [tags] {
+            json {
+              source => "message"
+            }            
+          }
+
+          else if "haproxy_access" in [tags] {
+            json {
+              source => "message"
+            }
+            grok {
+              match => ["log","%{HAPROXYHTTP}","log","%{HAPROXYTCP}"]
+            }  
+          }
+
+        }
+        if "haproxy_access" in [tags] {
+          if "hap-gw" in [tags] {
+          
+            grok {
+              match => ["message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}"]
+            }
+
+            grok {
+              match => ["message", "%{HAPROXYDATE:accept_date}"]
+            }
+
+            grok {
+              match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"}
+            }
+            mutate {
+              remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
+              remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beat","beconn","client_port","haproxy_milliseconds","@version"]
+              remove_field => ["haproxy_minute","offset","haproxy_second","actconn","source","program","haproxy_year","feconn","http_version"]
+              remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","prospector"]
+              
+              convert => {
+                "http_status_code" => "integer"
+                "time_backend_response" => "integer"
+              }
+
+              rename => {"syslog_server" => "SyslogSrv"}
+            }
+
+            date {
+              match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
+            }
+
+            geoip {
+                source => "TrueClientIP"
+            }
+
+
+
+            if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
+              drop {}
+            }
+
+            if [message] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|health|whoami|healthz|grafana|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
+              drop {}
+            }
+
+            if [http_status_code] == 400 or [http_status_code] == 404 or [http_status_code] == 403 or [http_status_code] == 201 or [http_status_code] == 204 or [http_status_code] == 101 or [http_status_code] == 301 or [http_status_code] == 405 or [http_status_code] == 302 or [http_status_code] == 304 {
+              drop {}
+            }
+
+
+            if [http_status_code] == 200 and  [time_backend_response] < 5000 {
+              drop {}
+            }
+
+            if [referrer] == "hub.lumigame.com" and [http_status_code] == 401 and [http_verb] == "GET" {
+              drop {}
+            }
+
+            if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
+              drop {}
+            }
+
+            if [backend_name] == "grafana_be" {
+              drop {}
+            }
+
+            if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp|csv)$/ {
+              drop {}
+            }
+          }
+          else if "hap-ing" in [tags] {
+
+            grok {
+              match => ["message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}"]
+            }
+
+            grok {
+              match => ["message", "%{HAPROXYDATE:accept_date}"]
+            }
+
+            mutate {
+              remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
+              remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beconn","client_port","haproxy_milliseconds","@version"]
+              remove_field => ["haproxy_minute","haproxy_second","actconn","program","haproxy_year","feconn","http_version"]
+              remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","bytes_read","timestamp8601"]
+              
+              convert => {
+                "http_status_code" => "integer"
+                "time_backend_response" => "integer"
+              }
+
+              rename => {"syslog_server" => "haproxy-ing-pod"}
+            }
+            if [http_status_code] == 200 and  [time_backend_response] < 5000 {
+              drop {}
+            }
+          }
+          if [type] == "cloudwatch" {
+            if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp)$/ {
+              drop {}
+            }
+
+          }
+
+        }
+
+        
+        if [host] =~ /vault-cluster/ {
+          json {
+              source => "message"
+            }
+          mutate {
+            add_tag => ["vault-cluster-server"]
+          }
+        }
+        else if [host] =~ /vault/ {
+          json {
+              source => "message"
+            }
+          mutate {
+            add_tag => ["vault-server"]
+          }
+        }
+    }
+
+
+  main_output.conf: |
+    output {
+
+      # Cloudtrail
+      if [type] == "cloudtrail" {
+
+        # CloudTrail AWS LOCAL
+        if "awslocal" in [tags] {
+          opensearch {
+            hosts => ["https://opensearch-cluster-lumi:9200"]
+            user => "logstash"
+            password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
+            index => "logstash-cloudtrail-awslocal-%{+YYYY.MM.dd}"
+          }
+        }
+
+        # CloudTrail AWS KBT
+        else if "awskbt" in [tags] {
+          opensearch {
+            hosts => ["https://opensearch-cluster-lumi:9200"]
+            user => "logstash"
+            password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
+            index => "logstash-cloudtrail-awskbt-%{+YYYY.MM.dd}"
+          }          
+        }
+      }
+      # CloudWatch
+      else if [type] == "cloudwatch" {
+
+        # Output logs for EKSLOCAL
+        if "ekslocal" in [tags] {
+
+          # EKS Control Plane logging
+          if "cloud-controller-manager" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-cloud-controller-manager-ekslocal-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-controller-manager" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-kube-controller-manager-ekslocal-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-scheduler" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-kube-scheduler-ekslocal-%{+YYYY.MM.dd}"
+            }
+          }
+
+          # EKS Data Plane logging
+          else if "eks-dataplane" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-dataplane-ekslocal-%{+YYYY.MM.dd}"
+            } 
+          }
+
+          else if "eks-containers" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-container-logs-ekslocal-%{+YYYY.MM.dd}"
+            }             
+          }
+          else if "eks-workernode" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-worker-node-logs-ekslocal-%{+YYYY.MM.dd}"
+            }             
+          }
+        }
+
+        # Output logs for EKSUAT
+        else if "eksuat" in [tags] {
+        
+          if "cloud-controller-manager" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-cloud-controller-manager-eksuat-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-controller-manager" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-kube-controller-manager-eksuat-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-scheduler" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-kube-scheduler-eksuat-%{+YYYY.MM.dd}"
+            }
+          }
+
+          # EKS Data Plane logging
+          else if "eks-dataplane" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-dataplane-eksuat-%{+YYYY.MM.dd}"
+            } 
+          }
+
+          else if "eks-containers" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-container-logs-eksuat-%{+YYYY.MM.dd}"
+            }             
+          }
+          else if "eks-workernode" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-worker-node-logs-eksuat-%{+YYYY.MM.dd}"
+            }             
+          }
+          # else {
+          #   opensearch {
+          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     user => "logstash"
+          #     password => "logstash"
+          #     ssl => true
+          #     ssl_certificate_verification => false
+          #     index => "logstash-unknown-eksuat-%{+YYYY.MM.dd}"
+          #   }             
+          # }        
+        }
+
+        # Output logs for EKSPROD
+        else if "eksprod" in [tags] {
+          if "cloud-controller-manager" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-cloud-controller-manager-eksprod-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-controller-manager" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-kube-controller-manager-eksprod-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "kube-scheduler" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-eks-kube-scheduler-eksprod-%{+YYYY.MM.dd}"
+            }
+          }
+
+          # EKS Data Plane logging
+          else if "eks-dataplane" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-dataplane-eksprod-%{+YYYY.MM.dd}"
+            } 
+          }
+
+          else if "eks-containers" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-container-logs-eksprod-%{+YYYY.MM.dd}"
+            }             
+          }
+          else if "eks-workernode" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-worker-node-logs-eksprod-%{+YYYY.MM.dd}"
+            }             
+          }
+          # else {
+          #   opensearch {
+          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     user => "logstash"
+          #     password => "logstash"
+          #     ssl => true
+          #     ssl_certificate_verification => false
+          #     index => "logstash-unknown-eksprod-%{+YYYY.MM.dd}"
+          #   }             
+          # }          
+        }
+      }
+
+      if "haproxy_access" in [tags] {
+        if "local" in [tags] {
+          if "hap-gw" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "%{[@metadata][beat]}-haproxy-gw-local-%{+YYYY.MM.dd}"
+            }         
+          }
+          else if "hap-ing" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
+            }  
+          }
+          # else {
+          #   opensearch {
+          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     user => "logstash"
+          #     password => "logstash"
+          #     ssl => true
+          #     ssl_certificate_verification => false
+          #     index => "%{[@metadata][beat]}-unknown-haproxy-local-%{+YYYY.MM.dd}"
+          #   }         
+          # }
+        }
+        else if "eksprod" in [tags] {
+          if "hap-ing" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-ing-eksprod-%{+YYYY.MM.dd}"
+            }  
+          }
+          else if "hap-gw" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-gw-eksprod-%{+YYYY.MM.dd}"
+            }  
+          }
+
+          # else {
+          #   opensearch {
+          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     user => "logstash"
+          #     password => "logstash"
+          #     ssl => true
+          #     ssl_certificate_verification => false
+          #     index => "%{[@metadata][beat]}-unknown-haproxy-eksprod-%{+YYYY.MM.dd}"
+          #   }         
+          # }
+        }
+
+
+        else if "eksuat" in [tags] {
+          if "hap-ing" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-ing-eksuat-%{+YYYY.MM.dd}"
+            }  
+          }
+          else if "hap-gw" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-lumi:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-gw-eksuat-%{+YYYY.MM.dd}"
+            }  
+          }
+          # else {
+          #   opensearch {
+          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     user => "logstash"
+          #     password => "logstash"
+          #     ssl => true
+          #     ssl_certificate_verification => false
+          #     index => "%{[@metadata][beat]}-unknown-haproxy-eksuat-%{+YYYY.MM.dd}"
+          #   }         
+          # }
+        }
+
+      }
+
+      else if "vault-server" in [tags] {
+        opensearch {
+          hosts => ["https://opensearch-cluster-lumi:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
+        }         
+      }
+      
+      else if "vault-cluster-server" in [tags] {
+        opensearch {
+          hosts => ["https://opensearch-cluster-lumi:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-vault-cluster-audit-local-%{+YYYY.MM.dd}"
+        }         
+      }
+
+      # else {
+      #   opensearch {
+      #     hosts => ["https://opensearch-cluster-lumi:9200"]
+      #     user => "logstash"
+      #     password => "logstash"
+      #     ssl => true
+      #     ssl_certificate_verification => false
+      #     index => "logstash-unknown-%{+YYYY.MM.dd}"
+      #     }        
+      #   }
+    }
