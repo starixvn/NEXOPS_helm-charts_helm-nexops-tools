@@ -438,7 +438,7 @@ logstashPipeline:
         # CloudTrail AWS LOCAL
         if "awslocal" in [tags] {
           opensearch {
-            hosts => ["https://opensearch-cluster-lumi:9200"]
+            hosts => ["https://opensearch-cluster-master:9200"]
             user => "logstash"
             password => "logstash"
             ssl => true
@@ -450,7 +450,7 @@ logstashPipeline:
         # CloudTrail AWS KBT
         else if "awskbt" in [tags] {
           opensearch {
-            hosts => ["https://opensearch-cluster-lumi:9200"]
+            hosts => ["https://opensearch-cluster-master:9200"]
             user => "logstash"
             password => "logstash"
             ssl => true
@@ -468,7 +468,7 @@ logstashPipeline:
           # EKS Control Plane logging
           if "cloud-controller-manager" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -478,7 +478,7 @@ logstashPipeline:
           }
           else if "kube-controller-manager" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -488,7 +488,7 @@ logstashPipeline:
           }
           else if "kube-scheduler" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -500,7 +500,7 @@ logstashPipeline:
           # EKS Data Plane logging
           else if "eks-dataplane" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -511,7 +511,7 @@ logstashPipeline:
 
           else if "eks-containers" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -521,7 +521,7 @@ logstashPipeline:
           }
           else if "eks-workernode" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -536,7 +536,7 @@ logstashPipeline:
         
           if "cloud-controller-manager" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -546,7 +546,7 @@ logstashPipeline:
           }
           else if "kube-controller-manager" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -556,7 +556,7 @@ logstashPipeline:
           }
           else if "kube-scheduler" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -568,7 +568,7 @@ logstashPipeline:
           # EKS Data Plane logging
           else if "eks-dataplane" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -579,7 +579,7 @@ logstashPipeline:
 
           else if "eks-containers" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -589,7 +589,7 @@ logstashPipeline:
           }
           else if "eks-workernode" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -599,7 +599,7 @@ logstashPipeline:
           }
           # else {
           #   opensearch {
-          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     hosts => ["https://opensearch-cluster-master:9200"]
           #     user => "logstash"
           #     password => "logstash"
           #     ssl => true
@@ -613,7 +613,7 @@ logstashPipeline:
         else if "eksprod" in [tags] {
           if "cloud-controller-manager" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -623,7 +623,7 @@ logstashPipeline:
           }
           else if "kube-controller-manager" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -633,7 +633,7 @@ logstashPipeline:
           }
           else if "kube-scheduler" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -645,7 +645,7 @@ logstashPipeline:
           # EKS Data Plane logging
           else if "eks-dataplane" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -656,7 +656,7 @@ logstashPipeline:
 
           else if "eks-containers" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -666,7 +666,7 @@ logstashPipeline:
           }
           else if "eks-workernode" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -676,7 +676,7 @@ logstashPipeline:
           }
           # else {
           #   opensearch {
-          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     hosts => ["https://opensearch-cluster-master:9200"]
           #     user => "logstash"
           #     password => "logstash"
           #     ssl => true
@@ -691,7 +691,7 @@ logstashPipeline:
         if "local" in [tags] {
           if "hap-gw" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -701,7 +701,7 @@ logstashPipeline:
           }
           else if "hap-ing" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -711,7 +711,7 @@ logstashPipeline:
           }
           # else {
           #   opensearch {
-          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     hosts => ["https://opensearch-cluster-master:9200"]
           #     user => "logstash"
           #     password => "logstash"
           #     ssl => true
@@ -723,7 +723,7 @@ logstashPipeline:
         else if "eksprod" in [tags] {
           if "hap-ing" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -733,7 +733,7 @@ logstashPipeline:
           }
           else if "hap-gw" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -744,7 +744,7 @@ logstashPipeline:
 
           # else {
           #   opensearch {
-          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     hosts => ["https://opensearch-cluster-master:9200"]
           #     user => "logstash"
           #     password => "logstash"
           #     ssl => true
@@ -758,7 +758,7 @@ logstashPipeline:
         else if "eksuat" in [tags] {
           if "hap-ing" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -768,7 +768,7 @@ logstashPipeline:
           }
           else if "hap-gw" in [tags] {
             opensearch {
-              hosts => ["https://opensearch-cluster-lumi:9200"]
+              hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
@@ -778,7 +778,7 @@ logstashPipeline:
           }
           # else {
           #   opensearch {
-          #     hosts => ["https://opensearch-cluster-lumi:9200"]
+          #     hosts => ["https://opensearch-cluster-master:9200"]
           #     user => "logstash"
           #     password => "logstash"
           #     ssl => true
@@ -792,7 +792,7 @@ logstashPipeline:
 
       else if "vault-server" in [tags] {
         opensearch {
-          hosts => ["https://opensearch-cluster-lumi:9200"]
+          hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
           password => "logstash"
           ssl => true
@@ -803,7 +803,7 @@ logstashPipeline:
       
       else if "vault-cluster-server" in [tags] {
         opensearch {
-          hosts => ["https://opensearch-cluster-lumi:9200"]
+          hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
           password => "logstash"
           ssl => true
@@ -814,7 +814,7 @@ logstashPipeline:
 
       # else {
       #   opensearch {
-      #     hosts => ["https://opensearch-cluster-lumi:9200"]
+      #     hosts => ["https://opensearch-cluster-master:9200"]
       #     user => "logstash"
       #     password => "logstash"
       #     ssl => true
