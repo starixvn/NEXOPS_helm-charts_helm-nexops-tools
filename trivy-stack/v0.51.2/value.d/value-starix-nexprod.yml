@@ -1,0 +1,25 @@
+trivy:
+  debugMode: true
+  skipDBUpdate: false
+  cache:
+    redis:
+      enabled: true
+      url: "redis://trivy-starix-nexprod-redis-master:6379"
+      ttl: "3600s"
+  serverToken: "H5nF5ywy262wt881ZWpq"
+
+ingress:
+  enabled: true
+  ingressClassName: "haproxy"
+  hosts:
+  - host: trivy-k3s.nexdev.net
+
+redis:
+  clusterDomain: "starix.nexprod"
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      size: 10Gi
+  volumePermissions:
+    enabled: true
