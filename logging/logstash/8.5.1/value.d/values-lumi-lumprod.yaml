@@ -1,3 +1,14 @@
+logstashJavaOpts: "-Xmx2g -Xms2g"
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "1536Mi"
+  limits:
+    cpu: "2"
+    memory: "4096Mi"
+
+
 logstashConfig:
   logstash.yml: |
     http.host: "0.0.0.0"
