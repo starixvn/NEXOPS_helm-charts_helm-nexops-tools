@@ -75,9 +75,9 @@ config:
     [INPUT]
       Name tail
       Tag kube.sys.*
-      Path /var/log/containers/aws-node*, /var/log/containers/kube-proxy*
+      Path /var/log/containers/kube-*
       multiline.parser docker, cri
-      DB /var/fluent-bit/state/flb_dataplane_tail.db
+      DB /var/fluent-bit/state/flb_kubesys_tail.db
       Mem_Buf_Limit 50MB
       Skip_Long_Lines On
       Refresh_Interval 10
