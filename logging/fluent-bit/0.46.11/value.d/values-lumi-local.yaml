@@ -32,17 +32,36 @@ config:
 
     [FILTER]
       Name lua
-      Match kube.*
+      Match kube.app.*
       code function strip_ansi_color_code(tag, timestamp, record) if type(record["log"]) == "string" then record["log"] = record["log"]:gsub('[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]', '') return 2, 0, record end return 0, 0, 0 end
       call strip_ansi_color_code
 
     [FILTER]
       Name grep
-      Match kube.*
+      Match kube.app.*
       Exclude $log \"statusCode\":200
       Exclude $log \"GET (/[a-zA-Z\-]*)+ HTTP/1.[01]\" 200
       Exclude $log GET (/[a-zA-Z\-]*)+ 200
       Exclude $log HTTP (response|request) headers after [0-9]+.[0-9]+ms - 200
+
+    [OUTPUT]
+      Name opensearch
+      Match kube.app.*
+      Host 10.10.50.121
+      Port 30920
+      HTTP_User fbit
+      HTTP_Passwd uJ4R33WzgJwLJgtr1LfK
+      Logstash_Format On
+      Retry_Limit False
+      Suppress_Type_Name On
+      Logstash_Prefix fbit-container-sclocal
+      Logstash_DateFormat %Y-%m-%d
+      Trace_Error On
+      Trace_Output On
+      Include_Tag_Key On
+      tls On
+      tls.verify Off
+      Tag_Key tagLogKey
 
   controller-log: |
     [INPUT]
@@ -71,6 +90,25 @@ config:
       Match (systemd\.kube|kube\.sys).*
       Exclude $message  level=info
       Exclude $message  "RemoveContainer"
+
+    [OUTPUT]
+      Name opensearch
+      Match (systemd\.kube|kube\.sys).*
+      Host 10.10.50.121
+      Port 30920
+      HTTP_User fbit
+      HTTP_Passwd uJ4R33WzgJwLJgtr1LfK
+      Logstash_Format On
+      Retry_Limit False
+      Suppress_Type_Name On
+      Logstash_Prefix fbit-kubesys-sclocal
+      Logstash_DateFormat %Y-%m-%d
+      Trace_Error On
+      Trace_Output On
+      Include_Tag_Key On
+      tls On
+      tls.verify Off
+      Tag_Key tagLogKey
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
