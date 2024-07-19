@@ -68,7 +68,7 @@ config:
 
     [FILTER]
       Name grep
-      Match kube.sys.*, systemd.kube.*
+      Match (systemd\.kube|kube\.sys).*
       Exclude $message  level=info
       Exclude $message  "RemoveContainer"
 
@@ -95,7 +95,7 @@ config:
   outputs: |
     [OUTPUT]
       Name opensearch
-      Match kube.*, systemd.*
+      Match (systemd\.kube|kube).*
       Host 10.10.50.121
       Port 30920
       HTTP_User nexops
