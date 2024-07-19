@@ -415,7 +415,7 @@ logstashPipeline:
         }
         mutate {
           add_tag => ["vault-cluster"]
-          remove_field => ["response.data.*"]
+          remove_field => ["[response][data]"]
         }
       }
       else if [host] =~ /vault/ {
