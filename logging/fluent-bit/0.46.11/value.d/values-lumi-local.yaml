@@ -105,7 +105,7 @@ config:
       Retry_Limit False
       Suppress_Type_Name On
       Logstash_Prefix fbit-container-sclocal
-      Logstash_DateFormat %Y-%m-%d
+      Logstash_DateFormat %Y.%m.%d
       Trace_Error On
       Trace_Output On
       Include_Tag_Key On
@@ -124,7 +124,7 @@ config:
       Retry_Limit False
       Suppress_Type_Name On
       Logstash_Prefix fbit-kubesys-sclocal
-      Logstash_DateFormat %Y-%m-%d
+      Logstash_DateFormat %Y.%m.%d
       Trace_Error On
       Trace_Output On
       Include_Tag_Key On
