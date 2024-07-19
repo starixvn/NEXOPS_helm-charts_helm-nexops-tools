@@ -9,7 +9,7 @@ extraEnvs:
 - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
   value: Y8cY3sn7hCwSmJLff2U7fkNG
 
-opensearchJavaOpts: "-Xmx2G -Xms2G"
+opensearchJavaOpts: "-Xmx4G -Xms4G"
 
 persistence:
   size: 30Gi
