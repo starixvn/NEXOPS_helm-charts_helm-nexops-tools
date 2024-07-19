@@ -34,7 +34,7 @@ data:
       tags: ["lumi_haproxy_local", "haproxy_access", "local", "hap-ing"]
     output:
       logstash:
-        hosts: ["logstash-lumprod-logstash.logging:5000"]
+        hosts: ["10.10.50.121:30500"]
 
     filebeat.config.modules:
       # Glob pattern for configuration loading
