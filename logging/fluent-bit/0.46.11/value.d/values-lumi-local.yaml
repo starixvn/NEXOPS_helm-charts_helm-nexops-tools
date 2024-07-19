@@ -16,7 +16,7 @@ config:
       storage.backlog.mem_limit 5M
 
   ## https://docs.fluentbit.io/manual/pipeline/inputs
-  input: |
+  inputs: |
     [INPUT]
       Name tail
       Path /var/log/containers/l1-*.log, /var/log/containers/l2-*.log, /var/log/containers/gn-*.log
