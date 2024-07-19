@@ -131,24 +131,6 @@ config:
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
-    [OUTPUT]
-      Name opensearch
-      Match (systemd\.kube|kube).*
-      Host 10.10.50.121
-      Port 30920
-      HTTP_User nexops
-      HTTP_Passwd $pVnH3Sio6fa
-      Logstash_Format On
-      Retry_Limit False
-      Suppress_Type_Name On
-      Logstash_Prefix fbit-container-logs
-      Logstash_DateFormat %Y-%m-%d
-      Trace_Error On
-      Trace_Output On
-      Include_Tag_Key On
-      tls On
-      tls.verify Off
-      Tag_Key tagLogKey
 
     # [OUTPUT]
     #     Name es
