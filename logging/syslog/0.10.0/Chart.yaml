@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 4.8.0
+description: AxoSyslog for Kubernetes
+name: axosyslog
+type: application
+version: 0.10.0

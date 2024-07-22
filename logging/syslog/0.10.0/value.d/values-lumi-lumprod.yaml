@@ -1,0 +1,65 @@
+image:
+  repository: ghcr.io/axoflow/axosyslog
+
+collector:
+  enabled: false
+
+syslog:
+  enabled: true
+  logFileStorage:
+    size: 10Gi
+
+  config: 
+    raw: ""  # Use this to manually set the contents of the syslog-ng.conf file.
+    stats:
+      level: 2
+    sources:
+      syslog:
+        enabled: true
+        # node ports for the syslog service
+        rfc3164UdpPort: 30514
+        rfc3164TcpPort: 30514
+
+      syslogNgOtlp:
+        enabled: true
+        # nodePort
+        port: 30317
+        extraOptionsRaw: ""
+        
+    rewrites:
+      set: {}
+
+    destinations:
+      file:
+        enabled: true
+        path: "/var/log/syslog"
+        # path: "/var/log/remote/${HOST}/${YEAR}_${MONTH}_${DAY}.log"
+        extraOptionsRaw: "create-dirs(yes)"
+      syslog:
+        enabled: true
+        transport: tcp
+        address: logstash-lumprod-logstash
+        port: 5045
+        # convert incoming data to JSON
+        #template: "$(format-json .*)\n"
+        # use standard syslog logfile
+        #template: "$ISODATE $HOST $MSGHDR$MSG\n"
+        extraOptionsRaw: "time-reopen(10)"
+      opensearch:
+        enabled: false
+        url: http://my-release-opensearch.default.svc.cluster.local:9200
+        index: "test-axoflow-index"
+        user: "admin"
+        password: "admin"
+        #tls:
+        #  CAFile: "/path/to/CAFile.pem"
+        #  CADir: "/path/to/CADir/"
+        #  Cert: "/path/to/Cert.pem"
+        #  Key: "/path/to/Key.pem"
+        #  peerVerify: false
+        #template: "$(format-json --scope rfc5424 --exclude DATE --key ISODATE @timestamp=${ISODATE})"
+        extraOptionsRaw: "time-reopen(10)"
+      syslogNgOtlp:
+        enabled: false
+        url: "192.168.77.133:4317"
+        extraOptionsRaw: "time-reopen(1) batch-timeout(1000) batch-lines(1000)"
