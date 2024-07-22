@@ -32,6 +32,8 @@ config:
 
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
+
+    # Application log for SC LOCAL (fbit-container-sclocal)
     [INPUT]
       Name tail
       Path /var/log/containers/l1-*.log, /var/log/containers/l2-*.log, /var/log/containers/gn-*.log
@@ -45,6 +47,7 @@ config:
       storage.type filesystem
       Read_from_Head False
 
+    # K8S kube-system log SC LOCAL (fbit-kubesys-sclocal)
     [INPUT]
       Name systemd
       Tag systemd.kube.*
@@ -53,6 +56,7 @@ config:
       DB /var/fluent-bit/state/systemd.db
       Read_From_Tail On
 
+    # K8S kube-system log SC LOCAL (fbit-kubesys-sclocal)
     [INPUT]
       Name tail
       Tag kube.sys.*
@@ -130,7 +134,7 @@ config:
 
     [OUTPUT]
       Name opensearch
-      Match (systemd\.kube|kube\.sys).*
+      Match (systemd.kube|kube.sys).*
       Host 10.10.50.121
       Port 30920
       HTTP_User fbit
