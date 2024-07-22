@@ -98,7 +98,7 @@ trivy:
   # You might want to enable this flag in test or CI/CD environments to avoid GitHub rate limiting issues.
   # If the flag is enabled you have to manually download the `trivy.db` file and mount it in the
   # `/home/scanner/.cache/trivy/db/trivy.db` path (see `cacheDir`).
-  skipDBUpdate: true
+  skipDBUpdate: false
   # OCI repository to retrieve the trivy vulnerability database from
   dbRepository: ghcr.io/aquasecurity/trivy-db
   # Trivy supports filesystem and redis as caching backend
