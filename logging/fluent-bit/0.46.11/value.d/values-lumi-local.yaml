@@ -134,7 +134,7 @@ config:
 
     [OUTPUT]
       Name opensearch
-      Match (systemd.kube|kube.sys).*
+      Match_regex (systemd\.kube|kube\.sys).*
       Host 10.10.50.121
       Port 30920
       HTTP_User fbit
