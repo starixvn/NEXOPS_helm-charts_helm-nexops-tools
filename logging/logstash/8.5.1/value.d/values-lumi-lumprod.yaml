@@ -437,14 +437,20 @@ logstashPipeline:
               "http_status_code" => "integer"
               "time_backend_response" => "integer"
             }
-            add_tag => ["haproxy_access", "hap-gw"]
+            add_tag => ["haproxy_access"]
+            if [facility_label] == "local2" {
+              add_tag => ["hap-gw"]
+            }
+            else if [facility_label] == "local1" {
+              add_tag => ["hap-ing"]
+            }
           }
           date {
             match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
           }
           
           geoip {
-              source => "TrueClientIP"
+            source => "TrueClientIP"
           }
 
           if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
