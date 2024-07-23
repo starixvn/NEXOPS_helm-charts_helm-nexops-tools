@@ -33,7 +33,7 @@ syslog:
       file:
         enabled: true
         # path: "/var/log/syslog"
-        path: "/var/log/remote/${HOST}/${YEAR}_${MONTH}_${DAY}.log"
+        path: "/var/log/remote/${HOSTNAME}/${YEAR}_${MONTH}_${DAY}.log"
         extraOptionsRaw: "create-dirs(yes)"
       syslog:
         enabled: true
