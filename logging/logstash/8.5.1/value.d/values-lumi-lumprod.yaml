@@ -31,7 +31,7 @@ logstashPipeline:
       tcp {
         port => 5045
         mode => server
-        type => "rsyslog"
+        type => syslog
       }
 
     }
