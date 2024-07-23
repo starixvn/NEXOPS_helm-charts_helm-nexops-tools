@@ -28,10 +28,8 @@ logstashPipeline:
       tcp {
         port => 5044
       }
-      tcp {
+      syslog {
         port => 5045
-        mode => server
-        type => syslog
       }
 
     }
