@@ -13,6 +13,10 @@ syslog:
     raw: ""  # Use this to manually set the contents of the syslog-ng.conf file.
     stats:
       level: 2
+    extraGlobalOptions:
+      chain-hostnames: yes
+      keep-hostname: yes
+
     sources:
       syslog:
         enabled: true

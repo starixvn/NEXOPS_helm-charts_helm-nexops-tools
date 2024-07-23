@@ -18,6 +18,9 @@ data:
       );
       ts-format(iso);
       frac-digits(6);
+      {{- range $key, $value := .Values.syslog.config.extraGlobalOptions }}
+      {{ $key }}({{ $value }})
+      {{- end }}
     };
 
 {{- with .Values.syslog.config.sources.syslog }}
