@@ -16,7 +16,7 @@ syslog:
     sources:
       syslog:
         enabled: true
-        # node ports for the syslog service
+        # node ports for tihe syslog service
         rfc3164UdpPort: 30514
         rfc3164TcpPort: 30514
 
@@ -38,7 +38,7 @@ syslog:
       syslog:
         enabled: true
         transport: tcp
-        address: logstash-lumprod-logstash-0
+        address: logstash-lumprod-logstash
         port: 5045
         # convert incoming data to JSON
         #template: "$(format-json .*)\n"
