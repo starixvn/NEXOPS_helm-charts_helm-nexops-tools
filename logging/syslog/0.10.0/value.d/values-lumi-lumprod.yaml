@@ -38,7 +38,7 @@ syslog:
       syslog:
         enabled: true
         transport: tcp
-        address: logstash-lumprod-logstash
+        address: logstash-lumprod-logstash-0
         port: 5045
         # convert incoming data to JSON
         #template: "$(format-json .*)\n"
