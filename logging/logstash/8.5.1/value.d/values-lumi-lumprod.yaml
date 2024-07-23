@@ -17,7 +17,6 @@ logstashConfig:
 logstashPipeline:
   logstash.conf: |
     input {
-
       http {
         port => 8080
         add_field => { "[@metadata][input-http]" => "" }
@@ -28,12 +27,10 @@ logstashPipeline:
       tcp {
         port => 5044
       }
-      tcp {
+      syslog {
         port => 5045
-        type => "syslog"
         tags => ["syslog"]
       }
-
     }
 
   aws_input.conf: |
@@ -423,7 +420,7 @@ logstashPipeline:
 
         if [program] == "haproxy" {
           grok {
-            match => ["message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}"]
+            match => ["message","%{HAPROXYHTTPBASE}"]
           }
           grok {
             match => ["message", "%{HAPROXYDATE:accept_date}"]
