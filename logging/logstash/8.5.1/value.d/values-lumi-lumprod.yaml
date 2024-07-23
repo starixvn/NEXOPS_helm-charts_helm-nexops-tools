@@ -28,7 +28,7 @@ logstashPipeline:
       tcp {
         port => 5044
       }
-      syslog {
+      tcp {
         port => 5045
         tags => ["syslog"]
       }
