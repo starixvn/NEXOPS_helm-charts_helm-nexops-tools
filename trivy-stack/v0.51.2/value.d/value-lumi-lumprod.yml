@@ -10,7 +10,7 @@ ingress:
   enabled: true
   ingressClassName: "haproxy"
   hosts:
-  - host: trivy-k3s.lumigame.com
+  - host: trivy.lumigame.com
 
 redis:
   clusterDomain: "lumi.lumprod"

@@ -10,7 +10,7 @@ ingress:
   enabled: true
   ingressClassName: "haproxy"
   hosts:
-  - host: trivy-k3s.nexdev.net
+  - host: trivy.nexdev.net
 
 redis:
   clusterDomain: "starix.nexprod"
