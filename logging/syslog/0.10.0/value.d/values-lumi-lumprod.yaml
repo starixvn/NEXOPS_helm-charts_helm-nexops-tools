@@ -14,8 +14,8 @@ syslog:
     stats:
       level: 2
     extraGlobalOptions:
-      chain-hostnames: yes
-      keep-hostname: yes
+      chain-hostnames: "yes"
+      keep-hostname: "yes"
 
     sources:
       syslog:
