@@ -18,7 +18,7 @@ syslog:
         enabled: true
         # node ports for the syslog service
         rfc3164UdpPort: 30514
-        rfc3164TcpPort: 30514
+        # rfc3164TcpPort: 30514
 
       syslogNgOtlp:
         enabled: true
