@@ -437,12 +437,14 @@ logstashPipeline:
               "http_status_code" => "integer"
               "time_backend_response" => "integer"
             }
-            add_tag => ["haproxy_access"]
             if [facility_label] == "local2" {
-              add_tag => ["hap-gw"]
+              add_tag => ["haproxy_access", "hap-gw"]
             }
             else if [facility_label] == "local1" {
-              add_tag => ["hap-ing"]
+              add_tag => ["haproxy_access", "hap-ing"]
+            }
+            else {
+              add_tag => ["haproxy_access"]
             }
           }
           date {
