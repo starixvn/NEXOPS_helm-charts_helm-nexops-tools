@@ -901,7 +901,7 @@ logstashPipeline:
         }
       }
 
-      if !([type] == "cloudtrail" or [type] == "cloudwatch"){
+      if "syslog" in [tags] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
