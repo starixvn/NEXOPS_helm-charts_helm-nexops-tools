@@ -785,7 +785,7 @@ logstashPipeline:
               password => "logstash"
               ssl => true
               ssl_certificate_verification => false
-              index => "%{[@metadata][beat]}-haproxy-gw-local-%{+YYYY.MM.dd}"
+              index => "logstash-haproxy-gw-local-%{+YYYY.MM.dd}"
             }         
           }
           else if "hap-ing" in [tags] {
@@ -795,7 +795,7 @@ logstashPipeline:
               password => "logstash"
               ssl => true
               ssl_certificate_verification => false
-              index => "%{[@metadata][beat]}-haproxy-ing-local-%{+YYYY.MM.dd}"
+              index => "logstash-haproxy-ing-local-%{+YYYY.MM.dd}"
             }  
           }
           # else {
