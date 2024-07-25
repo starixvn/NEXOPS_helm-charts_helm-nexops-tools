@@ -39,6 +39,12 @@ logstashPipeline:
           remove_field => ["[event][original]"]
         }
       }
+
+      if "LoginTransaction" in [Tags] {
+        useragent {
+          source => 'Message[UserAgent]'
+        }
+      }
       
     }
 
