@@ -327,8 +327,9 @@ controller:
       stats show-modules
     forwarded-for: "true"
     dontlognull: "true"
-    syslog-server: address:rsyslog-service.logging, facility:local1
-  #   timeout-connect: "250ms"
+    syslog-server: "address:10.10.50.121, port:30514, facility:local1"
+    # syslog-server: "address:syslog-lumprod-axosyslog-syslog, port:514, facility:local1"
+    # timeout-connect: "250ms"
   #   servers-increment: "10"
   #   servers-increment-max-disabled: "10"
   #   rate-limit: "ON"
