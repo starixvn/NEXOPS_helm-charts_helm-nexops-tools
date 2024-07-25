@@ -91,7 +91,7 @@ terminationGracePeriodSeconds: 3600
 ## Configure the maximum number of concurrent jobs
 ## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-global-section
 ##
-concurrent: 10
+concurrent: 30
 
 ## Number of seconds until the forceful shutdown operation times out and exits the process.
 ## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-global-section
@@ -644,17 +644,17 @@ podLabels: {}
 ## implementing "custom.metrics.k8s.io" using supported third party adapter
 ## Example: https://github.com/directxman12/k8s-prometheus-adapter
 ##
-hpa:
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: External
-    external:
-      metric:
-        name: gitlab_runner_jobs_builds_concurrent_saturation
-      target:
-        type: AverageValue
-        value: 0.4
+hpa: {}
+  # minReplicas: 1
+  # maxReplicas: 5
+  # metrics:
+  # - type: External
+  #   external:
+  #     metric:
+  #       name: gitlab_runner_jobs_builds_concurrent_saturation
+  #     target:
+  #       type: AverageValue
+  #       value: 0.4
 
 ## Configure priorityClassName for manager pod. See k8s docs for more info on how pod priority works:
 ##  https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
