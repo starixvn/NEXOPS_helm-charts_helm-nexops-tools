@@ -57,7 +57,7 @@ runners:
           AuthenticationType = "access-key"
       [[runners.kubernetes.services]]
         environment = ["HEALTHCHECK_TCP_PORT=2376"]
-        name = "hub.lumigame.com/base/docker:24-dind-alpine"
+        name = "hub.nexdev.net/base/docker:24.0.4"
         command = ["--experimental", "--mtu=1450"]
         alias = "docker"
     [runners.kubernetes.node_selector]
