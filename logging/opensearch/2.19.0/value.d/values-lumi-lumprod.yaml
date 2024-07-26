@@ -17,3 +17,8 @@ persistence:
 service:
   type: NodePort
   nodePort: "30920"
+
+resources:
+  requests:
+    cpu: "2"
+    memory: "5Gi"
