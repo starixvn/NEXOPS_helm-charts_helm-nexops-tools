@@ -73,6 +73,10 @@ runners:
   cache:
     secretName: s3access
 
+
+nodeSelector:
+  nexops-tools: "yes"
+
 podSecurityContext:
   runAsUser: 999
   fsGroup: 999
