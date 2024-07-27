@@ -7,7 +7,7 @@ replicas: 1
 
 gitlabUrl: https://git3.nexdev.net
 runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
-concurrent: 5
+concurrent: 30
 
 runners:
   config: |
@@ -68,8 +68,8 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-  tags: "job-test,docker,test"
-  name: "k8s-runner-test-jobs"
+  tags: "k8s,haproxy,docker,renovate"
+  name: "k8s-runner-build-jobs"
   cache:
     secretName: s3access
 
