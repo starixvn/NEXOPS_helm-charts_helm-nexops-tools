@@ -12,8 +12,13 @@ extraEnvs:
 opensearchJavaOpts: "-Xmx4G -Xms4G"
 
 persistence:
-  size: 30Gi
+  size: 50Gi
 
 service:
   type: NodePort
   nodePort: "30920"
+
+resources:
+  requests:
+    cpu: "2"
+    memory: "5Gi"
