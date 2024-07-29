@@ -11,7 +11,7 @@ persistence:
   persistentVolumeClaim:
     registry:
       storageClass: "longhorn-best-effort"
-      size: 180Gi
+      size: 150Gi
     jobservice:
       jobLog:
         storageClass: "longhorn-best-effort"
