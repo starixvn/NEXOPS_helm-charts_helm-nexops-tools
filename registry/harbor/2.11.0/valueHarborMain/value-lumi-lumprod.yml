@@ -1,0 +1,95 @@
+expose:
+  tls:
+    enabled: false
+  ingress:
+    className: "haproxy"
+    hosts:
+      core: hub-main.lumigame.com
+externalURL: https://hub-main.lumigame.com
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: "longhorn-best-effort"
+      size: 180Gi
+    jobservice:
+      jobLog:
+        storageClass: "longhorn-best-effort"
+        size: 5Gi
+    database:
+      storageClass: "longhorn-best-effort"
+      size: 10Gi
+    redis:
+      storageClass: "longhorn-best-effort"
+      size: 20Gi
+    trivy:
+      storageClass: "longhorn-best-effort"
+      size: 10Gi
+
+cache:
+  enabled: true
+  expireHours: 8
+
+
+portal:
+  nodeSelector:
+    harbor-main-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-main
+core:
+  nodeSelector:
+    harbor-main-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-main
+jobservice:
+  nodeSelector:
+    harbor-main-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-main
+registry:
+  nodeSelector:
+    harbor-main-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-main
+trivy:
+  nodeSelector:
+    harbor-main-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-main
+  skipUpdate: false
+  skipJavaDBUpdate: false
+  offlineScan: false
+database:
+  internal:
+    nodeSelector:
+      harbor-main-workload: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor-main
+redis:
+  internal:
+    nodeSelector:
+      harbor-main-workload: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor-main
+exporter:
+  nodeSelector:
+    harbor-main-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-main
+
