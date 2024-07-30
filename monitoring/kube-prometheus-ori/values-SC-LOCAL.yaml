@@ -1003,10 +1003,10 @@ prometheus:
   scrapeConfigNamespaceSelector: {}
   ## @param prometheus.retention Metrics retention days
   ##
-  retention: 7d
+  retention: 3d
   ## @param prometheus.retentionSize Maximum size of metrics
   ##
-  retentionSize: "30GB"
+  retentionSize: "25GB"
   ## @param prometheus.disableCompaction Disable the compaction of the Prometheus TSDB
   ## See https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
   ## ref: https://prometheus.io/docs/prometheus/latest/storage/#compaction
@@ -1071,14 +1071,14 @@ prometheus:
     ## If undefined (the default) or set to null, no storageClassName spec is
     ## set, choosing the default provisioner.
     ##
-    storageClass: "longhorn"
+    storageClass: "local-path"
     ## @param prometheus.persistence.accessModes Persistent Volume Access Modes
     ##
     accessModes:
       - ReadWriteOnce
     ## @param prometheus.persistence.size Persistent Volume Size
     ##
-    size: 40Gi
+    size: 30Gi
     ## @param prometheus.persistence.annotations Persistent Volume Claim annotations
     ##
     annotations: {}
