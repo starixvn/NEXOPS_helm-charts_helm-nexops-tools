@@ -53,8 +53,7 @@ ingress:
     enabled: true
     ingressClassName: "haproxy"
     annotations:
-      ingress.kubernetes.io/secure-backends: "true"
-      ingress.kubernetes.io/backend-protocol: "https"
+      ingress.kubernetes.io/passthrough: "true"
     host: minio-lumprod.lumigame.com
     path: /
     pathType: Prefix
