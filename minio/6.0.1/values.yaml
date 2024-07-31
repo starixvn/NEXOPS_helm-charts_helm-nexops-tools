@@ -189,3 +189,7 @@ operator:
       cpu: 200m
       memory: 256Mi
       ephemeral-storage: 500Mi
+
+
+# -- Array of extra K8s manifests to deploy
+extraObjects: []
