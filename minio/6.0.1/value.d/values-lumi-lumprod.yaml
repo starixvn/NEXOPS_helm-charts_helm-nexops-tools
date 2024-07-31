@@ -12,6 +12,9 @@ operator:
     value: minio
     effect: "NoSchedule"
 
+  nodeSelector:
+    node-role.kubernetes.io/minio: "yes"
+
   resources:
     requests:
       cpu: 200m
