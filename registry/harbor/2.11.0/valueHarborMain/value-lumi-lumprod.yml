@@ -10,21 +10,21 @@ externalURL: https://hub-main.lumigame.com
 persistence:
   persistentVolumeClaim:
     registry:
-      storageClass: "longhorn-best-effort"
+      storageClass: "local-path"
       size: 150Gi
     jobservice:
       jobLog:
-        storageClass: "longhorn-best-effort"
+        storageClass: "local-path"
         size: 5Gi
     database:
-      storageClass: "longhorn-best-effort"
+      storageClass: "local-path"
       size: 10Gi
     redis:
-      storageClass: "longhorn-best-effort"
-      size: 20Gi
+      storageClass: "local-path"
+      size: 25Gi
     trivy:
-      storageClass: "longhorn-best-effort"
-      size: 10Gi
+      storageClass: "local-path"
+      size: 5i
 
 cache:
   enabled: true
