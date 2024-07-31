@@ -3,6 +3,8 @@ operator:
   env:
   - name: MINIO_OPERATOR_RUNTIME
     value: "Rancher"
+  - name: CLUSTER_DOMAIN
+    value: "lumi.lumprod"
 
   replicaCount: 3
 
