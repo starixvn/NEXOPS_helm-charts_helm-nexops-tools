@@ -1,1 +1,19 @@
 ---
+operator:
+  env:
+  - name: MINIO_OPERATOR_RUNTIME
+    value: "Rancher"
+
+  replicaCount: 2
+
+  tolerations:
+  - key: cattle.io/os
+    operator: "Equal"
+    value: minio
+    effect: "NoSchedule"
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+      ephemeral-storage: 500Mi
