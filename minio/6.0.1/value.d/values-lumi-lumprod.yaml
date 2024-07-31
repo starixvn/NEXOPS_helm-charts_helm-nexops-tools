@@ -4,7 +4,7 @@ operator:
   - name: MINIO_OPERATOR_RUNTIME
     value: "Rancher"
 
-  replicaCount: 2
+  replicaCount: 3
 
   tolerations:
   - key: cattle.io/os
