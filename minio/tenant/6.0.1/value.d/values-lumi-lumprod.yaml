@@ -1,0 +1,55 @@
+---
+secrets:
+  name: nexops-env-configuration
+  accessKey: nexops
+  secretKey: Ilu@n3xc3l12
+
+tenant:
+  name: nexops
+  configuration:
+    name: nexops-env-configuration
+
+  pools:
+  - servers: 3
+    name: pool-0
+    volumesPerServer: 1
+    size: 30Gi
+    storageClassName: directpv-min-io
+    storageAnnotations: { }
+    annotations: { }
+    tolerations:
+    - key: cattle.io/os
+      operator: "Equal"
+      value: minio
+      effect: "NoSchedule"
+    nodeSelector:
+      node-role.kubernetes.io/minio: "yes"
+    affinity: { }
+
+  mountPath: /minio
+
+  metrics:
+    enabled: true
+    port: 9000
+    protocol: http
+  prometheusOperator: false
+  env: [ ]
+  ###
+  # PriorityClassName indicates the Pod priority and hence importance of a Pod relative to other Pods.
+  # This is applied to MinIO pods only.
+  # Refer Kubernetes documentation for details https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass/
+  priorityClassName: ""
+
+ingress:
+  api:
+    enabled: true
+    ingressClassName: "haproxy"
+    host: minio-lumprod-api.lumigame.com
+    path: /
+    pathType: Prefix
+  console:
+    enabled: true
+    ingressClassName: "haproxy"
+    host: minio-lumprod.lumigame.com
+    path: /
+    pathType: Prefix
