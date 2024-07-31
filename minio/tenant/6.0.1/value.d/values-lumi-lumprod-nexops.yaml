@@ -58,6 +58,7 @@ ingress:
       - "minio-lumprod.lumigame.com"
     annotations:
       ingress.kubernetes.io/passthrough: "true"
+      haproxy.org/server-ssl: "true"
     host: minio-lumprod.lumigame.com
     path: /
     pathType: Prefix
