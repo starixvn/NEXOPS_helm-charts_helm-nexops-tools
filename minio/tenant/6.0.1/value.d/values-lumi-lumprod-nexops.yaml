@@ -44,16 +44,18 @@ ingress:
   api:
     enabled: true
     ingressClassName: "haproxy"
-    annotations:
-      ingress.kubernetes.io/backend-protocol: "h1-ssl"
+    tls:
+    - hosts:
+      - "minio-lumprod-api.lumigame.com"
     host: minio-lumprod-api.lumigame.com
     path: /
     pathType: Prefix
   console:
     enabled: true
     ingressClassName: "haproxy"
-    annotations:
-      ingress.kubernetes.io/backend-protocol: "h1-ssl"
+    tls:
+    - hosts:
+      - "minio-lumprod.lumigame.com"
     host: minio-lumprod.lumigame.com
     path: /
     pathType: Prefix
