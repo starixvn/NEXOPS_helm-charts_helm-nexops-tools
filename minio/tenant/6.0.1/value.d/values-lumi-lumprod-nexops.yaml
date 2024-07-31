@@ -52,8 +52,10 @@ ingress:
   console:
     enabled: true
     ingressClassName: "haproxy"
-    annotations:
-      ingress.kubernetes.io/passthrough: "true"
+    tls:
+    - secretName: nexops-tls
+      hosts:
+      - "minio-lumprod.lumigame.com"
     host: minio-lumprod.lumigame.com
     path: /
     pathType: Prefix
