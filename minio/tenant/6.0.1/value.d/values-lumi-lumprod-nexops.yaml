@@ -4,9 +4,8 @@ secrets:
   accessKey: nexops
   secretKey: Ilu@n3xc3l12
   stringData:
-     config.env: |-
-       export MINIO_ROOT_USER=ROOTUSERNAME
-       export MINIO_ROOT_PASSWORD=ROOTUSERPASSWORD
+    config.env: |-
+      export MINIO_PROMETHEUS_AUTH_TYPE='public'
 
 tenant:
   name: nexops
