@@ -1,13 +1,18 @@
 ---
+secrets:
+  name: nexops-env-configuration
+  accessKey: nexops
+  secretKey: Ilu@n3xc3l12
+
 tenant:
   name: nexops
 
-  # configuration:
-  #   name: nexops-env-configuration
-  configSecret:
+  configuration:
     name: nexops-env-configuration
-    accessKey: nexops
-    secretKey: Ilu@n3xc3l12
+  # configSecret:
+  #   name: nexops-env-configuration
+  #   accessKey: nexops
+  #   secretKey: Ilu@n3xc3l12
     # existingSecret: true
 
   pools:
