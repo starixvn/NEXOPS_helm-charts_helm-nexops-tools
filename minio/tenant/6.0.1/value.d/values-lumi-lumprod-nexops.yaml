@@ -2,10 +2,10 @@
 tenant:
   name: nexops
 
-  # configuration:
-  #   name: nexops-env-configuration
-  configSecret:
+  configuration:
     name: nexops-env-configuration
+  configSecret:
+    name: nexops-env-configSecret
     accessKey: nexops
     secretKey: Ilu@n3xc3l12
 
