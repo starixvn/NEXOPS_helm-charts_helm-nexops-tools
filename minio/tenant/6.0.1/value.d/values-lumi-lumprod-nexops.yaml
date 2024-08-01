@@ -8,7 +8,7 @@ tenant:
     name: nexops-env-secret
     accessKey: nexops
     secretKey: Ilu@n3xc3l12
-    # existingSecret: true
+    existingSecret: true
 
   pools:
   - name: pool-0
