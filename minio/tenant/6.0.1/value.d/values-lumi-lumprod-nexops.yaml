@@ -56,7 +56,7 @@ ingress:
     # - secretName: nexops-tls
     #   hosts:
     #   - "minio-lumprod.lumigame.com"
-    annotations: {}
+    annotations:
       # ingress.kubernetes.io/passthrough: "true"
       haproxy.org/server-ssl: "true"
       # haproxy.org/standalone-backend: "true"
