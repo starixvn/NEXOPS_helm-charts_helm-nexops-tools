@@ -58,14 +58,13 @@ ingress:
     path: /
     pathType: Prefix
 
-#extraResources:
-#  - |
-#    apiVersion: v1
-#    kind: Secret
-#    type: Opaque
-#    metadata:
-#      name: {{ dig "tenant" "configSecret" "name" "" (.Values | merge (dict)) }}
-#    stringData:
-#      config.env: |-
-#        export MINIO_ROOT_USER='minio'
-#        export MINIO_ROOT_PASSWORD='minio123'
+extraResources:
+- |
+  apiVersion: v1
+  kind: Secret
+  type: Opaque
+  metadata:
+    name: {{ dig "tenant" "configSecret" "name" "" (.Values | merge (dict)) }}
+  stringData:
+    config.env: |-
+      export MINIO_PROMETHEUS_AUTH_TYPE='public'
