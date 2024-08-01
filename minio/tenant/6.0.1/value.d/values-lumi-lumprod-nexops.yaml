@@ -31,7 +31,7 @@ tenant:
   metrics:
     enabled: true
     port: 9000
-    protocol: http
+    protocol: https
   prometheusOperator: false
   env: [ ]
   ###
