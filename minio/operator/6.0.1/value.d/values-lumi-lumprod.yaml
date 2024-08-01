@@ -5,6 +5,8 @@ operator:
     value: "Rancher"
   - name: CLUSTER_DOMAIN
     value: "lumi.lumprod"
+  - name: MINIO_PROMETHEUS_AUTH_TYPE
+    value: "public"
 
   replicaCount: 3
 
