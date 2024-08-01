@@ -2,8 +2,8 @@
 tenant:
   name: nexops
 
-  configuration:
-    name: nexops-env-configuration
+  # configuration:
+  #   name: nexops-env-configuration
   configSecret:
     name: nexops-env-configuration
     accessKey: nexops
