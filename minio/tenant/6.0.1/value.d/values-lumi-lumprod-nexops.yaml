@@ -6,11 +6,9 @@ tenant:
     name: nexops-env-configuration
   configSecret:
     name: nexops-env-secret
-    accessKey: nexops
-    secretKey: Ilu@n3xc3l12
-    stringData:
-      config.env: |-
-        export MINIO_PROMETHEUS_AUTH_TYPE='public'
+    # accessKey: nexops
+    # secretKey: Ilu@n3xc3l12
+    existingSecret: true
 
   pools:
   - name: pool-0
@@ -71,3 +69,5 @@ extraResources:
   stringData:
     config.env: |-
       export MINIO_PROMETHEUS_AUTH_TYPE='public'
+      export MINIO_ROOT_USER='nexops'
+      export MINIO_ROOT_PASSWORD='Ilu@n3xc3l12'
