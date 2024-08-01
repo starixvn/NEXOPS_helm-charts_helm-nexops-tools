@@ -9,17 +9,12 @@ tenant:
 
   configuration:
     name: nexops-env-configuration
-  # configSecret:
-  #   name: nexops-env-configuration
-  #   accessKey: nexops
-  #   secretKey: Ilu@n3xc3l12
-    # existingSecret: true
 
   pools:
   - name: pool-0
     servers: 3
     volumesPerServer: 2
-    size: 40Gi
+    size: 100Gi
     storageClassName: directpv-min-io
     storageAnnotations: { }
     annotations: { }
