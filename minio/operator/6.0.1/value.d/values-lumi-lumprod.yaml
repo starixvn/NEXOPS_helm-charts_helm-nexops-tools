@@ -10,14 +10,14 @@ operator:
 
   replicaCount: 3
 
-  tolerations:
-  - key: cattle.io/os
-    operator: "Equal"
-    value: minio
-    effect: "NoSchedule"
+  # tolerations:
+  # - key: cattle.io/os
+  #   operator: "Equal"
+  #   value: minio
+  #   effect: "NoSchedule"
 
-  nodeSelector:
-    node-role.kubernetes.io/minio: "yes"
+  # nodeSelector:
+  #   node-role.kubernetes.io/minio: "yes"
 
   resources:
     requests:
