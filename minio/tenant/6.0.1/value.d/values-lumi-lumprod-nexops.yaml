@@ -8,6 +8,9 @@ tenant:
     name: nexops-env-secret
     accessKey: nexops
     secretKey: Ilu@n3xc3l12
+    stringData:
+      config.env: |-
+        export MINIO_PROMETHEUS_AUTH_TYPE='public'
 
   pools:
   - name: pool-0
@@ -58,13 +61,13 @@ ingress:
     path: /
     pathType: Prefix
 
-extraResources:
-- |
-  apiVersion: v1
-  kind: Secret
-  type: Opaque
-  metadata:
-    name: {{ dig "tenant" "configSecret" "name" "" (.Values | merge (dict)) }}
-  stringData:
-    config.env: |-
-      export MINIO_PROMETHEUS_AUTH_TYPE='public'
+# extraResources:
+# - |
+#   apiVersion: v1
+#   kind: Secret
+#   type: Opaque
+#   metadata:
+#     name: {{ dig "tenant" "configSecret" "name" "" (.Values | merge (dict)) }}
+#   stringData:
+#     config.env: |-
+#       export MINIO_PROMETHEUS_AUTH_TYPE='public'
