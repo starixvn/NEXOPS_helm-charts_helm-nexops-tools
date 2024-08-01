@@ -19,7 +19,7 @@ tenant:
   - name: pool-0
     servers: 3
     volumesPerServer: 2
-    size: 50Gi
+    size: 40Gi
     storageClassName: directpv-min-io
     storageAnnotations: { }
     annotations: { }
