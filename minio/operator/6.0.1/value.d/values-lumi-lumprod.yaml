@@ -7,6 +7,8 @@ operator:
     value: "lumi.lumprod"
   - name: MINIO_PROMETHEUS_AUTH_TYPE
     value: "public"
+  - name: PROMETHEUS_NAMESPACE
+    value: "monitoring"
 
   replicaCount: 3
 
