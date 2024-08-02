@@ -1,0 +1,3 @@
+global:
+  defaultStorageClass: "longhorn"
+clusterDomain: lumi.lumprod
