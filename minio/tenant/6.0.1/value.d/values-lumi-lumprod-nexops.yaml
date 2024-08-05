@@ -33,7 +33,7 @@ tenant:
     enabled: true
     port: 9000
     protocol: http
-  prometheusOperator: false
+  prometheusOperator: true
   env: [ ]
   ###
   # PriorityClassName indicates the Pod priority and hence importance of a Pod relative to other Pods.
