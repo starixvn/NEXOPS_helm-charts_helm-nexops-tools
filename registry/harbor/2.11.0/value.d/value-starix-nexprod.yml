@@ -4,8 +4,8 @@ expose:
   ingress:
     className: "haproxy"
     hosts:
-      core: hub-bk.nexdev.net
-externalURL: https://hub-bk.nexdev.net
+      core: hub.nexdev.net
+externalURL: https://hub.nexdev.net
 
 persistence:
   persistentVolumeClaim:
