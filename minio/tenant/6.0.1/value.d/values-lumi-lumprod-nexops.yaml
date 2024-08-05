@@ -10,6 +10,21 @@ tenant:
   configuration:
     name: nexops-env-configuration
 
+  buckets:
+  - name: backup-vault-lumprod
+
+
+  ###
+  # Array of Kubernetes secrets from which the Operator generates MinIO users during tenant provisioning.
+  #
+  # Each secret should specify the ``CONSOLE_ACCESS_KEY`` and ``CONSOLE_SECRET_KEY`` as the access key and secret key for that user.
+  users: [ ]
+
+  features:
+    bucketDNS: false
+    domains: { }
+    enableSFTP: true
+
   pools:
   - name: pool-0
     servers: 3
