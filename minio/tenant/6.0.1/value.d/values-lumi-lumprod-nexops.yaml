@@ -52,7 +52,7 @@ tenant:
 
   env:
   - name: MINIO_PROMETHEUS_URL
-    value: "prometheus-stack-kube-prom-prometheus.monitoring.svc.lumi.lumprod"
+    value: "http://prometheus-stack-kube-prom-prometheus.monitoring.svc.lumi.lumprod:9090"
   
   ###
   # PriorityClassName indicates the Pod priority and hence importance of a Pod relative to other Pods.
