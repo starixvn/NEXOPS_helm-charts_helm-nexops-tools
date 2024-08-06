@@ -51,8 +51,8 @@ tenant:
   prometheusOperator: true
 
   env:
-  - name: test
-    MINIO_PROMETHEUS_URL: "prometheus-stack-kube-prom-prometheus.monitoring.svc.lumi.lumprod"
+  - name: MINIO_PROMETHEUS_URL
+    value: "prometheus-stack-kube-prom-prometheus.monitoring.svc.lumi.lumprod"
   
   ###
   # PriorityClassName indicates the Pod priority and hence importance of a Pod relative to other Pods.
