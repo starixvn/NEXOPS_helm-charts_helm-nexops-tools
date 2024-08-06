@@ -1,6 +1,6 @@
 ---
 secrets:
-  name: nexops-env-secret
+  name: nexops-env-configuration
   accessKey: nexops
   secretKey: Ilu@n3xc3l12
 
