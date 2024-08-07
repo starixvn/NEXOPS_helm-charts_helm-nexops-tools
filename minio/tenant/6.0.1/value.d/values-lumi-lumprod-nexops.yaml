@@ -110,7 +110,7 @@ extraResources:
         - name: minio-{{ .Values.tenant.name }}-sftp-bind
           port: 8022
       service:
-        name: nexops-sftp
+        name: {{ .Values.tenant.name }}-sftp
         port: 8022
 
   - |
