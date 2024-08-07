@@ -84,46 +84,44 @@ extraResources:
     kind: Service
     metadata:
       name: {{ .Values.tenant.name }}-sftp
-      annotations:
-        haproxy.org/cr-backend: minio-{{ .Values.tenant.name }}-backend
     spec:
+      type: NodePort
       selector:
         v1.min.io/tenant: nexops
       ports:
-      - name: sftp-minio
-        port: 8022
-        protocol: TCP
+      - port: 8022
         targetPort: 8022
+        nodePort: 30822
 
-  - |
-    ## TCP port exposer
-    apiVersion: ingress.v1.haproxy.org/v1
-    kind: TCP
-    metadata:
-      name: minio-{{ .Values.tenant.name }}
-    spec:
-    - name: minio-{{ .Values.tenant.name }}-sftp
-      frontend:
-        name: minio-{{ .Values.tenant.name }}-sftp
-        tcplog: true
-        binds:
-        - name: minio-{{ .Values.tenant.name }}-sftp-bind
-          port: 8022
-      service:
-        name: {{ .Values.tenant.name }}-sftp
-        port: 8022
+  # - |
+  #   ## TCP port exposer
+  #   apiVersion: ingress.v1.haproxy.org/v1
+  #   kind: TCP
+  #   metadata:
+  #     name: minio-{{ .Values.tenant.name }}
+  #   spec:
+  #   - name: minio-{{ .Values.tenant.name }}-sftp
+  #     frontend:
+  #       name: minio-{{ .Values.tenant.name }}-sftp
+  #       tcplog: true
+  #       binds:
+  #       - name: minio-{{ .Values.tenant.name }}-sftp-bind
+  #         port: 8022
+  #     service:
+  #       name: {{ .Values.tenant.name }}-sftp
+  #       port: 8022
 
-  - |
-    ## HAProxy Backend
-    apiVersion: core.haproxy.org/v1alpha2
-    kind: Backend
-    metadata:
-      name: minio-{{ .Values.tenant.name }}-backend
-    spec:
-      config:
-        name: minio-{{ .Values.tenant.name }}-sftp-backend
-        balance:
-          algorithm: "leastconn"
+  # - |
+  #   ## HAProxy Backend
+  #   apiVersion: core.haproxy.org/v1alpha2
+  #   kind: Backend
+  #   metadata:
+  #     name: minio-{{ .Values.tenant.name }}-backend
+  #   spec:
+  #     config:
+  #       name: minio-{{ .Values.tenant.name }}-sftp-backend
+  #       balance:
+  #         algorithm: "leastconn"
 
 # extraResources:
 # - |
