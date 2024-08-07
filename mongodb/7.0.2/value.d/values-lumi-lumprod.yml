@@ -1,0 +1,8 @@
+clusterDomain: lumi.lumprod
+auth:
+  enabled: true
+  rootUser: root
+  rootPassword: "1A-GvQw!BpCe"
+persistence:
+  storageClass: "longhorn"
+  size: 8Gi
