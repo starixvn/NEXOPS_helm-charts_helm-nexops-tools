@@ -78,6 +78,25 @@ ingress:
     path: /
     pathType: Prefix
 
+extraResources:
+  - |
+    ##TCP port exposer
+    apiVersion: ingress.v1.haproxy.org/v1
+    kind: TCP
+    metadata:
+      name: {{ .Values.tenant.name }}
+    spec:
+    - name: {{ .Values.tenant.name }}-sftp
+      frontend:
+        name: minio-{{ .Values.tenant.name }}-sftp
+        tcplog: true
+        binds:
+        - name: minio-{{ .Values.tenant.name }}-sftp-bind
+          port: 8022
+      service:
+        name: nexops-hl
+        port: 8022
+
 # extraResources:
 # - |
 #   apiVersion: v1
@@ -88,5 +107,3 @@ ingress:
 #   stringData:
 #     config.env: |-
 #       export MINIO_PROMETHEUS_AUTH_TYPE='public'
-#       export MINIO_ROOT_USER='nexops'
-#       export MINIO_ROOT_PASSWORD='Ilu@n3xc3l12'
