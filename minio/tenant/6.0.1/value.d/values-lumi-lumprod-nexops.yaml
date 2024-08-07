@@ -80,6 +80,22 @@ ingress:
 
 extraResources:
   - |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ .Values.tenant.name }}-sftp
+      annotations:
+        haproxy.org/cr-backend: minio-{{ .Values.tenant.name }}-backend
+    spec:
+      selector:
+        v1.min.io/tenant: nexops
+      ports:
+      - name: sftp-minio
+        port: 8022
+        protocol: TCP
+        targetPort: 8022
+
+  - |
     ## TCP port exposer
     apiVersion: ingress.v1.haproxy.org/v1
     kind: TCP
@@ -94,8 +110,9 @@ extraResources:
         - name: minio-{{ .Values.tenant.name }}-sftp-bind
           port: 8022
       service:
-        name: nexops-hl
+        name: nexops-sftp
         port: 8022
+
   - |
     ## HAProxy Backend
     apiVersion: core.haproxy.org/v1alpha2
