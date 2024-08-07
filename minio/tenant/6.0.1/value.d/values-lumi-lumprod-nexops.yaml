@@ -98,7 +98,7 @@ extraResources:
         port: 8022
   - |
     ## HAProxy Backend
-    apiVersion: ingress.v1.haproxy.com/v1
+    apiVersion: core.haproxy.org/v1alpha2
     kind: Backend
     metadata:
       name: minio-{{ .Values.tenant.name }}-backend
