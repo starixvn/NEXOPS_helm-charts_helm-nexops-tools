@@ -1,0 +1,12 @@
+---
+controller:
+  extraArgs:
+  - --configmap-tcp-services=gitlab-server/gitlab-server-haproxy-tcp
+  service:
+    tcpPorts:
+    - name: ssh
+      port: 22
+      targetPort: 22
+    - name: sftp
+      port: 8022
+      targetPort: 8022
