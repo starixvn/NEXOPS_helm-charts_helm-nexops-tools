@@ -15,6 +15,7 @@ tenant:
   - name: backups
   - name: lumi-backup
   - name: starix-backup
+  - name: longhorn-lumprod
 
 
   ###
