@@ -67,7 +67,7 @@ trivy:
     key: cattle.io/os
     value: harbor-main
   skipUpdate: true
-  skipJavaDBUpdate: false
+  skipJavaDBUpdate: true
   offlineScan: true
 database:
   internal:
