@@ -9,6 +9,7 @@ spec:
     additionalConfig: |
       default_user={{ .Values.rabbitCluster.user }}
       default_pass={{ .Values.rabbitCluster.password }}
+      cluster_partition_handling = autoheal
   resources:
     requests:
       memory: 128Mi
@@ -31,3 +32,6 @@ spec:
             targetPort: 15672
             nodePort: 31672
         type: NodePort
+  persistence:
+    storageClass: "longhorn"
+    size: 10Gi
