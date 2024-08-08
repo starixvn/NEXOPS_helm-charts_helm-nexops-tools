@@ -13,6 +13,8 @@ tenant:
   buckets:
   - name: vault-lumprod-backup
   - name: backups
+  - name: lumi-backup
+  - name: starix-backup
 
 
   ###
