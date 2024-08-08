@@ -45,6 +45,28 @@ logstashPipeline:
           source => '[Message][UserAgent]'
         }
       }
+
+      if [Properties][Team] == "Legion" {
+        mutate {
+          remove_field => ["[Renderings][HttpLog][Rendering]", "[Renderings][HttpLog][Format]", "[Properties][HttpLog]" ]
+          add_tag => ["legion"]
+        }
+
+        if [Properties][RequestPath] == "/" {
+          drop {}
+        }
+
+        if [Properties][Application] == "DepositAPI" {
+          mutate {
+            add_tag => ["deposit"]
+          }
+        }
+        if [Properties][Application] == "DepositAPIGateway" {
+          mutate {
+            add_tag => ["deposit-apigateway"]
+          }
+        }        
+      }
       
     }
 
@@ -61,6 +83,41 @@ logstashPipeline:
           ssl_certificate_verification => false
           index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
         }         
+      }
+
+      else if "legion" in [tags] {
+        if [Properties][Enviroment] == "LOCAL" {
+          if "deposit" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-master:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-legion-deposit-local-%{+YYYY.MM.dd}"
+            }
+          }
+          else if "deposit-apigateway" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-master:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-legion-deposit-apigateway-local-%{+YYYY.MM.dd}"
+            }            
+          }
+          else {
+            opensearch {
+              hosts => ["https://opensearch-cluster-master:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-legion-unknown-local-%{+YYYY.MM.dd}"
+            }           
+          }
+        }
       }
 
       else if "LoginTransaction" in [Tags] {
