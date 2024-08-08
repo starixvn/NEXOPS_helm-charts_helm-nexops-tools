@@ -48,7 +48,7 @@ logstashPipeline:
 
       if [Properties][Team] == "Legion" {
         mutate {
-          remove_field => ["[Renderings][HttpLog][Rendering]", "[Renderings][HttpLog][Format]", "[Properties][HttpLog]" ]
+          remove_field => ["[Renderings][HttpLog]", "[Properties][HttpLog]" ]
           add_tag => ["legion"]
         }
 
