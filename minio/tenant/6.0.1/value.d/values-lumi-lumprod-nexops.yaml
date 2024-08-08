@@ -11,7 +11,8 @@ tenant:
     name: nexops-env-configuration
 
   buckets:
-  - name: backup-vault-lumprod
+  - name: vault-lumprod-backup
+  - name: backups
 
 
   ###
