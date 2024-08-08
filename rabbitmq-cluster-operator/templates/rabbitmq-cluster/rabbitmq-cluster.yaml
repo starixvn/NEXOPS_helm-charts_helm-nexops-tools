@@ -2,7 +2,7 @@ apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
   name: rabbitmq-cluster
-  namespace: {{ include "common.names.namespace" . | quote }}
+  namespace: { { include "common.names.namespace" . | quote } }
 spec:
   replicas: 3
   rabbitmq:
@@ -14,7 +14,7 @@ spec:
     requests:
       memory: 128Mi
     limits:
-      memory: {{ .Values.rabbitCluster.resources.maxMemory }}
+      memory: { { .Values.rabbitCluster.resources.maxMemory } }
   override:
     service:
       spec:
@@ -33,5 +33,5 @@ spec:
             nodePort: 31672
         type: NodePort
   persistence:
-    storageClass: "longhorn"
-    size: 10Gi
+    storageClassName: longhorn
+    storage: 10Gi
