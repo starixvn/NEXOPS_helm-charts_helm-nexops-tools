@@ -1,1 +1,4 @@
 clusterDomain: lumi.lumprod
+rabbitCluster:
+  user: admin
+  password: 1Jhie4%iUnl$on

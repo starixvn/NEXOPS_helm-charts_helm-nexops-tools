@@ -12,6 +12,12 @@
 ## @param global.defaultStorageClass Global default StorageClass for Persistent Volume(s)
 ## @param global.storageClass DEPRECATED: use global.defaultStorageClass instead
 ##
+rabbitCluster:
+  user: guest
+  password: guest
+  resources:
+    maxMemory: 2Gi
+
 global:
   imageRegistry: ""
   ## E.g.
