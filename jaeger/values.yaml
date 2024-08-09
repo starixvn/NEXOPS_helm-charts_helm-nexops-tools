@@ -6,8 +6,8 @@ global:
   imageRegistry:
 
 provisionDataStore:
-  cassandra: true
-  elasticsearch: false
+  cassandra: false
+  elasticsearch: true
   kafka: false
 
 networkPolicy:
@@ -98,7 +98,7 @@ allInOne:
 
 storage:
   # allowed values (cassandra, elasticsearch, grpc-plugin, badger, memory)
-  type: cassandra #elasticsearch
+  type: elasticsearch #cassandra
   cassandra:
     host: cassandra
     port: 9042
@@ -189,10 +189,7 @@ storage:
 cassandra:
   persistence:
     # To enable persistence, please see the documentation for the Cassandra chart
-    enabled: true
-    storageClass: longhorn
-    accessModes: [ "ReadWriteOnce" ]
-    size: 2Gi
+    enabled: false
   config:
     cluster_name: jaeger
     seed_size: 1
@@ -289,9 +286,9 @@ elasticsearch:
          value: "-Xmx2g -Xms2g"
      persistence:
        enabled: true
-       storageClass: local-path
+       storageClass: longhorn-single
        accessModes: [ "ReadWriteOnce" ]
-       size: 1gb
+       size: 2gb
 #   extraConfig:
 #     cluster.max_shards_per_node: 3000
 #   sysctlImage:
