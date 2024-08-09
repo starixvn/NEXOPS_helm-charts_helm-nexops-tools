@@ -10,7 +10,6 @@ spec:
     additionalConfig: |
       default_user = {{ .Values.rabbitCluster.user }}
       default_pass = {{ .Values.rabbitCluster.password }}
-      cluster_partition_handling = autoheal
       vm_memory_high_watermark.absolute = 2048MiB
   resources:
     requests:
