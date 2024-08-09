@@ -33,10 +33,10 @@ dependencies:
     version: 0.15.3
     repository: https://charts.helm.sh/incubator
     condition: provisionDataStore.cassandra
-  - name: elasticsearch
-    version: 20.0.4
-    repository: https://charts.bitnami.com/bitnami
-    condition: provisionDataStore.elasticsearch
+  #- name: elasticsearch
+  #  version: 20.0.4
+  #  repository: https://charts.bitnami.com/bitnami
+  #  condition: provisionDataStore.elasticsearch
   - name: kafka
     version: 26.6.2
     repository: https://charts.bitnami.com/bitnami
