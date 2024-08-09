@@ -189,7 +189,10 @@ storage:
 cassandra:
   persistence:
     # To enable persistence, please see the documentation for the Cassandra chart
-    enabled: false
+    enabled: true
+    storageClass: longhorn
+    accessModes: [ "ReadWriteOnce" ]
+    size: 2Gi
   config:
     cluster_name: jaeger
     seed_size: 1
