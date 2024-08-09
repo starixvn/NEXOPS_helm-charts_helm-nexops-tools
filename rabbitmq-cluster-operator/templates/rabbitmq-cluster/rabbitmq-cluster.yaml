@@ -5,11 +5,13 @@ metadata:
   namespace: {{ include "common.names.namespace" . | quote }}
 spec:
   replicas: 3
+  terminationGracePeriodSeconds: 60
   rabbitmq:
     additionalConfig: |
-      default_user={{ .Values.rabbitCluster.user }}
-      default_pass={{ .Values.rabbitCluster.password }}
+      default_user = {{ .Values.rabbitCluster.user }}
+      default_pass = {{ .Values.rabbitCluster.password }}
       cluster_partition_handling = autoheal
+      vm_memory_high_watermark.absolute = 2048MiB
   resources:
     requests:
       memory: 128Mi
@@ -34,4 +36,4 @@ spec:
         type: NodePort
   persistence:
     storageClassName: longhorn
-    storage: 10Gi
+    storage: 8Gi
