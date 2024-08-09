@@ -28,19 +28,19 @@ maintainers:
     email: me@pavelnikolov.net
   - name: jkowall
     email: jkowall@kowall.net
-dependencies:
-  - name: cassandra
-    version: 0.15.3
-    repository: https://charts.helm.sh/incubator
-    condition: provisionDataStore.cassandra
+#dependencies:
+#  - name: cassandra
+#    version: 0.15.3
+#    repository: https://charts.helm.sh/incubator
+#    condition: provisionDataStore.cassandra
   #- name: elasticsearch
   #  version: 20.0.4
   #  repository: https://charts.bitnami.com/bitnami
   #  condition: provisionDataStore.elasticsearch
-  - name: kafka
-    version: 26.6.2
-    repository: https://charts.bitnami.com/bitnami
-    condition: provisionDataStore.kafka
-  - name: common
-    repository: https://charts.bitnami.com/bitnami
-    version: 2.x.x
+#  - name: kafka
+#    version: 26.6.2
+#    repository: https://charts.bitnami.com/bitnami
+#    condition: provisionDataStore.kafka
+#  - name: common
+#    repository: https://charts.bitnami.com/bitnami
+#    version: 2.x.x
