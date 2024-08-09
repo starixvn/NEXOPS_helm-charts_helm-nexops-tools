@@ -286,7 +286,7 @@ elasticsearch:
          value: "-Xmx2g -Xms2g"
      persistence:
        enabled: true
-       storageClass: longhorn
+       storageClass: local-path
        accessModes: [ "ReadWriteOnce" ]
        size: 1gb
 #   extraConfig:
