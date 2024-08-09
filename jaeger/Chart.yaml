@@ -35,7 +35,7 @@ dependencies:
     condition: provisionDataStore.cassandra
   - name: elasticsearch
     version: 20.0.4
-    repository: "file://./charts/elasticsearch" #https://charts.bitnami.com/bitnami
+    repository: https://charts.bitnami.com/bitnami
     condition: provisionDataStore.elasticsearch
   - name: kafka
     version: 26.6.2
