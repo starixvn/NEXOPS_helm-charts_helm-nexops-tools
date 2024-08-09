@@ -6,8 +6,8 @@ global:
   imageRegistry:
 
 provisionDataStore:
-  cassandra: false
-  elasticsearch: true
+  cassandra: true
+  elasticsearch: false
   kafka: false
 
 networkPolicy:
@@ -98,7 +98,7 @@ allInOne:
 
 storage:
   # allowed values (cassandra, elasticsearch, grpc-plugin, badger, memory)
-  type: elasticsearch #cassandra 
+  type: cassandra #elasticsearch
   cassandra:
     host: cassandra
     port: 9042
