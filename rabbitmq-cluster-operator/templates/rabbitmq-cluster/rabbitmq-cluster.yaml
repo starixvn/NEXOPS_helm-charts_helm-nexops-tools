@@ -5,7 +5,7 @@ metadata:
   namespace: {{ include "common.names.namespace" . | quote }}
 spec:
   replicas: 3
-  terminationGracePeriodSeconds: 60
+  terminationGracePeriodSeconds: 30
   rabbitmq:
     additionalConfig: |
       default_user = {{ .Values.rabbitCluster.user }}
