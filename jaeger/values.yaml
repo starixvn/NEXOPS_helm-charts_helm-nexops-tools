@@ -98,7 +98,7 @@ allInOne:
 
 storage:
   # allowed values (cassandra, elasticsearch, grpc-plugin, badger, memory)
-  type: elasticsearch #cassandra
+  type: elasticsearch #cassandra 
   cassandra:
     host: cassandra
     port: 9042
