@@ -8,8 +8,8 @@ dependencies:
 #- name: kafka
 #  repository: https://charts.bitnami.com/bitnami
 #  version: 26.6.2
-#- name: common
-#  repository: https://charts.bitnami.com/bitnami
-#  version: 2.19.1
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.19.1
 digest: sha256:16dad4387f2b392d5034731f997518ff05b77909220ce45ee6dd69664942f2df
 generated: "2024-04-11T08:42:48.824851-04:00"

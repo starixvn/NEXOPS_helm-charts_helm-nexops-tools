@@ -41,6 +41,6 @@ dependencies:
   #  version: 26.6.2
   #  repository: https://charts.bitnami.com/bitnami
   #  condition: provisionDataStore.kafka
-  #- name: common
-  #  repository: https://charts.bitnami.com/bitnami
-  #  version: 2.x.x
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 2.x.x
