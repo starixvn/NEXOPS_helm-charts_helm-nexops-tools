@@ -5,6 +5,7 @@ dependencies:
 - name: elasticsearch
   repository: file://./charts/elasticsearch
   version: 20.0.4
+  condition: provisionDataStore.elasticsearch
 - name: kafka
   repository: https://charts.bitnami.com/bitnami
   version: 26.6.2
