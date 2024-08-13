@@ -45,10 +45,10 @@ server:
           }
         }
 
-        seal "awskms" {
-          region     = "ap-east-1"
-          kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
-        }
+        # seal "awskms" {
+        #   region     = "ap-east-1"
+        #   kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
+        # }
 
         telemetry {
           prometheus_retention_time = "24h",
