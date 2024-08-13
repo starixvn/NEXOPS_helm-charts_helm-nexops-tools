@@ -1,0 +1,34 @@
+---
+clusterDomain: starix.uat
+
+operator:
+  enabled: true
+
+prometheus:
+  service:
+    nodePorts:
+      http: "30062"
+
+  retention: 14d
+  retentionSize: "28GB"
+
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
+    size: 30Gi
+
+  additionalScrapeConfigs:
+    enabled: false
+    type: external
+    external:
+      ## Name of the secret that Prometheus should use for the additional scrape configuration
+      name: ""
+      ## Name of the key inside the secret to be used for the additional scrape configuration.
+      key: ""
+    internal:
+      jobList: []
+  ##
+  additionalScrapeConfigsExternal:
+    enabled: false
+    name: ""
+    key: ""
