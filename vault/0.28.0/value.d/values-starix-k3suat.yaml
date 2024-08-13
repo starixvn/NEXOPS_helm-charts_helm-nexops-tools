@@ -13,6 +13,14 @@ server:
   auditStorage:
     enabled: false
 
+  ingress:
+    enabled: true
+    hosts: 
+    - host: "vault.starixuat.com"
+      paths: []
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+
   # Run Vault in "HA" mode.
   ha:
     enabled: true
@@ -34,14 +42,11 @@ server:
           telemetry {
             unauthenticated_metrics_access = "true"
           }
-          # tls_cert_file = "/vault/userconfig/tls-server/fullchain.pem"
-          # tls_key_file = "/vault/userconfig/tls-server/server.key"
-          # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
         }
 
         seal "awskms" {
           region     = "ap-east-1"
-          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
+          kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
         }
 
         telemetry {
@@ -53,21 +58,11 @@ server:
           path = "/vault/data"
             retry_join {
             leader_api_addr = "http://vault-nexprod-0.vault-nexprod-internal:8200"
-            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
           retry_join {
             leader_api_addr = "http://vault-nexprod-1.vault-nexprod-internal:8200"
-            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
           retry_join {
             leader_api_addr = "http://vault-nexprod-2.vault-nexprod-internal:8200"
-            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
           }
-
         }
