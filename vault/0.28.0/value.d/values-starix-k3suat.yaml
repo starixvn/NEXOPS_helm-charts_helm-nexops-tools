@@ -103,8 +103,6 @@ injector:
     key: cattle.io/os
     operator: Equal
     value: linux
-  nodeSelector:
-    nexops-tools: "yes"
 
 ui:
   enabled: true
