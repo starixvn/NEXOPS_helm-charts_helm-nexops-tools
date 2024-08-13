@@ -58,13 +58,13 @@ server:
         storage "raft" {
           path = "/vault/data"
             retry_join {
-            leader_api_addr = "http://vault-nexprod-0.vault-nexprod-internal:8200"
+            leader_api_addr = "http://vault-k3suat-0.vault-k3suat-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-nexprod-1.vault-nexprod-internal:8200"
+            leader_api_addr = "http://vault-k3suat-1.vault-k3suat-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-nexprod-2.vault-nexprod-internal:8200"
+            leader_api_addr = "http://vault-k3suat-2.vault-k3suat-internal:8200"
           }
         }
 
