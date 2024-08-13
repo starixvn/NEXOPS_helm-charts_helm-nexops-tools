@@ -2,7 +2,7 @@
 server:
   resources:
     limits:
-      memory: 4Gi
+      memory: 3Gi
 
   dataStorage:
     enabled: true
