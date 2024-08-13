@@ -1,4 +1,5 @@
 ---
+## Deploy helm manually
 service:
   ui:
     # -- Service type for Longhorn UI. (Options: "ClusterIP", "NodePort", "LoadBalancer", "Rancher-Proxy")
@@ -20,4 +21,4 @@ ingress:
 metrics:
   serviceMonitor:
     # -- Setting that allows the creation of a Prometheus ServiceMonitor resource for Longhorn Manager components.
-    enabled: true
+    enabled: false
