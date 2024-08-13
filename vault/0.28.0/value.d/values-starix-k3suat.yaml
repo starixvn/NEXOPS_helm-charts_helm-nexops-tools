@@ -78,13 +78,13 @@ server:
 
   updateStrategyType: "RollingUpdate"
 
-  extraSecretEnvironmentVars:
-  - envName: AWS_ACCESS_KEY_ID
-    secretName: eks-creds
-    secretKey: AWS_ACCESS_KEY_ID
-  - envName: AWS_SECRET_ACCESS_KEY
-    secretName: eks-creds
-    secretKey: AWS_SECRET_ACCESS_KEY
+  # extraSecretEnvironmentVars:
+  # - envName: AWS_ACCESS_KEY_ID
+  #   secretName: eks-creds
+  #   secretKey: AWS_ACCESS_KEY_ID
+  # - envName: AWS_SECRET_ACCESS_KEY
+  #   secretName: eks-creds
+  #   secretKey: AWS_SECRET_ACCESS_KEY
 
   standalone:
     enabled: false
