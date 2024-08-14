@@ -1,0 +1,119 @@
+---
+server:
+
+  logLevel: "debug"
+
+  # resources:
+  #   limits:
+  #     memory: 2Gi
+
+  dataStorage:
+    enabled: true
+    size: 5Gi
+    mountPath: "/vault/data"
+    storageClass: longhorn
+
+  auditStorage:
+    enabled: false
+
+  ingress:
+    activeService: false
+    ingressClassName: "haproxy"
+    enabled: false
+    hosts: 
+    - host: "vault.starixuat.com"
+      paths: []
+
+  # Run Vault in "HA" mode.
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+      setNodeId: true
+
+      config: |
+        ui = true
+        cluster_name = "vault-integrated-storage"
+        # default_max_request_duration = "7200s"
+        
+        listener "tcp" {
+          tls_disable = 1
+          address = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+          # Enable unauthenticated metrics access (necessary for Prometheus Operator)
+          telemetry {
+            unauthenticated_metrics_access = "true"
+          }
+        }
+
+        seal "awskms" {
+          region     = "ap-east-1"
+          kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
+        }
+
+        telemetry {
+          prometheus_retention_time = "24h",
+          disable_hostname = true
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+          retry_join {
+            leader_api_addr = "http://vault-testlab-0.vault-testlab-internal:8200"
+          }
+          retry_join {
+            leader_api_addr = "http://vault-testlab-1.vault-testlab-internal:8200"
+          }
+          retry_join {
+            leader_api_addr = "http://vault-testlab-2.vault-testlab-internal:8200"
+          }
+        }
+
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 180
+
+  updateStrategyType: "RollingUpdate"
+
+  extraEnvironmentVars: 
+    HTTP_PROXY: http://10.70.70.136:3128/
+    HTTPS_PROXY: http://10.70.70.136:3128/
+    NO_PROXY: localhost,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+
+  extraSecretEnvironmentVars:
+  - envName: AWS_ACCESS_KEY_ID
+    secretName: eks-creds
+    secretKey: AWS_ACCESS_KEY_ID
+  - envName: AWS_SECRET_ACCESS_KEY
+    secretName: eks-creds
+    secretKey: AWS_SECRET_ACCESS_KEY
+
+  standalone:
+    enabled: false
+
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: cattle.io/os
+  #   operator: Equal
+  #   value: linux
+  # nodeSelector:
+  #   vault-workload: "yes"
+
+# injector:
+#   tolerations:
+#   - effect: NoSchedule
+#     key: cattle.io/os
+#     operator: Equal
+#     value: linux
+
+ui:
+  enabled: true
+  externalPort: 8200
+  targetPort: 8200
+  activeVaultPodOnly: false
+  serviceType: "ClusterIP"
