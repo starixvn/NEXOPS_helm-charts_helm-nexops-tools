@@ -34,13 +34,13 @@ dependencies:
   #  repository: https://charts.helm.sh/incubator
   #  condition: provisionDataStore.cassandra
   - name: elasticsearch
-    version: 20.0.4
-    repository: file://./charts/elasticsearch
+    version: ^7.11.1
+    repository: https://helm.elastic.co
     condition: provisionDataStore.elasticsearch
   #- name: kafka
   #  version: 26.6.2
   #  repository: https://charts.bitnami.com/bitnami
   #  condition: provisionDataStore.kafka
   - name: common
-    repository: file://./charts/elasticsearch #https://charts.bitnami.com/bitnami
-    version: 2.x.x
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.16.0
