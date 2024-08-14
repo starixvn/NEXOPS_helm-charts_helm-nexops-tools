@@ -20,8 +20,6 @@ server:
     hosts: 
     - host: "vault.starixuat.com"
       paths: []
-    annotations:
-      ingress.kubernetes.io/ssl-redirect: "true"
 
   # Run Vault in "HA" mode.
   ha:
@@ -61,12 +59,12 @@ server:
           retry_join {
             leader_api_addr = "http://vault-k3suat-0.vault-k3suat-internal:8200"
           }
-          retry_join {
-            leader_api_addr = "http://vault-k3suat-1.vault-k3suat-internal:8200"
-          }
-          retry_join {
-            leader_api_addr = "http://vault-k3suat-2.vault-k3suat-internal:8200"
-          }
+          # retry_join {
+          #   leader_api_addr = "http://vault-k3suat-1.vault-k3suat-internal:8200"
+          # }
+          # retry_join {
+          #   leader_api_addr = "http://vault-k3suat-2.vault-k3suat-internal:8200"
+          # }
         }
 
   readinessProbe:
@@ -75,7 +73,7 @@ server:
   livenessProbe:
     enabled: true
     path: "/v1/sys/health?standbyok=true"
-    initialDelaySeconds: 60
+    initialDelaySeconds: 180
 
   updateStrategyType: "RollingUpdate"
 
@@ -90,20 +88,15 @@ server:
   standalone:
     enabled: false
 
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    operator: Equal
-    value: linux
   nodeSelector:
     vault-workload: "yes"
 
-injector:
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    operator: Equal
-    value: linux
+# injector:
+#   tolerations:
+#   - effect: NoSchedule
+#     key: cattle.io/os
+#     operator: Equal
+#     value: linux
 
 ui:
   enabled: true
