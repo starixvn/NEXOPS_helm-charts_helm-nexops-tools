@@ -34,8 +34,8 @@ dependencies:
   #  repository: https://charts.helm.sh/incubator
   #  condition: provisionDataStore.cassandra
   - name: elasticsearch
-    version: ^7.11.1
-    repository: https://helm.elastic.co
+    version: 7.17.23-debian-12-r0 #^7.11.1
+    repository: file://./charts/elasticsearch #https://helm.elastic.co
     condition: provisionDataStore.elasticsearch
   #- name: kafka
   #  version: 26.6.2
