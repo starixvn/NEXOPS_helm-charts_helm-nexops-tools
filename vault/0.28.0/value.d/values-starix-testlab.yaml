@@ -8,7 +8,7 @@ server:
   #     memory: 2Gi
 
   dataStorage:
-    enabled: false
+    enabled: true
     size: 5Gi
     mountPath: "/vault/data"
     storageClass: longhorn
