@@ -8,7 +8,7 @@ server:
     enabled: true
     size: 5Gi
     mountPath: "/vault/data"
-    storageClass: longhorn-stricted
+    storageClass: longhorn
 
   auditStorage:
     enabled: false
