@@ -1,5 +1,8 @@
 ---
 server:
+
+  logLevel: "debug"
+
   # resources:
   #   limits:
   #     memory: 2Gi
