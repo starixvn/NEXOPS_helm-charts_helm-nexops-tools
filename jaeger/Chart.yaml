@@ -43,4 +43,4 @@ dependencies:
   #  condition: provisionDataStore.kafka
   - name: common
     repository: file://./charts/elasticsearch #https://charts.bitnami.com/bitnami
-    version: 2.x.x
+    version: 20.0.4 #2.x.x
