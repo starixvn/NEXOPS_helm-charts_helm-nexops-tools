@@ -1,8 +1,8 @@
 ---
 server:
-  resources:
-    limits:
-      memory: 2Gi
+  # resources:
+  #   limits:
+  #     memory: 2Gi
 
   dataStorage:
     enabled: true
@@ -37,7 +37,7 @@ server:
         listener "tcp" {
           address = "[::]:8200"
           cluster_address = "[::]:8201"
-          tls_disable = 1
+          # tls_disable = 1
           # Enable unauthenticated metrics access (necessary for Prometheus Operator)
           telemetry {
             unauthenticated_metrics_access = "true"
@@ -88,6 +88,11 @@ server:
   standalone:
     enabled: false
 
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: cattle.io/os
+  #   operator: Equal
+  #   value: linux
   nodeSelector:
     vault-workload: "yes"
 
