@@ -1,8 +1,8 @@
 ---
 server:
-  resources:
-    limits:
-      memory: 2Gi
+  # resources:
+  #   limits:
+  #     memory: 2Gi
 
   dataStorage:
     enabled: true
@@ -88,6 +88,11 @@ server:
   standalone:
     enabled: false
 
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: cattle.io/os
+  #   operator: Equal
+  #   value: linux
   nodeSelector:
     vault-workload: "yes"
 
