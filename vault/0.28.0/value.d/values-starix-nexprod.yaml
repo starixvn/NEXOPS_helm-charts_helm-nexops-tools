@@ -12,6 +12,10 @@ server:
   auditStorage:
     enabled: false
 
+  ingress:
+    activeService: false
+    ingressClassName: "haproxy"
+
   # Run Vault in "HA" mode.
   ha:
     enabled: true
@@ -70,3 +74,49 @@ server:
           }
 
         }
+
+  
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 60
+
+  updateStrategyType: "RollingUpdate"
+
+  extraSecretEnvironmentVars:
+  - envName: AWS_ACCESS_KEY_ID
+    secretName: eks-creds
+    secretKey: AWS_ACCESS_KEY_ID
+  - envName: AWS_SECRET_ACCESS_KEY
+    secretName: eks-creds
+    secretKey: AWS_SECRET_ACCESS_KEY
+
+  standalone:
+    enabled: false
+
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    operator: Equal
+    value: linux
+  nodeSelector:
+    vault-workload: "yes"
+
+injector:
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    operator: Equal
+    value: linux
+  nodeSelector:
+    nexops-tools: "yes"
+
+ui:
+  enabled: true
+  externalPort: 8200
+  targetPort: 8200
+  activeVaultPodOnly: false
+  serviceType: "ClusterIP"

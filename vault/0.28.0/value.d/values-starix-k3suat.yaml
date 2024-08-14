@@ -2,7 +2,7 @@
 server:
   resources:
     limits:
-      memory: 4Gi
+      memory: 2Gi
 
   dataStorage:
     enabled: true
@@ -12,6 +12,15 @@ server:
 
   auditStorage:
     enabled: false
+
+  ingress:
+    ingressClassName: "haproxy"
+    enabled: true
+    hosts: 
+    - host: "vault.starixuat.com"
+      paths: []
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
 
   # Run Vault in "HA" mode.
   ha:
@@ -34,15 +43,12 @@ server:
           telemetry {
             unauthenticated_metrics_access = "true"
           }
-          # tls_cert_file = "/vault/userconfig/tls-server/fullchain.pem"
-          # tls_key_file = "/vault/userconfig/tls-server/server.key"
-          # tls_client_ca_file = "/vault/userconfig/tls-server/client-auth-ca.pem"
         }
 
-        seal "awskms" {
-          region     = "ap-east-1"
-          kms_key_id = "7ba20a15-eac9-4f9d-9319-471a377ac8ca"
-        }
+        # seal "awskms" {
+        #   region     = "ap-east-1"
+        #   kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
+        # }
 
         telemetry {
           prometheus_retention_time = "24h",
@@ -52,22 +58,55 @@ server:
         storage "raft" {
           path = "/vault/data"
             retry_join {
-            leader_api_addr = "http://vault-nexprod-0.vault-nexprod-internal:8200"
-            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
+            leader_api_addr = "http://vault-k3suat-0.vault-k3suat-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-nexprod-1.vault-nexprod-internal:8200"
-            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
+            leader_api_addr = "http://vault-k3suat-1.vault-k3suat-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-nexprod-2.vault-nexprod-internal:8200"
-            # leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
-            # leader_client_cert_file = "/vault/userconfig/tls-server/server.crt"
-            # leader_client_key_file = "/vault/userconfig/tls-server/server.key"
+            leader_api_addr = "http://vault-k3suat-2.vault-k3suat-internal:8200"
           }
-
         }
+
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 60
+
+  updateStrategyType: "RollingUpdate"
+
+  # extraSecretEnvironmentVars:
+  # - envName: AWS_ACCESS_KEY_ID
+  #   secretName: eks-creds
+  #   secretKey: AWS_ACCESS_KEY_ID
+  # - envName: AWS_SECRET_ACCESS_KEY
+  #   secretName: eks-creds
+  #   secretKey: AWS_SECRET_ACCESS_KEY
+
+  standalone:
+    enabled: false
+
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    operator: Equal
+    value: linux
+  nodeSelector:
+    vault-workload: "yes"
+
+injector:
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    operator: Equal
+    value: linux
+
+ui:
+  enabled: true
+  externalPort: 8200
+  targetPort: 8200
+  activeVaultPodOnly: false
+  serviceType: "ClusterIP"
