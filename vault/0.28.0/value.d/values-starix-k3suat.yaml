@@ -1,11 +1,9 @@
 ---
 server:
 
-  logLevel: "debug"
-
-  # resources:
-  #   limits:
-  #     memory: 2Gi
+  resources:
+    limits:
+      memory: 2Gi
 
   dataStorage:
     enabled: true
@@ -47,10 +45,10 @@ server:
           }
         }
 
-        # seal "awskms" {
-        #   region     = "ap-east-1"
-        #   kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
-        # }
+        seal "awskms" {
+          region     = "ap-east-1"
+          kms_key_id = "0ff7b39a-cc1a-4bb1-96c2-6e52a4245371"
+        }
 
         telemetry {
           prometheus_retention_time = "24h",
@@ -76,17 +74,23 @@ server:
   livenessProbe:
     enabled: true
     path: "/v1/sys/health?standbyok=true"
-    initialDelaySeconds: 180
+    initialDelaySeconds: 60
 
   updateStrategyType: "RollingUpdate"
 
-  # extraSecretEnvironmentVars:
-  # - envName: AWS_ACCESS_KEY_ID
-  #   secretName: eks-creds
-  #   secretKey: AWS_ACCESS_KEY_ID
-  # - envName: AWS_SECRET_ACCESS_KEY
-  #   secretName: eks-creds
-  #   secretKey: AWS_SECRET_ACCESS_KEY
+  extraEnvironmentVars:
+    HTTP_PROXY: lisasqd.nebula.prod:8801
+    HTTPS_PROXY: lisasqd.nebula.prod:8801
+    NO_PROXY: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vault-k3suat-internal,.nebula.prod
+
+
+  extraSecretEnvironmentVars:
+  - envName: AWS_ACCESS_KEY_ID
+    secretName: eks-creds
+    secretKey: AWS_ACCESS_KEY_ID
+  - envName: AWS_SECRET_ACCESS_KEY
+    secretName: eks-creds
+    secretKey: AWS_SECRET_ACCESS_KEY
 
   standalone:
     enabled: false
