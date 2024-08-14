@@ -21,8 +21,8 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  defaultStorageClass: ""
-  storageClass: ""
+  defaultStorageClass: local-path #longhorn-single
+  storageClass: local-path #longhorn-single
   elasticsearch:
     service:
       name: elasticsearch
@@ -362,7 +362,7 @@ service:
 ingress:
   ## @param ingress.enabled Enable ingress record generation for Elasticsearch
   ##
-  enabled: false
+  enabled: true
   ## @param ingress.pathType Ingress path type
   ##
   pathType: ImplementationSpecific
@@ -371,7 +371,7 @@ ingress:
   apiVersion: ""
   ## @param ingress.hostname Default host for the ingress record
   ##
-  hostname: elasticsearch.local
+  hostname: jaeger-elasticsearch-k3s.lumigame.com
   ## @param ingress.path Default path for the ingress record
   ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
   ##
@@ -400,7 +400,7 @@ ingress:
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
   ##
-  ingressClassName: ""
+  ingressClassName: "haproxy"
   ## @param ingress.extraHosts An array with additional hostname(s) to be covered with the ingress record
   ## e.g:
   ## extraHosts:
@@ -464,10 +464,10 @@ ingress:
 master:
   ## @param master.masterOnly Deploy the Elasticsearch master-elegible nodes as master-only nodes. Recommended for high-demand deployments.
   ## If you are
-  masterOnly: true
+  masterOnly: false
   ## @param master.replicaCount Number of master-elegible replicas to deploy
   ##
-  replicaCount: 2
+  replicaCount: 1
   ## @param master.extraRoles Append extra roles to the node role
   ##
   extraRoles: []
@@ -809,7 +809,7 @@ master:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: ""
+    storageClass: local-path #longhorn-single
     ## @param master.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -833,7 +833,7 @@ master:
       - ReadWriteOnce
     ## @param master.persistence.size Persistent Volume Size
     ##
-    size: 8Gi
+    size: 2Gi
   ## Master Persistent Volume Claim Retention Policy
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
   ##
@@ -877,7 +877,7 @@ master:
 data:
   ## @param data.replicaCount Number of data-only replicas to deploy
   ##
-  replicaCount: 2
+  replicaCount: 0
   ## @param data.extraRoles Append extra roles to the node role
   ##
   extraRoles: []
@@ -1215,7 +1215,7 @@ data:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: "longhorn-single"
+    storageClass: local-path #longhorn-single
     ## @param data.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -1285,7 +1285,7 @@ data:
 coordinating:
   ## @param coordinating.replicaCount Number of coordinating-only replicas to deploy
   ##
-  replicaCount: 2
+  replicaCount: 0
   ## @param coordinating.extraRoles Append extra roles to the node role
   ## NOTE: In Elasticsearch, all nodes act as coordinators, coordinating-only nodes do not have any other role by default.
   ##
@@ -1643,7 +1643,7 @@ ingest:
   enabled: true
   ## @param ingest.replicaCount Number of ingest-only replicas to deploy
   ##
-  replicaCount: 2
+  replicaCount: 0
   ## @param ingest.extraRoles Append extra roles to the node role
   ##
   extraRoles: []
