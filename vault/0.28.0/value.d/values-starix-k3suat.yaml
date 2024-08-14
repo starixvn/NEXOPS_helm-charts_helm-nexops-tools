@@ -35,9 +35,9 @@ server:
         # default_max_request_duration = "7200s"
         
         listener "tcp" {
+          tls_disable = 1
           address = "[::]:8200"
           cluster_address = "[::]:8201"
-          # tls_disable = 1
           # Enable unauthenticated metrics access (necessary for Prometheus Operator)
           telemetry {
             unauthenticated_metrics_access = "true"
