@@ -21,6 +21,8 @@ server:
     hosts: 
     - host: "vault.starixuat.com"
       paths: []
+    - host: "nex-vault-uat.nebula.prod"
+      paths: []
 
   # Run Vault in "HA" mode.
   ha:
