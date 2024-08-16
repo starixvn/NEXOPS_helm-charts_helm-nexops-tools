@@ -1,1 +1,4 @@
 ---
+controller:
+  config:
+    ssl-certificate: "haproxy-ingress/nebula-prod-cert"
