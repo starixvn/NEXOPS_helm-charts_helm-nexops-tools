@@ -21,6 +21,8 @@ server:
     hosts: 
     - host: "vault.starixuat.com"
       paths: []
+    - host: "nex-vault-uat.nebula.prod"
+      paths: []
 
   # Run Vault in "HA" mode.
   ha:
@@ -81,7 +83,7 @@ server:
   extraEnvironmentVars:
     HTTP_PROXY: lisasqd.nebula.prod:8801
     HTTPS_PROXY: lisasqd.nebula.prod:8801
-    NO_PROXY: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vault-k3suat-internal,.nebula.prod
+    NO_PROXY: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vault-k3suat-internal,.nebula.prod,.svc,.cluster.local
 
 
   extraSecretEnvironmentVars:
