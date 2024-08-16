@@ -1,8 +1,6 @@
 ---
 server:
 
-  configAnnotation: true
-  
   resources:
     limits:
       memory: 1Gi
