@@ -1,5 +1,7 @@
 ---
 server:
+
+  configAnnotation: true
   
   resources:
     limits:
