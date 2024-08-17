@@ -5,6 +5,9 @@ server:
     limits:
       memory: 1Gi
 
+  authDelegator:
+    enabled: true
+
   dataStorage:
     enabled: true
     size: 5Gi
