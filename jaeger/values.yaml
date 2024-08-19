@@ -484,7 +484,7 @@ collector:
     loadBalancerIP: ""
     # List of IP ranges that are allowed to access the load balancer (if supported)
     loadBalancerSourceRanges: []
-    type: ClusterIP
+    type: NodePort #ClusterIP
     # Cluster IP address to assign to service. Set to None to make service headless
     clusterIP: ""
     grpc:
@@ -504,12 +504,12 @@ collector:
         #{}
         name: otlp-grpc
         port: 4317
-        # nodePort:
+        nodePort: 31317
       http:
         #{}
         name: otlp-http
         port: 4318
-        #nodePort: 31318
+        nodePort: 31318
   ingress:
     enabled: false
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
