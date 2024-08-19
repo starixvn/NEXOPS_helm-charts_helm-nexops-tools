@@ -62,13 +62,13 @@ server:
         storage "raft" {
           path = "/vault/data"
           retry_join {
-            leader_api_addr = "http://vault-testlab-0.vault-testlab-internal:8200"
+            leader_api_addr = "http://vaultz-testlab-0.vaultz-testlab-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-testlab-1.vault-testlab-internal:8200"
+            leader_api_addr = "http://vaultz-testlab-1.vaultz-testlab-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-testlab-2.vault-testlab-internal:8200"
+            leader_api_addr = "http://vaultz-testlab-2.vaultz-testlab-internal:8200"
           }
         }
 
@@ -90,7 +90,7 @@ server:
   extraEnvironmentVars: 
     HTTP_PROXY: http://10.70.70.136:3128/
     HTTPS_PROXY: http://10.70.70.136:3128/
-    NO_PROXY: localhost,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vault-testlab-internal,.svc,.cluster.local
+    NO_PROXY: localhost,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vaultz-testlab-internal,.svc,.cluster.local
 
   extraSecretEnvironmentVars:
   - envName: AWS_ACCESS_KEY_ID
