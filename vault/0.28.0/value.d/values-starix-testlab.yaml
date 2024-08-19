@@ -62,13 +62,13 @@ server:
         storage "raft" {
           path = "/vault/data"
           retry_join {
-            leader_api_addr = "http://vault-testlab-0.vault-testlab-internal:8200"
+            leader_api_addr = "http://vaultz-testlab-0.vaultz-testlab-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-testlab-1.vault-testlab-internal:8200"
+            leader_api_addr = "http://vaultz-testlab-1.vaultz-testlab-internal:8200"
           }
           retry_join {
-            leader_api_addr = "http://vault-testlab-2.vault-testlab-internal:8200"
+            leader_api_addr = "http://vaultz-testlab-2.vaultz-testlab-internal:8200"
           }
         }
 
