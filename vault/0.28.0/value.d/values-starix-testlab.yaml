@@ -1,9 +1,13 @@
 ---
 server:
-  
+  logLevel: "debug"
+
   resources:
     limits:
       memory: 1Gi
+
+  authDelegator:
+    enabled: true
 
   dataStorage:
     enabled: true
@@ -67,6 +71,8 @@ server:
             leader_api_addr = "http://vault-testlab-2.vault-testlab-internal:8200"
           }
         }
+
+        service_registration "kubernetes" {}
 
   route:
     enabled: true

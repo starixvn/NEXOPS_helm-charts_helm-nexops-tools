@@ -36,5 +36,5 @@ extraResources:
       dataLocality: strict-local
       numberOfReplicas: "1"
     provisioner: driver.longhorn.io
-    reclaimPolicy: Retain
+    reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
