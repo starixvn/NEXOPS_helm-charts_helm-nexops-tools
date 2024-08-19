@@ -13,8 +13,12 @@ server:
     enabled: false
 
   ingress:
-    activeService: false
+    enabled: true
+    activeService: true
     ingressClassName: "haproxy"
+    hosts: 
+    - host: "vault.nexdev.net"
+      paths: []
 
   # Run Vault in "HA" mode.
   ha:
@@ -74,6 +78,8 @@ server:
           }
 
         }
+
+        service_registration "kubernetes" {}
 
   
   readinessProbe:
