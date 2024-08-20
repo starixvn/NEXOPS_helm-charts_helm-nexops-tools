@@ -1,0 +1,48 @@
+# Default values for vault-raft-backup-cronjob.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: hub.nexdev.net/base/nexops-tools/vault-snapshot
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "2024.8.17"
+
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "vault-snapshot"
+
+cronjob:
+  schedule: "21 * * * *"
+  retainLast: "3"
+  env:
+  - name: TZ
+    value: Asia/Bangkok
+
+  - name: S3_HOST
+    value: s3.example.com
+  - name: S3_BUCKET
+    value: bucketname
+  - name: S3_PATH
+    value: bucketname/full/path
+
+  - name: VAULT_ROLE
+    value: vault-snapshot
+  - name: VAULT_ADDR
+    value: https://vault.example.com
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        key: AWS_SECRET_ACCESS_KEY
+        name: vault-snapshot-credentials
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        key: AWS_ACCESS_KEY_ID
+        name: vault-snapshot-credentials
