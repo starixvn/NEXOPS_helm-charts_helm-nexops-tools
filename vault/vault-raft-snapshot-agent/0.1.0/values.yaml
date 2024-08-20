@@ -24,6 +24,8 @@ cronjob:
   env:
   - name: TZ
     value: Asia/Bangkok
+  - name: retainDay
+    value: 3
 
   - name: S3_HOST
     value: s3.example.com
