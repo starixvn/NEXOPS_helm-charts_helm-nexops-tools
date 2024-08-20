@@ -20,7 +20,6 @@ serviceAccount:
 
 cronjob:
   schedule: "21 * * * *"
-  retainDay: "3"
   env:
   - name: TZ
     value: Asia/Bangkok
