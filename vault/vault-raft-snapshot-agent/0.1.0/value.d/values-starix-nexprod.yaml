@@ -1,7 +1,7 @@
 ---
 cronjob:
-  schedule: "8 * * * *"
-  retainLast: "3"
+  schedule: "52 * * * *"
+  retainDay: "3"
   env:
   - name: S3_HOST
     value: minio-lumprod-api.lumigame.com
