@@ -1,6 +1,6 @@
 ---
 cronjob:
-  schedule: "59 * * * *"
+  schedule: "7 * * * *"
   retainDay: "3"
   env:
   - name: S3_HOST
