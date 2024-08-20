@@ -21,8 +21,8 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  defaultStorageClass: local-path #longhorn-single
-  storageClass: local-path #longhorn-single
+  defaultStorageClass: longhron #local-path #longhorn-single
+  storageClass: longhron #longhorn-single
   elasticsearch:
     service:
       name: elasticsearch
