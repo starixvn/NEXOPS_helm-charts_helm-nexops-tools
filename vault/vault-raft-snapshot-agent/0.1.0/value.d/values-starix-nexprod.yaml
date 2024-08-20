@@ -1,8 +1,11 @@
 ---
 cronjob:
-  schedule: "7 * * * *"
-  retainDay: "3"
+  schedule: "21 * * * *"
   env:
+  - name: TZ
+    value: Asia/Bangkok
+  - name: retainDay
+    value: 3
   - name: S3_HOST
     value: https://minio-lumprod-api.lumigame.com
   - name: S3_BUCKET
