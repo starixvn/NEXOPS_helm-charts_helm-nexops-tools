@@ -21,8 +21,8 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  defaultStorageClass: local-path #longhorn-single
-  storageClass: longhron #longhorn-single
+  defaultStorageClass: longhorn #local-path #longhorn-single
+  storageClass: longhorn #longhorn-single
   elasticsearch:
     service:
       name: elasticsearch
@@ -809,7 +809,7 @@ master:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: local-path #longhorn-single
+    storageClass: longhorn #longhorn-single
     ## @param master.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -1215,7 +1215,7 @@ data:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: local-path #longhorn-single
+    storageClass: longhorn #longhorn-single
     ## @param data.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
