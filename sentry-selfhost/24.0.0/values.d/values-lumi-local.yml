@@ -18,6 +18,36 @@ nginx:
   clusterDomain: lumi.local
 postgresql:
   clusterDomain: lumi.local
+  auth:
+    database: sentry
+    enablePostgresUser: true
+    existingSecret: ""
+    password: "passwdpostgres"
+    postgresPassword: "passwdpostgres"
+    replicationPassword: "passwdpostgres"
+    replicationUsername: repl_user
+    secretKeys:
+      adminPasswordKey: postgres-password
+      replicationPasswordKey: replication-password
+      userPasswordKey: password
+    usePasswordFiles: false
+    username: "postgres"
+  common:
+    exampleValue: common-chart
+    global:
+      imagePullSecrets: []
+      imageRegistry: ""
+      postgresql:
+        auth:
+          database: "sentry"
+          existingSecret: ""
+          password: "passwdpostgres"
+          postgresPassword: "passwdpostgres"
+          secretKeys:
+            adminPasswordKey: "postgres-password"
+            replicationPasswordKey: "replication-password"
+            userPasswordKey: "password"
+          username: "postgres"
 rabbitmq:
   clusterDomain: lumi.local
 redis:
