@@ -19,16 +19,16 @@ logstashPipeline:
 
     }
 
-  global_filter.conf: |
-    filter {
-      if ([host]) {
-        mutate {
-          rename => {
-            "host" => "tcp_host"
-          }
-        }
-      }
-    }
+  # global_filter.conf: |
+  #   filter {
+  #     if ([host]) {
+  #       mutate {
+  #         rename => {
+  #           "host" => "tcp_host"
+  #         }
+  #       }
+  #     }
+  #   }
 
   vault_filter.conf: |
     filter {
