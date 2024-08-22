@@ -1,5 +1,7 @@
 ---
 controller:
+  extraArgs:
+  - --configmap-tcp-services=haproxy-ingress/tcp-configmap
   service:
     tcpPorts:
     - name: busybox
