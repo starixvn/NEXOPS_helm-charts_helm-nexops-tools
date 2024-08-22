@@ -310,7 +310,7 @@ ingress:
     httpRedirect: false
   enabled: true
   #regexPathStyle: nginx
-  hostname: "sentry-k8s.lumigame.com"
+  hostname: "sentry-s1.nexentgame.com"
   ingressClassName: "haproxy"
 kafka:
   advertisedListeners: []
