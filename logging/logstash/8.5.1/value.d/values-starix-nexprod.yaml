@@ -23,8 +23,7 @@ logstashPipeline:
     filter {
       if ([host]) {
         mutate {
-          rename => ["host" => "[host][addr]"]
-          convert => ["[host][addr]" => "string"]
+          rename => ["host" => "host.addr"]
         }
       }
     }
