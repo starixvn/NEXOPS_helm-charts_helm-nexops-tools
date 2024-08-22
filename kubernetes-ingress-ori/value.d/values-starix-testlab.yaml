@@ -5,6 +5,6 @@ controller:
   service:
     tcpPorts:
     - name: busybox
-      port: 2002
-      targetPort: 2002
+      port: 2000
+      targetPort: 2000
       protocol: TCP
