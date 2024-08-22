@@ -9,6 +9,9 @@ ingress:
 clickhouse:
   clusterDomain: lumi.local
 kafka:
+  extraConfig: |
+    offsets.topic.replication.factor=1
+    transaction.state.log.replication.factor=1
   clusterDomain: lumi.local
   zookeeper:
     clusterDomain: lumi.local
