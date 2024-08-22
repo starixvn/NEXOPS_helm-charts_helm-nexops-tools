@@ -39,10 +39,7 @@ spec:
               protocol: TCP
           env:
             - name: ApiKey
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "baget.fullname" . }}-apikey-secret
-                  key: apiKey
+              value: {{ .Values.apiKey | quote }}
             {{- if .Values.pathBase }}
             - name: PathBase
               value: {{ .Values.pathBase | quote }}
