@@ -1,1 +1,23 @@
 ---
+controller:
+  extraArgs:
+  - --configmap-tcp-services=haproxy-ingress/tcp-configmap
+  service:
+    tcpPorts:
+    - name: logstash-tcp
+      port: 5044
+      targetPort: 5044
+      protocol: TCP
+
+
+# Add-on component
+extraResources:
+  - |
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: tcp-configmap
+      namespace: haproxy-ingress
+    data:
+      5044:
+        logging/logstash-nexprod-logstash:5044
