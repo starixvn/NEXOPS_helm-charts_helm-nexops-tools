@@ -1,0 +1,26 @@
+ingress:
+  hostname: "sentry-s1.nexentgame.com"
+
+# filestore:
+#   filesystem:
+#     persistence:
+#       storageClass: "local-path"
+
+clickhouse:
+  clusterDomain: lumi.local
+kafka:
+  clusterDomain: lumi.local
+  zookeeper:
+    clusterDomain: lumi.local
+memcached:
+  clusterDomain: lumi.local
+nginx:
+  clusterDomain: lumi.local
+postgresql:
+  clusterDomain: lumi.local
+rabbitmq:
+  clusterDomain: lumi.local
+redis:
+  clusterDomain: lumi.local
+zookeeper:
+  clusterDomain: lumi.local

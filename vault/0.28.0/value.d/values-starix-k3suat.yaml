@@ -23,6 +23,8 @@ server:
       paths: []
     - host: "nex-vault-uat.nebula.prod"
       paths: []
+    annotations:
+      haproxy.org/forwarded-for: "true"
 
   # Run Vault in "HA" mode.
   ha:

@@ -31,7 +31,7 @@ server:
       config: |
         ui = true
         cluster_name = "vault-integrated-storage"
-        # default_max_request_duration = "7200s"
+        default_max_request_duration = "7200s"
         
         listener "tcp" {
           address = "[::]:8200"

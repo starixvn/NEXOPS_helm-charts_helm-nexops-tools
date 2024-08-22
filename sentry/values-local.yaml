@@ -310,7 +310,7 @@ ingress:
     httpRedirect: false
   enabled: true
   #regexPathStyle: nginx
-  hostname: "sentry-k8s.lumigame.com"
+  hostname: "sentry-s1.nexentgame.com"
   ingressClassName: "haproxy"
 kafka:
   advertisedListeners: []
@@ -3678,7 +3678,7 @@ system:
 user:
   create: true
   email: admin@sentry.local
-  password: aaaa
+  password: "KglIeyMTup1-"
 vroom:
   affinity: {}
   autoscaling:

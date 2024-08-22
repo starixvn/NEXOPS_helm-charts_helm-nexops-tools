@@ -19,6 +19,16 @@ logstashPipeline:
 
     }
 
+  global_filter.conf: |
+    filter {
+      if ([host]) {
+        mutate {
+          rename => {"host" => "[host][hostname]"}
+          convert => {"[host][hostname]" => "string"}
+        }
+      }
+    }
+
   vault_filter.conf: |
     filter {
       # if [@metadata][input][tcp][source] and ![host] {
@@ -30,7 +40,7 @@ logstashPipeline:
       #   }
       # }
 
-      if [@metadata][input][tcp][source][name] =~ /vault/ {
+      if [host][hostname] =~ /vault/ {
         json {
           source => "message"
         }
@@ -38,8 +48,24 @@ logstashPipeline:
           add_tag => ["vault-server"]
           remove_field => ["[event][original]"]
         }
-      }
 
+        if [host][hostname] =~ /vault-nexprod/ {
+          mutate {
+            add_tag => ["nexprod","starix"]
+          }
+        }
+
+        else if [host][hostname] =~ /vault-internal/ {
+          mutate {
+            add_tag => ["dev","starix"]
+          }
+        }
+
+      }
+    }
+
+  dev_filter.conf: |
+    filter {
       if "LoginTransaction" in [Tags] {
         useragent {
           source => '[Message][UserAgent]'
@@ -67,14 +93,13 @@ logstashPipeline:
           }
         }        
       }
-      
     }
 
 
   main_output.conf: |
     output {
 
-      if "vault-server" in [tags] {
+      if "vault-server" in [tags] and "nexprod" in [tags] and "starix" in [tags] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
@@ -82,6 +107,17 @@ logstashPipeline:
           ssl => true
           ssl_certificate_verification => false
           index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
+        }         
+      }
+
+      else if "vault-server" in [tags] and "dev" in [tags] and "starix" in [tags] {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-vault-audit-dev-%{+YYYY.MM.dd}"
         }         
       }
 

@@ -11,11 +11,11 @@ tenant:
     name: nexops-env-configuration
 
   buckets:
-  - name: vault-lumprod-backup
   - name: backups
   - name: lumi-backup
   - name: starix-backup
   - name: longhorn-lumprod
+  - name: vault-backup
 
 
   ###
