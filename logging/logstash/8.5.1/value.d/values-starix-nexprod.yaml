@@ -23,8 +23,7 @@ logstashPipeline:
     filter {
       if ([host]) {
         mutate {
-          rename => {"host" => "[host][hostname]"}
-          convert => {"[host][hostname]" => "string"}
+          rename => {"host" => "[hostname]"}
         }
       }
     }
@@ -40,7 +39,7 @@ logstashPipeline:
       #   }
       # }
 
-      if [host][hostname] =~ /vault/ {
+      if [hostname] =~ /vault/ {
         json {
           source => "message"
         }
@@ -49,13 +48,13 @@ logstashPipeline:
           remove_field => ["[event][original]"]
         }
 
-        if [host][hostname] =~ /vault-nexprod/ {
+        if [hostname] =~ /vault-nexprod/ {
           mutate {
             add_tag => ["nexprod","starix"]
           }
         }
 
-        else if [host][hostname] =~ /vault-internal/ {
+        else if [hostname] =~ /vault-internal/ {
           mutate {
             add_tag => ["dev","starix"]
           }
