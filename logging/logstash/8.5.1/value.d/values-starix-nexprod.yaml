@@ -39,28 +39,26 @@ logstashPipeline:
       #   }
       # }
 
-      if [host] =~ /vault/ {
+      if [host] =~ /vault-nexprod/ {
         json {
           source => "message"
         }
         mutate {
-          add_tag => ["vault-server"]
+          add_tag => ["vault-server","nexprod","starix"]
           remove_field => ["[event][original]"]
           remove_field => ["[response][data]"]
         }
+      }
 
-        if [host] =~ /vault-nexprod/ {
-          mutate {
-            add_tag => ["nexprod","starix"]
-          }
+      else if [host] == "10.42.0.0" {
+        json {
+          source => "message"
         }
-
-        else if [host] == "10.42.0.0" {
-          mutate {
-            add_tag => ["dev","starix"]
-          }
+        mutate {
+          add_tag => ["vault-server","dev","starix"]
+          remove_field => ["[event][original]"]
+          remove_field => ["[response][data]"]
         }
-
       }
     }
 
