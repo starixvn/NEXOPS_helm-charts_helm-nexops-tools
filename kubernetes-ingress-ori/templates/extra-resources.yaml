@@ -1,0 +1,4 @@
+{{- range .Values.extraResources }}
+---
+{{- include "kunernetes-custom.render" (dict "value" . "context" $) }}
+{{- end }}

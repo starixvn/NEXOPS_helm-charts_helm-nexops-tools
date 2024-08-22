@@ -153,3 +153,18 @@ Create a FQDN for the Service metrics.
 {{- end -}}
 
 {{/* vim: set filetype=mustache: */}}
+
+
+
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "kunernetes-custom.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "kunernetes-custom.render" -}}
+  {{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+  {{- else }}
+    {{- tpl (.value | toYaml) .context }}
+  {{- end }}
+{{- end -}}

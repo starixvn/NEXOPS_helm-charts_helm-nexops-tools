@@ -8,3 +8,16 @@ controller:
       port: 2000
       targetPort: 2000
       protocol: TCP
+
+
+# Add-on component
+extraResources:
+  - |
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: tcp-configmap
+      namespace: haproxy-ingress
+    data:
+      2000:
+        nexops/busybox-service:5570
