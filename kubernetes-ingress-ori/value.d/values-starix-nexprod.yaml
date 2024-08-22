@@ -4,7 +4,7 @@ controller:
   - --configmap-tcp-services=haproxy-ingress/tcp-configmap
   service:
     tcpPorts:
-    - name: logstash-tcp
+    - name: logstash
       port: 5044
       targetPort: 5044
       protocol: TCP
