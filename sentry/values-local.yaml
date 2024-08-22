@@ -3678,7 +3678,7 @@ system:
 user:
   create: true
   email: admin@sentry.local
-  password: aaaa
+  password: "KglIeyMTup1-"
 vroom:
   affinity: {}
   autoscaling:
