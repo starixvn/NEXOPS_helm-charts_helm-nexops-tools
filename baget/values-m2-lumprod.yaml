@@ -1,0 +1,10 @@
+clusterDomain: lumi.lumprod
+image:
+  tag: latest
+persistence:
+  storageClass: longhorn
+ingress:
+  enabled: true
+  hosts:
+    - host: baget.nexentgame.com
+      paths: /
