@@ -30,7 +30,7 @@ logstashPipeline:
       #   }
       # }
 
-      if [host] =~ /vault-lumprod/{
+      if [host] =~ /vault/ {
         json {
           source => "message"
         }
