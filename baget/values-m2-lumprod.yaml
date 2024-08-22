@@ -1,4 +1,5 @@
 clusterDomain: lumi.lumprod
+apiKey: "7u5DkDlduy9Xuu3Tuoe65wc4"
 persistence:
   storageClass: longhorn
 ingress:
