@@ -5,6 +5,7 @@ persistence:
   storageClass: longhorn
 ingress:
   enabled: true
+  className: haproxy
   hosts:
     - host: baget.nexentgame.com
       paths:
