@@ -19,16 +19,16 @@ logstashPipeline:
 
     }
 
-  # global_filter.conf: |
-  #   filter {
-  #     if ([host]) {
-  #       mutate {
-  #         rename => {
-  #           "host" => "tcp_host"
-  #         }
-  #       }
-  #     }
-  #   }
+  global_filter.conf: |
+    filter {
+      if ([host]) {
+        mutate {
+          rename => {
+            "host" => "host.addr"
+          }
+        }
+      }
+    }
 
   vault_filter.conf: |
     filter {
@@ -41,7 +41,7 @@ logstashPipeline:
       #   }
       # }
 
-      if [tcp_host] =~ /vault/ {
+      if [host][addr] =~ /vault/ {
         json {
           source => "message"
         }
