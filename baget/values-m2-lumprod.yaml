@@ -7,4 +7,6 @@ ingress:
   enabled: true
   hosts:
     - host: baget.nexentgame.com
-      paths: ["/"]
+      paths:
+        - path: "/"
+          pathType: Prefix
