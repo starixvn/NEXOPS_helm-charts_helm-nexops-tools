@@ -49,6 +49,12 @@ spec:
             {{- end }}
             - name: ASPNETCORE_URLS
               value: "http://+:{{ .Values.service.port }}"
+            - name: Storage__Type
+              value: "FileSystem"
+            - name: Storage__Path
+              value: "/var/baget/packages"
+            - name: Search__Type
+              value: "Database"
             - name: PackageDeletionBehavior
               value: {{ .Values.packageDeletionBehavior | quote }}
             - name: AllowPackageOverrides
@@ -64,7 +70,7 @@ spec:
             {{- end }}
             {{- if eq .Values.database.type "Sqlite" .}}
             - name: Database__ConnectionString
-              value: "Data Source=baget.db"
+              value: "Data Source=/var/baget/baget.db"
             {{- end }}
           livenessProbe:
             httpGet:
@@ -76,7 +82,7 @@ spec:
               port: http
           volumeMounts:
             - name: {{ template "baget.fullname" . }}-data
-              mountPath: /app/packages
+              mountPath: /var/baget
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
