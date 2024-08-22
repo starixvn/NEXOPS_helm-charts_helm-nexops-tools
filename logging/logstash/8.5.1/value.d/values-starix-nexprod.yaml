@@ -55,7 +55,7 @@ logstashPipeline:
           }
         }
 
-        else if [host] =~ /vault-internal/ {
+        else if [host] == "10.42.0.0" {
           mutate {
             add_tag => ["dev","starix"]
           }
