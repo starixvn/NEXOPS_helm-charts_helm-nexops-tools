@@ -6,6 +6,10 @@ persistence:
 ingress:
   enabled: true
   className: haproxy
+  tls:
+    - secretName: haproxy-ingress/nexent-cert
+      hosts:
+        - baget.nexentgame.com    
   hosts:
     - host: baget.nexentgame.com
       paths:
