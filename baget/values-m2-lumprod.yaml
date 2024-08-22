@@ -1,6 +1,4 @@
 clusterDomain: lumi.lumprod
-image:
-  tag: latest
 persistence:
   storageClass: longhorn
 ingress:
