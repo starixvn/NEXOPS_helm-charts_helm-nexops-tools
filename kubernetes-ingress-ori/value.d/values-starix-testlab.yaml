@@ -1,1 +1,8 @@
 ---
+controller:
+  service:
+    tcpPorts:
+    - name: busybox
+      port: 2002
+      targetPort: 2002
+      protocol: TCP
