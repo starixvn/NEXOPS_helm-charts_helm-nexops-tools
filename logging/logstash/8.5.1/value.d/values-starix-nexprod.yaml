@@ -41,7 +41,7 @@ logstashPipeline:
       #   }
       # }
 
-      if [tcp_host] =~ /vault/ {
+      if [host] =~ /vault/ {
         json {
           source => "message"
         }
