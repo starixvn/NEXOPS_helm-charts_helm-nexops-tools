@@ -50,7 +50,7 @@ logstashPipeline:
         }
       }
 
-      else if [host] == "10.42.0.0" {
+      else if [host] =~ /haproxy-ingress-nexprod-kubernetes-ingress.haproxy-ingress.svc.starix.nexprod/ {
         json {
           source => "message"
         }
