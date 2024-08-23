@@ -6,6 +6,13 @@ ingress:
 #     persistence:
 #       storageClass: "local-path"
 
+
+sentry:
+  workerEvents:
+    enabled: "true"
+  workerTransactions:
+    enabled: "true"
+
 clickhouse:
   clusterDomain: lumi.local
 kafka:
