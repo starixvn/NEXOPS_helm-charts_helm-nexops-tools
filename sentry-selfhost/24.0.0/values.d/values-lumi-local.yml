@@ -7,14 +7,14 @@ ingress:
 #       storageClass: "local-path"
 
 
-sentry:
-  workerEvents:
-    enabled: "true"
-  workerTransactions:
-    enabled: "true"
+# sentry:
+#   workerEvents:
+#     enabled: "true"
+#   workerTransactions:
+#     enabled: "true"
 
-symbolicator:
-  enabled: true
+# symbolicator:
+#   enabled: true
 
 clickhouse:
   clusterDomain: lumi.local
