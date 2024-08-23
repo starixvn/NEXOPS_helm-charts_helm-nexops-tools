@@ -13,6 +13,9 @@ sentry:
   workerTransactions:
     enabled: "true"
 
+symbolicator:
+  enabled: true
+
 clickhouse:
   clusterDomain: lumi.local
 kafka:
