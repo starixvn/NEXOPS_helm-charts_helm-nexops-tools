@@ -120,7 +120,7 @@ logstashPipeline:
       }
 
       else if "legion" in [tags] {
-        if [Properties][Enviroment] == "LOCAL" {
+        if [Properties][Environment] == "LOCAL" {
           if "deposit" in [tags] {
             opensearch {
               hosts => ["https://opensearch-cluster-master:9200"]
