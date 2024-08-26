@@ -11,8 +11,6 @@ spec:
       targetPort: 31311
       protocol: TCP
       name: http
-      {{- if .Values.service.nodePort -}}
       nodePort: {{ .Values.service.nodePort }}
-      {{- end }}
   selector:
     {{- include "nui-k8s.selectorLabels" . | nindent 4 }}
