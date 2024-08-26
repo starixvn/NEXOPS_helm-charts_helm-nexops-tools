@@ -1,11 +1,11 @@
 ---
 server:
   ingress:
-    activeService: false
+    activeService: true
     ingressClassName: "haproxy"
     enabled: true
     hosts: 
-    - host: "vault.starixuat.com"
+    - host: "vault.starix.testlab"
       paths: []
 
   resources:
