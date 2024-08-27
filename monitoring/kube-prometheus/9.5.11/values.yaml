@@ -3251,3 +3251,7 @@ kubeProxy:
 rbac:
   create: true
   pspEnabled: true
+
+
+crds:
+  enabled: true
