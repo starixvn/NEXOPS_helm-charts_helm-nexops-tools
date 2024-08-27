@@ -60,6 +60,16 @@ logstashPipeline:
           remove_field => ["[response][data]"]
         }
       }
+
+      else if [host] =~ /10.42.0.0/ {
+        json {
+          source => "message"
+        }
+        mutate {
+          remove_field => ["[event][original]"]
+          remove_field => ["[response][data]"]
+        }
+      }
     }
 
   dev_filter.conf: |
