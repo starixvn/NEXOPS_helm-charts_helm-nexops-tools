@@ -8,6 +8,7 @@ crds:
   enabled: false
 
 prometheus:
+  type: NodePort
   service:
     nodePorts:
       http: "30062"
