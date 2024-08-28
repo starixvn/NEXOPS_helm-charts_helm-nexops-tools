@@ -496,7 +496,7 @@ operator:
     initialDelaySeconds: 30
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 300
     successThreshold: 1
   ## @param operator.customLivenessProbe Custom livenessProbe that overrides the default one
   ##
