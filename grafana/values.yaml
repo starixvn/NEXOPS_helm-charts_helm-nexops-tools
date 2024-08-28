@@ -96,11 +96,11 @@ livenessProbe:
 
 image:
   # -- The Docker registry
-  registry: hub.lumigame.com #docker.io
+  registry: docker.io
   # -- Docker image repository
-  repository: base/grafana
+  repository: grafana/grafana
   # Overrides the Grafana image tag whose default is the chart appVersion
-  tag: "10.1.4-d11"
+  tag: ""
   sha: ""
   pullPolicy: IfNotPresent
 
