@@ -1164,11 +1164,11 @@ imageRenderer:
     behavior: {}
   image:
     # -- The Docker registry
-    registry: docker.io
+    registry: hub.lumigame.com #docker.io
     # image-renderer Image repository
-    repository: grafana/grafana-image-renderer
+    repository: base/grafana #grafana/grafana-image-renderer
     # image-renderer Image tag
-    tag: latest
+    tag: 10.1.4-d11 #latest
     # image-renderer Image sha (optional)
     sha: ""
     # image-renderer ImagePullPolicy
