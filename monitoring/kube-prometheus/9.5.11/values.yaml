@@ -496,7 +496,7 @@ operator:
     initialDelaySeconds: 30
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 300
+    failureThreshold: 60
     successThreshold: 1
   ## @param operator.customLivenessProbe Custom livenessProbe that overrides the default one
   ##
@@ -1097,7 +1097,7 @@ prometheus:
     enabled: true
     path: /-/ready
     initialDelaySeconds: 0
-    failureThreshold: 60
+    failureThreshold: 300
     periodSeconds: 15
     successThreshold: 1
     timeoutSeconds: 3
