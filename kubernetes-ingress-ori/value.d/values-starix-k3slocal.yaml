@@ -3,5 +3,6 @@ controller:
   config:
     ssl-certificate: "haproxy-ingress/nexent-cert"
 
-  # service:
-  #   externalTrafficPolicy: "Local"
+  service:
+    type: LoadBalancer
+    # externalTrafficPolicy: "Local"

@@ -3,6 +3,7 @@ controller:
   extraArgs:
   - --configmap-tcp-services=gitlab-server/gitlab-server-haproxy-tcp
   service:
+    type: LoadBalancer
     tcpPorts:
     - name: ssh
       port: 22
