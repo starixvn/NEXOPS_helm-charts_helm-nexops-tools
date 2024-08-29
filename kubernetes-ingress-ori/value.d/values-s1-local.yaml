@@ -1,4 +1,7 @@
 ---
 controller:
+  config:
+    ssl-certificate: "haproxy-ingress/nexent-cert"
+    
   service:
     type: LoadBalancer
