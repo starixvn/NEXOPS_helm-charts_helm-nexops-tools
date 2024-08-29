@@ -40,3 +40,6 @@ prometheus:
     enabled: false
     name: ""
     key: ""
+
+alertmanager:
+  enabled: false
