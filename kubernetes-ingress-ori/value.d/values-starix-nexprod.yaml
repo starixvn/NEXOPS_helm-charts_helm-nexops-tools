@@ -3,6 +3,7 @@ controller:
   extraArgs:
   - --configmap-tcp-services=haproxy-ingress/tcp-configmap
   service:
+    type: LoadBalancer
     tcpPorts:
     - name: logstash
       port: 5044

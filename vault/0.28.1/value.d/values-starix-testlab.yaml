@@ -83,9 +83,9 @@ server:
   updateStrategyType: "RollingUpdate"
 
   extraEnvironmentVars: 
-    HTTP_PROXY: http://10.70.70.136:3128/
-    HTTPS_PROXY: http://10.70.70.136:3128/
-    NO_PROXY: localhost,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vault-testlab-internal,.svc,.cluster.local
+    http_proxy: http://10.70.70.136:3128
+    https_proxy: http://10.70.70.136:3128
+    no_proxy: localhost,127.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.vault-testlab-internal,.svc,.cluster.local
 
   extraSecretEnvironmentVars:
   - envName: AWS_ACCESS_KEY_ID
