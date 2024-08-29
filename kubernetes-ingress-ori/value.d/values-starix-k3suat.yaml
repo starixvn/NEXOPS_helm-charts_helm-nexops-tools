@@ -4,4 +4,5 @@ controller:
     ssl-certificate: "haproxy-ingress/nebula-prod-cert"
 
   service:
+    type: LoadBalancer
     externalTrafficPolicy: "Local"
