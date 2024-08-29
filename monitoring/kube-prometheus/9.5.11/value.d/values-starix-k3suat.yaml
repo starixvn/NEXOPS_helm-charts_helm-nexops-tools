@@ -4,9 +4,6 @@ clusterDomain: starix.uat
 operator:
   enabled: true
 
-crds:
-  enabled: false
-
 prometheus:
   service:
     type: NodePort
