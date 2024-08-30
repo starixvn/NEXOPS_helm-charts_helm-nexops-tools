@@ -33,7 +33,7 @@ nameOverride: ""
 fullnameOverride: ""
 ## @param clusterDomain Kubernetes Cluster Domain
 ##
-clusterDomain: cluster.local
+clusterDomain: starix.k3slocal
 ## @param commonAnnotations Annotations to add to all deployed objects
 ##
 commonAnnotations: {}
