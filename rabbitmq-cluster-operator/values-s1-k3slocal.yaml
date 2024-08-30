@@ -1,0 +1,4 @@
+clusterDomain: starix.k3slocal
+rabbitCluster:
+  user: admin
+  password: 1Jhie4%iUnl$on
