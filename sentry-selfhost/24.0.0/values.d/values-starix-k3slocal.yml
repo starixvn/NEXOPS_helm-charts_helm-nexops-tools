@@ -13,8 +13,8 @@ ingress:
 #   workerTransactions:
 #     enabled: "true"
 
-# symbolicator:
-#   enabled: true
+symbolicator:
+  enabled: true
 
 clickhouse:
   clusterDomain: starix.k3slocal

@@ -200,7 +200,7 @@ sentry:
 
   worker:
     enabled: true
-    replicas: 1
+    replicas: 3
     # concurrency: 4
     env: []
     resources: {}
