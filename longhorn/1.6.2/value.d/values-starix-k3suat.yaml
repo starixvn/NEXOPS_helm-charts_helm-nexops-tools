@@ -38,6 +38,38 @@ extraResources:
     parameters:
       dataLocality: strict-local
       numberOfReplicas: "1"
+      fsType: "xfs"
+      diskSelector: "default"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-s1
+    parameters:
+      dataLocality: disabled
+      numberOfReplicas: "3"
+      fsType: "xfs"
+      diskSelector: "longhorn-s1"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-s1-stricted
+    parameters:
+      dataLocality: strict-local
+      numberOfReplicas: "1"
+      fsType: "xfs"
+      diskSelector: "longhorn-s1"
     provisioner: driver.longhorn.io
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
