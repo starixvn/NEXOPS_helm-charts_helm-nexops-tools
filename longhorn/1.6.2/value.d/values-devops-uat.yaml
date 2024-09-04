@@ -41,16 +41,3 @@ extraResources:
     provisioner: driver.longhorn.io
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
-
-  - |
-    apiVersion: storage.k8s.io/v1
-    kind: StorageClass
-    allowVolumeExpansion: true
-    metadata:
-      name: longhorn-s1
-    parameters:
-      dataLocality: disabled
-      numberOfReplicas: "3"
-    provisioner: driver.longhorn.io
-    reclaimPolicy: Delete
-    volumeBindingMode: Immediate
