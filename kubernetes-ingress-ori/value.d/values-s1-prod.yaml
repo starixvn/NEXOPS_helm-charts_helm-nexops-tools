@@ -1,0 +1,11 @@
+---
+controller:
+  config:
+    stats-config-snippet: |
+      stats auth nexops:NexOps!QAZ
+      stats refresh 300s
+      stats show-legends
+      stats show-node
+      stats show-modules
+  service:
+    type: LoadBalancer

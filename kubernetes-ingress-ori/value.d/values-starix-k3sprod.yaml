@@ -1,0 +1,13 @@
+---
+controller:
+  config:
+    # ssl-certificate: "haproxy-ingress/nebula-prod-cert"
+    stats-config-snippet: |
+      stats auth nexops:NexOps!QAZ
+      stats refresh 300s
+      stats show-legends
+      stats show-node
+      stats show-modules
+  service:
+    type: LoadBalancer
+    #externalTrafficPolicy: "Local"
