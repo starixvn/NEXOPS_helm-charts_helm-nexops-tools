@@ -1,5 +1,5 @@
 ---
-clusterDomain: starix.uat
+clusterDomain: lumi.uat
 
 operator:
   enabled: true
@@ -12,13 +12,13 @@ prometheus:
     nodePorts:
       http: "30062"
 
-  retention: 14d
-  retentionSize: "28GB"
+  retention: 7d
+  retentionSize: "18GB"
 
   persistence:
     enabled: true
     storageClass: "longhorn"
-    size: 30Gi
+    size: 20Gi
 
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
@@ -40,3 +40,6 @@ prometheus:
     enabled: false
     name: ""
     key: ""
+
+alertmanager:
+  enabled: false
