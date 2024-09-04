@@ -42,7 +42,7 @@ extraResources:
       dataLocality: strict-local
       numberOfReplicas: "1"
       fsType: "xfs"
-      diskSelector: "default"
+      diskSelector: "starix"
     provisioner: driver.longhorn.io
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
