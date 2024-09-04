@@ -23,6 +23,9 @@ metrics:
     # -- Setting that allows the creation of a Prometheus ServiceMonitor resource for Longhorn Manager components.
     enabled: true
 
+persistence:
+  defaultFsType: xfs
+
 defaultSettings:
   defaultDataPath: "/var/lib/longhorn/starix"
 
