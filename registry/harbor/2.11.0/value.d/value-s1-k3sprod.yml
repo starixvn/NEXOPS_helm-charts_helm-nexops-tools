@@ -26,20 +26,22 @@ metrics:
 persistence:
   persistentVolumeClaim:
     registry:
-      storageClass: "longhorn-s1-best-effort"
+      storageClass: "longhorn-harbor-s1"
       size: 70Gi
+      accessMode: "ReadWriteMany"
     jobservice:
       jobLog:
-        storageClass: "longhorn-s1-best-effort"
+        storageClass: "longhorn-harbor-s1"
         size: 5Gi
+        accessMode: "ReadWriteMany"
     database:
-      storageClass: "longhorn-s1-best-effort"
+      storageClass: "longhorn-harbor-s1"
       size: 10Gi
     redis:
-      storageClass: "longhorn-s1-best-effort"
+      storageClass: "longhorn-harbor-s1"
       size: 10Gi
     trivy:
-      storageClass: "longhorn-s1-best-effort"
+      storageClass: "longhorn-harbor-s1"
       size: 5Gi
 
 cache:
