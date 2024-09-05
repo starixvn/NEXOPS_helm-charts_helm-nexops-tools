@@ -28,12 +28,10 @@ persistence:
     registry:
       storageClass: "longhorn-harbor-s1"
       size: 70Gi
-      accessMode: "ReadWriteMany"
     jobservice:
       jobLog:
         storageClass: "longhorn-harbor-s1"
         size: 5Gi
-        accessMode: "ReadWriteMany"
     database:
       storageClass: "longhorn-harbor-s1"
       size: 10Gi
@@ -66,7 +64,6 @@ core:
     key: cattle.io/os
     value: harbor-s1
 jobservice:
-  replicas: 2
   nodeSelector:
     harbor-workload: "yes"
   tolerations:
@@ -74,7 +71,6 @@ jobservice:
     key: cattle.io/os
     value: harbor-s1
 registry:
-  replicas: 2
   nodeSelector:
     harbor-workload: "yes"
   tolerations:
