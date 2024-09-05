@@ -1,4 +1,6 @@
-clusterDomain: starix.k3slocal
+global:
+  storageClass: longhorn
+  storageSize: 8Gi
 rabbitCluster:
   user: admin
   password: 1Jhie4%iUnl$on

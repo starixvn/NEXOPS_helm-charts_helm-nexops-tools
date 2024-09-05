@@ -1,0 +1,6 @@
+global:
+  storageClass: longhorn-s1
+  storageSize: 10Gi
+rabbitCluster:
+  user: admin
+  password: 1Jhie4%iUnl$on

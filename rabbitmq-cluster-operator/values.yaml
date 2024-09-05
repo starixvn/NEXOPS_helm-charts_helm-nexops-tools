@@ -27,6 +27,7 @@ global:
   imagePullSecrets: []
   defaultStorageClass: ""
   storageClass: ""
+  storageSize: 8Gi
   ## Compatibility adaptations for Kubernetes platforms
   ##
   compatibility:

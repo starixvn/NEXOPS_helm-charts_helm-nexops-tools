@@ -34,5 +34,5 @@ spec:
             nodePort: 31672
         type: NodePort
   persistence:
-    storageClassName: longhorn
-    storage: 8Gi
+    storageClassName: {{ .Values.global.storageClass }}
+    storage: {{ .Values.global.storageSize }}
