@@ -21,7 +21,7 @@ server:
     hosts: 
     - host: "vault.starixuat.com"
       paths: []
-    - host: "nex-vault-uat.nebula.prod"
+    - host: "vn-nex-vault-uat.nebula.prod"
       paths: []
     annotations:
       haproxy.org/forwarded-for: "true"
