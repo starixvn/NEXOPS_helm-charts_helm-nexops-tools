@@ -1,5 +1,10 @@
 ingress:
-  hostname: "sentry.vgamesuat.com"
+  #hostname: "sentry.vgamesuat.com"
+  hosts: 
+    - host: "sentry.vgamesuat.com"
+      paths: []
+    - host: "vn-s1-sentry-prod.nebula.prod"
+      paths: []
 
 # filestore:
 #   filesystem:
@@ -17,20 +22,20 @@ symbolicator:
   enabled: true
 
 clickhouse:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
 kafka:
   extraConfig: |
     offsets.topic.replication.factor=1
     transaction.state.log.replication.factor=1
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
   zookeeper:
-    clusterDomain: starix.k3suat
+    clusterDomain: starix.k3sprod
 memcached:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
 nginx:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
 postgresql:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
   auth:
     database: sentry
     enablePostgresUser: true
@@ -62,8 +67,8 @@ postgresql:
             userPasswordKey: "password"
           username: "postgres"
 rabbitmq:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
 redis:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
 zookeeper:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3sprod
