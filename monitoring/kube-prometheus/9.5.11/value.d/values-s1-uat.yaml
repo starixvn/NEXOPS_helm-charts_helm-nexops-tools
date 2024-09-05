@@ -1,5 +1,5 @@
 ---
-clusterDomain: s1.local
+clusterDomain: s1.uat
 
 operator:
   enabled: true

@@ -1,5 +1,5 @@
 ---
-clusterDomain: lumi.uat
+clusterDomain: starix.k3suat
 
 operator:
   enabled: true
