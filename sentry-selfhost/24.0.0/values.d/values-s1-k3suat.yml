@@ -1,8 +1,5 @@
 ingress:
-  #hostname: "sentry.vgamesuat.com"
-  hosts: 
-    - sentry.vgamesuat.com
-    - vn-s1-sentry-uat.nebula.prod
+  hostname: "sentry-s1.vgamesuat.com"
 
 # filestore:
 #   filesystem:
