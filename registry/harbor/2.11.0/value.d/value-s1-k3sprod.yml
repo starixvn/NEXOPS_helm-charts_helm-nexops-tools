@@ -7,20 +7,12 @@ expose:
       core: s1hub-bk.nebula.prod
 externalURL: https://s1hub-bk.nebula.prod
 
-proxy:
-  http_proxy: "http://lisasqd-dev.nebula.prod:8801"
-  https_proxy: "http://lisasqd-dev.nebula.prod:8801"
-  noProxy: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-  components:
-    - core
-    - jobservice
-    - trivy
 
 
 metrics:
   enabled: true
   serviceMonitor:
-    enabled: false  
+    enabled: true  
 
 
 persistence:
@@ -42,72 +34,73 @@ persistence:
       storageClass: "longhorn-harbor-s1"
       size: 5Gi
 
+proxy:
+  httpProxy: "http://lisasqd-dev.nebula.prod:8801"
+  httpsProxy: "http://lisasqd-dev.nebula.prod:8801"
+  noProxy: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+  components:
+    - core
+    - jobservice
+    - trivy
+
+
 cache:
   enabled: true
   expireHours: 12
 
 
 portal:
-  replicas: 2
   nodeSelector:
-    harbor-workload: "yes"
+    harbor-s1-bk: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-s1
+    value: harbor-s1-bk
 core:
-  replicas: 2
   nodeSelector:
-    harbor-workload: "yes"
+    harbor-s1-bk: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-s1
+    value: harbor-s1-bk
 jobservice:
   nodeSelector:
-    harbor-workload: "yes"
+    harbor-s1-bk: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-s1
+    value: harbor-s1-bk
 registry:
   nodeSelector:
-    harbor-workload: "yes"
+    harbor-s1-bk: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-s1
+    value: harbor-s1-bk
 trivy:
-  nodeSelector:
-    harbor-workload: "yes"
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    value: harbor-s1
-  skipUpdate: false
-  skipJavaDBUpdate: false
-  offlineScan: false
+  enabled: false
+
 database:
   internal:
     nodeSelector:
-      harbor-workload: "yes"
+      harbor-s1-bk: "yes"
     tolerations:
     - effect: NoSchedule
       key: cattle.io/os
-      value: harbor-s1
+      value: harbor-s1-bk
 redis:
   internal:
     nodeSelector:
-      harbor-workload: "yes"
+      harbor-s1-bk: "yes"
     tolerations:
     - effect: NoSchedule
       key: cattle.io/os
-      value: harbor-s1
+      value: harbor-s1-bk
 exporter:
   nodeSelector:
-    harbor-workload: "yes"
+    harbor-s1-bk: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-s1
+    value: harbor-s1-bk
 
