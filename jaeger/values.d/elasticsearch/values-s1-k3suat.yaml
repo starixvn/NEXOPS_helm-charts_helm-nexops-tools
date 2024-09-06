@@ -21,8 +21,8 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  defaultStorageClass: longhorn #local-path #longhorn-single
-  storageClass: longhorn #longhorn-single
+  defaultStorageClass: longhorn 
+  storageClass: longhorn 
   elasticsearch:
     service:
       name: elasticsearch
@@ -57,7 +57,7 @@ commonLabels: {}
 commonAnnotations: {}
 ## @param clusterDomain Kubernetes cluster domain name
 ##
-clusterDomain: cluster.local
+clusterDomain: starix.k3suat
 ## @param extraDeploy Array of extra objects to deploy with the release
 ##
 extraDeploy: []
@@ -371,7 +371,7 @@ ingress:
   apiVersion: ""
   ## @param ingress.hostname Default host for the ingress record
   ##
-  hostname: jaeger-elasticsearch-k3s.lumigame.com
+  hostname: vn-s1-jaeger-elasticsearch-uat.nebula.prod
   ## @param ingress.path Default path for the ingress record
   ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
   ##
@@ -809,7 +809,7 @@ master:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: longhorn #longhorn-single
+    storageClass: longhorn 
     ## @param master.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -833,7 +833,7 @@ master:
       - ReadWriteOnce
     ## @param master.persistence.size Persistent Volume Size
     ##
-    size: 2Gi
+    size: 30Gi
   ## Master Persistent Volume Claim Retention Policy
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
   ##
