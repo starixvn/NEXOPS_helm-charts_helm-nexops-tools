@@ -35,8 +35,8 @@ persistence:
       size: 5Gi
 
 proxy:
-  http_proxy: "http://lisasqd-dev.nebula.prod:8801"
-  https_proxy: "http://lisasqd-dev.nebula.prod:8801"
+  httpProxy: "http://lisasqd-dev.nebula.prod:8801"
+  httpsProxy: "http://lisasqd-dev.nebula.prod:8801"
   noProxy: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
   components:
     - core
