@@ -1,0 +1,104 @@
+expose:
+  tls:
+    enabled: false
+  ingress:
+    className: "haproxy"
+    hosts:
+      core: s1hub.nebula.prod
+externalURL: https://s1hub.nebula.prod
+
+proxy:
+  http_proxy: "http://lisasqd-dev.nebula.prod:8801"
+  https_proxy: "http://lisasqd-dev.nebula.prod:8801"
+  noProxy: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+  components:
+    - core
+    - jobservice
+    - trivy
+
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true  
+
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: "longhorn-harbor-s1"
+      size: 70Gi
+    jobservice:
+      jobLog:
+        storageClass: "longhorn-harbor-s1"
+        size: 5Gi
+    database:
+      storageClass: "longhorn-harbor-s1"
+      size: 10Gi
+    redis:
+      storageClass: "longhorn-harbor-s1"
+      size: 10Gi
+    trivy:
+      storageClass: "longhorn-harbor-s1"
+      size: 5Gi
+
+cache:
+  enabled: true
+  expireHours: 12
+
+
+portal:
+  nodeSelector:
+    harbor-s1-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-s1-main
+core:
+  nodeSelector:
+    harbor-s1-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-s1-main
+jobservice:
+  nodeSelector:
+    harbor-s1-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-s1-main
+registry:
+  nodeSelector:
+    harbor-s1-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-s1-main
+trivy:
+  enabled: false
+
+database:
+  internal:
+    nodeSelector:
+      harbor-s1-main: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor-s1-main
+redis:
+  internal:
+    nodeSelector:
+      harbor-s1-main: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor-s1-main
+exporter:
+  nodeSelector:
+    harbor-s1-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-s1-main
+
