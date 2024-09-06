@@ -7,14 +7,6 @@ expose:
       core: s1hub.nebula.prod
 externalURL: https://s1hub.nebula.prod
 
-proxy:
-  http_proxy: "http://lisasqd-dev.nebula.prod:8801"
-  https_proxy: "http://lisasqd-dev.nebula.prod:8801"
-  noProxy: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-  components:
-    - core
-    - jobservice
-    - trivy
 
 
 metrics:
@@ -41,6 +33,16 @@ persistence:
     trivy:
       storageClass: "longhorn-harbor-s1"
       size: 5Gi
+
+proxy:
+  http_proxy: "http://lisasqd-dev.nebula.prod:8801"
+  https_proxy: "http://lisasqd-dev.nebula.prod:8801"
+  noProxy: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+  components:
+    - core
+    - jobservice
+    - trivy
+
 
 cache:
   enabled: true
