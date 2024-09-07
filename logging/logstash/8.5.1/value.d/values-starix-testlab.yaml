@@ -91,7 +91,7 @@ logstashPipeline:
     
 
 
-logstashJavaOpts: "-Xmx3g -Xms3g"
+logstashJavaOpts: "-Xmx1g -Xms1g"
 
 resources:
   requests:
