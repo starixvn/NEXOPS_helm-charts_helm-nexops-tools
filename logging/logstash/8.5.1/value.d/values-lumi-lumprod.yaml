@@ -13,7 +13,6 @@ logstashConfig:
   logstash.yml: |
     http.host: "0.0.0.0"
 
-
 logstashPipeline:
   logstash.conf: |
     input {
@@ -828,3 +827,8 @@ logstashPipeline:
         }
       }
     }
+
+
+
+nodeSelector: 
+  nexops-tools: "yes"
