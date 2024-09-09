@@ -201,9 +201,9 @@ zabbixAgent:
   ##    mountPropagation: None|HostToContainer|Bidirectional
   image:
     ## Zabbix agent Docker image name
-    repository: zabbix/zabbix-agent2
+    repository: hub.nexdev.net/base/zabbix/zabbix-agent2 #zabbix/zabbix-agent2
     ## Tag of Docker image of Zabbix agent
-    tag: alpine-7.0.0
+    tag: ubuntu-7.0.3
     pullPolicy: IfNotPresent
     ## List of dockerconfig secrets names to use when pulling images. Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -264,9 +264,9 @@ zabbixAgent:
 
   service:
     type: ClusterIP
-    port: 10052
-    targetPort: 10052
-    nodePort: 31052
+    port: 10069
+    targetPort: 10069
+    nodePort: 31069
     portName: zabbix-agent
     listenOnAllInterfaces: true
     annotations:
