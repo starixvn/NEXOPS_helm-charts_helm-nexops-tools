@@ -1,5 +1,5 @@
 ingress:
-  hostname: "sentry-s1.nova88demo.com"
+  hostname: "sentry.nova88demo.com"
   additionalHostNames:
   - "vn-s1-sentry-prod.nebula.prod"
 
