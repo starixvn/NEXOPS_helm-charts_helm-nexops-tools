@@ -264,9 +264,9 @@ zabbixAgent:
 
   service:
     type: ClusterIP
-    port: 10069
-    targetPort: 10069
-    nodePort: 31069
+    port: 10050
+    targetPort: 10050
+    nodePort: 31050
     portName: zabbix-agent
     listenOnAllInterfaces: true
     annotations:
