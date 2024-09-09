@@ -203,7 +203,7 @@ zabbixAgent:
     ## Zabbix agent Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-agent2 #zabbix/zabbix-agent2
     ## Tag of Docker image of Zabbix agent
-    tag: ubuntu-7.0.3
+    tag: alpine-7.0.0
     pullPolicy: IfNotPresent
     ## List of dockerconfig secrets names to use when pulling images. Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
