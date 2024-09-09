@@ -13,6 +13,10 @@ ingress:
 #   workerTransactions:
 #     enabled: "true"
 
+sentry:
+  worker:
+    replicas: 2
+
 symbolicator:
   enabled: true
 
