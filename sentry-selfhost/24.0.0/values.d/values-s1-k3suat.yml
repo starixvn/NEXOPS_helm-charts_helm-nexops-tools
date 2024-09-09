@@ -20,6 +20,8 @@ symbolicator:
 
 clickhouse:
   clusterDomain: starix.k3suat
+  nodeSelector:
+    sentry: "yes"
   clickhouse:
     ## The instance number of Clickhouse
     replicas: "1"
