@@ -30,7 +30,7 @@ zabbixProxy:
   resources: {}
   image:
     ## Zabbix proxy Docker image name
-    repository: zabbix/zabbix-proxy-sqlite3
+    repository: hub.nexdev.net/base/zabbix/zabbix-proxy-sqlite3
     ## Tag of Docker image of Zabbix proxy
     tag: alpine-7.0.0
     pullPolicy: IfNotPresent
