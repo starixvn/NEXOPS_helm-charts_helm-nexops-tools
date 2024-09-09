@@ -42,18 +42,18 @@ spec:
           imagePullPolicy: {{ .Values.zabbixAgent.image.pullPolicy }}
           ports:
             - name: zabbix-agent
-              containerPort: 10050
+              containerPort: 10069
               protocol: TCP
           startupProbe:
             tcpSocket:
-              port: 10050
+              port: 10069
             initialDelaySeconds: 10
             periodSeconds: 5
             timeoutSeconds: 3
             failureThreshold: 5
           livenessProbe:
             tcpSocket:
-              port: 10050
+              port: 10069
             timeoutSeconds: 3
             failureThreshold: 3
             periodSeconds: 10
