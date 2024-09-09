@@ -42,7 +42,7 @@ spec:
           imagePullPolicy: {{ .Values.zabbixAgent.image.pullPolicy }}
           ports:
             - name: zabbix-agent
-              containerPort: 10069 #10050
+              containerPort: 10050
               protocol: TCP
           startupProbe:
             tcpSocket:
