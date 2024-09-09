@@ -78,6 +78,7 @@ ingress:
     ingressClassName: "haproxy"
     annotations:
       haproxy.org/server-ssl: "true"
+      ingress.kubernetes.io/compress-enable: "false"
     host: minio-lumprod.lumigame.com
     path: /
     pathType: Prefix
