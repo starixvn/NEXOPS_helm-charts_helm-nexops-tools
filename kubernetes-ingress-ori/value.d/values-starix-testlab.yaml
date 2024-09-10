@@ -10,6 +10,14 @@ controller:
       targetPort: 15044
       protocol: TCP
 
+  externalTrafficPolicy: "Local"
+  logging:
+    level: info
+    traffic:
+      address: "stdout"
+      format: "raw"
+      facility: "daemon"
+
 
 # Add-on component
 extraResources:

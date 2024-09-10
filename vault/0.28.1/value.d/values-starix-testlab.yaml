@@ -5,8 +5,12 @@ server:
     ingressClassName: "haproxy"
     enabled: true
     hosts: 
-    - host: "vault.starix.testlab"
+    - host: vault.starix.testlab
       paths: []
+
+  route:
+    enabled: true
+    host: vault.starix.testlab
 
   resources:
     limits:
@@ -16,7 +20,7 @@ server:
     enabled: true
     size: 5Gi
     mountPath: "/vault/data"
-    storageClass: longhorn-stricted
+    storageClass: "longhorn-stricted"
 
   auditStorage:
     enabled: false
@@ -69,8 +73,7 @@ server:
 
         service_registration "kubernetes" {}
 
-  route:
-    enabled: true
+  
 
   readinessProbe:
     enabled: true
