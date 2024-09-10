@@ -16,6 +16,8 @@ master:
 
 sentinel:
   enabled: true
+  service:
+    type: NodePort
   persistence:
     size: 10Gi    
 
