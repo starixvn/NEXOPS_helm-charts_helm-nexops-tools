@@ -21,4 +21,4 @@ extraResources:
       namespace: haproxy-ingress
     data:
       15044:
-        logging/logstash-nexprod-logstash:5044
+        logging/logstash-testlab-logstash:5044
