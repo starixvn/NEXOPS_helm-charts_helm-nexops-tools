@@ -110,7 +110,13 @@ zabbixServer:
     concurrencyPolicy: "Replace"
     deleteOlderThanSeconds: 3600
     # -- Requests and limits of pod resources. See: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers)
-    resources: {}
+    resources: #{}
+      requests:
+        memory: "512Mi"
+        #cpu: "250m"
+      limits:
+        memory: "1024Mi"
+        #cpu: "500m"
     # -- Extra environment variables. A list of additional environment variables.
     extraEnv: []
     # -- Additional volumeMounts to the cronjob hanodes autoclean
@@ -401,7 +407,7 @@ zabbixProxy:
 # **Zabbix Agent** configurations
 zabbixAgent:
   # -- Enables use of **Zabbix Agent**
-  enabled: true
+  enabled: false #true
   # -- Its is a default mode. Zabbix-agent will run as sidecar in zabbix-server and zabbix-proxy pods. Disable this mode if you want to run zabbix-agent as daemonSet
   runAsSidecar: true
   # -- Enable this mode if you want to run zabbix-agent as daemonSet. The 'zabbixAgent.runAsSidecar' option must be false.
