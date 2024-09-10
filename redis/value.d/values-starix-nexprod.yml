@@ -1,0 +1,25 @@
+clusterDomain: "starix.nexprod"
+
+global:
+  storageClass: "longhorn-effort"
+
+auth:
+  password: "qdT2!aC-DZc3"
+
+
+volumePermissions:
+  enabled: true
+
+master:
+  persistence:
+    size: 10Gi
+
+sentinel:
+  enabled: true
+  persistence:
+    size: 10Gi    
+
+replica:
+  replicaCount: 3
+  persistence:
+    size: 10Gi
