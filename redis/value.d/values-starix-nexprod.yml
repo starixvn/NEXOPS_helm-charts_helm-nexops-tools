@@ -20,6 +20,7 @@ sentinel:
     type: NodePort
     nodePorts:
       redis: "30989"
+      sentinel: "30999"
   persistence:
     size: 10Gi    
 
