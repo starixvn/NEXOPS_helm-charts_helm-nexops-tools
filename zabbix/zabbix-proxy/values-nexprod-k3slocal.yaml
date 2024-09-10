@@ -246,16 +246,18 @@ zabbixAgent:
 
   ## Tolerations configurations
   tolerations:
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/control-plane
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/master
-    - effect: NoSchedule
-      key: cattle.io/os: runner
-    - effect: NoSchedule
-      key: cattle.io/os: harbor-main
-    - effect: NoSchedule
-      key: cattle.io/os: harbor
+    - operator: Exists
+
+    #- effect: NoSchedule
+    #  key: node-role.kubernetes.io/control-plane
+    #- effect: NoSchedule
+    #  key: node-role.kubernetes.io/master
+    #- effect: NoSchedule
+    #  key: cattle.io/os: runner
+    #- effect: NoSchedule
+    #  key: cattle.io/os: harbor-main
+    #- effect: NoSchedule
+    #  key: cattle.io/os: harbor
 
   ## Affinity configurations
   affinity: {}
