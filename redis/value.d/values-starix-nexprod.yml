@@ -16,8 +16,8 @@ master:
 
 sentinel:
   enabled: true
-  # service:
-  #   type: NodePort
+  service:
+    type: LoadBalancer
   #   nodePorts:
   #     redis: "30989"
   #     sentinel: "30999"
