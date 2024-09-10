@@ -16,8 +16,10 @@ master:
 
 sentinel:
   enabled: true
-  # service:
-  #   type: NodePort
+  service:
+    type: NodePort
+    nodePorts:
+      redis: "30989"
   persistence:
     size: 10Gi    
 
