@@ -106,4 +106,4 @@ ui:
   externalPort: 8200
   targetPort: 8200
   activeVaultPodOnly: false
-  serviceType: "LoadBalancer"
+  serviceType: "ClusterIP"
