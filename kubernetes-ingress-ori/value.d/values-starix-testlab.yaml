@@ -5,9 +5,9 @@ controller:
   service:
     type: LoadBalancer
     tcpPorts:
-    - name: busybox
-      port: 2000
-      targetPort: 2000
+    - name: logstash
+      port: 15044
+      targetPort: 15044
       protocol: TCP
 
 
@@ -20,5 +20,5 @@ extraResources:
       name: tcp-configmap
       namespace: haproxy-ingress
     data:
-      2000:
-        nexops/busybox-service:5570
+      15044:
+        logging/logstash-nexprod-logstash:5044
