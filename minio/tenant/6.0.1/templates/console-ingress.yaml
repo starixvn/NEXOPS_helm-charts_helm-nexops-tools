@@ -1,3 +1,7 @@
+{{- $pathType := .Values.ingress.console.pathType -}}
+{{- $tenantName := .Values.tenant.name -}}
+{{- $requestAutoCert := .Values.tenant.certificate.requestAutoCert -}}
+{{- $externalCertSecret := .Values.tenant.certificate.externalCertSecret -}}
 {{- if .Values.ingress.console.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -24,18 +28,22 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.console.host }}
+  {{- range .Values.ingress.console.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          - path: {{ .Values.ingress.console.path }}
-            pathType: {{ .Values.ingress.console.pathType }}
+        {{- range (.paths | default (list "/")) }}
+          - path: {{ . }}
+            pathType: {{ $pathType }}
             backend:
               service:
-                name: {{ .Values.tenant.name }}-console
+                name: {{ $tenantName }}-console
                 port:
-                  {{- if or .Values.tenant.certificate.requestAutoCert (not (empty .Values.tenant.certificate.externalCertSecret)) }}
+                  {{- if or $requestAutoCert (not (empty $externalCertSecret)) }}
                   name: https-console
                   {{- else }}
                   name: http-console
                   {{- end }}
+        {{- end }}
+  {{- end }}
 {{- end }}
