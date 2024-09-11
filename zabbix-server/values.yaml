@@ -189,7 +189,7 @@ zabbixServer:
     - name: "ZBX_CACHESIZE"
       value: "2048M"
     - name: "ZBX_TRENDCACHESIZE"
-      value: "32M"
+      value: "128M"
   #- name: ENABLE_TIMESCALEDB
   #  value: "true"
   # -- Annotations to add to the deployment
