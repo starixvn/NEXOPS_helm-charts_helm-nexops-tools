@@ -77,18 +77,13 @@ zabbixServer:
   # -- Optional set hostIP different from 0.0.0.0 to open port only on this IP
   hostIP: 0.0.0.0
   # -- Requests and limits of pod resources. See: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers)
-  resources: #{}
-    requests:
-      memory: "512Mi"
-      #cpu: "250m"
-    limits:
-      memory: "1024Mi"
-      #cpu: "500m"
+  resources: {}
+
   image:
     # -- Zabbix Server Docker image name
-    repository: hub.nexdev.net/base/zabbix/zabbix-server-pgsql #zabbix/zabbix-server-pgsql
+    repository: hub.nexdev.net/base/zabbix-test/zabbix-server-pgsql #zabbix/zabbix-server-pgsql
     # -- Zabbix Server Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0.0-latest #null
+    tag: ubuntu-7.0.0-v7 #null
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
@@ -110,13 +105,8 @@ zabbixServer:
     concurrencyPolicy: "Replace"
     deleteOlderThanSeconds: 3600
     # -- Requests and limits of pod resources. See: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers)
-    resources: #{}
-      requests:
-        memory: "512Mi"
-        #cpu: "250m"
-      limits:
-        memory: "1024Mi"
-        #cpu: "500m"
+    resources: {}
+
     # -- Extra environment variables. A list of additional environment variables.
     extraEnv: []
     # -- Additional volumeMounts to the cronjob hanodes autoclean
