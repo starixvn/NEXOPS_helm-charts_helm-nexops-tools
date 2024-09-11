@@ -85,7 +85,6 @@ zabbixProxy:
     port: 10051
     ## Port of application pod
     targetPort: 10051
-    nodePort: 31051
     ## Zabbix proxy Ingress externalIPs with optional path
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
     ## Must be provided if ProxyMode is set to passive mode
