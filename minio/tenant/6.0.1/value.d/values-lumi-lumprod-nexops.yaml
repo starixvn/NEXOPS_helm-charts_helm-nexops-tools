@@ -72,7 +72,7 @@ ingress:
       # haproxy.org/server-ssl: "true"
       cert-manager.io/cluster-issuer: letsencrypt-lumprod
     tls:
-    - secretName: certmanager.minio-api.starixsoft.com 
+    - secretName: minio-api.starixsoft.com 
       hosts:
       - minio-api.starixsoft.com
     hosts:
