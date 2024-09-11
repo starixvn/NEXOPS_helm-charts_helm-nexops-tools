@@ -70,6 +70,11 @@ ingress:
     ingressClassName: "haproxy"
     annotations:
       haproxy.org/server-ssl: "true"
+    hosts:
+    - host: "minio-lumprod-api.lumigame.com"
+      path: []
+    - host: "minio.starixsoft.com"
+      path: []
     host: minio-lumprod-api.lumigame.com
     path: /
     pathType: Prefix
@@ -81,8 +86,9 @@ ingress:
       haproxy.org/backend-config-snippet: |
         compression type text/html text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon image/bmp
         compression algo gzip
-
-
+    hosts:
+    - host: "minio-lumprod.lumigame.com"
+      path: []
     host: minio-lumprod.lumigame.com
     path: /
     pathType: Prefix
