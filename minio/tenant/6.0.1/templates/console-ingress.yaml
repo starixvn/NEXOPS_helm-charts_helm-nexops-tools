@@ -24,10 +24,12 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.console.host }}
+  {{- range .Values.ingress.console.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          - path: {{ .Values.ingress.console.path }}
+        {{- range (.paths | default (list "/")) }}
+          - path: {{ . }}
             pathType: {{ .Values.ingress.console.pathType }}
             backend:
               service:

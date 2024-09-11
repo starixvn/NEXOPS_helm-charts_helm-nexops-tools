@@ -24,10 +24,12 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.api.host }}
+  {{- range .Values.ingress.api.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          - path: {{ .Values.ingress.api.path }}
+        {{- range (.paths | default (list "/")) }}
+          - path: {{ . }}
             pathType: {{ .Values.ingress.api.pathType }}
             backend:
               service:
@@ -38,6 +40,7 @@ spec:
                   {{- else }}
                   name: http-minio
                   {{- end }}
+
     {{- if .Values.tenant.features.bucketDNS }}
     - host: "*.{{ .Values.ingress.api.host }}"
       http:
