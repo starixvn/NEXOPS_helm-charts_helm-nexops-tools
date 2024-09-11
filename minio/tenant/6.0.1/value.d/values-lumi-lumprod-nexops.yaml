@@ -75,8 +75,6 @@ ingress:
       paths: []
     - host: "minio.starixsoft.com"
       paths: []
-    host: minio-lumprod-api.lumigame.com
-    path: /
     pathType: Prefix
   console:
     enabled: true
@@ -89,8 +87,6 @@ ingress:
     hosts:
     - host: "minio-lumprod.lumigame.com"
       paths: []
-    host: minio-lumprod.lumigame.com
-    path: /
     pathType: Prefix
 
 extraResources:
