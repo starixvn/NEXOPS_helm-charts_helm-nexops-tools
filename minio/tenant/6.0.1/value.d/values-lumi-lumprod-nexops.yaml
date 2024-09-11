@@ -69,7 +69,7 @@ ingress:
     enabled: true
     ingressClassName: "haproxy"
     annotations:
-      haproxy.org/server-ssl: "false"
+      haproxy.org/server-ssl: "true"
       cert-manager.io/cluster-issuer: letsencrypt-lumprod
     tls:
     - secretName: minio-api.starixsoft.com 
@@ -85,7 +85,7 @@ ingress:
     enabled: true
     ingressClassName: "haproxy"
     annotations:
-      haproxy.org/server-ssl: "false"
+      haproxy.org/server-ssl: "true"
       haproxy.org/backend-config-snippet: |
         compression type text/html text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon image/bmp
         compression algo gzip
