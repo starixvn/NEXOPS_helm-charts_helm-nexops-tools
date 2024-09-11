@@ -30,7 +30,7 @@ zabbixProxy:
   resources: {}
   image:
     ## Zabbix proxy Docker image name
-    repository: nexhub.nebula.prod/kbt/zabbix/zabbix-proxy-sqlite3
+    repository: nexhub.nebula.prod/kbt/base/zabbix/zabbix-proxy-sqlite3
     ## Tag of Docker image of Zabbix proxy
     tag: alpine-7.0.0
     pullPolicy: IfNotPresent
@@ -202,7 +202,7 @@ zabbixAgent:
   ##    mountPropagation: None|HostToContainer|Bidirectional
   image:
     ## Zabbix agent Docker image name
-    repository: nexhub.nebula.prod/kbt/zabbix/zabbix-agent2 #zabbix/zabbix-agent2
+    repository: nexhub.nebula.prod/kbt/base/zabbix/zabbix-agent2 #zabbix/zabbix-agent2
     ## Tag of Docker image of Zabbix agent
     tag: ubuntu-7.0.0-v1
     pullPolicy: IfNotPresent
