@@ -252,7 +252,10 @@ postgresql:
     claim_access_mode: ReadWriteOnce
     # -- Storage PVC storageclass to use
     storageClass: longhorn #local-storage
-  updateStrategyType: "RollingUpdate"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
     # More details: https://kubernetes.io/docs/concepts/services-networking/service/
