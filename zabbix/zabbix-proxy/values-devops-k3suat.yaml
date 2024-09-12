@@ -42,7 +42,7 @@ zabbixProxy:
   env:
     ## The variable allows to switch Zabbix proxy mode. By default, value is 0 - active proxy. Allowed values are 0 and 1.
     - name: ZBX_PROXYMODE
-      value: 0
+      value: 1
     ## Zabbix proxy hostname
     - name: ZBX_HOSTNAME
       value: zabbix-proxy-devops-uat
