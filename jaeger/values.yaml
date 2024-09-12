@@ -134,7 +134,7 @@ storage:
       # cassandra.tls.enabled: "false"
   elasticsearch:
     scheme: http
-    host: jaeger-elasticsearch-k3s.lumigame.com #elasticsearch-master
+    host: jaeger-elasticsearch-k3s.lumigame.com:80 #elasticsearch-master
     #port: 9300
     anonymous: true
     #user: elastic
@@ -148,7 +148,7 @@ storage:
     extraEnv: #[]
     ## ES related env vars to be configured on the concerned components
      - name: ES_SERVER_URLS
-       value: https://jaeger-elasticsearch-k3s.lumigame.com:80 #http://elasticsearch-master:9200
+       value: https://jaeger-elasticsearch-k3s.lumigame.com #http://elasticsearch-master:9200
     # - name: ES_USERNAME
     #   value: elastic
     # - name: ES_INDEX_PREFIX
