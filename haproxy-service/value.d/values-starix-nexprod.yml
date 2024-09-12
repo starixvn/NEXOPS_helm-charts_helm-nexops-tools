@@ -1,4 +1,5 @@
 clusterDomain: "starix.nexprod"
+replicaCount: 3
 
 service:
   type: LoadBalancer
@@ -13,7 +14,7 @@ service:
   - name: redis-replicas
     protocol: TCP
     port: 16380
-    targetPort: redis-master
+    targetPort: redis-replicas
 
 
   - name: http
@@ -42,7 +43,7 @@ configuration: |
     timeout server 60s
 
   resolvers k8s
-    nameserver dns1 coredns.kube-system:53
+    nameserver dns1 kube-dns.kube-system:53
     resolve_retries 3
     timeout resolve 1s
     timeout retry 1s
