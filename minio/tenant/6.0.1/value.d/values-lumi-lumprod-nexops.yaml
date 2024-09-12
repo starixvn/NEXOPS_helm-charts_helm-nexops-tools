@@ -69,10 +69,10 @@ ingress:
     enabled: true
     ingressClassName: "haproxy"
     annotations:
-      # haproxy.org/server-ssl: "true"
+      haproxy.org/server-ssl: "true"
       cert-manager.io/cluster-issuer: letsencrypt-lumprod
     tls:
-    - secretName: minio-api-starixsoft-cert 
+    - secretName: certmanager.minio-api.starixsoft.com 
       hosts:
       - minio-api.starixsoft.com
     hosts:
