@@ -15,11 +15,6 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-#   haproxy.cfg: |
-#     {{- include "common.tplvalues.render" ( dict "value" .Values.configuration "context" $ ) | nindent 4 }}
-# {{- end }}
-{{- range $path, $config := .Values.configuration }}
-  {{ $path }}: |
-{{ tpl $config $ | indent 4 -}}
-{{- end -}}
-{{- end -}}
+  haproxy.cfg: |
+    {{- include "common.tplvalues.render" ( dict "value" .Values.configuration "context" $ ) | nindent 4 }}
+{{- end }}
