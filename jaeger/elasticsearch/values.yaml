@@ -2006,7 +2006,7 @@ ingest:
   service:
     ## @param ingest.service.enabled Enable Ingest-only service
     ##
-    enabled: false
+    #enabled: false
     ## @param ingest.service.type Elasticsearch ingest-only service type
     ##
     type: NodePort #ClusterIP
@@ -2067,7 +2067,7 @@ ingest:
   ingress:
     ## @param ingest.ingress.enabled Enable ingress record generation for Elasticsearch
     ##
-    enabled: false
+    enabled: true
     ## @param ingest.ingress.pathType Ingress path type
     ##
     pathType: ImplementationSpecific
@@ -2076,7 +2076,7 @@ ingest:
     apiVersion: ""
     ## @param ingest.ingress.hostname Default host for the ingress record
     ##
-    hostname: elasticsearch-ingest.local
+    hostname: jaeger-elasticsearch-k3s.lumigame.com
     ## @param ingest.ingress.path Default path for the ingress record
     ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
     ##
@@ -2105,7 +2105,7 @@ ingest:
     ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
     ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
     ##
-    ingressClassName: ""
+    ingressClassName: "haproxy"
     ## @param ingest.ingress.extraHosts An array with additional hostname(s) to be covered with the ingress record
     ## e.g:
     ## extraHosts:
