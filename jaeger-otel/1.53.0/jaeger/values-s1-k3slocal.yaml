@@ -134,7 +134,7 @@ storage:
       # cassandra.tls.enabled: "false"
   elasticsearch:
     scheme: http
-    host: jaeger-elasticsearch-s1-k3slocal-master #jaeger-elasticsearch-s1.nexentgame.com #elasticsearch-master
+    host: 0.0.0.0 #jaeger-elasticsearch-s1-k3slocal-master #jaeger-elasticsearch-s1.nexentgame.com #elasticsearch-master
     port: 9300
     anonymous: true
     #user: elastic
