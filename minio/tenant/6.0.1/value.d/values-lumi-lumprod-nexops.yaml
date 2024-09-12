@@ -80,6 +80,9 @@ ingress:
       paths: []
     - host: "minio-api.starixsoft.com"
       paths: []
+    tls:
+    - hosts:
+      - minio-api.starixsoft.com
     pathType: Prefix
   console:
     enabled: true
