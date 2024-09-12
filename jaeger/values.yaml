@@ -135,7 +135,7 @@ storage:
   elasticsearch:
     scheme: http
     host: jaeger-elasticsearch-k3s.lumigame.com #elasticsearch-master
-    port: 80 #9300
+    #port: 9300
     anonymous: true
     #user: elastic
     usePassword: false
