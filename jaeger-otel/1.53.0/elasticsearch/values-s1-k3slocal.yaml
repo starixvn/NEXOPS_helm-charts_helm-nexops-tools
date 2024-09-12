@@ -304,7 +304,7 @@ security:
 service:
   ## @param service.type Elasticsearch service type
   ##
-  type: ClusterIP
+  type: NodePort #ClusterIP
   ## @param service.ports.restAPI Elasticsearch service REST API port
   ## @param service.ports.transport Elasticsearch service transport port
   ##
@@ -317,8 +317,8 @@ service:
   ## NOTE: choose port between <30000-32767>
   ##
   nodePorts:
-    restAPI: ""
-    transport: ""
+    restAPI: "30920"
+    transport: "30930"
   ## @param service.clusterIP Elasticsearch service Cluster IP
   ## e.g.:
   ## clusterIP: None
