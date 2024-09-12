@@ -2009,7 +2009,7 @@ ingest:
     enabled: false
     ## @param ingest.service.type Elasticsearch ingest-only service type
     ##
-    type: ClusterIP
+    type: NodePort #ClusterIP
     ## @param ingest.service.ports.restAPI Elasticsearch service REST API port
     ## @param ingest.service.ports.transport Elasticsearch service transport port
     ##
@@ -2022,8 +2022,8 @@ ingest:
     ## NOTE: choose port between <30000-32767>
     ##
     nodePorts:
-      restAPI: ""
-      transport: ""
+      restAPI: "30920"
+      transport: "30930"
     ## @param ingest.service.clusterIP Elasticsearch ingest-only service Cluster IP
     ## e.g.:
     ## clusterIP: None
