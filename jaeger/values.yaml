@@ -823,7 +823,7 @@ spark:
   # ttlSecondsAfterFinished: 120
 
 esIndexCleaner:
-  enabled: true #false
+  enabled: false
   securityContext:
     runAsUser: 1000
   podSecurityContext:
@@ -872,7 +872,7 @@ esIndexCleaner:
   # ttlSecondsAfterFinished: 120
 
 esRollover:
-  enabled: true #false
+  enabled: false
   securityContext: {}
   podSecurityContext:
     runAsUser: 1000
