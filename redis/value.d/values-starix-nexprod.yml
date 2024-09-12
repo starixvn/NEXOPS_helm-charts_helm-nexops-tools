@@ -16,13 +16,8 @@ master:
 
 sentinel:
   enabled: true
-  service:
-    type: LoadBalancer
-  #   nodePorts:
-  #     redis: "30989"
-  #     sentinel: "30999"
   persistence:
-    size: 10Gi    
+    size: 1Gi    
 
 replica:
   replicaCount: 3
