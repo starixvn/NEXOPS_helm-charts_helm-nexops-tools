@@ -824,7 +824,7 @@ spark:
   # ttlSecondsAfterFinished: 120
 
 esIndexCleaner:
-  enabled: false
+  enabled: true #false
   securityContext:
     runAsUser: 1000
   podSecurityContext:
