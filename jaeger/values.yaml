@@ -134,7 +134,7 @@ storage:
       # cassandra.tls.enabled: "false"
   elasticsearch:
     scheme: http
-    host: jaeger-elasticsearch-k3s.lumigame.com:80 #elasticsearch-master
+    host: jaeger-elasticsearch-k3s.lumigame.com #elasticsearch-master
     #port: 9300
     anonymous: true
     #user: elastic
