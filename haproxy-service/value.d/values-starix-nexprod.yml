@@ -14,7 +14,7 @@ service:
   - name: redis-replicas
     protocol: TCP
     port: 16380
-    targetPort: redis-master
+    targetPort: redis-replicas
 
 
   - name: http
