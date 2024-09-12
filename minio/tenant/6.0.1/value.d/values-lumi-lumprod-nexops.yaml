@@ -70,11 +70,11 @@ ingress:
     ingressClassName: "haproxy"
     annotations:
       haproxy.org/server-ssl: "true"
-      cert-manager.io/cluster-issuer: letsencrypt-lumprod
-    tls:
-    - secretName: certmanager.minio-api.starixsoft.com 
-      hosts:
-      - minio-api.starixsoft.com
+      # cert-manager.io/cluster-issuer: letsencrypt-lumprod
+    # tls:
+    # - secretName: certmanager.minio-api.starixsoft.com 
+    #   hosts:
+    #   - minio-api.starixsoft.com
     hosts:
     - host: "minio-lumprod-api.lumigame.com"
       paths: []
