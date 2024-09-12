@@ -30,7 +30,7 @@ containerPorts:
   containerPort: 8080
 
 
-configuration:
+configuration: |
   global
     log stdout format raw local0
     maxconn 10240
