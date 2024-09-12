@@ -93,8 +93,7 @@ ingress:
     - host: "minio-api.starixsoft.com"
       paths: []
     tls:
-    - secretName: haproxy-ingress/starixsoft-cert 
-      hosts:
+    - hosts:
       - minio-api.starixsoft.com
     pathType: Prefix
 
