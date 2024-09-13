@@ -214,10 +214,10 @@ zabbixAgent:
   env:
       ## Zabbix server host
     - name: ZBX_SERVER_HOST
-      value: 10.99.91.8	
+      value: zabbix-proxy-devops-k3suat-zabbix-helm-chrt-proxy	
       ## Zabbix server port
     - name: ZBX_SERVER_PORT
-      value: 31402
+      value: 10051
       ## This variable is boolean (true or false) and enables or disables feature of passive checks. By default, value is true
     - name: ZBX_PASSIVE_ALLOW
       value: true
