@@ -246,7 +246,10 @@ zabbixAgent:
 
   ## Tolerations configurations
   tolerations:
-    - operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
 
   ## Affinity configurations
   affinity: {}
