@@ -125,7 +125,7 @@ storage:
       #   value: jaeger_v1_test
       # - name: CASSANDRA_TLS_ENABLED
       #   value: "false"
-    ## Cassandra related cmd line opts to be configured on the concerned components
+    # Cassandra related cmd line opts to be configured on the concerned components
     cmdlineParams:
       {}
       # cassandra.servers: cassandra
