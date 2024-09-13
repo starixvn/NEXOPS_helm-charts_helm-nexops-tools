@@ -56,7 +56,7 @@ zabbixProxy:
 
     ## Note that since version 6.0 the variable ZBX_SERVER_PORT is not supported anymore. Instead, add a colon (:) followed by the port number to the end of ZBX_SERVER_HOST value.
     - name: ZBX_SERVER_HOST
-      value: "10.18.200.193:31051"
+      value: "zabbix-server-nexprod-zabbix-server"
     ## The variable is used to specify debug level. By default, value is 3
     - name: ZBX_DEBUGLEVEL
       value: 3
