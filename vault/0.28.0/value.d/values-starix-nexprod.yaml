@@ -1,7 +1,7 @@
 server:
 
   ingress:
-    enabled: true
+    enabled: false
     activeService: true
     ingressClassName: "haproxy"
     hosts: 
@@ -112,6 +112,7 @@ server:
     operator: Equal
     effect: NoSchedule
     value: vault
+
   nodeSelector:
     vault-workload: "yes"
 
