@@ -7,6 +7,8 @@ server:
     hosts: 
     - host: "vault.nexdev.net"
       paths: []
+    - host: "vault-test.nexdev.net"
+      paths: []
 
   resources: {}
     # limits:
