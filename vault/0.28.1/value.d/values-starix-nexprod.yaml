@@ -8,9 +8,9 @@ server:
     - host: "vault.nexdev.net"
       paths: []
 
-  resources:
-    limits:
-      memory: 4Gi
+  resources: {}
+    # limits:
+    #   memory: 4Gi
 
   dataStorage:
     enabled: true
