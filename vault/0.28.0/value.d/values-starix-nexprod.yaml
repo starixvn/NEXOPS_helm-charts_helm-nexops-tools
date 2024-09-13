@@ -8,9 +8,9 @@ server:
     - host: "vault.nexdev.net"
       paths: []
 
-  resources:
-    limits:
-      memory: 4Gi
+  resources: {}
+    # limits:
+    #   memory: 4Gi
 
   dataStorage:
     enabled: true
@@ -108,21 +108,12 @@ server:
     enabled: false
 
   tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
+  - key: devops/node-role
     operator: Equal
-    value: linux
+    effect: NoSchedule
+    value: vault
   nodeSelector:
     vault-workload: "yes"
-
-injector:
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    operator: Equal
-    value: linux
-  nodeSelector:
-    nexops-tools: "yes"
 
 ui:
   enabled: true

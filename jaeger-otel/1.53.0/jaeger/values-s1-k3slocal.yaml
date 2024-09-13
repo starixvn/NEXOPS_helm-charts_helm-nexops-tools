@@ -135,7 +135,7 @@ storage:
   elasticsearch:
     scheme: http
     host: 10.10.50.66 #jaeger-elasticsearch-s1-k3slocal-master #jaeger-elasticsearch-s1.nexentgame.com #elasticsearch-master
-    port: 30930
+    port: 30920
     anonymous: true
     #user: elastic
     #usePassword: false

@@ -552,7 +552,7 @@ zabbixWeb:
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer. 
     #More details: https://kubernetes.io/docs/concepts/services-networking/service/
-    type: ClusterIP #NodePort
+    type: NodePort
     # -- clusterIP is the IP address of the service and is usually assigned randomly. 
     #If an address is specified manually, is in-range (as per system configuration), and is not in use, it will be allocated to the service.
     clusterIP:
@@ -584,7 +584,7 @@ zabbixWeb:
     sessionAffinity: None    # -- Port of service in Kubernetes cluster
     port: 80
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 31080
+    nodePort: 30081
     # -- Annotations for the Zabbix Web
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
