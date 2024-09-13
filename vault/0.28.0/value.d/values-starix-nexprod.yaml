@@ -115,15 +115,6 @@ server:
   nodeSelector:
     vault-workload: "yes"
 
-injector:
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    operator: Equal
-    value: linux
-  nodeSelector:
-    nexops-tools: "yes"
-
 ui:
   enabled: true
   externalPort: 8200
