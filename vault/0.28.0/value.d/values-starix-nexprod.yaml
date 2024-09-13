@@ -108,10 +108,10 @@ server:
     enabled: false
 
   tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
+  - key: devops/node-role
     operator: Equal
-    value: linux
+    effect: NoSchedule
+    value: vault
   nodeSelector:
     vault-workload: "yes"
 
