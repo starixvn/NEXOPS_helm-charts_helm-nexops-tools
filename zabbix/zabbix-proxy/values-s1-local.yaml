@@ -242,9 +242,7 @@ zabbixAgent:
 
   ## Node selector for Agent. Only supports Linux.
   nodeSelector:
-    #kubernetes.io/os: linux
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/master
+    kubernetes.io/os: linux
 
   ## Tolerations configurations
   tolerations:
