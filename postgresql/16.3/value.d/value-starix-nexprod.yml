@@ -1,0 +1,37 @@
+global:
+  defaultStorageClass: "longhorn"
+clusterDomain: starix.nexprod
+
+
+
+primary:
+  extendedConfiguration: |-
+    log_line_prefix = '%m [%p] %q%u@%d '
+    logging_collector = 'on'
+    log_rotation_size = '102400'
+    log_truncate_on_rotation = 'on'
+    log_duration = 'on'
+    log_statement = 'none'
+    log_min_duration_statement = 0
+    log_checkpoints = 'on'
+    log_connections = 'on'
+    log_disconnections = 'on'
+    log_lock_waits = 'on'
+  # sidecars:
+  #   - name: logging-collector-flbeat
+  #     image: "hub.lumigame.com/base/flbeat-postgres:8.8.2"
+  #     env:
+  #     - name: PG_LOG_PATH
+  #       value: "/bitnami/postgresql/data/log"
+  #     - name: PG_ENV
+  #       value: "lumprod"
+  #     - name: LOGSTASH_HOST
+  #       value: "logstash-lumprod-logstash.logging.svc"
+  #     - name: LOGSTASH_PORT
+  #       value: "5000"
+  #     volumeMounts:
+  #       - name: data
+  #         mountPath: /bitnami/postgresql
+  #     securityContext:
+  #       allowPrivilegeEscalation: false
+  #       runAsUser: 0
