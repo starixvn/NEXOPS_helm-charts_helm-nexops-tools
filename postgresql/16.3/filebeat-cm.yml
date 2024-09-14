@@ -5,14 +5,14 @@ metadata:
   namespace: "postgres-db"
 data:
   filebeat.yml: |
-    filebeat.inputs:
-      - type: log
-        paths:
-          - "${PG_LOG_PATH}/*.log*"
-        tags: ["${PG_ENV}", "postgresql" ]
+    # filebeat.inputs:
+    #   - type: log
+    #     paths:
+    #       - "${PG_LOG_PATH}/*.log*"
+    #     tags: ["${PG_ENV}", "postgresql" ]
     # Enable the PostgreSQL module
     filebeat.modules:
-      - module: postgres
+      - module: postgresql
         log:
           enabled: true
           var.paths: ["${PG_LOG_PATH}/*.log*"]

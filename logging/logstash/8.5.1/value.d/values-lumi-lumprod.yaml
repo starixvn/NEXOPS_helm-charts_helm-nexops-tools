@@ -816,6 +816,16 @@ logstashPipeline:
         }
       }
 
+      if "postgresql" in [tags] {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-postgres-%{+YYYY.MM.dd}"        
+      }
+
       if "syslog" in [tags] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
