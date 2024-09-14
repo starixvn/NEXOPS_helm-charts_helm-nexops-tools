@@ -5,24 +5,25 @@ metadata:
   namespace: "postgres-db"
 data:
   filebeat.yml: |
-    # filebeat.inputs:
-    #   - type: log
-    #     paths:
-    #       - "${PG_LOG_PATH}/*.log*"
-    #     tags: ["${PG_ENV}", "postgresql" ]
+    #filebeat.inputs:
+      # - type: log
+      #   paths:
+      #     - "${PG_LOG_PATH}/*.log"
+      #   tags: ["${PG_ENV}", "postgresql", "non-module" ]
     # Enable the PostgreSQL module
     filebeat.modules:
       - module: postgresql
         log:
           enabled: true
-          var.paths: ["${PG_LOG_PATH}/*.log*"]
-          tags: ["postgresql", "${PG_ENV}"]
+          var.paths: ["${PG_LOG_PATH}/*.log"]
+          # var.paths: ["/bitnami/postgresql/data/log/*.log"]
+          tags: ["postgresql", "${PG_ENV}", "module"]
         metric:
           enabled: false
 
     output:
       logstash:
-        hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
+        hosts: ["10.10.50.121:30500"]
 
     filebeat.config.modules:
       # Glob pattern for configuration loading

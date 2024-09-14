@@ -23,7 +23,7 @@ primary:
         name: filebeat-config-pg
   sidecars:
     - name: logging-collector-flbeat
-      image: "docker.elastic.co/beats/filebeat:8.15.1"
+      image: "hub.lumigame.com/base/filebeat:8.8.2"
       env:
       - name: PG_LOG_PATH
         value: "/bitnami/postgresql/data/log"
