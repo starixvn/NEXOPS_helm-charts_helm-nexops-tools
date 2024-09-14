@@ -824,6 +824,7 @@ logstashPipeline:
           ssl => true
           ssl_certificate_verification => false
           index => "logstash-postgres-%{+YYYY.MM.dd}"        
+        }
       }
 
       if "syslog" in [tags] {
