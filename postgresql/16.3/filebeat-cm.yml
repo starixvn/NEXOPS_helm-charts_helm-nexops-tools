@@ -23,7 +23,7 @@ data:
 
     output:
       logstash:
-        hosts: ["10.10.50.121:30500"]
+        hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
 
     filebeat.config.modules:
       # Glob pattern for configuration loading
