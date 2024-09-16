@@ -1,0 +1,144 @@
+clusterDomain: "starix.k3suat"
+replicaCount: 3
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: "10.99.91.9"
+  ports:
+#NAP
+#   - name: redis-nap-master
+#     protocol: TCP
+#     port: 16379
+#     targetPort: redis-nap-master
+
+#   - name: redis-nap-replicas
+#     protocol: TCP
+#     port: 16879
+#     targetPort: redis-nap-replicas
+# #Alpha
+#   - name: redis-alpha-master
+#     protocol: TCP
+#     port: 16380
+#     targetPort: redis-alpha-master
+
+#   - name: redis-alpha-replicas
+#     protocol: TCP
+#     port: 16880
+#     targetPort: redis-alpha-replicas
+# #FPS
+#   - name: redis-fps-master
+#     protocol: TCP
+#     port: 16381
+#     targetPort: redis-fps-master
+
+#   - name: redis-fps-replicas
+#     protocol: TCP
+#     port: 16881
+#     targetPort: redis-fps-replicas
+#S1
+  - name: redis-s1-master
+    protocol: TCP
+    port: 16382
+    targetPort: redis-s1-master
+
+  - name: redis-s1-replicas
+    protocol: TCP
+    port: 16882
+    targetPort: redis-s1-replicas
+
+  - name: http
+    port: 8080
+    targetPort: http
+
+
+containerPorts:
+#NAP
+# - name: redis-nap-master
+#   containerPort: 16379
+# - name: redis-nap-replicas
+#   containerPort: 16879
+# #ALPHA
+# - name: redis-nap-master
+#   containerPort: 16380
+# - name: redis-nap-replicas
+#   containerPort: 16880
+# #FPS
+# - name: redis-nap-master
+#   containerPort: 16381
+# - name: redis-nap-replicas
+#   containerPort: 16881
+#S1
+- name: redis-s1-master
+  containerPort: 16382
+- name: redis-s1-replicas
+  containerPort: 16882
+
+- name: http
+  containerPort: 8080
+
+
+configuration: |
+  global
+    log stdout format raw local0
+    maxconn 10240
+
+  defaults
+    log global
+    timeout client 60s
+    timeout connect 60s
+    timeout server 60s
+
+  resolvers k8s
+    nameserver dns1 kube-dns.kube-system:53
+    resolve_retries 3
+    timeout resolve 1s
+    timeout retry 1s
+    hold valid 10s
+    hold obsolete 30s
+
+  frontend fe_main
+    bind :8080
+    mode http
+    stats enable
+    stats uri /stats
+    stats refresh 300s
+    stats show-legends
+    stats show-node
+    stats auth nexcel:NexOps!QAZ
+    default_backend default_backend_nodes
+
+
+  backend default_backend_nodes
+    mode http
+    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable ! Pls contact NexOps if you think this is a mistake... K3s UAT"
+
+  frontend redis_s1_master_fe
+    bind :16382
+    default_backend redis_master_be
+
+  backend redis_s1_master_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-s1-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+
+
+  frontend redis_s1_replicas_fe
+    bind :16882
+    default_backend redis_s1_replicas_be
+    
+  backend redis_s1_replicas_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none

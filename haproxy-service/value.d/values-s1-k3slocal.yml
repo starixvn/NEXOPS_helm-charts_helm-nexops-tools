@@ -1,0 +1,98 @@
+clusterDomain: "starix.k3slocal"
+replicaCount: 3
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: "10.10.50.129"
+  ports:
+  - name: redis-master
+    protocol: TCP
+    port: 16379
+    targetPort: redis-master
+
+
+  - name: redis-replicas
+    protocol: TCP
+    port: 16380
+    targetPort: redis-replicas
+
+
+  - name: http
+    port: 8080
+    targetPort: http
+
+
+containerPorts:
+- name: redis-master
+  containerPort: 16379
+- name: redis-replicas
+  containerPort: 16380
+- name: http
+  containerPort: 8080
+
+
+configuration: |
+  global
+    log stdout format raw local0
+    maxconn 10240
+
+  defaults
+    log global
+    timeout client 60s
+    timeout connect 60s
+    timeout server 60s
+
+  resolvers k8s
+    nameserver dns1 kube-dns.kube-system:53
+    resolve_retries 3
+    timeout resolve 1s
+    timeout retry 1s
+    hold valid 10s
+    hold obsolete 30s
+
+  frontend fe_main
+    bind :8080
+    mode http
+    stats enable
+    stats uri /stats
+    stats refresh 300s
+    stats show-legends
+    stats show-node
+    stats auth nexcel:NexOps!QAZ
+    default_backend default_backend_nodes
+
+
+  backend default_backend_nodes
+    mode http
+    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable..."
+
+  frontend redis_master_fe
+    bind :16379
+    default_backend redis_master_be
+
+  backend redis_master_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-nexprod-nap-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
+
+  frontend redis_replicas_fe
+    bind :16380
+    default_backend redis_replicas_be
+    
+  backend redis_replicas_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
