@@ -118,7 +118,7 @@ configuration: |
 
   backend redis_s1_master_be
     option tcp-check
-    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check send AUTH\ foo1@bared\r\n
     tcp-check expect string +OK
     tcp-check send PING\r\n
     tcp-check expect string PONG
@@ -135,7 +135,7 @@ configuration: |
     
   backend redis_s1_replicas_be
     option tcp-check
-    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check send AUTH\ foo1@bared\r\n
     tcp-check expect string +OK
     tcp-check send PING\r\n
     tcp-check expect string PONG
