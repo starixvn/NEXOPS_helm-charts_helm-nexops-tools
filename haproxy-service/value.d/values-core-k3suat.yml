@@ -114,7 +114,7 @@ configuration: |
 
   frontend redis_s1_master_fe
     bind :16382
-    default_backend redis_master_be
+    default_backend redis_s1_master_be
 
   backend redis_s1_master_be
     option tcp-check
