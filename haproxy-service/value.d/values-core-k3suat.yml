@@ -6,25 +6,25 @@ service:
   loadBalancerIP: "10.99.91.9"
   ports:
 #NAP
-   - name: redis-nap-m
-     protocol: TCP
-     port: 16379
-     targetPort: redis-nap-m
+  - name: redis-nap-m
+    protocol: TCP
+    port: 16379
+    targetPort: redis-nap-m
 
-   - name: redis-nap-r
-     protocol: TCP
-     port: 16879
-     targetPort: redis-nap-r
+  - name: redis-nap-r
+    protocol: TCP
+    port: 16879
+    targetPort: redis-nap-r
 #Alpha
-   - name: redis-alpha-m
-     protocol: TCP
-     port: 16380
-     targetPort: redis-alpha-m
+  - name: redis-alpha-m
+    protocol: TCP
+    port: 16380
+    targetPort: redis-alpha-m
 
-   - name: redis-alpha-r
-     protocol: TCP
-     port: 16880
-     targetPort: redis-alpha-r
+  - name: redis-alpha-r
+    protocol: TCP
+    port: 16880
+    targetPort: redis-alpha-r
 ##FPS
 #   - name: redis-fps-m
 #     protocol: TCP
