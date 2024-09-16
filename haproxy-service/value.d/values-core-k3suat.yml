@@ -126,7 +126,7 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-s1-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+    server-template redis-sentinel-s1-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3suat-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
 
 
   frontend redis_s1_replicas_fe
@@ -141,4 +141,4 @@ configuration: |
     tcp-check expect string PONG
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+    server-template redis-sentinel-s1-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3suat-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
