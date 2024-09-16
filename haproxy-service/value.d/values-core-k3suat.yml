@@ -53,15 +53,15 @@ service:
 
 containerPorts:
 #NAP
- - name: redis-nap-m
-   containerPort: 16379
- - name: redis-nap-r
-   containerPort: 16879
+- name: redis-nap-m
+  containerPort: 16379
+- name: redis-nap-r
+  containerPort: 16879
 #ALPHA
- - name: redis-alpha-m
-   containerPort: 16380
- - name: redis-alpha-r
-   containerPort: 16880
+- name: redis-alpha-m
+  containerPort: 16380
+- name: redis-alpha-r
+  containerPort: 16880
 ##FPS
 # - name: redis-nap-m
 #   containerPort: 16381
