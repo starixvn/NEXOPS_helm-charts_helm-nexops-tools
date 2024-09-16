@@ -29,6 +29,13 @@ kafka:
   extraConfig: |
     offsets.topic.replication.factor=1
     transaction.state.log.replication.factor=1
+    
+    log.retention.hours=72
+    log.retention.bytes=3221225472
+    log.segment.bytes=1073741824
+    log.retention.check.interval.ms=60000
+    log.segment.delete.delay.ms=1000
+
   clusterDomain: starix.k3suat
   zookeeper:
     clusterDomain: starix.k3suat
