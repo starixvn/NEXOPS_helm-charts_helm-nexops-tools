@@ -25,6 +25,11 @@ symbolicator:
 
 clickhouse:
   clusterDomain: starix.k3slocal
+  nodeSelector:
+    sentry: "yes"
+  clickhouse:
+    ## The instance number of Clickhouse
+    replicas: "1"
 kafka:
   extraConfig: |
     offsets.topic.replication.factor=1
