@@ -1778,6 +1778,7 @@ config:
     # No Python Extension Config Given
   relay: |
     # No YAML relay config given
+    envelope_buffer_size: 1000000
   web:
     httpKeepalive: 15
     maxRequests: 100000
