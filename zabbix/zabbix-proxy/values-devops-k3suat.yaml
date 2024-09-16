@@ -214,7 +214,7 @@ zabbixAgent:
   env:
       ## Zabbix server host
     - name: ZBX_SERVER_HOST
-      value: 10.99.91.8
+      value: 10.99.98.74
       ## Zabbix server port
     - name: ZBX_SERVER_PORT
       value: 31402
