@@ -16,6 +16,9 @@ ingress:
 sentry:
   worker:
     replicas: 2
+  cleanup:
+    days: 3
+
 
 symbolicator:
   enabled: true
