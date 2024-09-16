@@ -39,7 +39,7 @@ logstashPipeline:
       #   }
       # }
 
-      if [host] =~ /vault-nexprod/ {
+      if [host] =~ /vault-starix-nexprod/ {
         json {
           source => "message"
         }

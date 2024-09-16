@@ -1,5 +1,5 @@
 ingress:
-  hostname: "sentry.vgamesuat.com"
+  hostname: "sentry-s1.nexentgame.com"
 
 # filestore:
 #   filesystem:
@@ -24,7 +24,7 @@ symbolicator:
   enabled: true
 
 clickhouse:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
 kafka:
   extraConfig: |
     offsets.topic.replication.factor=1
@@ -35,15 +35,15 @@ kafka:
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=60000
     log.segment.delete.delay.ms=1000
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
   zookeeper:
-    clusterDomain: starix.k3suat
+    clusterDomain: starix.k3slocal
 memcached:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
 nginx:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
 postgresql:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
   auth:
     database: sentry
     enablePostgresUser: true
@@ -75,8 +75,8 @@ postgresql:
             userPasswordKey: "password"
           username: "postgres"
 rabbitmq:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
 redis:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
 zookeeper:
-  clusterDomain: starix.k3suat
+  clusterDomain: starix.k3slocal
