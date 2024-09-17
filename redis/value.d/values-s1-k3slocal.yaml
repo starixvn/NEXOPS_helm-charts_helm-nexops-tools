@@ -1,7 +1,7 @@
 clusterDomain: "starix.k3slocal"
 
 global:
-  storageClass: "longhorn-s1"
+  storageClass: "longhorn-s1-effort"
 
 auth:
   password: "foo1@bared"
