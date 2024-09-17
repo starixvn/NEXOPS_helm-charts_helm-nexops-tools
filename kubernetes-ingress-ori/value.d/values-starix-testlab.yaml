@@ -15,7 +15,7 @@ controller:
       facility: "daemon"
   
   service:
-    type: LoadBalanceru
+    type: LoadBalancer
     tcpPorts:
     - name: logstash
       port: 15044
