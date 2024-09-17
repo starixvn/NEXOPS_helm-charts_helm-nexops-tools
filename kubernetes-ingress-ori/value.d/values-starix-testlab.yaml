@@ -1,7 +1,8 @@
 ---
 controller:
   replicaCount: 1
-  nodeSelector: {}
+  nodeSelector:
+    haproxy: "yes"
 
   extraArgs:
   - --disable-ipv6
