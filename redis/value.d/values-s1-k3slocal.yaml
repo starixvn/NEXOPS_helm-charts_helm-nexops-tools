@@ -12,7 +12,7 @@ volumePermissions:
 
 master:
   persistence:
-    size: 10Gi
+    size: 5Gi
 
 sentinel:
   enabled: true
@@ -22,4 +22,4 @@ sentinel:
 replica:
   replicaCount: 3
   persistence:
-    size: 10Gi
+    size: 5Gi
