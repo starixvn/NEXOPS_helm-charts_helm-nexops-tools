@@ -3,6 +3,11 @@ ingress:
   additionalHostNames:
   - "vn-s1-sentry-uat.nebula.prod"
 
+filestore:
+  filesystem:
+    persistence:
+      storageClass: "longhorn-single"
+
 # filestore:
 #   filesystem:
 #     persistence:
@@ -25,7 +30,12 @@ clickhouse:
   clickhouse:
     ## The instance number of Clickhouse
     replicas: "1"
+    persistentVolumeClaim:
+      dataPersistentVolume:
+        storageClassName: "longhorn-single"
 kafka:
+  global:
+    storageClass: "longhorn-single"
   extraConfig: |
     offsets.topic.replication.factor=1
     transaction.state.log.replication.factor=1
@@ -44,6 +54,8 @@ memcached:
 nginx:
   clusterDomain: starix.k3suat
 postgresql:
+  global:
+    storageClass: "longhorn-single"
   clusterDomain: starix.k3suat
   auth:
     database: sentry
@@ -76,8 +88,14 @@ postgresql:
             userPasswordKey: "password"
           username: "postgres"
 rabbitmq:
+  global:
+    storageClass: "longhorn-single"
   clusterDomain: starix.k3suat
 redis:
   clusterDomain: starix.k3suat
+  global:
+    storageClass: "longhorn-single"
 zookeeper:
   clusterDomain: starix.k3suat
+  global:
+    storageClass: "longhorn-single"
