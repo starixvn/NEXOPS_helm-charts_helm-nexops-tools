@@ -15,14 +15,14 @@ controller:
       facility: "daemon"
   
   service:
-    type: LoadBalancer
+    type: LoadBalanceru
     tcpPorts:
     - name: logstash
       port: 15044
       targetPort: 15044
       protocol: TCP
 
-  externalTrafficPolicy: "Local"
+    externalTrafficPolicy: "Local"
   
 
 
