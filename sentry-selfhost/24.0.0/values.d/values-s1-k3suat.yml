@@ -33,6 +33,8 @@ clickhouse:
     persistentVolumeClaim:
       dataPersistentVolume:
         storageClassName: "longhorn-s1"
+    nodeSelector:
+      sentry: "yes"
 kafka:
   global:
     storageClass: "longhorn-s1"
@@ -90,11 +92,19 @@ postgresql:
 rabbitmq:
   global:
     storageClass: "longhorn-s1"
+  nodeSelector:
+    sentry: "yes"
   clusterDomain: starix.k3suat
 redis:
   clusterDomain: starix.k3suat
   global:
     storageClass: "longhorn-s1"
+  master:
+    nodeSelector:
+      sentry: "yes"
+  replica:
+    nodeSelector:
+      sentry: "yes"      
 zookeeper:
   clusterDomain: starix.k3suat
   global:
