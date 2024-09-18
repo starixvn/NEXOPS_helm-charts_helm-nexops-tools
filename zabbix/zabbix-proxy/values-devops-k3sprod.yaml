@@ -56,7 +56,7 @@ zabbixProxy:
 
     ## Note that since version 6.0 the variable ZBX_SERVER_PORT is not supported anymore. Instead, add a colon (:) followed by the port number to the end of ZBX_SERVER_HOST value.
     - name: ZBX_SERVER_HOST
-      value: "zabbix.nexdev.net"
+      value: '0.0.0.0/0'
     ## The variable is used to specify debug level. By default, value is 3
     - name: ZBX_DEBUGLEVEL
       value: 3
@@ -81,6 +81,7 @@ zabbixProxy:
     labels: {}
     ## Type of service for Zabbix proxy
     type: NodePort #ClusterIP
+    nodePort: 31402
     ## Port to expose service
     port: 10051
     ## Port of application pod
