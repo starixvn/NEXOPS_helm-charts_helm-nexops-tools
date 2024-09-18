@@ -82,11 +82,9 @@ zabbixProxy:
     ## Type of service for Zabbix proxy
     type: NodePort #ClusterIP
     ## Port to expose service
-    ports:
-      - port: 10051
+    port: 10051
     ## Port of application pod
-        targetPort: 10051
-        nodePort: 31402
+    targetPort: 10051
     ## Zabbix proxy Ingress externalIPs with optional path
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
     ## Must be provided if ProxyMode is set to passive mode
