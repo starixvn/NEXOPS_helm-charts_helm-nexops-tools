@@ -46,7 +46,9 @@ kafka:
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=60000
     log.segment.delete.delay.ms=1000
-
+  controller:
+    nodeSelector:
+      sentry: "yes"
   clusterDomain: starix.k3suat
   zookeeper:
     clusterDomain: starix.k3suat
@@ -88,6 +90,9 @@ postgresql:
             replicationPasswordKey: "replication-password"
             userPasswordKey: "password"
           username: "postgres"
+  primary:
+    nodeSelector:
+      sentry: "yes"
 rabbitmq:
   global:
     storageClass: "longhorn-s1"
