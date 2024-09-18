@@ -9,7 +9,7 @@ global:
         value: "linux"
         effect: "NoSchedule"
         operator: "Equal"
-      - key: "devops/node-role"
+      - key: "node.role"
         value: "vault"
         effect: "NoSchedule"
         operator: "Equal"
