@@ -80,7 +80,7 @@ zabbixProxy:
     annotations: {}
     labels: {}
     ## Type of service for Zabbix proxy
-    type: ClusterIP
+    type: NodePort #ClusterIP
     ## Port to expose service
     port: 10051
     ## Port of application pod
