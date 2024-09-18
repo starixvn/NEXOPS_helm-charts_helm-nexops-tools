@@ -1,9 +1,6 @@
 clusterDomain: "starix.k3slocal"
 replicaCount: 3
 
-# global:
-#   storageClass: "longhorn"
-
 service:
   type: LoadBalancer
   loadBalancerIP: "10.10.50.129"
@@ -112,7 +109,7 @@ configuration: |
 
   backend default_backend_nodes
     mode http
-    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable ! Pls contact NexOps if you think this is a mistake... K3s UAT"
+    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable ! Pls contact NexOps if you think this is a mistake... K3s LOCAL"
 
   frontend redis_nap_master_fe
     bind :16379

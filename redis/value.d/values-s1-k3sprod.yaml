@@ -1,0 +1,25 @@
+clusterDomain: "starix.k3sprod"
+
+global:
+  storageClass: "longhorn-s1-effort"
+
+auth:
+  password: "foo1@bared"
+
+
+volumePermissions:
+  enabled: true
+
+master:
+  persistence:
+    size: 20Gi
+
+sentinel:
+  enabled: true
+  persistence:
+    size: 2Gi    
+
+replica:
+  replicaCount: 3
+  persistence:
+    size: 20Gi
