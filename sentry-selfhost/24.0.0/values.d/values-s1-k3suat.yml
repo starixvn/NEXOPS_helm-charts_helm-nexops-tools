@@ -56,6 +56,8 @@ memcached:
   clusterDomain: starix.k3suat
 nginx:
   clusterDomain: starix.k3suat
+  nodeSelector:
+    sentry: "yes"
 postgresql:
   global:
     storageClass: "longhorn-s1"
