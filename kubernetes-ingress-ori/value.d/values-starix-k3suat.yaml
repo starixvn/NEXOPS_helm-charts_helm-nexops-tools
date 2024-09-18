@@ -5,4 +5,4 @@ controller:
 
   service:
     type: LoadBalancer
-    #externalTrafficPolicy: "Local"
+    externalTrafficPolicy: "Local"
