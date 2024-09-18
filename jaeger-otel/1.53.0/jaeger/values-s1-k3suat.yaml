@@ -134,8 +134,8 @@ storage:
       # cassandra.tls.enabled: "false"
   elasticsearch:
     scheme: http
-    host: vn-s1-jaeger-elasticsearch-uat.nebula.prod #elasticsearch-master
-    #port: 9300
+    host: 10.99.91.8 #elasticsearch-master
+    port: 30920
     anonymous: true
     #user: elastic
     usePassword: false
@@ -148,14 +148,16 @@ storage:
     extraEnv: #[]
     ## ES related env vars to be configured on the concerned components
      - name: ES_SERVER_URLS
-       value: http://vn-s1-jaeger-elasticsearch-uat.nebula.prod #http://elasticsearch-master:9200
+       value: http://10.99.91.8:30920 #http://elasticsearch-master:9200
     # - name: ES_USERNAME
     #   value: elastic
     # - name: ES_INDEX_PREFIX
     #   value: test
     ## ES related cmd line opts to be configured on the concerned components
     cmdlineParams:
-      {}
+      {
+        es.server-urls: http://10.99.91.8:30920
+      }
       # es.server-urls: http://elasticsearch-master:9200
       # es.username: elastic
       # es.index-prefix: test
@@ -823,7 +825,7 @@ spark:
   # ttlSecondsAfterFinished: 120
 
 esIndexCleaner:
-  enabled: false
+  enabled: true #false
   securityContext:
     runAsUser: 1000
   podSecurityContext:
@@ -872,7 +874,7 @@ esIndexCleaner:
   # ttlSecondsAfterFinished: 120
 
 esRollover:
-  enabled: false
+  enabled: true #false
   securityContext: {}
   podSecurityContext:
     runAsUser: 1000

@@ -1,5 +1,20 @@
 ---
 ## Deploy helm manually
+global:
+  cattle:
+    windowsCluster:
+      enabled: true
+      tolerations:
+      - key: "cattle.io/os"
+        value: "linux"
+        effect: "NoSchedule"
+        operator: "Equal"
+      - key: "devops/node-role"
+        value: "vault"
+        effect: "NoSchedule"
+        operator: "Equal"
+
+
 service:
   ui:
     # -- Service type for Longhorn UI. (Options: "ClusterIP", "NodePort", "LoadBalancer", "Rancher-Proxy")

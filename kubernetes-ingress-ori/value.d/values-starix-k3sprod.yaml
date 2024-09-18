@@ -10,4 +10,7 @@ controller:
       stats show-modules
   service:
     type: LoadBalancer
-    #externalTrafficPolicy: "Local"
+    externalTrafficPolicy: "Local"
+  nodeSelector:
+    node-role.kubernetes.io/master: "true"
+    node-role.kubernetes.io/control-plane: "true"
