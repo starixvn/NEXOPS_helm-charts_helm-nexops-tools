@@ -27,7 +27,7 @@ tenant:
   features:
     bucketDNS: false
     domains: { }
-    enableSFTP: true
+    enableSFTP: false
 
   pools:
   - name: pool-0
