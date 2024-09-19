@@ -193,11 +193,11 @@ zabbixServer:
     - name: "ZBX_VALUECACHESIZE"
       value: "1G"
     - name: "ZBX_STARTPROXYPOLLERS"
-      value: "10"
+      value: "20"
     - name: "ZBX_HOUSEKEEPINGFREQUENCY"
       value: "1"
     - name: "ZBX_MAXHOUSEKEEPERDELETE"
-      value: "50000"
+      value: "500000"
   #- name: ENABLE_TIMESCALEDB
   #  value: "true"
   # -- Annotations to add to the deployment
