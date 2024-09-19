@@ -513,7 +513,7 @@ collector:
         port: 4318
         nodePort: 31318
   ingress:
-    enabled: false
+    enabled: true #false
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
     # ingressClassName: nginx
@@ -524,9 +524,9 @@ collector:
     # hosts:
     #   - chart-example.local
     # or:
-    # hosts:
-    #   - host: chart-example.local
-    #     servicePort: grpc
+    hosts:
+       - host: vn-s1-jaeger-collector-prod.nebula.prod
+         servicePort: 4317
     # annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"

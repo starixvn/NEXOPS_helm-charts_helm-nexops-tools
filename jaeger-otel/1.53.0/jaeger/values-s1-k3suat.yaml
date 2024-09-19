@@ -524,9 +524,9 @@ collector:
     # hosts:
     #   - chart-example.local
     # or:
-    # hosts:
-    #   - host: chart-example.local
-    #     servicePort: grpc
+    hosts:
+       - host: vn-s1-jaeger-collector-uat.nebula.prod
+         servicePort: 4317
     # annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
