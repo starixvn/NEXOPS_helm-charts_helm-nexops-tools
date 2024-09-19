@@ -71,8 +71,9 @@ ingress:
   api:
     enabled: true
     ingressClassName: "haproxy"
-    # annotations:
-    #   haproxy.org/server-ssl: "true"
+    annotations:
+      haproxy.org/ssl-redirect: "false"
+      haproxy.org/server-ssl: "true"
       # cert-manager.io/cluster-issuer: letsencrypt-lumprod
     # tls:
     # - secretName: certmanager.minio-api.starixsoft.com 
@@ -90,8 +91,9 @@ ingress:
   console:
     enabled: true
     ingressClassName: "haproxy"
-    # annotations:
-    #   haproxy.org/server-ssl: "true"
+    annotations:
+      haproxy.org/ssl-redirect: "false"
+      # haproxy.org/server-ssl: "true"
     #   haproxy.org/backend-config-snippet: |
     #     compression type text/html text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon image/bmp
     #     compression algo gzip
@@ -114,44 +116,3 @@ ingress:
 #       - port: 8022
 #         targetPort: 8022
 #         nodePort: 30822
-
-  # - |
-  #   ## TCP port exposer
-  #   apiVersion: ingress.v1.haproxy.org/v1
-  #   kind: TCP
-  #   metadata:
-  #     name: minio-{{ .Values.tenant.name }}
-  #   spec:
-  #   - name: minio-{{ .Values.tenant.name }}-sftp
-  #     frontend:
-  #       name: minio-{{ .Values.tenant.name }}-sftp
-  #       tcplog: true
-  #       binds:
-  #       - name: minio-{{ .Values.tenant.name }}-sftp-bind
-  #         port: 8022
-  #     service:
-  #       name: {{ .Values.tenant.name }}-sftp
-  #       port: 8022
-
-  # - |
-  #   ## HAProxy Backend
-  #   apiVersion: core.haproxy.org/v1alpha2
-  #   kind: Backend
-  #   metadata:
-  #     name: minio-{{ .Values.tenant.name }}-backend
-  #   spec:
-  #     config:
-  #       name: minio-{{ .Values.tenant.name }}-sftp-backend
-  #       balance:
-  #         algorithm: "leastconn"
-
-# extraResources:
-# - |
-#   apiVersion: v1
-#   kind: Secret
-#   type: Opaque
-#   metadata:
-#     name: {{ dig "tenant" "configSecret" "name" "" (.Values | merge (dict)) }}
-#   stringData:
-#     config.env: |-
-#       export MINIO_PROMETHEUS_AUTH_TYPE='public'
