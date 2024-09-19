@@ -525,7 +525,7 @@ collector:
     # or:
     hosts:
        - host: jaeger-collector-s1.nexentgame.com
-         servicePort: grpc
+         servicePort: otlp-grpc
     # annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
