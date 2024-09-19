@@ -25,16 +25,6 @@ service:
     protocol: TCP
     port: 16880
     targetPort: redis-alpha-r
-##FPS
-#   - name: redis-fps-m
-#     protocol: TCP
-#     port: 16381
-#     targetPort: redis-fps-m
-
-#   - name: redis-fps-r
-#     protocol: TCP
-#     port: 16881
-#     targetPort: redis-fps-r
 #S1
   - name: redis-s1-m
     protocol: TCP
@@ -62,11 +52,6 @@ containerPorts:
   containerPort: 16380
 - name: redis-alpha-r
   containerPort: 16880
-##FPS
-# - name: redis-nap-m
-#   containerPort: 16381
-# - name: redis-nap-r
-#   containerPort: 16881
 #S1
 - name: redis-s1-m
   containerPort: 16382
@@ -170,3 +155,12 @@ configuration: |
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
     server-template redis-sentinel-s1-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3slocal-headless.redis-sentinel-s1.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
+  backend nats_s1_be
+    option tcp-check
+    server-template nats-s1-box- 0-2  _tcp-nats._TCP.nats-s1-headless.s1.svc.starix.k3slocal:4222  check inter 1s resolvers k8s init-addr none
+
+  backend rabbitmq_s1_be
+    option tcp-check
+    server-template rabbitmq-cluster-server- 0-2  _tcp-rabbitmq._TCP.rabbitmq-cluster.s1.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
