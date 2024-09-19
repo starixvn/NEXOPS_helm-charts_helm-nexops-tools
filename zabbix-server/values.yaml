@@ -187,9 +187,13 @@ zabbixServer:
     - name: "ZBX_STARTPOLLERSUNREACHABLE"
       value: "10"
     - name: "ZBX_CACHESIZE"
-      value: "8192M"
+      value: "8G"
     - name: "ZBX_TRENDCACHESIZE"
       value: "512M"
+    - name: "ZBX_VALUECACHESIZE"
+      value: "1G"
+    - name: "ZBX_STARTPROXYPOLLERS"
+      value: "10"
   #- name: ENABLE_TIMESCALEDB
   #  value: "true"
   # -- Annotations to add to the deployment
