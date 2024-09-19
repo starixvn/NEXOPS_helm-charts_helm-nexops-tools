@@ -198,6 +198,8 @@ zabbixServer:
       value: "1"
     - name: "ZBX_MAXHOUSEKEEPERDELETE"
       value: "500000"
+    - name: "ZBX_HISTORYINDEXCACHESIZE"
+      value: "32M"
   #- name: ENABLE_TIMESCALEDB
   #  value: "true"
   # -- Annotations to add to the deployment
