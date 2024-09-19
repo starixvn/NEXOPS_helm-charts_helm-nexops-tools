@@ -54,9 +54,12 @@ tenant:
     protocol: http
   prometheusOperator: true
 
+  certificate:
+    requestAutoCert: false
+
   env:
   - name: MINIO_PROMETHEUS_URL
-    value: "http://prometheus-stack-kube-prom-prometheus.monitoring.svc.lumi.lumprod:9090"
+    value: "http://prometheus-stack-kube-prom-prometheus.monitoring.svc:9090"
   
   ###
   # PriorityClassName indicates the Pod priority and hence importance of a Pod relative to other Pods.
@@ -68,8 +71,8 @@ ingress:
   api:
     enabled: true
     ingressClassName: "haproxy"
-    annotations:
-      haproxy.org/server-ssl: "true"
+    # annotations:
+    #   haproxy.org/server-ssl: "true"
       # cert-manager.io/cluster-issuer: letsencrypt-lumprod
     # tls:
     # - secretName: certmanager.minio-api.starixsoft.com 
@@ -87,11 +90,11 @@ ingress:
   console:
     enabled: true
     ingressClassName: "haproxy"
-    annotations:
-      haproxy.org/server-ssl: "true"
-      haproxy.org/backend-config-snippet: |
-        compression type text/html text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon image/bmp
-        compression algo gzip
+    # annotations:
+    #   haproxy.org/server-ssl: "true"
+    #   haproxy.org/backend-config-snippet: |
+    #     compression type text/html text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon image/bmp
+    #     compression algo gzip
     hosts:
     - host: "minio-lumprod.lumigame.com"
       paths: []
