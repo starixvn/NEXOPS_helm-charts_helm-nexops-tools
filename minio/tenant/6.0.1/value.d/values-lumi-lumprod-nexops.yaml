@@ -27,7 +27,7 @@ tenant:
   features:
     bucketDNS: false
     domains: { }
-    enableSFTP: true
+    enableSFTP: false
 
   pools:
   - name: pool-0
@@ -100,20 +100,20 @@ ingress:
       paths: []
     pathType: Prefix
 
-extraResources:
-  - |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: {{ .Values.tenant.name }}-sftp
-    spec:
-      type: NodePort
-      selector:
-        v1.min.io/tenant: nexops
-      ports:
-      - port: 8022
-        targetPort: 8022
-        nodePort: 30822
+# extraResources:
+#   - |
+#     apiVersion: v1
+#     kind: Service
+#     metadata:
+#       name: {{ .Values.tenant.name }}-sftp
+#     spec:
+#       type: NodePort
+#       selector:
+#         v1.min.io/tenant: nexops
+#       ports:
+#       - port: 8022
+#         targetPort: 8022
+#         nodePort: 30822
 
   # - |
   #   ## TCP port exposer
