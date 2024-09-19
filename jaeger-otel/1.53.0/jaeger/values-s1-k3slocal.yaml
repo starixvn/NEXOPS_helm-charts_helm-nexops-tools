@@ -524,7 +524,7 @@ collector:
     #   - jaeger-collector-s1.nexentgame.com
     # or:
     hosts:
-       - host: aeger-collector-s1.nexentgame.com
+       - host: jaeger-collector-s1.nexentgame.com
          servicePort: grpc
     # annotations:
     # kubernetes.io/ingress.class: nginx
