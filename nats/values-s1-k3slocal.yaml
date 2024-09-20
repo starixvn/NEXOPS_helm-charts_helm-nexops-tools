@@ -19,6 +19,8 @@ config:
 
 promExporter:
   enabled: true
+  image: 
+    tag: 0.15.0
 
   podMonitor:
     enabled: true
