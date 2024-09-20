@@ -167,6 +167,10 @@ configuration: |
     tcp-check expect string +OK
     server-template redis-sentinel-s1-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3slocal-headless.redis-sentinel-s1.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
 
+  frontend nats_s1_fe
+    bind :4222
+    default_backend nats_s1_be
+
   backend nats_s1_be
     option tcp-check
     server-template nats-s1- 0-2  _nats._TCP.nats-s1-headless.s1.svc.starix.k3slocal:4222 check inter 1s resolvers k8s init-addr none
