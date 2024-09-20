@@ -158,9 +158,9 @@ configuration: |
 
   backend nats_s1_be
     option tcp-check
-    server-template nats-s1- 0-2  _nats._TCP.nats-s1-headless.s1.svc.starix.k3slocal:4222 check inter 1s resolvers k8s init-addr none
+    server-template nats-s1- 0-2  _nats._TCP.nats-s1.s1.svc.starix.k3slocal:4222 check inter 1s resolvers k8s init-addr none
 
   backend rabbitmq_s1_be
     option tcp-check
-    server-template rabbitmq-cluster-server- 0-2  _amqp._TCP.rabbitmq-cluster-nodes.s1.svc.starix.k3slocal:25672 check inter 1s resolvers k8s init-addr none
+    server-template rabbitmq-cluster-server- 0-2  _amqp._TCP.rabbitmq-cluster.s1.svc.starix.k3slocal:5672 check inter 1s resolvers k8s init-addr none
 
