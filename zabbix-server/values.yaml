@@ -193,7 +193,7 @@ zabbixServer:
     - name: "ZBX_VALUECACHESIZE"
       value: "1G"
     - name: "ZBX_STARTPROXYPOLLERS"
-      value: "20"
+      value: "100"
     - name: "ZBX_HOUSEKEEPINGFREQUENCY"
       value: "1"
     - name: "ZBX_MAXHOUSEKEEPERDELETE"
