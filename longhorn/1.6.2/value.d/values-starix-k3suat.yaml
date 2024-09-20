@@ -111,13 +111,30 @@ extraResources:
     apiVersion: storage.k8s.io/v1
     kind: StorageClass
     metadata:
-      annotations:
-        storageclass.kubernetes.io/is-default-class: "false"
+      name: longhorn-s1-single
+    parameters:
+      dataLocality: disabled
+      fromBackup: ""
+      fsType: xfs
+      diskSelector: "longhorn-s1"
+      numberOfReplicas: "1"
+      staleReplicaTimeout: "30"
+      unmapMarkSnapChainRemoved: ignored
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
       name: longhorn-single
     parameters:
       dataLocality: disabled
       fromBackup: ""
       fsType: xfs
+      diskSelector: "starix"
       numberOfReplicas: "1"
       staleReplicaTimeout: "30"
       unmapMarkSnapChainRemoved: ignored
