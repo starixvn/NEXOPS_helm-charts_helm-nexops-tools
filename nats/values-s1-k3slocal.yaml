@@ -16,3 +16,9 @@ config:
 
   nats:
     nodePort: 30222
+
+promExporter:
+  enabled: true
+
+  podMonitor:
+    enabled: true
