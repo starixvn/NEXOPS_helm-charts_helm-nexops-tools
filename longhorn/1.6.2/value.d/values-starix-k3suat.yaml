@@ -106,3 +106,22 @@ extraResources:
     provisioner: driver.longhorn.io
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      annotations:
+        storageclass.kubernetes.io/is-default-class: "false"
+      name: longhorn-single
+    parameters:
+      dataLocality: disabled
+      fromBackup: ""
+      fsType: xfs
+      numberOfReplicas: "1"
+      staleReplicaTimeout: "30"
+      unmapMarkSnapChainRemoved: ignored
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
