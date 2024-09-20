@@ -3,7 +3,7 @@
 service:
   ui:
     # -- Service type for Longhorn UI. (Options: "ClusterIP", "NodePort", "LoadBalancer", "Rancher-Proxy")
-    type: ClusterIP
+    type: LoadBalancer
     # -- NodePort port number for Longhorn UI. When unspecified, Longhorn selects a free port between 30000 and 32767.
     nodePort: null
   manager:
@@ -38,3 +38,22 @@ extraResources:
     provisioner: driver.longhorn.io
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
+    
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      annotations:
+        storageclass.kubernetes.io/is-default-class: "false"
+      name: longhorn-single
+    parameters:
+      dataLocality: disabled
+      fromBackup: ""
+      fsType: ext4
+      numberOfReplicas: "1"
+      staleReplicaTimeout: "30"
+      unmapMarkSnapChainRemoved: ignored
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
