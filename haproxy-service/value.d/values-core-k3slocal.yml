@@ -5,6 +5,7 @@ service:
   type: LoadBalancer
   loadBalancerIP: "10.10.50.129"
   ports:
+###REDIS
 #NAP
   - name: redis-nap-m
     protocol: TCP
@@ -35,7 +36,13 @@ service:
     protocol: TCP
     port: 16882
     targetPort: redis-s1-r
+###NATS
+  - name: nats-s1
+    protocol: TCP
+    port: 4222
+    targetPort: nats-s1
 
+#HAProxy stats
   - name: http
     port: 8080
     targetPort: http
@@ -58,6 +65,10 @@ containerPorts:
 - name: redis-s1-r
   containerPort: 16882
 
+###NATS
+- name: nats-s1
+  containerPort: 4222
+#HAProxy stats
 - name: http
   containerPort: 8080
 
