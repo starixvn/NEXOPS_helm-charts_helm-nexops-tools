@@ -84,6 +84,8 @@ ingress:
       paths: []
     - host: "minio-api.starixsoft.com"
       paths: []
+    - host: "minio-api.lumiplus.vn"
+      paths: []
     tls:
     - hosts:
       - minio-api.starixsoft.com
