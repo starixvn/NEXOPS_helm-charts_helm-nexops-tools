@@ -162,5 +162,5 @@ configuration: |
 
   backend rabbitmq_s1_be
     option tcp-check
-    server-template rabbitmq-cluster-server- 0-2  _tcp-rabbitmq._TCP.rabbitmq-cluster.s1.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server-template rabbitmq-cluster-server- 0-2  _amqp._TCP.rabbitmq-cluster.s1.svc.starix.k3slocal:5672  check inter 1s resolvers k8s init-addr none
 
