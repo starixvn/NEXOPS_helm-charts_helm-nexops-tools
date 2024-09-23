@@ -7,10 +7,12 @@ logstashPipeline:
     input {
       http {
         port => 8080
+        type => "http"
         add_field => { "[@metadata][input-http]" => "" }
       }
       tcp {
         port => 5044
+        type => "tcp"
       }
       syslog {
         port => 5045
@@ -299,23 +301,22 @@ logstashPipeline:
           ssl_certificate_verification => false
           index => "logstash-unknown-%{+YYYY.MM.dd}"
         }
-        }
       }
     }
 
-  # main_output.conf: |
-  #   output {
-  #     else {
-  #       opensearch {
-  #         hosts => ["https://opensearch-cluster-master:9200"]
-  #         user => "logstash"
-  #         password => "logstash"
-  #         ssl => true
-  #         ssl_certificate_verification => false
-  #         index => "logstash-unknown-%{+YYYY.MM.dd}"
-  #       }        
-  #     }
-  #   }
+  main_output.conf: |
+    output {
+      if ! ([type] in ["http", "tcp", "syslog", "vault"]) {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-unknown-%{+YYYY.MM.dd}"
+        }   
+      }
+    }
     
 
 
