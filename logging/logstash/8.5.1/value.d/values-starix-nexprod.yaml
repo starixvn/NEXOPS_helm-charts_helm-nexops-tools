@@ -10,34 +10,14 @@ logstashPipeline:
         port => 8080
         add_field => { "[@metadata][input-http]" => "" }
       }
-      beats {
-        port => 5000
-      }
       tcp {
         port => 5044
       }
 
     }
 
-  # global_filter.conf: |
-  #   filter {
-  #     if ([host]) {
-  #       mutate {
-  #         rename => {"host" => "[host]"}
-  #       }
-  #     }
-  #   }
-
   vault_filter.conf: |
     filter {
-      # if [@metadata][input][tcp][source] and ![host] {
-      #   mutate {
-      #     copy => {
-      #       "[@metadata][input][tcp][source][name]" => "[host][name]"
-      #       "[@metadata][input][tcp][source][ip]"   => "[host][ip]"
-      #     }
-      #   }
-      # }
 
       if [host] =~ /vault-starix-nexprod/ {
         json {
@@ -200,8 +180,39 @@ resources:
     cpu: "1000m"
     memory: "4096Mi"
 
+httpPort: 9600
+extraPorts:
+  - name: httplog
+    containerPort: 8080
+  - name: tcp
+    containerPort: 5044
+  - name: syslog
+    containerPort: 5045
+  - name: vault-st-local
+    containerPort: 5064
+
 service:
   type: NodePort
+  ports:
+  - name: httplog
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: tcp
+    nodePort: 30504
+    port: 5044
+    protocol: TCP
+    targetPort: 5044
+  - name: syslog
+    nodePort: 30505
+    port: 5045
+    protocol: TCP
+    targetPort: 5045
+  - name: vault-st-local
+    nodePort: 30064
+    port: 5064
+    protocol: TCP
+    targetPort: 5064
 
 nodeSelector: 
   nexops-tools: "yes"
