@@ -20,15 +20,25 @@ logstashPipeline:
         port => 8080
         add_field => { "[@metadata][input-http]" => "" }
       }
+
       beats {
         port => 5000
       }
+
       tcp {
         port => 5044
       }
+
       syslog {
         port => 5045
+        type => "syslog"
         tags => ["syslog", "local"]
+      }
+
+      tcp {
+        port => 5064
+        type => "vault"
+        tags => ["local", "lumi"]
       }
     }
 
@@ -413,21 +423,15 @@ logstashPipeline:
         }
       }
 
-      if [host] =~ /vault-lumprod/ {
+      if [type] == "vault" {
         json {
           source => "message"
         }
         mutate {
-          add_tag => ["vault-cluster"]
+          remove_field => ["[event][original]"]
           remove_field => ["[response][data]"]
-        }
-      }
-      else if [host] =~ /vault/ {
-        json {
-          source => "message"
-        }
-        mutate {
-          add_tag => ["vault-std"]
+          rename => {"type" => "vault.type"}
+          add_field => {"type" => "vault"}
         }
       }
     }
@@ -794,28 +798,6 @@ logstashPipeline:
 
       }
 
-      else if "vault-std" in [tags] {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
-        }
-      }
-      
-      else if "vault-cluster" in [tags] {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-vault-cluster-audit-local-%{+YYYY.MM.dd}"
-        }
-      }
-
       if [agent][name] =~ /postgresql.*/ {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
@@ -829,6 +811,19 @@ logstashPipeline:
 
 
 
+      if [type] == "vault" {
+        if "local" in [tags] and "lumi" in [tags] {
+          opensearch {
+            hosts => ["https://opensearch-cluster-master:9200"]
+            user => "logstash"
+            password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
+            index => "logstash-vault-lumi-local-%{+YYYY.MM.dd}"
+          }
+        }
+      }
+
       if "syslog" in [tags] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
@@ -841,7 +836,46 @@ logstashPipeline:
       }
     }
 
+httpPort: 9600
+extraPorts:
+  - name: httplog
+    containerPort: 8080
+  - name: beats
+    containerPort: 5000
+  - name: tcp
+    containerPort: 5044
+  - name: syslog
+    containerPort: 5045
+  - name: vault-lum-local
+    containerPort: 5064
 
+service:
+  type: NodePort
+  ports:
+  - name: beats
+    nodePort: 30500
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+  - name: httplog
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: tcp
+    nodePort: 30504
+    port: 5044
+    protocol: TCP
+    targetPort: 5044
+  - name: syslog
+    nodePort: 30505
+    port: 5045
+    protocol: TCP
+    targetPort: 5045
+  - name: vault-lum-local
+    nodePort: 30064
+    port: 5064
+    protocol: TCP
+    targetPort: 5064
 
 nodeSelector: 
   nexops-tools: "yes"
