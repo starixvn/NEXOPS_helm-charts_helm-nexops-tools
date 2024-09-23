@@ -10,6 +10,14 @@ controller:
       targetPort: 5044
       protocol: TCP
 
+  logging:
+    level: info
+    traffic:
+      address: "logstash-nexprod-logstash.logging.svc"
+      port: "5045"
+      format: "raw"
+      facility: "local1"
+
 
 # Add-on component
 extraResources:
