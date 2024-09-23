@@ -342,7 +342,7 @@ extraPorts:
   - name: vault-st-local
     containerPort: 5064
   - name: vault-st-dev
-    containerPort: 5064
+    containerPort: 5065
 
 service:
   type: NodePort
@@ -359,6 +359,7 @@ service:
   - name: syslog
     nodePort: 30505
     port: 5045
+    protocol: UDP
     targetPort: 5045
   - name: vault-st-local
     nodePort: 30064
