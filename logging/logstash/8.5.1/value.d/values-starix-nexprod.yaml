@@ -5,7 +5,6 @@ logstashConfig:
 logstashPipeline:
   logstash.conf: |
     input {
-
       http {
         port => 8080
         add_field => { "[@metadata][input-http]" => "" }
@@ -13,35 +12,26 @@ logstashPipeline:
       tcp {
         port => 5044
       }
-
+      syslog {
+        port => 5045
+        type => "syslog"
+        tags => ["local"]
+      }
+      tcp {
+        port => 5064
+        type => "vault"
+        tags => ["local", "starix"]
+      }
+      tcp {
+        port => 5065
+        type => "vault"
+        tags => ["dev", "starix"]
+      }
     }
 
   vault_filter.conf: |
     filter {
-
-      if [host] =~ /vault-starix-nexprod/ {
-        json {
-          source => "message"
-        }
-        mutate {
-          add_tag => ["vault-server","nexprod","starix"]
-          remove_field => ["[event][original]"]
-          remove_field => ["[response][data]"]
-        }
-      }
-
-      else if [host] =~ /haproxy-ingress-nexprod-kubernetes-ingress.haproxy-ingress.svc.starix.nexprod/ {
-        json {
-          source => "message"
-        }
-        mutate {
-          add_tag => ["vault-server","dev","starix"]
-          remove_field => ["[event][original]"]
-          remove_field => ["[response][data]"]
-        }
-      }
-
-      else if [host] =~ /10.42.0.0/ {
+      if [type] == "vault" {
         json {
           source => "message"
         }
@@ -86,27 +76,27 @@ logstashPipeline:
 
   main_output.conf: |
     output {
-
-      if "vault-server" in [tags] and "nexprod" in [tags] and "starix" in [tags] {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
-        }         
-      }
-
-      else if "vault-server" in [tags] and "dev" in [tags] and "starix" in [tags] {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-vault-audit-dev-%{+YYYY.MM.dd}"
-        }         
+      if [type] == "vault" {
+        if "local" in [tags] and "starix" in [tags] {
+          opensearch {
+            hosts => ["https://opensearch-cluster-master:9200"]
+            user => "logstash"
+            password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
+            index => "logstash-vault-audit-local-%{+YYYY.MM.dd}"
+          }
+        }
+        else if "dev" in [tags] and "starix" in [tags] {
+          opensearch {
+            hosts => ["https://opensearch-cluster-master:9200"]
+            user => "logstash"
+            password => "logstash"
+            ssl => true
+            ssl_certificate_verification => false
+            index => "logstash-vault-audit-dev-%{+YYYY.MM.dd}"
+          }
+        }
       }
 
       else if "legion" in [tags] {
@@ -190,6 +180,8 @@ extraPorts:
     containerPort: 5045
   - name: vault-st-local
     containerPort: 5064
+  - name: vault-st-dev
+    containerPort: 5064
 
 service:
   type: NodePort
@@ -213,6 +205,11 @@ service:
     port: 5064
     protocol: TCP
     targetPort: 5064
+  - name: vault-st-dev
+    nodePort: 30065
+    port: 5065
+    protocol: TCP
+    targetPort: 5065
 
 nodeSelector: 
   nexops-tools: "yes"
