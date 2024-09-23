@@ -307,7 +307,7 @@ logstashPipeline:
 
   main_output.conf: |
     output {
-      if ! ([type] in ["http", "tcp", "syslog", "vault"]) {
+      if [type] not in ["http", "tcp", "syslog", "vault"] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
