@@ -300,31 +300,19 @@ logstashPipeline:
       }
     }
 
-  main_output.conf: |
-    output {
-      if [type] == "syslog" {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-unknown-%{+YYYY.MM.dd}"
-        }
-      }
-
-      else {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-unknown-%{+YYYY.MM.dd}"
-        }        
-      }
-
-    }
+  # main_output.conf: |
+  #   output {
+  #     else {
+  #       opensearch {
+  #         hosts => ["https://opensearch-cluster-master:9200"]
+  #         user => "logstash"
+  #         password => "logstash"
+  #         ssl => true
+  #         ssl_certificate_verification => false
+  #         index => "logstash-unknown-%{+YYYY.MM.dd}"
+  #       }        
+  #     }
+  #   }
     
 
 
