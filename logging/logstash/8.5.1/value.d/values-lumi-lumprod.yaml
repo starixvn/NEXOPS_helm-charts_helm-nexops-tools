@@ -41,11 +41,11 @@ logstashPipeline:
         tags => ["local", "lumi"]
       }
 
-      logstash {
-        port => 9800
-        type => "logstash"
-        tags => ["logstash"]
-      }
+      # logstash {
+      #   port => 9800
+      #   type => "logstash"
+      #   tags => ["logstash"]
+      # }
     }
 
   aws_input.conf: |
@@ -319,7 +319,7 @@ logstashPipeline:
         }
       }
 
-      if "syslog" in [tags] {
+      if [type] == syslog" {
         mutate {
           rename => {
             "host" => "syslog_server"
@@ -769,8 +769,6 @@ logstashPipeline:
           #   }         
           # }
         }
-
-
         else if "eksuat" in [tags] {
           if "hap-ing" in [tags] {
             opensearch {
