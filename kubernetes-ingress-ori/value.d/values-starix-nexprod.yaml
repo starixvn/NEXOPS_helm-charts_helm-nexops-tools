@@ -16,7 +16,7 @@ controller:
     traffic:
       address: "logstash-nexprod-logstash.logging.svc"
       port: "5045"
-      len: "8096"
+      format: "json"
       facility: "local1"
 
 
