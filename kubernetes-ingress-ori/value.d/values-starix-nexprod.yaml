@@ -4,6 +4,7 @@ controller:
   - --configmap-tcp-services=haproxy-ingress/tcp-configmap
   service:
     type: LoadBalancer
+    externalTrafficPolicy: "Local"
     tcpPorts:
     - name: logstash
       port: 5044
