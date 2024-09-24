@@ -49,7 +49,6 @@ logstashPipeline:
     }
 
   aws_input.conf: |
-
     input {
       # CloudTrail AWS LOCAL
       s3 {
@@ -246,7 +245,6 @@ logstashPipeline:
 ######### FILTER PIPELINE #########
   proxy_filter.conf: |
     filter {
-
       # filter CloudTrail
       if [type] == "cloudtrail" {
         if [eventName] == "UpdateInstanceInformation" {
@@ -319,7 +317,7 @@ logstashPipeline:
         }
       }
 
-      if [type] == syslog" {
+      if [type] == "syslog" {
         mutate {
           rename => {
             "host" => "syslog_server"
