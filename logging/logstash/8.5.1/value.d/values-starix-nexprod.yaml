@@ -354,7 +354,7 @@ service:
   - name: syslog
     nodePort: 30505
     port: 5045
-    protocol: UDP
+    protocol: TCP
     targetPort: 5045
   - name: vault-st-local
     nodePort: 30064
