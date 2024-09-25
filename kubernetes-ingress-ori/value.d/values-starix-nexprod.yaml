@@ -2,14 +2,15 @@
 controller:
   extraArgs:
   - --configmap-tcp-services=haproxy-ingress/tcp-configmap
+
   service:
     type: LoadBalancer
     externalTrafficPolicy: "Local"
-    tcpPorts:
-    - name: logstash
-      port: 5044
-      targetPort: 5044
-      protocol: TCP
+    # tcpPorts:
+    # - name: logstash
+    #   port: 5044
+    #   targetPort: 5044
+    #   protocol: TCP
 
   logging:
     level: info
@@ -19,15 +20,19 @@ controller:
       format: "rfc3164"
       facility: "local1"
 
+  nodeSelector:
+    node-role.kubernetes.io/master: "true"
+    node-role.kubernetes.io/control-plane: "true"
+
 
 # Add-on component
-extraResources:
-  - |
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: tcp-configmap
-      namespace: haproxy-ingress
-    data:
-      5044:
-        logging/logstash-nexprod-logstash:5044
+# extraResources:
+#   - |
+#     apiVersion: v1
+#     kind: ConfigMap
+#     metadata:
+#       name: tcp-configmap
+#       namespace: haproxy-ingress
+#     data:
+#       5044:
+#         logging/logstash-nexprod-logstash:5044

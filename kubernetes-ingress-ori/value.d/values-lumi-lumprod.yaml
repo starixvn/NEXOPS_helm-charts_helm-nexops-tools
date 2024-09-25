@@ -2,6 +2,7 @@
 controller:
   extraArgs:
   - --configmap-tcp-services=gitlab-server/gitlab-server-haproxy-tcp
+
   service:
     type: LoadBalancer
     tcpPorts:
@@ -11,6 +12,18 @@ controller:
     - name: sftp
       port: 8022
       targetPort: 8022
+
+  logging:
+    level: info
+    traffic:
+      address: "logstash-lumprod-logstash.logging.svc"
+      port: "5045"
+      format: "rfc3164"
+      facility: "local1"
+
+  nodeSelector:
+    node-role.kubernetes.io/master: "true"
+    node-role.kubernetes.io/control-plane: "true"
 
 extraResources:
 - |
