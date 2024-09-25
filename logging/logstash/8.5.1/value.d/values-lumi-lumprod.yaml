@@ -894,6 +894,7 @@ extraPorts:
     containerPort: 5044
   - name: syslog
     containerPort: 5045
+    protocol: TCP
   - name: syslog-udp
     containerPort: 5046
     protocol: UDP
