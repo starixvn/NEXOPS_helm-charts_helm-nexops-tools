@@ -12,6 +12,14 @@ controller:
   service:
     type: LoadBalancer
 
+  logging:
+    level: info
+    traffic:
+      address: "10.10.50.121"
+      port: "30505"
+      format: "rfc3164"
+      facility: "local5"
+
   nodeSelector:
     node-role.kubernetes.io/master: ""
     node-role.kubernetes.io/control-plane: ""
