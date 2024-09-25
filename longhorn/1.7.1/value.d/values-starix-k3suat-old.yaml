@@ -1,0 +1,53 @@
+---
+## Deploy helm manually
+service:
+  ui:
+    # -- Service type for Longhorn UI. (Options: "ClusterIP", "NodePort", "LoadBalancer", "Rancher-Proxy")
+    type: ClusterIP
+    # -- NodePort port number for Longhorn UI. When unspecified, Longhorn selects a free port between 30000 and 32767.
+    nodePort: null
+  manager:
+    # -- Service type for Longhorn Manager.
+    type: ClusterIP
+    # -- NodePort port number for Longhorn Manager. When unspecified, Longhorn selects a free port between 30000 and 32767.
+    nodePort: ""
+
+ingress:
+  # -- Setting that allows Longhorn to generate ingress records for the Longhorn UI service.
+  enabled: false
+  ingressClassName: ~
+  path: /
+
+metrics:
+  serviceMonitor:
+    # -- Setting that allows the creation of a Prometheus ServiceMonitor resource for Longhorn Manager components.
+    enabled: true
+
+
+# Add-on component
+extraResources:
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-stricted
+    parameters:
+      dataLocality: strict-local
+      numberOfReplicas: "1"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Retain
+    volumeBindingMode: WaitForFirstConsumer
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-s1
+    parameters:
+      dataLocality: disabled
+      numberOfReplicas: "3"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate

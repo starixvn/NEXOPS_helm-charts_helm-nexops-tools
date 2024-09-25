@@ -1,0 +1,144 @@
+---
+## Deploy helm manually
+global:
+  cattle:
+    windowsCluster:
+      enabled: true
+      tolerations:
+      - key: "cattle.io/os"
+        value: "linux"
+        effect: "NoSchedule"
+        operator: "Equal"
+      - key: "node.role"
+        value: "vault"
+        effect: "NoSchedule"
+        operator: "Equal"
+
+
+service:
+  ui:
+    # -- Service type for Longhorn UI. (Options: "ClusterIP", "NodePort", "LoadBalancer", "Rancher-Proxy")
+    type: ClusterIP
+    # -- NodePort port number for Longhorn UI. When unspecified, Longhorn selects a free port between 30000 and 32767.
+    nodePort: null
+  manager:
+    # -- Service type for Longhorn Manager.
+    type: ClusterIP
+    # -- NodePort port number for Longhorn Manager. When unspecified, Longhorn selects a free port between 30000 and 32767.
+    nodePort: ""
+
+ingress:
+  # -- Setting that allows Longhorn to generate ingress records for the Longhorn UI service.
+  enabled: false
+  ingressClassName: ~
+  path: /
+
+metrics:
+  serviceMonitor:
+    # -- Setting that allows the creation of a Prometheus ServiceMonitor resource for Longhorn Manager components.
+    enabled: true
+
+persistence:
+  defaultFsType: xfs
+
+defaultSettings:
+  defaultDataPath: "/var/lib/longhorn/starix"
+
+
+# Add-on component
+extraResources:
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-stricted
+    parameters:
+      dataLocality: strict-local
+      numberOfReplicas: "1"
+      fsType: "xfs"
+      diskSelector: "starix"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-s1
+    parameters:
+      dataLocality: disabled
+      numberOfReplicas: "3"
+      fsType: "xfs"
+      diskSelector: "longhorn-s1"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-s1-stricted
+    parameters:
+      dataLocality: strict-local
+      numberOfReplicas: "1"
+      fsType: "xfs"
+      diskSelector: "longhorn-s1"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    allowVolumeExpansion: true
+    metadata:
+      name: longhorn-stricted-vault
+    parameters:
+      dataLocality: strict-local
+      numberOfReplicas: "1"
+      fsType: "ext4"
+      nodeSelector: "vault"
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: longhorn-s1-single
+    parameters:
+      dataLocality: disabled
+      fromBackup: ""
+      fsType: xfs
+      diskSelector: "longhorn-s1"
+      numberOfReplicas: "1"
+      staleReplicaTimeout: "30"
+      unmapMarkSnapChainRemoved: ignored
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
+
+  - |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: longhorn-single
+    parameters:
+      dataLocality: disabled
+      fromBackup: ""
+      fsType: xfs
+      diskSelector: "starix"
+      numberOfReplicas: "1"
+      staleReplicaTimeout: "30"
+      unmapMarkSnapChainRemoved: ignored
+    provisioner: driver.longhorn.io
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
