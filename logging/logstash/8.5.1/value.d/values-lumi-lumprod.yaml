@@ -888,6 +888,9 @@ extraPorts:
     containerPort: 5044
   - name: syslog
     containerPort: 5045
+  - name: syslog-udp
+    containerPort: 5045
+    protocol: UDP
   - name: vault-lum-local
     containerPort: 5064
 
