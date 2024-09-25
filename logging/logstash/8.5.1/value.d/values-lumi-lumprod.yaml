@@ -928,7 +928,7 @@ service:
     targetPort: 5045
   - name: syslog-udp
     nodePort: 30505
-    port: 5045
+    port: 5046
     protocol: UDP
     targetPort: 5046
   - name: vault-lum-local
