@@ -334,6 +334,11 @@ logstashPipeline:
               add_tag => ["haproxy_access", "hap-ing", "lumprod"]
             }
           }
+          else if [facility_label] == "local3" {
+            mutate {
+              add_tag => ["haproxy_access", "hap-ing", "devops"]
+            }
+          }
           else if [facility_label] == "local5" {
             mutate {
               add_tag => ["haproxy_access", "hap-ing", "s1"]
@@ -737,6 +742,16 @@ logstashPipeline:
                 ssl => true
                 ssl_certificate_verification => false
                 index => "logstash-haproxy-s1-local-%{+YYYY.MM.dd}"
+              }
+            }
+            else if "devops" in [tags] and "local" in [tags] {
+              opensearch {
+                hosts => ["https://opensearch-cluster-master:9200"]
+                user => "logstash"
+                password => "logstash"
+                ssl => true
+                ssl_certificate_verification => false
+                index => "logstash-haproxy-devops-local-%{+YYYY.MM.dd}"
               }
             }
             else {
