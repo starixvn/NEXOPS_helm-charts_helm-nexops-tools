@@ -1,4 +1,4 @@
-logstashJavaOpts: "-Xmx2g -Xms2g"
+logstashJavaOpts: "-Xmx4g -Xms2g"
 
 resources:
   requests:
