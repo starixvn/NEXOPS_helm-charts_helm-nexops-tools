@@ -35,6 +35,12 @@ logstashPipeline:
         tags => ["syslog", "local"]
       }
 
+      syslog {
+        port => 5046
+        type => "syslog"
+        tags => ["local"]
+      }
+
       tcp {
         port => 5064
         type => "vault"
@@ -888,9 +894,8 @@ extraPorts:
     containerPort: 5044
   - name: syslog
     containerPort: 5045
-    protocol: TCP
   - name: syslog-udp
-    containerPort: 5045
+    containerPort: 5046
     protocol: UDP
   - name: vault-lum-local
     containerPort: 5064
@@ -924,7 +929,7 @@ service:
     nodePort: 30505
     port: 5045
     protocol: UDP
-    targetPort: 5045
+    targetPort: 5046
   - name: vault-lum-local
     nodePort: 30064
     port: 5064
