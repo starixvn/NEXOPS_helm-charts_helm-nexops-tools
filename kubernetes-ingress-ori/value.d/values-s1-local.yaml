@@ -11,6 +11,7 @@ controller:
     
   service:
     type: LoadBalancer
+    externalTrafficPolicy: "Local"
 
   logging:
     level: info
