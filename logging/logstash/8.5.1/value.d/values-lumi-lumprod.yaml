@@ -879,7 +879,7 @@ logstashPipeline:
     output {
       if [type] not in ["cloudtrail", "cloudwatch", "syslog", "vault"] {
         if "haproxy_access" not in [tags] {
-          if [agent][name] ! =~ /postgresql.*/ {
+          if [agent][name] !~ /postgresql.*/ {
             opensearch {
               hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
