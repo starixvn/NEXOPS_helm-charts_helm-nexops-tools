@@ -242,7 +242,7 @@ logstashPipeline:
       
     }
 
-######### FILTER PIPELINE #########
+  ######### FILTER PIPELINE #########
   proxy_filter.conf: |
     filter {
       # filter CloudTrail
@@ -444,7 +444,7 @@ logstashPipeline:
       }
     }
 
-######### OUTPUT PIPELINE #########
+  ######### OUTPUT PIPELINE #########
   proxy_output.conf: |
     output {
       # Cloudtrail
@@ -835,7 +835,7 @@ logstashPipeline:
 
   main_output.conf: |
     output {
-      if [type] not in ["cloudtrail", "cloudwatch", "vault"] {
+      if [type] not in ["cloudtrail", "cloudwatch", "syslog", "vault"] {
         if "haproxy_access" not in [tags] {
           if [agent][name] =~ /postgresql.*/ {
             opensearch {
@@ -888,6 +888,11 @@ service:
     nodePort: 30505
     port: 5045
     protocol: TCP
+    targetPort: 5045
+  - name: syslog-udp
+    nodePort: 30505
+    port: 5045
+    protocol: UDP
     targetPort: 5045
   - name: vault-lum-local
     nodePort: 30064
