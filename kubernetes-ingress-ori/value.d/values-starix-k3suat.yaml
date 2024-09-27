@@ -7,6 +7,14 @@ controller:
     type: LoadBalancer
     externalTrafficPolicy: "Local"
 
+  logging:
+    level: info
+    traffic:
+      address: "logstash-starix-k3suat-logstash.logging.svc"
+      port: "5045"
+      format: "rfc3164"
+      facility: "local1"
+
   nodeSelector:
     node-role.kubernetes.io/master: "true"
     node-role.kubernetes.io/control-plane: "true"
