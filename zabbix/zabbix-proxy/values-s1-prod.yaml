@@ -38,6 +38,11 @@ zabbixProxy:
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ##      https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry
     pullSecrets: []
+  resources:
+    limits:
+      memory: "4Gi"
+    requests:
+      memory: "2Gi"
 
   env:
     ## The variable allows to switch Zabbix proxy mode. By default, value is 0 - active proxy. Allowed values are 0 and 1.
