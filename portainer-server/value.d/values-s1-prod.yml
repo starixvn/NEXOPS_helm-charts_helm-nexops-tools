@@ -1,0 +1,13 @@
+ingress:
+  enabled: true
+  ingressClassName: "haproxy"
+  hosts:
+    - host: "portainer.nova88demo.com"
+      paths:
+      - path: "/"
+
+
+
+persistence:
+  size: "10Gi"
+  storageClass: "longhorn-s1"
