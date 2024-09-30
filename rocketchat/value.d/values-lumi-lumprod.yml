@@ -1,10 +1,17 @@
 global:
   clusterDomain: "lumi.lumprod"
 
+image:
+  repository: hub.lumigame.com/base/rocketchat
+
 persistence:
   enabled: true
 
 mongodb:
+  image:
+    registry: hub.lumigame.com
+    repository: mongodb
+    tag: 6.0.10-debian-11-r8
   clusterDomain: "lumi.lumprod"
   auth:
     rootPassword: "rocketchat"
