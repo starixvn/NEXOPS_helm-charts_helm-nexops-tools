@@ -8,9 +8,25 @@ controller:
       stats show-legends
       stats show-node
       stats show-modules
+
   service:
     type: LoadBalancer
+    externalTrafficPolicy: "Local"
+
+  logging:
+    level: info
+    traffic:
+      address: "vn-st-ing-uat.nebula.prod"
+      port: "30045"
+      format: "rfc3164"
+      facility: "local5"
 
   nodeSelector:
     node-role.kubernetes.io/master: ""
     node-role.kubernetes.io/control-plane: ""
+
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
