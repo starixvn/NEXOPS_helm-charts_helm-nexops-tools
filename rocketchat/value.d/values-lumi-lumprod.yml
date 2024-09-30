@@ -10,7 +10,7 @@ persistence:
 mongodb:
   image:
     registry: hub.lumigame.com
-    repository: mongodb
+    repository: base/mongodb
     tag: 6.0.10-debian-11-r8
   clusterDomain: "lumi.lumprod"
   auth:
