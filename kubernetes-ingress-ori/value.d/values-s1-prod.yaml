@@ -9,6 +9,15 @@ controller:
       stats show-modules
   service:
     type: LoadBalancer
+    externalTrafficPolicy: "Local"
+
+  logging:
+    level: info
+    traffic:
+      address: "vn-st-ing-prod.nebula.prod"
+      port: "30045"
+      format: "rfc3164"
+      facility: "local5"
 
   nodeSelector:
     node-role.kubernetes.io/master: ""
