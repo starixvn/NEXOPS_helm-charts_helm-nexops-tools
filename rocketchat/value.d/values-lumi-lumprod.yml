@@ -1,0 +1,30 @@
+global:
+  clusterDomain: "lumi.lumprod"
+
+persistence:
+  enabled: true
+
+mongodb:
+  clusterDomain: "lumi.lumprod"
+  auth:
+    rootPassword: "rocketchat"
+    passwords:
+    - rocketchat
+  persistence:
+    enabled: true
+
+host: rocketchat.lumigame.com
+ingress:
+  enabled: true
+  ingressClassName: "haproxy"
+
+
+nats:
+  clusterDomain: "lumi.lumprod"
+
+postgresql:
+  clusterDomain: "lumi.lumprod"
+  
+
+
+
