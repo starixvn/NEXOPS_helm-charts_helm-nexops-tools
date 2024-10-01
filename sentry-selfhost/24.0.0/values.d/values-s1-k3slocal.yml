@@ -1,10 +1,10 @@
 ingress:
   hostname: "sentry-s1.nexentgame.com"
 
-# filestore:
-#   filesystem:
-#     persistence:
-#       storageClass: "local-path"
+filestore:
+  filesystem:
+    persistence:
+      storageClass: "local-path"
 
 
 # sentry:
@@ -29,7 +29,14 @@ clickhouse:
   clickhouse:
     ## The instance number of Clickhouse
     replicas: "1"
+    persistentVolumeClaim:
+      dataPersistentVolume:
+        storageClassName: "local-path"
+    nodeSelector:
+      sentry: "yes"
 kafka:
+  global:
+    storageClass: "local-path"
   extraConfig: |
     offsets.topic.replication.factor=1
     transaction.state.log.replication.factor=1
@@ -39,6 +46,9 @@ kafka:
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=60000
     log.segment.delete.delay.ms=1000
+  controller:
+    nodeSelector:
+      sentry: "yes"
   clusterDomain: starix.k3slocal
   zookeeper:
     clusterDomain: starix.k3slocal
@@ -46,7 +56,11 @@ memcached:
   clusterDomain: starix.k3slocal
 nginx:
   clusterDomain: starix.k3slocal
+  nodeSelector:
+    sentry: "yes"
 postgresql:
+  global:
+    storageClass: "local-path"
   clusterDomain: starix.k3slocal
   auth:
     database: sentry
@@ -78,9 +92,28 @@ postgresql:
             replicationPasswordKey: "replication-password"
             userPasswordKey: "password"
           username: "postgres"
+  primary:
+    nodeSelector:
+      sentry: "yes"
 rabbitmq:
   clusterDomain: starix.k3slocal
+  global:
+    storageClass: "local-path"
+  nodeSelector:
+    sentry: "yes"
 redis:
   clusterDomain: starix.k3slocal
+  global:
+    storageClass: "local-path"
+  master:
+    nodeSelector:
+      sentry: "yes"
+  replica:
+    nodeSelector:
+      sentry: "yes"  
 zookeeper:
   clusterDomain: starix.k3slocal
+  global:
+    storageClass: "local-path"
+  nodeSelector:
+    sentry: "yes"
