@@ -17,8 +17,7 @@ sentry:
   worker:
     replicas: 2
   cleanup:
-    days: 3
-
+    days: 1
 
 symbolicator:
   enabled: true

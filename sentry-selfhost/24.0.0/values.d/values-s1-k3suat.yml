@@ -19,7 +19,6 @@ filestore:
 #     enabled: "true"
 #   workerTransactions:
 #     enabled: "true"
-
 symbolicator:
   enabled: true
 
@@ -120,6 +119,8 @@ zookeeper:
 
 
 sentry:
+  cleanup:
+    days: 3
   web:
     env:
     - name: HTTP_PROXY
@@ -129,6 +130,7 @@ sentry:
     - name: NO_PROXY
       value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
   worker:
+    replicas: 2
     env:
     - name: HTTP_PROXY
       value: "http://lisasqd.nebula.prod:8801"
@@ -136,4 +138,3 @@ sentry:
       value: "http://lisasqd.nebula.prod:8801"
     - name: NO_PROXY
       value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-
