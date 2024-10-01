@@ -110,8 +110,9 @@ zookeeper:
 
 sentry:
   cleanup:
-    days: 3
+    days: 7
   web:
+    replicas: 2
     env:
     - name: HTTP_PROXY
       value: "http://lisasqd.nebula.prod:8801"
