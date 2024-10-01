@@ -1,4 +1,21 @@
 ---
 controller:
+  config:
+    ssl-certificate: "haproxy-ingress/lumigame-cert"
+    stats-config-snippet: |
+      stats auth lumi:lum!onRock
+      stats refresh 300s
+      stats show-legends
+      stats show-node
+      stats show-modules
+
   service:
     type: NodePort
+
+  logging:
+    level: info
+    traffic:
+      address: "10.10.50.121"
+      port: "30505"
+      format: "rfc3164"
+      facility: "local4"
