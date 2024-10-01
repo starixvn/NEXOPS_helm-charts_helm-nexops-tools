@@ -373,7 +373,6 @@ logstashPipeline:
               "http_status_code" => "integer"
               "time_backend_response" => "integer"
             }
-            rename => {"syslog_server" => "SyslogSrv"}
           }
 
           date {
@@ -425,7 +424,6 @@ logstashPipeline:
               "http_status_code" => "integer"
               "time_backend_response" => "integer"
             }
-
             rename => {"syslog_server" => "haproxy-ing-pod"}
           }
           if [http_status_code] == 200 and  [time_backend_response] < 5000 {
@@ -449,7 +447,7 @@ logstashPipeline:
         mutate {
           remove_field => ["[event][original]"]
           remove_field => ["[response][data]"]
-          rename => {"type" => "vault.type"}
+          rename => {"type" => "event.type"}
           add_field => {"type" => "vault"}
         }
       }
