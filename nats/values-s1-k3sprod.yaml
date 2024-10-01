@@ -11,8 +11,8 @@ config:
     fileStore:
       pvc:
         enabled: true
-        size: 8Gi
-        storageClassName: longhorn
+        size: 15Gi
+        storageClassName: longhorn-s1
 
   nats:
     nodePort: 30222
