@@ -3,7 +3,7 @@ controller:
   config:
     ssl-certificate: "haproxy-ingress/nexent-cert"
     stats-config-snippet: |
-      stats auth nexops:NexOps!QAZ
+      stats auth s1:s1@Nova888
       stats refresh 300s
       stats show-legends
       stats show-node
