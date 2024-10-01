@@ -1,7 +1,7 @@
 ingress:
-  hostname: "sentry.nova88demo.com"
+  hostname: "vn-s1-sentry-prod.nebula.prod"
   additionalHostNames:
-  - "vn-s1-sentry-prod.nebula.prod"
+  - "sentry.nova88demo.com"
 
 filestore:
   filesystem:
