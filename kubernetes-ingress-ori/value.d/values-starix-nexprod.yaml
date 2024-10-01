@@ -1,5 +1,14 @@
 ---
 controller:
+  config:
+    ssl-certificate: "haproxy-ingress/nexdev-crt"
+    stats-config-snippet: |
+      stats auth nexops:NexOps!QAZ
+      stats refresh 300s
+      stats show-legends
+      stats show-node
+      stats show-modules
+  
   extraArgs:
   - --configmap-tcp-services=haproxy-ingress/tcp-configmap
 
