@@ -122,7 +122,7 @@ sentry:
   cleanup:
     days: 3
   web:
-    replicas: 2
+    replicas: 1
     env:
     - name: HTTP_PROXY
       value: "http://lisasqd.nebula.prod:8801"
