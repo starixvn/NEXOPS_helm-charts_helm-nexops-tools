@@ -2,7 +2,7 @@
 controller:
   
   config:
-    ssl-certificate: "haproxy-ingress/nebula-prod-cert"
+    ssl-certificate: "haproxy-ingress/lumigame-cert"
     stats-config-snippet: |
       stats auth nexops:NexOps!QAZ
       stats refresh 300s
