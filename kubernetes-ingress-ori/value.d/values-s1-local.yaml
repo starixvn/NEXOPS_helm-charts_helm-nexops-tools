@@ -40,6 +40,9 @@ controller:
         scheme: http
         interval: 30s
 
+defaultBackend:
+  image: "hub.nexdev.net/base/nexops-tools/nginx-hello:latest"
+
 extraResources:
 - |
   apiVersion: networking.k8s.io/v1
@@ -98,7 +101,7 @@ extraResources:
       spec:
         containers:
         - name: coffee
-          image: nexhub.nebula.prod/kbt/base/nexops-tools/nginx-hello:latest
+          image: {{ Values.defaultBackend.image }}
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
