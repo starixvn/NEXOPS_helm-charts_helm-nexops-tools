@@ -39,7 +39,7 @@ extraResources:
     name: stat-{{ .Release.Name }}
     namespace: {{ include "kubernetes-ingress.namespace" . }}
     annotations:
-      haproxy.org/ssl-redirect: "false"
+      haproxy.org/ssl-redirect: "true"
   spec:
     ingressClassName: {{ .Values.controller.ingressClassResource.name }}
     rules:
