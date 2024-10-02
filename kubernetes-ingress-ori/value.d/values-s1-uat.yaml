@@ -30,3 +30,12 @@ controller:
     key: node-role.kubernetes.io/master
   - effect: NoSchedule
     key: node-role.kubernetes.io/control-plane
+
+  serviceMonitor:
+    enabled: true
+    extraLabels: {}
+    endpoints:
+      - port: stat
+        path: /metrics
+        scheme: http
+        interval: 30s

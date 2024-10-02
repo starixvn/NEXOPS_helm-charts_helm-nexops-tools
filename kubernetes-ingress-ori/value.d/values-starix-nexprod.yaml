@@ -33,6 +33,15 @@ controller:
     node-role.kubernetes.io/master: "true"
     node-role.kubernetes.io/control-plane: "true"
 
+  serviceMonitor:
+    enabled: true
+    extraLabels: {}
+    endpoints:
+      - port: stat
+        path: /metrics
+        scheme: http
+        interval: 30s
+
 
 # Add-on component
 # extraResources:
