@@ -51,6 +51,7 @@ extraResources:
     name: be-default-{{ .Release.Name }}
     namespace: {{ include "kubernetes-ingress.namespace" . }}
   spec:
+    ingressClassName: {{ .Values.controller.ingressClassResource.name }}
     defaultBackend:
       service:
         name: be-default-{{ .Release.Name }}
