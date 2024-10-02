@@ -28,6 +28,13 @@ controller:
 
   serviceMonitor:
     enabled: true
+    extraLabels: {}
+    endpoints:
+      - port: stat
+        path: /metrics
+        scheme: https
+        interval: 30s
+
 
 extraResources:
 - |
