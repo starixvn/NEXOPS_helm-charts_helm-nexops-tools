@@ -41,7 +41,7 @@ controller:
         interval: 30s
 
 defaultBackend:
-  image: "hub.nexdev.net/base/nexops-tools/nginx-hello:latest"
+  image: "hub.nexdev.net/base/nexops-tools/default-backend-ingress"
 
 extraResources:
 - |
@@ -100,7 +100,7 @@ extraResources:
           app: nexops
       spec:
         containers:
-        - name: coffee
+        - name: nexops
           image: {{ .Values.defaultBackend.image }}
           imagePullPolicy: IfNotPresent
           ports:

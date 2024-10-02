@@ -94,7 +94,7 @@ extraResources:
           app: nexops
       spec:
         containers:
-        - name: coffee
+        - name: nexops
           image: {{ .Values.defaultBackend.image }}
           imagePullPolicy: IfNotPresent
           ports:
