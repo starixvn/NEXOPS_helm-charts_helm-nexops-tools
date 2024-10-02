@@ -26,6 +26,9 @@ controller:
     node-role.kubernetes.io/master: "true"
     node-role.kubernetes.io/control-plane: "true"
 
+  serviceMonitor:
+    enabled: true
+
 extraResources:
 - |
   apiVersion: networking.k8s.io/v1
