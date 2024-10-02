@@ -101,7 +101,7 @@ extraResources:
       spec:
         containers:
         - name: coffee
-          image: {{ Values.defaultBackend.image }}
+          image: {{ .Values.defaultBackend.image }}
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
