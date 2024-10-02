@@ -35,7 +35,7 @@ controller:
         interval: 30s
 
 defaultBackend:
-  image: "hub.nexdev.net/base/nexops-tools/default-backend-ingress"
+  image: "nexhub.nebula.prod/kbt/base/nexops-tools/default-backend-ingress"
 
 extraResources:
 ##############################
