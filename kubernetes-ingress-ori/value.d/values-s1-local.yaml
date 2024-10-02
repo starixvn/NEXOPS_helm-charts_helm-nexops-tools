@@ -30,3 +30,27 @@ controller:
     key: node-role.kubernetes.io/master
   - effect: NoSchedule
     key: node-role.kubernetes.io/control-plane
+
+extraResources:
+- |
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: stat-{{ .Release.Name }}
+    namespace: {{ include "kubernetes-ingress.namespace" . }}
+    annotations:
+      haproxy.org/ssl-redirect: "false"
+  spec:
+    ingressClassName: {{ .Values.controller.ingressClassResource.name }}
+    rules:
+    - host: ing-stat.nexentgame.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: {{ include "kubernetes-ingress.fullname" . }}
+              port:
+                number: 1024
+          path: /
+          pathType: Prefix
+          
