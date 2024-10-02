@@ -20,11 +20,19 @@ mongodb:
   persistence:
     enabled: true
 
-host: rocketchat.lumigame.com
+host: rocketchat.nexentgame.com
 ingress:
   enabled: true
   ingressClassName: "haproxy"
-
+  tls:
+    - secretName: "nexent-cert"
+      hosts:
+        - rocketchat.nexentgame.com    
+  hosts:
+    - host: rocketchat.nexentgame.com
+      paths:
+        - path: "/"
+          pathType: Prefix
 
 nats:
   clusterDomain: "lumi.lumprod"
