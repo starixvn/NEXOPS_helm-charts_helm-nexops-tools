@@ -35,6 +35,8 @@ controller:
         scheme: http
         interval: 10s
 
+defaultBackend:
+  image: "hub.nexdev.net/base/nexops-tools/default-backend-ingress"
 
 extraResources:
 - |
@@ -58,3 +60,56 @@ extraResources:
                 number: 1024
           path: /
           pathType: Prefix
+
+##############################
+## DEFAULT BACKEND CONF
+##############################
+- |
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: be-default-{{ .Release.Name }}
+    namespace: {{ include "kubernetes-ingress.namespace" . }}
+  spec:
+    ingressClassName: {{ .Values.controller.ingressClassResource.name }}
+    defaultBackend:
+      service:
+        name: be-default-{{ .Release.Name }}
+        port:
+          number: 80
+- |
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: be-default-{{ .Release.Name }}
+    namespace: {{ include "kubernetes-ingress.namespace" . }}
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: nexops
+    template:
+      metadata:
+        labels:
+          app: nexops
+      spec:
+        containers:
+        - name: coffee
+          image: {{ .Values.defaultBackend.image }}
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+- |
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: be-default-{{ .Release.Name }}
+    namespace: {{ include "kubernetes-ingress.namespace" . }}
+  spec:
+    ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+    selector:
+      app: nexops
