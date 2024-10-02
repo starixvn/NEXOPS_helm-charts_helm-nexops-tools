@@ -1159,7 +1159,7 @@ prometheus:
   ## @param prometheus.additionalScrapeConfigs.internal.jobList A list of Prometheus scrape jobs
   ##
   additionalScrapeConfigs:
-    enabled: false
+    enabled: true #false
     type: external
     external:
       ## Name of the secret that Prometheus should use for the additional scrape configuration
@@ -1195,9 +1195,9 @@ prometheus:
   ## @param prometheus.additionalAlertManagerExternal.key Name of the key inside the secret to be used for the additional Prometheus AlertManager configuration
   ##
   additionalAlertManagerExternal:
-    enabled: false
-    name: ""
-    key: ""
+    enabled: true #false
+    name: "myalertmanager"
+    key: "alertmanager.yaml"
   ## Thanos sidecar container configuration
   ##
   thanos:
@@ -1610,8 +1610,6 @@ alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
   enabled: true #false
-  alertmanagerSpec:
-     configSecret: myalertmanager
   ## Bitnami Alertmanager image version
   ## ref: https://hub.docker.com/r/bitnami/prometheus-operator/tags/
   ## @param alertmanager.image.registry [default: REGISTRY_NAME] Prometheus image registry
@@ -1629,8 +1627,8 @@ alertmanager:
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## Example:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
+    #pullSecrets:
+    #- name: myalertmanager #myRegistryKeySecretName
     ##
     pullSecrets: []
   ## Service account for Alertmanager to use.
@@ -1958,20 +1956,21 @@ alertmanager:
   ## @skip alertmanager.config.receivers
   ##
   config:
-    global:
-      resolve_timeout: 5m
-    route:
-      group_by: ['job']
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 12h
-      receiver: 'null'
-      routes:
-        - match:
-            alertname: Watchdog
-          receiver: 'null'
-    receivers:
-      - name: 'null'
+  #  global:
+  #    resolve_timeout: 5m
+  #  route:
+  #    group_by: ['job']
+  #    group_wait: 30s
+  #    group_interval: 5m
+  #    repeat_interval: 12h
+  #    receiver: 'null'
+  #    routes:
+  #      - match:
+  #          alertname: Watchdog
+  #        receiver: 'null'
+  #  receivers:
+  #    - name: 'null'
+    
   ## @param alertmanager.templateFiles Extra files to be added inside the `alertmanager-{{ template "kube-prometheus.alertmanager.fullname" . }}` secret.
   ##
   templateFiles: {}
@@ -1981,7 +1980,7 @@ alertmanager:
   ##     alertmanager.yaml: <config>
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/alerting.md#alerting
   ##
-  externalConfig: false
+  externalConfig: true #false
   ## @param alertmanager.replicaCount Number of Alertmanager replicas desired
   ##
   replicaCount: 1
