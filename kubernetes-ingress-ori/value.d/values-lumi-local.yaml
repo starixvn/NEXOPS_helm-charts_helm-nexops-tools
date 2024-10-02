@@ -19,3 +19,12 @@ controller:
       port: "30505"
       format: "rfc3164"
       facility: "local4"
+
+  serviceMonitor:
+    enabled: true
+    extraLabels: {}
+    endpoints:
+      - port: stat
+        path: /metrics
+        scheme: https
+        interval: 30s

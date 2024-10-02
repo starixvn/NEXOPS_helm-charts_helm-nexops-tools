@@ -31,6 +31,15 @@ controller:
   - effect: NoSchedule
     key: node-role.kubernetes.io/control-plane
 
+  serviceMonitor:
+    enabled: true
+    extraLabels: {}
+    endpoints:
+      - port: stat
+        path: /metrics
+        scheme: https
+        interval: 30s
+
 extraResources:
 - |
   apiVersion: networking.k8s.io/v1
