@@ -26,5 +26,5 @@ controller:
     endpoints:
       - port: stat
         path: /metrics
-        scheme: https
+        scheme: http
         interval: 30s
