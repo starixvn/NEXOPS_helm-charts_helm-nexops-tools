@@ -33,7 +33,7 @@ controller:
       - port: stat
         path: /metrics
         scheme: https
-        interval: 30s
+        interval: 10s
 
 
 extraResources:
