@@ -1637,7 +1637,7 @@ alertmanager:
   serviceAccount:
     ## @param alertmanager.serviceAccount.create Specify whether to create a ServiceAccount for Alertmanager
     ##
-    create: true
+    create: false #true
     ## @param alertmanager.serviceAccount.name The name of the ServiceAccount to create
     ## If not set and create is true, a name is generated using the kube-prometheus.alertmanager.fullname template
     ##
