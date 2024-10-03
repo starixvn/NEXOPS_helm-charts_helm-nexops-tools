@@ -73,7 +73,7 @@ extraResources:
         containers:
         - name: nexops
           image: {{ .Values.defaultBackend.image }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
           - containerPort: 8080
 - |
