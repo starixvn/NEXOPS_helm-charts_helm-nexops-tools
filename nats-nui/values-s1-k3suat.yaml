@@ -1,2 +1,11 @@
 persistence:
   storageClass: longhorn-s1
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  hosts:
+    - host: natsnui.vgamesuat.com
+      paths:
+        - path: /
+          pathType: Prefix
