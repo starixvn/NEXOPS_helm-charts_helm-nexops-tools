@@ -78,5 +78,12 @@ rabbitmq:
   clusterDomain: starix.k3slocal
 redis:
   clusterDomain: starix.k3slocal
+  commonConfiguration: |-
+  # Enable AOF https://redis.io/topics/persistence#append-only-file
+  appendonly yes
+  # Disable RDB persistence, AOF persistence already enabled.
+  save ""
+  maxmemory 6000M
+  maxmemory-policy volatile-ttl
 zookeeper:
   clusterDomain: starix.k3slocal
