@@ -37,64 +37,64 @@ prometheus:
           scrape_interval: 5s
           # UAT MongoDB
           static_configs:
-            - targets:
-                - 'vn-s1-mongodb-uat.nebula.prod:8080'
-              labels:
-                environment: 'uat'
-                db: 'mongodb'
-                exporter: 'cadvisor'
-            - targets:
-                - 'vn-s1-mongodb-uat.nebula.prod:9216'
-              labels:
-                environment: 'uat'
-                db: 'mongodb'
-                exporter: 'mongodb_exporter'
-            - targets:
-                - 'vn-s1-mongodb-uat.nebula.prod:9100'
-              labels:
-                environment: 'uat'
-                db: 'mongodb'
-                exporter: 'node_exporter'
+          - targets:
+            - 'vn-s1-mongodb-uat.nebula.prod:8080'
+            labels:
+              environment: 'uat'
+              db: 'mongodb'
+              exporter: 'cadvisor'
+          - targets:
+            - 'vn-s1-mongodb-uat.nebula.prod:9216'
+            labels:
+              environment: 'uat'
+              db: 'mongodb'
+              exporter: 'mongodb_exporter'
+          - targets:
+            - 'vn-s1-mongodb-uat.nebula.prod:9100'
+            labels:
+              environment: 'uat'
+              db: 'mongodb'
+              exporter: 'node_exporter'
           # UAT Postgres
           static_configs:
-            - targets:
-                - 'vn-s1-postgresql-uat.nebula.prod:8080'
-              labels:
-                environment: 'uat'
-                db: 'postgres'
-                exporter: 'cadvisor'
-            - targets:
-                - 'vn-s1-postgresql-uat.nebula.prod:9187'
-              labels:
-                environment: 'uat'
-                db: 'postgres'
-                exporter: 'postgres_exporter'
-            - targets:
-                - 'vn-s1-postgresql-uat.nebula.prod:9100'
-              labels:
-                environment: 'uat'
-                db: 'postgres'
-                exporter: 'node_exporter'
+          - targets:
+            - 'vn-s1-postgresql-uat.nebula.prod:8080'
+            labels:
+              environment: 'uat'
+              db: 'postgres'
+              exporter: 'cadvisor'
+          - targets:
+            - 'vn-s1-postgresql-uat.nebula.prod:9187'
+            labels:
+              environment: 'uat'
+              db: 'postgres'
+              exporter: 'postgres_exporter'
+          - targets:
+            - 'vn-s1-postgresql-uat.nebula.prod:9100'
+            labels:
+              environment: 'uat'
+              db: 'postgres'
+              exporter: 'node_exporter'
           # PROD MongoDB
           static_configs:
-            - targets:
-                - 'vn-s1-mongodb-prod.nebula.prod:8080'
-              labels:
-                environment: 'production'
-                db: 'mongodb'
-                exporter: 'cadvisor'
-            - targets:
-                - 'vn-s1-mongodb-prod.nebula.prod:9216'
-              labels:
-                environment: 'production'
-                db: 'mongodb'
-                exporter: 'mongodb_exporter'
-            - targets:
-                - 'vn-s1-mongodb-prod.nebula.prod:9100'
-              labels:
-                environment: 'production'
-                db: 'mongodb'
-                exporter: 'node_exporter'
+          - targets:
+            - 'vn-s1-mongodb-prod.nebula.prod:8080'
+            labels:
+              environment: 'production'
+              db: 'mongodb'
+              exporter: 'cadvisor'
+          - targets:
+            - 'vn-s1-mongodb-prod.nebula.prod:9216'
+            labels:
+              environment: 'production'
+              db: 'mongodb'
+              exporter: 'mongodb_exporter'
+          - targets:
+            - 'vn-s1-mongodb-prod.nebula.prod:9100'
+            labels:
+              environment: 'production'
+              db: 'mongodb'
+              exporter: 'node_exporter'
         ###########################################################################
 
   ##
