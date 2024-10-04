@@ -4,6 +4,9 @@ persistence:
 ingress:
   enabled: true
   className: "haproxy"
+  annotations:
+    haproxy.org/auth-type: basic-auth
+    haproxy.org/auth-secret: s1/natsnui-credential
   hosts:
     - host: natsnui.vgamesuat.com
       paths:
