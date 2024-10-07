@@ -23,18 +23,78 @@ prometheus:
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
-  resourcesPreset: "medium"
+  resourcesPreset: "2xlarge"
 
   additionalScrapeConfigs:
-    enabled: false
-    type: external
-    external:
-      ## Name of the secret that Prometheus should use for the additional scrape configuration
-      name: ""
-      ## Name of the key inside the secret to be used for the additional scrape configuration.
-      key: ""
+    enabled: true
+    type: internal
     internal:
-      jobList: []
+      jobList:
+      ###########################################################################
+      ### Req from DBA: https://teams.microsoft.com/l/message/19:b042b9fae1704402b7582ace18f21fea@thread.v2/1728025357615?context=%7B%22contextType%22%3A%22chat%22%7D
+      ###########################################################################
+      - job_name: 's1-db-servers'
+        scrape_interval: 5s
+        # UAT MongoDB
+        static_configs:
+        - targets:
+          - 'vn-s1-mongodb-uat.nebula.prod:8080'
+          labels:
+            environment: 'uat'
+            db: 'mongodb'
+            exporter: 'cadvisor'
+        - targets:
+          - 'vn-s1-mongodb-uat.nebula.prod:9216'
+          labels:
+            environment: 'uat'
+            db: 'mongodb'
+            exporter: 'mongodb_exporter'
+        - targets:
+          - 'vn-s1-mongodb-uat.nebula.prod:9100'
+          labels:
+            environment: 'uat'
+            db: 'mongodb'
+            exporter: 'node_exporter'
+        # UAT Postgres
+        - targets:
+          - 'vn-s1-postgresql-uat.nebula.prod:8080'
+          labels:
+            environment: 'uat'
+            db: 'postgres'
+            exporter: 'cadvisor'
+        - targets:
+          - 'vn-s1-postgresql-uat.nebula.prod:9187'
+          labels:
+            environment: 'uat'
+            db: 'postgres'
+            exporter: 'postgres_exporter'
+        - targets:
+          - 'vn-s1-postgresql-uat.nebula.prod:9100'
+          labels:
+            environment: 'uat'
+            db: 'postgres'
+            exporter: 'node_exporter'
+        # PROD MongoDB
+        - targets:
+          - 'vn-s1-mongodb-prod.nebula.prod:8080'
+          labels:
+            environment: 'production'
+            db: 'mongodb'
+            exporter: 'cadvisor'
+        - targets:
+          - 'vn-s1-mongodb-prod.nebula.prod:9216'
+          labels:
+            environment: 'production'
+            db: 'mongodb'
+            exporter: 'mongodb_exporter'
+        - targets:
+          - 'vn-s1-mongodb-prod.nebula.prod:9100'
+          labels:
+            environment: 'production'
+            db: 'mongodb'
+            exporter: 'node_exporter'
+      ###########################################################################
+
   ##
   additionalScrapeConfigsExternal:
     enabled: false

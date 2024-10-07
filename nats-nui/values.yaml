@@ -27,6 +27,7 @@ serviceAccount:
 
 service:
   type: NodePort
+  port: 31311
   nodePort: 31311
 
 ingress:
