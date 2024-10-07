@@ -8,6 +8,8 @@ controller:
       stats show-legends
       stats show-node
       stats show-modules
+    frontend-config-snippet: |
+      capture request header X-Forwarded-For len 20
   service:
     type: LoadBalancer
     externalTrafficPolicy: "Local"
