@@ -1164,10 +1164,10 @@ prometheus:
     external:
       ## Name of the secret that Prometheus should use for the additional scrape configuration
       ##
-      name: "additional-scrape-configs"
+      name: "alertmanager-prometheus-kube-prometheus-alertmanager" #"additional-scrape-configs"
       ## Name of the key inside the secret to be used for the additional scrape configuration.
       ##
-      key: "prometheus-additional.yml"
+      key: "alertmanager.yaml" #"prometheus-additional.yml"
     internal:
       jobList: []
   ## @param prometheus.additionalScrapeConfigsExternal.enabled Deprecated: Enable additional scrape configs that are managed externally to this chart
@@ -1196,7 +1196,7 @@ prometheus:
   ##
   additionalAlertManagerExternal:
     enabled: true #false
-    name: "myalertmanager"
+    name: "alertmanager-prometheus-kube-prometheus-alertmanager"
     key: "alertmanager.yaml"
   ## Thanos sidecar container configuration
   ##
@@ -1610,6 +1610,10 @@ alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
   enabled: true #false
+  alertmanagerSpec:
+    useExistingSecret: true
+    secrets:
+      - alertmanager-prometheus-kube-prometheus-alertmanager
   ## Bitnami Alertmanager image version
   ## ref: https://hub.docker.com/r/bitnami/prometheus-operator/tags/
   ## @param alertmanager.image.registry [default: REGISTRY_NAME] Prometheus image registry
