@@ -5,7 +5,7 @@ image:
   repository: nexhub.nebula.prod/kbt/base/rocketchat
 
 persistence:
-  enabled: true
+  storageClass: "longhorn-s1"
 
 mongodb:
   image:
@@ -18,7 +18,7 @@ mongodb:
     passwords:
     - rocketchat
   persistence:
-    enabled: true
+    storageClass: "longhorn-s1"
 
 host: chat.vgamesuat.com
 ingress:
