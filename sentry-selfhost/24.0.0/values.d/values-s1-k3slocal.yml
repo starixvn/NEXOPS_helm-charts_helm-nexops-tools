@@ -100,7 +100,7 @@ rabbitmq:
   global:
     storageClass: "local-path"
   nodeSelector:
-    sentry: "yes"
+    rabbitmq-sentry: "yes"
 redis:
   clusterDomain: starix.k3slocal
   global:
