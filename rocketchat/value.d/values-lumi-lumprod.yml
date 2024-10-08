@@ -33,13 +33,3 @@ ingress:
       paths:
         - path: "/"
           pathType: Prefix
-
-nats:
-  clusterDomain: "lumi.lumprod"
-
-postgresql:
-  clusterDomain: "lumi.lumprod"
-  
-
-
-

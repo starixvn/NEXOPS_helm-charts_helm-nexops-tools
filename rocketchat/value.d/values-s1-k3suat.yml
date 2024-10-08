@@ -1,0 +1,32 @@
+global:
+  clusterDomain: "starix.k3suat"
+
+image:
+  repository: nexhub.nebula.prod/kbt/base/rocketchat
+
+persistence:
+  enabled: true
+
+mongodb:
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/mongodb
+    tag: 6.0.10-debian-11-r8
+  clusterDomain: "starix.k3suat"
+  auth:
+    rootPassword: "rocketchat"
+    passwords:
+    - rocketchat
+  persistence:
+    enabled: true
+
+host: chat.vgamesuat.com
+ingress:
+  enabled: true
+  ingressClassName: "haproxy"
+  hosts:
+    - host: chat.vgamesuat.com
+      paths:
+        - path: "/"
+          pathType: Prefix
+
