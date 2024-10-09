@@ -1697,7 +1697,7 @@ alertmanager:
   service:
     ## @param alertmanager.service.type Kubernetes service type
     ##
-    type: ClusterIP
+    type: NodePort #ClusterIP
     ## @param alertmanager.service.ports.http Alertmanager service port
     ##
     ports:
@@ -1710,7 +1710,7 @@ alertmanager:
     ## @param alertmanager.service.nodePorts.http Specify the nodePort value for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ## e.g:
-    ## nodePort: 30903
+    nodePort: 30903
     ##
     nodePorts:
       http: ""
@@ -1960,6 +1960,32 @@ alertmanager:
   ## @skip alertmanager.config.receivers
   ##
   config:
+    global:
+      resolve_timeout: 15m 
+  receivers:
+  - name: devnull
+  - name: 'prometheus-msteams-warning'
+    webhook_configs:
+      - send_resolved: true
+        url: 'http://prometheus-msteams:2000/alermanager-warning'
+  - name: 'prometheus-msteams-critical'
+    webhook_configs:
+      - send_resolved: true
+        url: 'http://prometheus-msteams:2000/alermanager-critical' 
+  route:
+    group_by: ['alertname']
+    group_interval: 1m
+    group_wait: 1m
+    repeat_interval: 5m
+    receiver: devnull
+    routes:
+      - receiver: prometheus-msteams-warning
+        match:
+          severity: warning
+      - receiver: prometheus-msteams-critical
+        match:
+          severity: critical
+
   #  global:
   #    resolve_timeout: 5m
   #  route:
