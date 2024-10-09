@@ -46,6 +46,7 @@ kafka:
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=60000
     log.segment.delete.delay.ms=1000
+  heapOpts: -Xmx4G -Xms2G
   controller:
     nodeSelector:
       sentry: "yes"
@@ -100,7 +101,7 @@ rabbitmq:
   global:
     storageClass: "local-path"
   nodeSelector:
-    rabbitmq-sentry: "yes"
+    sentry: "yes"
 redis:
   clusterDomain: starix.k3slocal
   global:
