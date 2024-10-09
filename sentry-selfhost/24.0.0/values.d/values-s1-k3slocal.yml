@@ -15,7 +15,7 @@ filestore:
 
 sentry:
   worker:
-    replicas: 1
+    replicas: 3
   cleanup:
     days: 1
 
