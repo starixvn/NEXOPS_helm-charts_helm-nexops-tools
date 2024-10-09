@@ -15,9 +15,13 @@ filestore:
 
 sentry:
   worker:
-    replicas: 2
+    replicas: 3
   cleanup:
     days: 1
+
+snuba:
+  transactionsConsumer:
+    autoOffsetReset: "latest"
 
 symbolicator:
   enabled: true
@@ -49,6 +53,8 @@ kafka:
   controller:
     nodeSelector:
       sentry: "yes"
+  broker: 
+    heapOpts: -Xmx4G -Xms2G
   clusterDomain: starix.k3slocal
   zookeeper:
     clusterDomain: starix.k3slocal
