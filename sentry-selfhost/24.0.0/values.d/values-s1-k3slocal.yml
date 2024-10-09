@@ -46,10 +46,11 @@ kafka:
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=60000
     log.segment.delete.delay.ms=1000
-  heapOpts: -Xmx4G -Xms2G
   controller:
     nodeSelector:
       sentry: "yes"
+  broker: 
+    heapOpts: -Xmx4G -Xms2G
   clusterDomain: starix.k3slocal
   zookeeper:
     clusterDomain: starix.k3slocal
