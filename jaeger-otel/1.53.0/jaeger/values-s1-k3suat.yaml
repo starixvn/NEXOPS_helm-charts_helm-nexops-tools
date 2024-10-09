@@ -528,7 +528,7 @@ collector:
        - host: vn-s1-jaeger-collector-uat.nebula.prod
          servicePort: otlp-grpc
     # annotations:
-    kubernetes.io/ingress.class: haproxy
+    # kubernetes.io/ingress.class: haproxy
     # kubernetes.io/tls-acme: "true"
     # labels:
     # app: jaeger-collector
