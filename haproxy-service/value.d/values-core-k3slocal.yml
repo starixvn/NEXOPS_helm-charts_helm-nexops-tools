@@ -38,10 +38,10 @@ service:
     targetPort: redis-s1-r
 
 #Remoting-Redis
-  - name: redis-remoting-m
+  - name: redis-rem-m
     protocol: TCP
     port: 16392
-    targetPort: redis-remoting-m
+    targetPort: redis-rem-m
 ###NATS
   - name: nats-s1
     protocol: TCP
@@ -72,7 +72,7 @@ containerPorts:
   containerPort: 16882
 
 #Remoting-Redis
-- name: redis-remoting-m
+- name: redis-rem-m
   containerPort: 16392
 ###NATS
 - name: nats-s1
