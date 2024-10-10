@@ -20,8 +20,8 @@ global:
   ##
   imagePullSecrets: []
   storageClass: ""
-  redis:
-    password: ""
+  #redis:
+  #  password: ""
 ## @section Common parameters
 ##
 
@@ -987,7 +987,7 @@ replica:
   service:
     ## @param replica.service.type Redis&reg; replicas service type
     ##
-    type: NodePort
+    #type: NodePort
     ## @param replica.service.ports.redis Redis&reg; replicas service port
     ##
     ports:
@@ -996,8 +996,8 @@ replica:
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ## NOTE: choose port between <30000-32767>
     ##
-    nodePorts:
-      redis: "30392"
+    #nodePorts:
+    #  redis: "30392"
     ## @param replica.service.externalTrafficPolicy Redis&reg; replicas service external traffic policy
     ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
