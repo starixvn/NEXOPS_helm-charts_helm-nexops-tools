@@ -98,7 +98,7 @@ configuration: |
 
   backend redis_remoting_master_be
     option tcp-check
-    server 10.18.200.109 10.18.200.109:6379 check inter 1s
+    server 10.18.200.192 10.18.200.192:30391 check inter 1s
 
   frontend redis_replicas_fe
     bind :16380
