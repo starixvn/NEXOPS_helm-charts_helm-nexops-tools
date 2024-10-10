@@ -997,7 +997,7 @@ replica:
     ## NOTE: choose port between <30000-32767>
     ##
     nodePorts:
-      redis: "30382"
+      redis: "30392"
     ## @param replica.service.externalTrafficPolicy Redis&reg; replicas service external traffic policy
     ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
