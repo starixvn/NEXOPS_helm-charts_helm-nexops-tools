@@ -36,6 +36,7 @@ service:
     protocol: TCP
     port: 16882
     targetPort: redis-s1-r
+
 ###NATS
   - name: nats-s1
     protocol: TCP
