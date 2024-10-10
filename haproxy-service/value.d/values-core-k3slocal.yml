@@ -36,6 +36,12 @@ service:
     protocol: TCP
     port: 16882
     targetPort: redis-s1-r
+
+#Remoting-Redis
+  - name: redis-remoting-m
+    protocol: TCP
+    port: 16392
+    targetPort: redis-remoting-m
 ###NATS
   - name: nats-s1
     protocol: TCP
@@ -65,6 +71,9 @@ containerPorts:
 - name: redis-s1-r
   containerPort: 16882
 
+#Remoting-Redis
+- name: redis-remoting-m
+  containerPort: 16392
 ###NATS
 - name: nats-s1
   containerPort: 4222
@@ -166,6 +175,14 @@ configuration: |
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
     server-template redis-sentinel-s1-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3slocal-headless.redis-sentinel-s1.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_remoting_master_fe
+    bind :16392
+    default_backend redis_remoting_master_be
+
+  backend redis_remoting_master_be
+    option tcp-check
+    server 10.18.200.109 10.18.200.109:6379 check inter 1s
 
   frontend nats_s1_fe
     bind :4222
