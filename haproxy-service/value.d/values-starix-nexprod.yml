@@ -16,6 +16,12 @@ service:
     port: 16380
     targetPort: redis-replicas
 
+#Remoting-Redis
+  - name: redis-rem-m
+    protocol: TCP
+    port: 16392
+    targetPort: redis-rem-m
+
 
   - name: http
     port: 8080
@@ -27,6 +33,10 @@ containerPorts:
   containerPort: 16379
 - name: redis-replicas
   containerPort: 16380
+#Remoting-Redis
+- name: redis-rem-m
+  containerPort: 16392
+
 - name: http
   containerPort: 8080
 
@@ -82,6 +92,13 @@ configuration: |
     tcp-check expect string +OK
     server-template redis-sentinel-nexprod-nap-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
 
+  frontend redis_remoting_master_fe
+    bind :16392
+    default_backend redis_remoting_master_be
+
+  backend redis_remoting_master_be
+    option tcp-check
+    server 10.18.200.109 10.18.200.109:6379 check inter 1s
 
   frontend redis_replicas_fe
     bind :16380
