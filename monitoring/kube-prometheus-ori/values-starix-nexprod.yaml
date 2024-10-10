@@ -1613,7 +1613,7 @@ alertmanager:
   alertmanagerSpec:
     useExistingSecret: true
     secrets:
-      - alertmanager-prometheus-kube-prometheus-alertmanager
+      - alertmanager-prometheus-server-kube-pro-alertmanager
   ## Bitnami Alertmanager image version
   ## ref: https://hub.docker.com/r/bitnami/prometheus-operator/tags/
   ## @param alertmanager.image.registry [default: REGISTRY_NAME] Prometheus image registry

@@ -1609,7 +1609,11 @@ prometheus:
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
-  enabled: true
+  enabled: true #false
+  alertmanagerSpec:
+    useExistingSecret: true
+    secrets:
+      - alertmanager-prometheus-server-kube-pro-alertmanager
   ## Bitnami Alertmanager image version
   ## ref: https://hub.docker.com/r/bitnami/prometheus-operator/tags/
   ## @param alertmanager.image.registry [default: REGISTRY_NAME] Prometheus image registry
