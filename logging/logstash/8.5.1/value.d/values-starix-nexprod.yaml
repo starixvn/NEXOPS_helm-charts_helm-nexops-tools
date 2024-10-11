@@ -40,8 +40,9 @@ logstashPipeline:
           source => "message"
         }
         mutate {
+          rename => {"type" => "event_type"}
+          rename => {"response.data" => "response_data"}
           remove_field => ["[event][original]","[response][data][auth]","[response][data][secret]"]
-          rename => {"type" => "vault.type"}
           add_field => {"type" => "vault"}
         }
       }
