@@ -1697,7 +1697,7 @@ alertmanager:
   service:
     ## @param alertmanager.service.type Kubernetes service type
     ##
-    type: ClusterIP
+    type: NodePort #ClusterIP
     ## @param alertmanager.service.ports.http Alertmanager service port
     ##
     ports:
@@ -1710,7 +1710,7 @@ alertmanager:
     ## @param alertmanager.service.nodePorts.http Specify the nodePort value for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ## e.g:
-    ## nodePort: 30903
+    nodePort: 30903
     ##
     nodePorts:
       http: ""
