@@ -11,7 +11,7 @@
   "summary": "{{- if eq .CommonAnnotations.summary "" -}}
                   {{- if eq .CommonAnnotations.message "" -}}
                     {{- if eq .CommonLabels.alertname "" -}}
-                      Prometheus Alert
+                      Longhorn Alert
                     {{- else -}}
                       {{- .CommonLabels.alertname -}}
                     {{- end -}}
@@ -21,7 +21,7 @@
               {{- else -}}
                   {{- .CommonAnnotations.summary -}}
               {{- end -}}",
-  "title": "Prometheus Alert ({{ .Status | title }})",
+  "title": "Longhorn Alert ({{ .Status | title }})",
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
