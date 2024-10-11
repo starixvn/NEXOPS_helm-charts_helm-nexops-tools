@@ -1,3 +1,5 @@
+replicas: 2
+
 logstashConfig:
   logstash.yml: |
     http.host: "0.0.0.0"
@@ -40,8 +42,9 @@ logstashPipeline:
           source => "message"
         }
         mutate {
-          remove_field => ["[event][original]"]
-          rename => {"type" => "vault.type"}
+          rename => {"type" => "event_type"}
+          rename => {"response.data" => "response_data"}
+          remove_field => ["[event][original]","[response][data]"]
           add_field => {"type" => "vault"}
         }
       }
