@@ -43,11 +43,11 @@ logstashPipeline:
         }
         mutate {
           rename => {
-            "type" => "event_type"
-            "response.data.error" => "response_error"
+            "[type]" => "[event_type]"
+            "[response][data][error]" => "[response_error]"
           }
           remove_field => ["[event][original]","[response][data]"]
-          add_field => {"type" => "vault"}
+          add_field => {"[type]" => "vault"}
         }
       }
     }
