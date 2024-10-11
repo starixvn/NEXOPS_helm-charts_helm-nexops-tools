@@ -44,7 +44,7 @@ prometheus:
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
-  enabled: true #false
+  enabled: true
   alertmanagerSpec:
     useExistingSecret: true
     secrets:
