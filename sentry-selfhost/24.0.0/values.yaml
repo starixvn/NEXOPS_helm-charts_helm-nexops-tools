@@ -205,8 +205,8 @@ sentry:
     env: []
     resources: {}
     affinity: {}
-    nodeSelector:
-      sentry: "yes"
+    # nodeSelector:
+    #   sentry: "yes"
     # tolerations: []
     # podLabels: []
 
