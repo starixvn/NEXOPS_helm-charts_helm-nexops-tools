@@ -134,3 +134,8 @@ zookeeper:
     storageClass: "local-path"
   nodeSelector:
     sentry: "yes"
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
