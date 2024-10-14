@@ -16,6 +16,7 @@ filestore:
 sentry:
   worker:
     replicas: 3
+    nodeSelector: {}
   cleanup:
     days: 1
 
