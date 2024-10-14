@@ -17,6 +17,9 @@ sentry:
   worker:
     replicas: 3
     nodeSelector: {}
+    resources:
+      requests:
+        cpu: 4
   cleanup:
     days: 1
 
