@@ -50,7 +50,7 @@ metrics:
     scrapeInterval: 30s
 
 ## Specify the custom message card template for MS teams
-customCardTemplate:
+customCardTemplate: |
   {{ define "msteams.default.summary" }}{{ template "__subject" . }}{{ end }}
   {{ define "msteams.default.title" }}{{ template "__subject" . }}{{ end }}
   {{ define "msteams.default.text" }}
