@@ -83,7 +83,7 @@ redis:
   appendonly yes
   # Disable RDB persistence, AOF persistence already enabled.
   save ""
-  maxmemory 6000M
+  maxmemory 6442450944
   maxmemory-policy volatile-ttl
 zookeeper:
   clusterDomain: starix.k3slocal
