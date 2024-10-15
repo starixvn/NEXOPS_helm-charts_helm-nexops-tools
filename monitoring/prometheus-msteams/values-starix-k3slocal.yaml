@@ -61,7 +61,7 @@ metrics:
 #  {{ template "__text_alert_list_markdown" .Alerts.Resolved }}
 #  {{ end }}
 #  {{ end }}'
-
+customCardTemplate: ""
 # customCardTemplate: |
 #   {{ define "teams.card" }}
 #   {...}
