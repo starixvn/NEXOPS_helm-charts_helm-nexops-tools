@@ -56,7 +56,7 @@ customCardTemplate: ""
 #   {...}
 #   {{ end }}
 
-templateFile: /etc/template/card.tmpl
+templateFile: /etc/template/msteams-card.tmpl
 
 extraConfigmapMounts: []
 # extraConfigmapMounts:
