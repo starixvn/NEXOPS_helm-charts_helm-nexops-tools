@@ -50,17 +50,17 @@ metrics:
     scrapeInterval: 30s
 
 ## Specify the custom message card template for MS teams
-customCardTemplate: |
-  '{{ define "msteams.default.summary" }}{{ template "__subject" . }}{{ end }}
-  {{ define "msteams.default.title" }}{{ template "__subject" . }}{{ end }}
-  {{ define "msteams.default.text" }}
-  {{ if gt (len .Alerts.Firing) 0 }}
-  {{ template "__text_alert_list_markdown" .Alerts.Firing }}
-  {{ end }}
-  {{ if gt (len .Alerts.Resolved) 0 }}
-  {{ template "__text_alert_list_markdown" .Alerts.Resolved }}
-  {{ end }}
-  {{ end }}'
+#customCardTemplate: |
+#  '{{ define "msteams.default.summary" }}{{ template "__subject" . }}{{ end }}
+#  {{ define "msteams.default.title" }}{{ template "__subject" . }}{{ end }}
+#  {{ define "msteams.default.text" }}
+#  {{ if gt (len .Alerts.Firing) 0 }}
+#  {{ template "__text_alert_list_markdown" .Alerts.Firing }}
+#  {{ end }}
+#  {{ if gt (len .Alerts.Resolved) 0 }}
+#  {{ template "__text_alert_list_markdown" .Alerts.Resolved }}
+#  {{ end }}
+#  {{ end }}'
 
 # customCardTemplate: |
 #   {{ define "teams.card" }}
