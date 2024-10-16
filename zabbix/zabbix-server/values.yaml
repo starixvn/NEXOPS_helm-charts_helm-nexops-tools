@@ -176,7 +176,7 @@ zabbixServer:
     # -- Port of service in Kubernetes cluster
     port: 10051
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 31052
+    nodePort: 31054
     # -- Annotations for the zabbix-server service
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
@@ -257,7 +257,7 @@ postgresql:
     # -- Existing persistent volume claim name to be used to store posgres data
     existingClaimName: false
     # -- Size of the PVC to be automatically generated
-    storageSize: 30Gi
+    storageSize: 20Gi
     # -- Kubernetes uses volume access modes to match PersistentVolumeClaims and PersistentVolumes. See: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
     claim_access_mode: ReadWriteOnce
     # -- Storage PVC storageclass to use
@@ -594,7 +594,7 @@ zabbixWeb:
     sessionAffinity: None    # -- Port of service in Kubernetes cluster
     port: 80
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 30081
+    nodePort: 30084
     # -- Annotations for the Zabbix Web
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
