@@ -160,6 +160,7 @@ logstashPipeline:
           }
         }
 
+        ### LEGION TEAM
         if [Properties][Team] == "Legion" {
           mutate {
             remove_field => ["[Renderings][HttpLog]", "[Properties][HttpLog]" ]
@@ -187,6 +188,9 @@ logstashPipeline:
             }
           }                
         }
+
+
+        ### ROME TEAM
         if [Properties][Team] == "Rome" {
           mutate {
             remove_field => ["[Renderings]", "[Properties][HttpLog]", "MessageTemplate", "[Properties][Elapsed]", "[Properties][SourceContext]"]
@@ -201,7 +205,12 @@ logstashPipeline:
             mutate {
               add_tag => ["deposit-apigw"]
             }
-          }               
+          }
+          if [Properties][Application] == "Licensee.AdminSetting.API" {
+            mutate {
+              add_tag => ["licensee-adminsetting"]
+            }
+          }
         }        
       }
     }
@@ -293,6 +302,16 @@ logstashPipeline:
                 ssl_certificate_verification => false
                 index => "logstash-rome-deposit-apigw-local-%{+YYYY.MM.dd}"
               }
+            }
+            else if "licensee-adminsetting" in [tags] {
+              opensearch {
+                hosts => ["https://opensearch-cluster-master:9200"]
+                user => "logstash"
+                password => "logstash"
+                ssl => true
+                ssl_certificate_verification => false
+                index => "logstash-rome-licensee-adminsetting-local-%{+YYYY.MM.dd}"
+              }              
             }
           }
         }
