@@ -69,7 +69,7 @@ tenant:
 
 ingress:
   api:
-    enabled: true
+    enabled: false
     ingressClassName: "haproxy"
     annotations:
       haproxy.org/ssl-redirect: "false"
@@ -91,7 +91,7 @@ ingress:
       - minio-api.starixsoft.com
     pathType: Prefix
   console:
-    enabled: true
+    enabled: false
     ingressClassName: "haproxy"
     annotations:
       haproxy.org/ssl-redirect: "true"
