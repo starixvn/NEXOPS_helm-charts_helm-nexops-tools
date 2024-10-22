@@ -19,6 +19,7 @@ controller:
       address: "stdout"
       format: "raw"
       facility: "daemon"
+      
     # traffic:
     #   address: "10.10.50.121"
     #   port: "30505"
