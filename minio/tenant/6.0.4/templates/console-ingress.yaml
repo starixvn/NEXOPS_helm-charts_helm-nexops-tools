@@ -1,0 +1,49 @@
+{{- $pathType := .Values.ingress.console.pathType -}}
+{{- $tenantName := .Values.tenant.name -}}
+{{- $requestAutoCert := .Values.tenant.certificate.requestAutoCert -}}
+{{- $externalCertSecret := .Values.tenant.certificate.externalCertSecret -}}
+{{- if .Values.ingress.console.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.tenant.name }}-console
+  {{- with .Values.ingress.console.labels }}
+  labels: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.ingress.console.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.console.ingressClassName }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- if .Values.ingress.console.tls }}
+  tls:
+    {{- range .Values.ingress.console.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+  {{- range .Values.ingress.console.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+        {{- range (.paths | default (list "/")) }}
+          - path: {{ . }}
+            pathType: {{ $pathType }}
+            backend:
+              service:
+                name: {{ $tenantName }}-console
+                port:
+                  {{- if or $requestAutoCert (not (empty $externalCertSecret)) }}
+                  name: https-console
+                  {{- else }}
+                  name: http-console
+                  {{- end }}
+        {{- end }}
+  {{- end }}
+{{- end }}
