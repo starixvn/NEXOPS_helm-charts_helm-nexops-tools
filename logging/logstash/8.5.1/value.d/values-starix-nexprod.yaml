@@ -193,7 +193,7 @@ logstashPipeline:
         ### ROME TEAM
         if [Properties][Team] == "Rome" {
           mutate {
-            remove_field => ["[Renderings]", "[Properties][HttpLog]", "MessageTemplate", "[Properties][Elapsed]", "[Properties][SourceContext]"]
+            # remove_field => ["[Renderings]", "[Properties][HttpLog]", "MessageTemplate", "[Properties][Elapsed]", "[Properties][SourceContext]"]
             add_tag => ["rome"]
           }
 
