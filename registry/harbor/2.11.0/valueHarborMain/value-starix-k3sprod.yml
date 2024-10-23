@@ -4,8 +4,8 @@ expose:
   ingress:
     className: "haproxy"
     hosts:
-      core: nexhub-bk.nebula.prod
-externalURL: https://nexhub-bk.nebula.prod
+      core: nexhub.nebula.prod
+externalURL: https://nexhub.nebula.prod
 
 persistence:
   persistentVolumeClaim:
