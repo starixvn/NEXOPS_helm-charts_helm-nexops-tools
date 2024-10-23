@@ -128,7 +128,7 @@ configuration: |
     server-template redis-sentinel-nap-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3suat-headless.redis-sentinel-nap.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
 
   frontend redis_alpha_master_fe
-    bind :16379
+    bind :16389
     default_backend redis_alpha_master_be
 
   backend redis_alpha_master_be
