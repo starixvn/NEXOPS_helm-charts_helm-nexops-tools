@@ -4,8 +4,8 @@ expose:
   ingress:
     className: "haproxy"
     hosts:
-      core: lumhub-bk.nebula.prod
-externalURL: https://lumhub-bk.nebula.prod
+      core: lumhub.nebula.prod
+externalURL: https://lumhub.nebula.prod
 
 persistence:
   persistentVolumeClaim:
