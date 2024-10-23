@@ -57,9 +57,9 @@ containerPorts:
   containerPort: 16379
 - name: redis-nap-r
   containerPort: 16879
-#ALPHA
+##ALPHA
 - name: redis-alpha-m
-  containerPort: 16380
+  containerPort: 16389
 - name: redis-alpha-r
   containerPort: 16880
 ##FPS
