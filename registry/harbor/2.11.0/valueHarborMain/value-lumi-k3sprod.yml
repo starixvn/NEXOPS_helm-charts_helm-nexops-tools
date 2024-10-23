@@ -1,0 +1,85 @@
+expose:
+  tls:
+    enabled: false
+  ingress:
+    className: "haproxy"
+    hosts:
+      core: lumhub-bk.nebula.prod
+externalURL: https://lumhub-bk.nebula.prod
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: "longhorn-harbor-s1"
+      size: 140Gi
+    jobservice:
+      jobLog:
+        storageClass: "longhorn-harbor-s1"
+        size: 5Gi
+    database:
+      storageClass: "longhorn-harbor-s1"
+      size: 10Gi
+    redis:
+      storageClass: "longhorn-harbor-s1"
+      size: 10Gi
+
+cache:
+  enabled: true
+  expireHours: 8
+
+
+portal:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-workload
+core:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-workload
+jobservice:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-workload
+registry:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-workload
+trivy:
+  enabled: false
+
+database:
+  internal:
+    nodeSelector:
+      harbor-workload: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor-workload
+redis:
+  internal:
+    nodeSelector:
+      harbor-workload: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: harbor-workload
+exporter:
+  nodeSelector:
+    harbor-workload: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: harbor-workload
+
