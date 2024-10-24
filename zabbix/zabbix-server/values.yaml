@@ -195,9 +195,9 @@ zabbixServer:
     - name: "ZBX_STARTPROXYPOLLERS"
       value: "200"
     - name: "ZBX_HOUSEKEEPINGFREQUENCY"
-      value: "1"
+      value: "24"
     - name: "ZBX_MAXHOUSEKEEPERDELETE"
-      value: "5000"
+      value: "50000"
     - name: "ZBX_HISTORYINDEXCACHESIZE"
       value: "32M"
   #- name: ENABLE_TIMESCALEDB
