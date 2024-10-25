@@ -47,7 +47,7 @@ schedules:
     labels:
       env: nexprod
       org: starix
-    schedule: "CRON_TZ=Asia/Ho_Chi_Minh 0 19 * * *"
+    schedule: "0 19 * * *"
     useOwnerReferencesInBackup: false
     paused: false
     template:
