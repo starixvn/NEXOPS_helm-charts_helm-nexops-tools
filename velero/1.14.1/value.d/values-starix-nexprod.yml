@@ -51,6 +51,7 @@ schedules:
     useOwnerReferencesInBackup: false
     paused: false
     template:
+      csiSnapshotTimeout: "120m"
       ttl: "72h"
       includedNamespaces:
       - awx
