@@ -53,7 +53,7 @@ extraResources:
     tls:
     - hosts:
       - "*.nexdev.net"
-      secretName: nexdev-crt
+      secretName: nexdev-cert
     rules:
     - host: "*.nexdev.net"
 ##############################
