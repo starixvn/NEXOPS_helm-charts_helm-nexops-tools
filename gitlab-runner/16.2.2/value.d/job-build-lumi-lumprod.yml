@@ -6,7 +6,8 @@ image:
 replicas: 1
 
 gitlabUrl: https://git3.nexdev.net
-runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
+# runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
+runnerToken: "glrt-cmC6yQApDPMX6NKjrBY6"
 concurrent: 100
 
 runners:
@@ -71,7 +72,7 @@ runners:
         mount_path = "/certs/client"
         medium = "Memory"
   tags: "k8s,haproxy,docker,renovate"
-  name: "k8s-runner-build-jobs"
+  name: "k8s-runner-build-jobs-new"
   cache:
     secretName: s3access
 
