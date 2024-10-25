@@ -6,7 +6,8 @@ image:
 replicas: 1
 
 gitlabUrl: https://git3.nexdev.net
-runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
+# runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
+runnerToken: "glrt-rz5a7x4tbhn55Lto1wcG"
 concurrent: 100
 
 runners:
@@ -54,7 +55,7 @@ runners:
         Type = "s3"
         Shared = true
         [runners.cache.s3]
-          ServerAddress = "minio-api.lumigame.com"
+          ServerAddress = "s3-api.lumigame.com"
           BucketName = "gitlab"
           AuthenticationType = "access-key"
       [[runners.kubernetes.services]]
@@ -70,8 +71,8 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-  tags: "k8s,haproxy,docker,renovate"
-  name: "k8s-runner-build-jobs"
+  # tags: "k8s,haproxy,docker,renovate"
+  # name: "k8s-runner-build-jobs-new"
   cache:
     secretName: s3access
 
