@@ -52,7 +52,7 @@ runners:
         Type = "s3"
         Shared = true
         [runners.cache.s3]
-          ServerAddress = "minio-api.lumigame.com"
+          ServerAddress = "s3-api.lumigame.com"
           BucketName = "gitlab"
           AuthenticationType = "access-key"
       [[runners.kubernetes.services]]
