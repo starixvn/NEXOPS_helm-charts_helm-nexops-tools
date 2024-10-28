@@ -43,13 +43,13 @@ snapshotsEnabled: false
 
 schedules:
   nexops-tools-pv:
-    disabled: false
+    disabled: true
     labels:
       env: nexprod
       org: starix
     schedule: "0 19 * * *"
     useOwnerReferencesInBackup: false
-    paused: false
+    paused: true
     template:
       csiSnapshotTimeout: "120m"
       ttl: "72h"
