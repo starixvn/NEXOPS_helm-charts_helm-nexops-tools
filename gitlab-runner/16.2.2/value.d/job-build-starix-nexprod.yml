@@ -6,7 +6,8 @@ image:
 replicas: 1
 
 gitlabUrl: https://gitlab.nexdev.net
-runnerRegistrationToken: "VscxAqFvRVcXgpyoBDD_"
+# runnerRegistrationToken: "VscxAqFvRVcXgpyoBDD_"
+runnerToken: "glrt-A5s63SQkC1xSV6JKbYmF"
 concurrent: 40
 
 runners:
@@ -68,7 +69,7 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-  tags: "docker,k8s,ci"
+  # tags: "docker,k8s,ci"
   name: "k8s-runner"
   cache:
     secretName: s3access
