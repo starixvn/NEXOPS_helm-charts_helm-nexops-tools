@@ -121,7 +121,7 @@ logstashPipeline:
           if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
             drop {}
           }
-          if [backend_name] == "grafana_be" {
+          if [backend_name] =~ /(grafana_be|stats)/ {
             drop {}
           }
           if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp|csv)$/ {
