@@ -419,8 +419,12 @@ extraPorts:
     containerPort: 8080
   - name: tcp
     containerPort: 5044
-  - name: syslog
+  - name: syslog-tcp
     containerPort: 5045
+    protocol: TCP
+  - name: syslog-udp
+    containerPort: 5045
+    protocol: UDP
   - name: vault-st-local
     containerPort: 5064
   - name: vault-st-dev
@@ -432,27 +436,32 @@ service:
   - name: httplog
     port: 8080
     protocol: TCP
-    targetPort: 8080
+    targetPort: httplog
   - name: tcp
     nodePort: 30504
     port: 5044
     protocol: TCP
-    targetPort: 5044
-  - name: syslog
+    targetPort: tcp
+  - name: syslog-tcp
     nodePort: 30505
     port: 5045
     protocol: TCP
-    targetPort: 5045
+    targetPort: syslog-tcp
+  - name: syslog-udp
+    nodePort: 30505
+    port: 5045
+    protocol: UDP
+    targetPort: syslog-udp
   - name: vault-st-local
     nodePort: 30064
     port: 5064
     protocol: TCP
-    targetPort: 5064
+    targetPort: vault-st-local
   - name: vault-st-dev
     nodePort: 30065
     port: 5065
     protocol: TCP
-    targetPort: 5065
+    targetPort: vault-st-dev
 
 nodeSelector: 
   nexops-tools: "yes"
