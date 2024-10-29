@@ -162,4 +162,4 @@ configuration: |
     tcp-check expect string PONG
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
