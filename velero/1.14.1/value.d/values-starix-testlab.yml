@@ -1,0 +1,68 @@
+image:
+  repository: hub.nexdev.net/base/velero
+  tag: v1.14.1
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    autodetect: true
+    enabled: true
+
+kubectl:
+  image:
+    repository: hub.nexdev.net/base/kubectl
+    tag: "1.16.15"
+
+# AWS backend plugin configuration
+initContainers:
+  - name: velero-plugin-for-aws
+    image: hub.nexdev.net/base/velero/velero-plugin-for-aws:v1.10.0
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+# Minio storage configuration
+configuration:
+  backupStorageLocation:
+    - provider: aws
+      bucket: minio-st-backup
+      config:
+        region: minio
+        s3ForcePathStyle: true
+        s3Url: https://s3-api.nexdev.net
+  # Enable CSI snapshot support
+  features: EnableCSI
+credentials:
+  existingSecret: velero-secret
+# Disable VolumeSnapshotLocation CRD. It is not needed for CSI integration
+snapshotsEnabled: false
+
+
+schedules:
+  nexops-tools-pv:
+    disabled: true
+    labels:
+      env: nexprod
+      org: starix
+    schedule: "0 19 * * *"
+    useOwnerReferencesInBackup: false
+    paused: true
+    template:
+      csiSnapshotTimeout: "120m"
+      ttl: "72h"
+      includedNamespaces:
+      - awx
+      # - logging
+      # - nexops
+      # - npm
+      - portainer
+      - redis-alpha
+      - redis-nap
+      - redis-remotingref
+      - redis-sentinel-nap
+      - trivy-stack
+      - vault
+      # - zabbix-server-nexprod

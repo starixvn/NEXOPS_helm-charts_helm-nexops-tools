@@ -28,6 +28,19 @@ service:
     targetPort: http
 
 
+# NexOps Redis
+  - name: redis-nexops-write
+    protocol: TCP
+    port: 16400
+    targetPort: redis-nexops-write
+
+  - name: redis-nexops-read
+    protocal: TCP
+    port: 16401
+    targetPort: redis-nexops-read
+
+
+
 containerPorts:
 - name: redis-master
   containerPort: 16379
@@ -36,6 +49,12 @@ containerPorts:
 #Remoting-Redis
 - name: redis-rem-m
   containerPort: 16392
+
+# NexOps Redis
+- name: redis-nexops-write
+  containerPort: 16400
+- name: redis-nexops-read
+  containerPort: 16401
 
 - name: http
   containerPort: 8080
@@ -113,3 +132,34 @@ configuration: |
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
     server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
+  # NexOps Redis
+  frontend redis_nexops_write_fe
+    bind :16400
+    default_backend redis_nexops_write_be
+
+  backend redis_nexops_write_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-nexprod-nexops-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_nexops_read_fe
+    bind :16401
+    default_backend redis_nexops_read_be
+  
+  backend redis_nexops_read_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-nexprod-nexops-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none 
