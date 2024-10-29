@@ -406,7 +406,7 @@ logstashPipeline:
           if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
             drop {}
           }
-          if [backend_name] =~ /(grafana_be|stats)/ {
+          if [backend_name] == "grafana_be" {
             drop {}
           }
           if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp|csv)$/ {
@@ -431,9 +431,8 @@ logstashPipeline:
             }
             rename => {"syslog_server" => "haproxy-ing-pod"}
           }
-          if [http_status_code] == 200 and  [time_backend_response] < 5000 {
-            drop {}
-          }
+          if [http_status_code] == 200 and  [time_backend_response] < 5000 { drop {} }
+          else if [backend_name] == "stats" { drop {} }
         }
         if [type] == "cloudwatch" {
           if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp)$/ {
