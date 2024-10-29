@@ -49,6 +49,8 @@ logstashPipeline:
           remove_field => ["[event][original]","[response][data]"]
           add_field => {"[type]" => "vault"}
         }
+
+        if [request][mount_type] == "kv" and [request][operation] == "read" { drop {} }
       }
     }
 
