@@ -35,7 +35,7 @@ service:
     targetPort: redis-nexops-w
 
   - name: redis-nexops-r
-    protocal: TCP
+    protocol: TCP
     port: 16401
     targetPort: redis-nexops-r
 
