@@ -78,7 +78,7 @@ logstashPipeline:
       if "haproxy_access" in [tags] {
         if "hap-gw" in [tags] {
           grok {
-            match => ["message","%{HAPROXYHTTPBASE}","message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}"]
+            match => ["message","%{HAPROXYHTTPBASE}","message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}","message","%{HAPROXYGW}"]
           }
           grok {
             match => ["message", "%{HAPROXYDATE:accept_date}"]
