@@ -80,7 +80,7 @@ logstashPipeline:
           grok {
             match => ["message","%{HAPROXYHTTPBASE}","message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}","message","%{HAPROXYGW}"]
           }
-          if ("" in[accept_date]) {
+          if ![accept_date] {
             grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
           }
           
