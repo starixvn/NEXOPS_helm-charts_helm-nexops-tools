@@ -119,9 +119,9 @@ logstashPipeline:
           if [http_status_code] == 400 or [http_status_code] == 404 or [http_status_code] == 403 or [http_status_code] == 201 or [http_status_code] == 204 or [http_status_code] == 101 or [http_status_code] == 301 or [http_status_code] == 405 or [http_status_code] == 302 or [http_status_code] == 304 {
             drop {}
           }
-          # if [http_status_code] == 200 and  [time_backend_response] < 5000 {
-          #   drop {}
-          # }
+          if [http_status_code] == 200 and  [time_backend_response] < 5000 {
+            drop {}
+          }
           if [referrer] == "hub.lumigame.com" and [http_status_code] == 401 and [http_verb] == "GET" {
             drop {}
           }
