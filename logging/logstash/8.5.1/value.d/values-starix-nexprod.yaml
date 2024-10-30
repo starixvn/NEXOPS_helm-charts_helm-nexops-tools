@@ -80,9 +80,10 @@ logstashPipeline:
           grok {
             match => ["message","%{HAPROXYHTTPBASE}","message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}","message","%{HAPROXYGW}"]
           }
-          grok {
-            match => ["message", "%{HAPROXYDATE:accept_date}"]
+          if ("" in[accept_date]) {
+            grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
           }
+          
           grok {
             match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP}?)"}
           }
