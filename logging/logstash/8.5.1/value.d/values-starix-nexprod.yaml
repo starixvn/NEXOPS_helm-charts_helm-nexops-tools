@@ -104,12 +104,12 @@ logstashPipeline:
           geoip {
               source => "TrueClientIP"
           }
-          # if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
-          #   drop {}
-          # }
-          # if [message] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|health|whoami|healthz|grafana|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
-          #   drop {}
-          # }
+          if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com|ci.nexdev.net)/ {
+            drop {}
+          }
+          if [message] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|health|whoami|healthz|grafana|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
+            drop {}
+          }
           # if [http_status_code] == 400 or [http_status_code] == 404 or [http_status_code] == 403 or [http_status_code] == 201 or [http_status_code] == 204 or [http_status_code] == 101 or [http_status_code] == 301 or [http_status_code] == 405 or [http_status_code] == 302 or [http_status_code] == 304 {
           #   drop {}
           # }
