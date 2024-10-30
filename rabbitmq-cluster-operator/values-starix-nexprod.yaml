@@ -3,4 +3,4 @@ global:
   storageSize: 15Gi
 rabbitCluster:
   user: admin
-  password: "rabbitadmin!@#"
+  password: rabbitadmin!@
