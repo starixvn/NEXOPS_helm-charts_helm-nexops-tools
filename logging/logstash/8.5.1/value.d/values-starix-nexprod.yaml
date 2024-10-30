@@ -77,58 +77,57 @@ logstashPipeline:
       }
       if "haproxy_access" in [tags] {
         if "hap-gw" in [tags] {
-          # grok {
-          #   match => ["message","%{HAPROXYHTTPBASE}","%{HAPROXYHTTP}","%{HAPROXYTCP}"]
-          # }
-          # if ![accept_date] {
-          #   grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
-          # }
+          grok {
+            match => ["message","%{HAPROXYHTTPBASE}","%{HAPROXYHTTP}","%{HAPROXYTCP}"]
+          }
+          if ![accept_date] {
+            grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
+          }
           
-          # grok {
-          #   match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP}?)"}
-          # }
-          # mutate {
-          #   remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
-          #   remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beat","beconn","client_port","haproxy_milliseconds","@version"]
-          #   remove_field => ["haproxy_minute","offset","haproxy_second","actconn","source","program","haproxy_year","feconn","http_version"]
-          #   remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","timestamp8601"]
-          #   convert => {
-          #     "http_status_code" => "integer"
-          #     "time_backend_response" => "integer"
-          #   }
-          #   rename => {"syslog_server" => "SyslogSrv"}
-          # }
-          # date {
-          #   match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
-          # }
-          # geoip {
-          #     source => "TrueClientIP"
-          # }
+          grok {
+            match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP}?)"}
+          }
+          mutate {
+            remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
+            remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beat","beconn","client_port","haproxy_milliseconds","@version"]
+            remove_field => ["haproxy_minute","offset","haproxy_second","actconn","source","program","haproxy_year","feconn","http_version"]
+            remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","timestamp8601"]
+            convert => {
+              "http_status_code" => "integer"
+              "time_backend_response" => "integer"
+            }
+            rename => {"syslog_server" => "SyslogSrv"}
+          }
+          date {
+            match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
+          }
+          geoip {
+              source => "TrueClientIP"
+          }
           if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com|ci.nexdev.net)/ {
             drop {}
           }
-          if [captured_request_headers] == "ci.nexdev.net|Java/11.0.12||" { drop{} }
           if [message] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|health|whoami|healthz|grafana|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
             drop {}
           }
-          # if [http_status_code] == 400 or [http_status_code] == 404 or [http_status_code] == 403 or [http_status_code] == 201 or [http_status_code] == 204 or [http_status_code] == 101 or [http_status_code] == 301 or [http_status_code] == 405 or [http_status_code] == 302 or [http_status_code] == 304 {
-          #   drop {}
-          # }
-          # if [http_status_code] == 200 and  [time_backend_response] < 5000 {
-          #   drop {}
-          # }
-          # if [referrer] == "hub.lumigame.com" and [http_status_code] == 401 and [http_verb] == "GET" {
-          #   drop {}
-          # }
-          # if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
-          #   drop {}
-          # }
-          # if [backend_name] == "grafana_be" {
-          #   drop {}
-          # }
-          # if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp|csv)$/ {
-          #   drop {}
-          # }
+          if [http_status_code] == 400 or [http_status_code] == 404 or [http_status_code] == 403 or [http_status_code] == 201 or [http_status_code] == 204 or [http_status_code] == 101 or [http_status_code] == 301 or [http_status_code] == 405 or [http_status_code] == 302 or [http_status_code] == 304 {
+            drop {}
+          }
+          if [http_status_code] == 200 and  [time_backend_response] < 5000 {
+            drop {}
+          }
+          if [referrer] == "hub.lumigame.com" and [http_status_code] == 401 and [http_verb] == "GET" {
+            drop {}
+          }
+          if [user-agent] =~ /containerd/ or [user-agent] =~ /Go-http-client/ or [user-agent] =~ /docker/ or [user-agent] =~ /buildkit/ {
+            drop {}
+          }
+          if [backend_name] == "grafana_be" {
+            drop {}
+          }
+          if [http_request] =~ /(png|jpg|jpeg|gif|svg|css|js|xml|ico|json|mp3|ttf|atlas|otf|webp|csv)$/ {
+            drop {}
+          }
         }
         else if "hap-ing" in [tags] {
           grok {
