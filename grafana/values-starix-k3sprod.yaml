@@ -286,7 +286,7 @@ ingress:
   pathType: Prefix
 
   hosts:
-    - grafana.starixplay.com
+    - grafana-starix.starixplay.com
   
   ingressClassName: "haproxy"
   ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
