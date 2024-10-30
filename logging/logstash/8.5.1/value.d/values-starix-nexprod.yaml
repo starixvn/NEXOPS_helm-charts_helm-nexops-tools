@@ -107,6 +107,7 @@ logstashPipeline:
           if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com|ci.nexdev.net)/ {
             drop {}
           }
+          if [captured_request_headers] == "ci.nexdev.net|Java/11.0.12||" { drop{} }
           if [message] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|health|whoami|healthz|grafana|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com)/ {
             drop {}
           }
