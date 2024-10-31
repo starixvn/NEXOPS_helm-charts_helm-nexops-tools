@@ -19,6 +19,32 @@ filestore:
 #     enabled: "true"
 #   workerTransactions:
 #     enabled: "true"
+
+sentry:
+  cleanup:
+    days: 3
+  web:
+    replicas: 1
+    env:
+    - name: HTTP_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: HTTPS_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: NO_PROXY
+      value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+  worker:
+    replicas: 2
+    env:
+    - name: HTTP_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: HTTPS_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: NO_PROXY
+      value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+    nodeSelector:
+      sentry: "yes"
+
+
 symbolicator:
   enabled: true
 
@@ -92,6 +118,8 @@ postgresql:
             userPasswordKey: "password"
           username: "postgres"
   primary:
+    persistence:
+      size: 30Gi
     nodeSelector:
       sentry: "yes"
 rabbitmq:
@@ -117,25 +145,3 @@ zookeeper:
   nodeSelector:
     sentry: "yes"   
 
-
-sentry:
-  cleanup:
-    days: 3
-  web:
-    replicas: 1
-    env:
-    - name: HTTP_PROXY
-      value: "http://lisasqd.nebula.prod:8801"
-    - name: HTTPS_PROXY
-      value: "http://lisasqd.nebula.prod:8801"
-    - name: NO_PROXY
-      value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-  worker:
-    replicas: 2
-    env:
-    - name: HTTP_PROXY
-      value: "http://lisasqd.nebula.prod:8801"
-    - name: HTTPS_PROXY
-      value: "http://lisasqd.nebula.prod:8801"
-    - name: NO_PROXY
-      value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
