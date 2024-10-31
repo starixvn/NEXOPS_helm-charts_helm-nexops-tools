@@ -49,7 +49,7 @@ schedules:
     useOwnerReferencesInBackup: false
     paused: true
     template:
-      ttl: "72h"
+      ttl: "168h"
       includedNamespaces:
       - gn
       - l1
