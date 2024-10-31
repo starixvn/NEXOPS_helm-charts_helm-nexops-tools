@@ -28,7 +28,7 @@ prometheus:
     internal:
       jobList: []
   ##
-  additionalScrapeConfigsExternal:
+
+exporters:
+  node-exporter:
     enabled: false
-    name: ""
-    key: ""
