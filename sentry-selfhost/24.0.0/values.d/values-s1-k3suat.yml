@@ -33,7 +33,7 @@ sentry:
     - name: NO_PROXY
       value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
   worker:
-    replicas: 2
+    replicas: 1
     env:
     - name: HTTP_PROXY
       value: "http://lisasqd.nebula.prod:8801"
@@ -54,7 +54,7 @@ clickhouse:
     sentry: "yes"
   clickhouse:
     ## The instance number of Clickhouse
-    # replicas: "1"
+    replicas: "1"
     persistentVolumeClaim:
       dataPersistentVolume:
         storageClassName: "longhorn-s1"
