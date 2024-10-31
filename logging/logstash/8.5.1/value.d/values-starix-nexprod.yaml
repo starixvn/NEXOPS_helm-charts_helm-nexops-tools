@@ -88,9 +88,8 @@ logstashPipeline:
           if ![accept_date] {
             grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
           }
-          
-          grok {
-            match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP}?)"}
+          if [captured_request_headers] {
+            grok { match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"} }
           }
           mutate {
             remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
@@ -107,8 +106,8 @@ logstashPipeline:
             match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
             timezone => "Asia/Bangkok"
           }
-          geoip {
-              source => "TrueClientIP"
+          if [TrueClientIP] {
+            geoip { source => "TrueClientIP" }
           }
           if [captured_request_headers] =~ /^(Zabbix|Prometheus|sentry|sonarqube|portainer|axios|grafana|whoami|ansible|deploy|rocketor|kibana|haproxy|logs.lumigame.com|npm.lumigame.com|ci.nexdev.net)/ {
             drop {}
