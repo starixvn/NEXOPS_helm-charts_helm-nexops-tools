@@ -96,7 +96,7 @@ prometheus:
       ###########################################################################
     external:
       name: "minio-prom-additional-scrape-config"
-      key: "scrape-jobs.yaml"
+      key: "prometheus-additional.yaml"
 
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
