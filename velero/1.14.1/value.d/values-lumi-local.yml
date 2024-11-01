@@ -47,7 +47,7 @@ schedules:
       org: lumi
     schedule: "0 19 * * *"
     useOwnerReferencesInBackup: false
-    paused: true
+    paused: false
     template:
       ttl: "168h"
       includedNamespaces:
