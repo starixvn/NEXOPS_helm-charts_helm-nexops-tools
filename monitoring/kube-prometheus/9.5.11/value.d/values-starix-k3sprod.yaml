@@ -27,7 +27,7 @@ prometheus:
 
   additionalScrapeConfigs:
     enabled: true
-    type: internal
+    type: external
     internal:
       jobList:
       ###########################################################################
@@ -94,12 +94,9 @@ prometheus:
             db: 'mongodb'
             exporter: 'node_exporter'
       ###########################################################################
-
-  ##
-  additionalScrapeConfigsExternal:
-    enabled: false
-    name: ""
-    key: ""
+    external:
+      name: "minio-prom-additional-scrape-config"
+      key: "scrape-jobs.yaml"
 
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
