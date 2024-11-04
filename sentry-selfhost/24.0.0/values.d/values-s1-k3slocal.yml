@@ -1,5 +1,5 @@
 ingress:
-  hostname: "sentry-s1.nexentgame.com"
+  hostname: "sentry-s1-tmp.nexentgame.com"
 
 filestore:
   filesystem:
