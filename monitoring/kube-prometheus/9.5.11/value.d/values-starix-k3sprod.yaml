@@ -94,19 +94,6 @@ prometheus:
             db: 'mongodb'
             exporter: 'node_exporter'
       ###########################################################################
-      ###########################################################################
-      ### Minio S1 - monitor
-      ###########################################################################
-      - job_name: s1-minio-job
-        bearer_token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4ODQwNDMwMTAsImlzcyI6InByb21ldGhldXMiLCJzdWIiOiJuZXhvcHMifQ.82DZWsXyhUl9N4UhsoNW3xOkyZxtq1_saXZp2OVy_9y9xYMqehD0zAvB7e-2GMMGAGX9qiIqOfepB_AwZKTM2A
-        metrics_path: /minio/v2/metrics/cluster
-        scheme: http
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        static_configs:
-        - targets:
-          - minio.minio.svc.starix.k3sprod:80
-      ###########################################################################
 
 
 alertmanager:
