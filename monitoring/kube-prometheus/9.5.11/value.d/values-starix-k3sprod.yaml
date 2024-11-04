@@ -95,11 +95,6 @@ prometheus:
             exporter: 'node_exporter'
       ###########################################################################
 
-  ##
-  additionalScrapeConfigsExternal:
-    enabled: false
-    name: ""
-    key: ""
 
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
