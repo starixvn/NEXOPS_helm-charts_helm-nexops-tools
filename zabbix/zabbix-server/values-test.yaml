@@ -262,6 +262,9 @@ postgresql:
     claim_access_mode: ReadWriteOnce
     # -- Storage PVC storageclass to use
     storageClass: "local-path"
+
+  nodeSelector:
+    zabbix: "yes"
   
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
