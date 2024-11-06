@@ -801,6 +801,10 @@ grafana.ini:
     url: https://grafana.net
   server:
     domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ tpl (.Values.ingress.hosts | first) . }}{{ else }}''{{ end }}"
+  proxy:
+    http_proxy: "lisasqd.nebula.prod:8801"
+    https_proxy: "lisasqd.nebula.prod:8801"
+
 ## grafana Authentication can be enabled with the following values on grafana.ini
  # server:
       # The full public facing url you use in browser, used for redirects and emails
