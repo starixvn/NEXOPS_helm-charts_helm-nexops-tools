@@ -804,7 +804,6 @@ grafana.ini:
   proxy:
     http_proxy: "http://lisasqd.nebula.prod:8801/"
     https_proxy: "http://lisasqd.nebula.prod:8801/"
-    no_proxy: "127.0.0.1,localhost"
 
 ## grafana Authentication can be enabled with the following values on grafana.ini
  # server:
