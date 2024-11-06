@@ -17,7 +17,7 @@ prometheus:
     storageClass: "longhorn"
     size: 5Gi
 
-  resourcesPreset: "medium"
+  resourcesPreset: "2xlarge"
 
   additionalScrapeConfigs:
     enabled: false
