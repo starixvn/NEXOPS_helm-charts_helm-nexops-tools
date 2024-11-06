@@ -84,12 +84,30 @@ logstashPipeline:
           ssl => true
           ssl_certificate_verification => false
           index => "logstash-unknown-%{+YYYY.MM.dd}"
+          template => "~/templates/logstash_default.json"
+          template_name => "logstash_default"
         }        
       }
 
     }
     
+secrets:
+- name: "index-template"
+  values:
+    logstash_default.json: |
+      {
+        "template": "somename-*",
+        "settings": {
+          "number_of_shards": 2,
+          "number_of_replicas" : 0
+        }
+      }
 
+
+secretMounts: 
+- name: "index-template"
+  secretName: "index-template"
+  path: "~/templates"
 
 logstashJavaOpts: "-Xmx1g -Xms1g"
 
