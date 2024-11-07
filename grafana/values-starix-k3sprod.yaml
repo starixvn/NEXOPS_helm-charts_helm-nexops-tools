@@ -804,6 +804,8 @@ grafana.ini:
   proxy:
     HTTP_PROXY: "http://lisasqd.nebula.prod:8801/"
     HTTPS_PROXY: "http://lisasqd.nebula.prod:8801/"
+  secure_socks_datasource_proxy:
+    proxy_address: "http://lisasqd.nebula.prod:8801/"
 
 ## grafana Authentication can be enabled with the following values on grafana.ini
  # server:
