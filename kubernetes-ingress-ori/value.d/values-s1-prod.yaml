@@ -62,6 +62,17 @@ extraResources:
     namespace: {{ include "kubernetes-ingress.namespace" . }}
   spec:
     ingressClassName: {{ .Values.controller.ingressClassResource.name }}
+    rules:
+    - host: vn-st-ing-prod.nebula.prod
+      http:
+        paths:
+        - backend:
+            service:
+              name: {{ include "kubernetes-ingress.fullname" . }}
+              port:
+                number: 1024
+          path: /
+          pathType: Prefix
     defaultBackend:
       service:
         name: be-default-{{ .Release.Name }}

@@ -62,7 +62,7 @@ extraResources:
   spec:
     ingressClassName: {{ .Values.controller.ingressClassResource.name }}
     rules:
-    - host: ing-stat.nexentgame.com
+    - host: ing-stat.starixnet.com
       http:
         paths:
         - backend:
