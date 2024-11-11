@@ -161,6 +161,9 @@ logstashPipeline:
   dev_filter.conf: |
     filter {
       if [type] == "dev-logs" {
+        json {
+          source => "message"
+        }
         if "LoginTransaction" in [Tags] {
           useragent {
             source => '[Message][UserAgent]'
