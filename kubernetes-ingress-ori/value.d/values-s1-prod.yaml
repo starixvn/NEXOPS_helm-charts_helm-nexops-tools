@@ -63,7 +63,7 @@ extraResources:
   spec:
     ingressClassName: {{ .Values.controller.ingressClassResource.name }}
     rules:
-    - host: vn-st-ing-prod.nebula.prod
+    - host: vn-s1-ing-prod.nebula.prod
       http:
         paths:
         - backend:
