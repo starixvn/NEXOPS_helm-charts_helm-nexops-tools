@@ -523,9 +523,9 @@ collector:
     #hosts:
     #   - jaeger-collector-s1.nexentgame.com
     # or:
-    hosts:
-       - host: jaeger-collector-s1.nexdev.net
-         servicePort: 4317
+    #hosts:
+    #   - host: jaeger-collector-s1.nexdev.net
+    #     servicePort: 4317
     # annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
