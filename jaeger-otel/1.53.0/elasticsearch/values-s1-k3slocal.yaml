@@ -371,7 +371,7 @@ ingress:
   apiVersion: ""
   ## @param ingress.hostname Default host for the ingress record
   ##
-  hostname: jaeger-elasticsearch-s1.nexentgame.com
+  hostname: jaeger-elasticsearch-s1.nexdev.net
   ## @param ingress.path Default path for the ingress record
   ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
   ##
