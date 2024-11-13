@@ -78,9 +78,13 @@ kafka:
   controller:
     nodeSelector:
       sentry: "yes"
+    persistence:
+      size: "30Gi"
   clusterDomain: starix.k3suat
   zookeeper:
     clusterDomain: starix.k3suat
+    persistence:
+      size: "30Gi"
 memcached:
   clusterDomain: starix.k3suat
 nginx:
@@ -147,5 +151,7 @@ zookeeper:
   global:
     storageClass: "longhorn-s1"
   nodeSelector:
-    sentry: "yes"   
+    sentry: "yes"
+  persistence:
+    size: "20Gi"
 
