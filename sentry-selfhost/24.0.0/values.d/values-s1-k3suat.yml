@@ -20,6 +20,10 @@ filestore:
 #   workerTransactions:
 #     enabled: "true"
 
+snuba:
+  transactionsConsumer:
+    autoOffsetReset: "latest"
+
 sentry:
   cleanup:
     days: 3
@@ -33,7 +37,7 @@ sentry:
     - name: NO_PROXY
       value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
   worker:
-    replicas: 1
+    replicas: 2
     env:
     - name: HTTP_PROXY
       value: "http://lisasqd.nebula.prod:8801"
