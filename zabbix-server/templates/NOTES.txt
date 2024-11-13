@@ -1,4 +1,0 @@
-Get the application URL by running these commands:
-  echo "Visit http://127.0.0.1:8888 to use your application"
-  echo "Default credentials => Login: Admin Password: zabbix (Change after first access!!!)"
-  kubectl --namespace {{ .Release.Namespace }} port-forward service/{{ .Release.Name }}-zabbix-web 8888:{{ .Values.zabbixWeb.service.port }}
