@@ -801,9 +801,6 @@ grafana.ini:
     url: https://grafana.net
   server:
     domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ tpl (.Values.ingress.hosts | first) . }}{{ else }}''{{ end }}"
-  proxy:
-    HTTP_PROXY: "http://lisasqd.nebula.prod:8801/"
-    HTTPS_PROXY: "http://lisasqd.nebula.prod:8801/"
   secure_socks_datasource_proxy:
     proxy_address: "http://lisasqd.nebula.prod:8801/"
 
