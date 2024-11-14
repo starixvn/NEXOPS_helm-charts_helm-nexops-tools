@@ -38,16 +38,19 @@ logstashPipeline:
         type => "dev-logs"
         tags => ["tcp"]
       }
+
       syslog {
         port => 5045
         type => "syslog"
         tags => ["local"]
       }
+
       tcp {
         port => 5064
         type => "vault"
         tags => ["local", "starix"]
       }
+
       tcp {
         port => 5065
         type => "vault"
@@ -506,10 +509,12 @@ service:
   - name: tcp-s1
     port: 5099
     protocol: TCP
+    nodePort: 31853
     targetPort: tcp-s1
   - name: udp-s1
     port: 5099
     protocol: UDP
+    nodePort: 31853
     targetPort: udp-s1
   - name: tcp
     nodePort: 30504
