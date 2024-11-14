@@ -448,10 +448,12 @@ service:
   ports:
   - name: httplog
     port: 8080
+    nodePort: 31055
     protocol: TCP
     targetPort: httplog
   - name: httplog-s1
     port: 8081
+    nodePort: 32012
     protocol: TCP
     targetPort: httplog-s1
   - name: tcp
