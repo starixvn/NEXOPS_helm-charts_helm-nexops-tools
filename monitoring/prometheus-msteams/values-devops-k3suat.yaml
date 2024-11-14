@@ -78,7 +78,7 @@ extraEnvs:
   HTTP_PROXY: http://lisasqd.nebula.prod:8801
   HTTPS_PROXY: http://lisasqd.nebula.prod:8801
 # ref: https://github.com/prometheus-msteams/prometheus-msteams#customise-messages-per-ms-teams-channel
-#connectorsWithCustomTemplates: []
+connectorsWithCustomTemplates: []
 # - request_path: /alert2
 #   template_file: |
 #     {{ define "teams.card" }}
