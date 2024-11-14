@@ -802,7 +802,7 @@ grafana.ini:
   server:
     domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ tpl (.Values.ingress.hosts | first) . }}{{ else }}''{{ end }}"
   secure_socks_datasource_proxy:
-    proxy_address: "http://lisasqd.nebula.prod:8801/"
+    proxy_address: "lisasqd.nebula.prod:8801"
 
 ## grafana Authentication can be enabled with the following values on grafana.ini
  # server:
