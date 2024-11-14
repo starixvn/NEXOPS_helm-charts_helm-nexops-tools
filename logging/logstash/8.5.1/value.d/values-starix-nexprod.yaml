@@ -13,6 +13,14 @@ logstashPipeline:
         tags => ["http"]
         add_field => { "[@metadata][input-http]" => "" }
       }
+
+      http {
+        port => 8081
+        type => "s1-logs"
+        tags => ["http-s1"]
+        add_field => { "[@metadata][input-http]" => "" }
+      }
+
       tcp {
         port => 5044
         type => "dev-logs"
