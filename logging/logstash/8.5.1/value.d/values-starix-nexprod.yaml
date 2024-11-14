@@ -22,13 +22,13 @@ logstashPipeline:
       }
 
       udp {
-        port 5099
+        port => 5099
         type => "s1-udp"
         tags => ["udp-s1"]
       }
 
       tcp {
-        port 5099
+        port => 5099
         type => "s1-tcp"
         tags => ["tcp-s1"]
       }
