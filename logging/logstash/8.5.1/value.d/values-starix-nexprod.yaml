@@ -184,7 +184,7 @@ logstashPipeline:
 
   dev_filter.conf: |
     filter {
-      if [type] == "dev-logs" {
+      if [type] == "dev-logs" or [type] == "s1-udp" or [type] == "s1-tcp" {
         json {
           source => "message"
         }
