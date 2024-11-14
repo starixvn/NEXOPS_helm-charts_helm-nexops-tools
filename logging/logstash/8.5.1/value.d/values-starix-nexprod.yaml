@@ -428,6 +428,8 @@ httpPort: 9600
 extraPorts:
   - name: httplog
     containerPort: 8080
+  - name: httplog-s1
+    containerPort: 8081
   - name: tcp
     containerPort: 5044
   - name: syslog-tcp
@@ -448,6 +450,10 @@ service:
     port: 8080
     protocol: TCP
     targetPort: httplog
+  - name: httplog-s1
+    port: 8081
+    protocol: TCP
+    targetPort: httplog-s1
   - name: tcp
     nodePort: 30504
     port: 5044
