@@ -61,12 +61,12 @@ clickhouse:
     replicas: "1"
     persistentVolumeClaim:
       dataPersistentVolume:
-        storageClassName: "longhorn-s1"
+        storageClassName: "longhorn-s1-effort"
     nodeSelector:
       sentry: "yes"
 kafka:
   global:
-    storageClass: "longhorn-s1"
+    storageClass: "longhorn-s1-effort"
   extraConfig: |
     offsets.topic.replication.factor=1
     transaction.state.log.replication.factor=1
@@ -149,7 +149,7 @@ redis:
 zookeeper:
   clusterDomain: starix.k3suat
   global:
-    storageClass: "longhorn-s1"
+    storageClass: "longhorn-s1-effort"
   nodeSelector:
     sentry: "yes"
   persistence:
