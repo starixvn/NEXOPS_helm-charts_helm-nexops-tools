@@ -378,6 +378,10 @@ logstashPipeline:
           } 
         }
       }
+    }
+
+  dev_output.conf: |
+    output {
       if [type] == "dev-s1" {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
