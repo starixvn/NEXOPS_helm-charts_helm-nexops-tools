@@ -184,7 +184,7 @@ logstashPipeline:
 
   dev_filter.conf: |
     filter {
-      if [type] == "dev-logs" or [type] == "dev-s1" {
+      if [type] == "dev-logs"{
         json {
           source => "message"
         }
@@ -249,7 +249,14 @@ logstashPipeline:
       }
     }
 
-
+  dev_s1_filter.conf: |
+    filter {
+      if [type] == "dev-s1" {
+        json {
+          source => "message"
+        }
+      }
+    }
 
   vault_output.conf: |
     output {
