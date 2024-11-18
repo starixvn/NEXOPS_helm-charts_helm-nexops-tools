@@ -2,6 +2,11 @@
 controller:
   replicaCount: 1
 
+  podAnnotations:
+    vault.hashicorp.com/agent-inject: 'true'
+    vault.hashicorp.com/role: 'cert-injector'
+    vault.hashicorp.com/agent-inject-secret-config.txt: 'nexops/certs'
+
   config:
     # ssl-certificate: "haproxy-ingress/nebula-cert"
     stats-config-snippet: |
