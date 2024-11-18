@@ -188,9 +188,16 @@ logstashPipeline:
         json {
           source => "message"
         }
+
+        ### FPS TEAM
         if "LoginTransaction" in [Tags] {
           useragent {
             source => '[Message][UserAgent]'
+            target => "user_agent"
+          }
+          geoip {
+            source => "[Message][IP]"
+            target => "geo"
           }
         }
 
