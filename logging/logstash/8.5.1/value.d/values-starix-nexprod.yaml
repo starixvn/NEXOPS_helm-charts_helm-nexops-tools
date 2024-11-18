@@ -380,7 +380,7 @@ logstashPipeline:
       }
     }
 
-  dev_output.conf: |
+  dev_s1_output.conf: |
     output {
       if [type] == "dev-s1" {
         opensearch {
