@@ -1,7 +1,7 @@
 ---
 controller:
   config:
-    ssl-certificate: "haproxy-ingress/nexdev-crt"
+    ssl-certificate: "haproxy-ingress/nexdev-cert"
     stats-config-snippet: |
       stats auth nexops:NexOps!QAZ
       stats refresh 300s
