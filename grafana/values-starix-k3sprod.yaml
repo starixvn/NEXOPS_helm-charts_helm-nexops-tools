@@ -619,11 +619,11 @@ datasources: #{}
   datasources.yaml:
     apiVersion: 1
     datasources:
-    - name: Prometheus
+    - name: STARIX-SWARM-NEXPROD
       type: prometheus
-      url: http://lisasqd.nebula.prod:8801 #http://prometheus-prometheus-server
+      url: http://202.78.231.51:16090
       access: proxy
-      isDefault: true
+      isDefault: false
 #    - name: CloudWatch
 #      type: cloudwatch
 #      access: proxy
