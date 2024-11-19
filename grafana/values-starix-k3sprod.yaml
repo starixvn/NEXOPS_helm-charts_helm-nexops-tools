@@ -623,7 +623,7 @@ datasources: #{}
       type: prometheus
       url: http://lisasqd.nebula.prod:8801
       access: proxy
-      isDefault: false
+      isDefault: true
 #    - name: CloudWatch
 #      type: cloudwatch
 #      access: proxy
