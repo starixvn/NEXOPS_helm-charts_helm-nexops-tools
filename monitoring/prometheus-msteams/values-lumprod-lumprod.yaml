@@ -74,7 +74,7 @@ connectors:
   - alertmanager-warning: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/94e5b76eb0144df2857f401eb329312f/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2S4ThKY3yjWRgj_fyF783GTdYBtHaBN-mWke4EQX48BE1
   - alertmanager-critical: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/94e5b76eb0144df2857f401eb329312f/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2S4ThKY3yjWRgj_fyF783GTdYBtHaBN-mWke4EQX48BE1
 # ref: https://github.com/prometheus-msteams/prometheus-msteams#customise-messages-per-ms-teams-channel
-#connectorsWithCustomTemplates: []
+connectorsWithCustomTemplates: []
 #   - request_path: /alert2
 #     template_file: |
 #       {{ define "msteams.default.summary" }}{{ template "__subject" . }}{{ end }}
