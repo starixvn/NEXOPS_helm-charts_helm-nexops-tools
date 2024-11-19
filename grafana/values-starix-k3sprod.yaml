@@ -624,6 +624,11 @@ datasources: #{}
       url: http://lisasqd.nebula.prod:8801
       access: proxy
       isDefault: true
+    - name: STARIX-SWARM-NEXPROD
+      type: prometheus
+      url:url: http://202.78.231.51:16090
+      access: proxy
+      isDefault: false
 #    - name: CloudWatch
 #      type: cloudwatch
 #      access: proxy
