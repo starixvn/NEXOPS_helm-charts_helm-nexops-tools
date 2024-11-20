@@ -20,7 +20,7 @@ global:
 #See more info in [Zabbix Life Cycle & Release Policy](https://www.zabbix.com/life_cycle_and_release_policy) page
 #When you want use a non-LTS version (example: 6.4.x), you have to set this yourself. You can change version
 #here or overwrite in each component (example: zabbixserver.image.tag, etc).
-zabbixImageTag: ubuntu-7.0.5
+zabbixImageTag: ubuntu-7.0.0
 
 # **Zabbix Postgresql access / credentials** configurations
 # with this dict, you can set unified PostgreSQL access credentials, IP and so on for both Zabbix Server and Zabbix web frontend
@@ -83,7 +83,7 @@ zabbixServer:
     # -- Zabbix Server Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-server-pgsql #zabbix/zabbix-server-pgsql
     # -- Zabbix Server Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0.5
+    tag: ubuntu-7.0.0
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
@@ -91,6 +91,10 @@ zabbixServer:
   # -- Automatically clean orphaned ha nodes from ha_nodes db table
   nodeSelector:
     zabbix-server: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: zabbix-server
   haNodesAutoClean:
     enabled: true
     image:
@@ -265,6 +269,10 @@ postgresql:
 
   nodeSelector:
     zabbix-server: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: zabbix-server
   
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
@@ -555,7 +563,7 @@ zabbixWeb:
     # -- Zabbix Web Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-web-nginx-pgsql
     # -- Zabbix Web Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0.5
+    tag: ubuntu-7.0.0
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
@@ -653,6 +661,10 @@ zabbixWeb:
   startupProbe: {}
   nodeSelector:
     zabbix-server: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: zabbix-server
 
 # **Zabbix Web Service** configurations
 zabbixWebService:
@@ -888,7 +900,10 @@ route:
 #nodeSelector: {}
 nodeSelector:
   zabbix-server: "yes"
-
+tolerations:
+- effect: NoSchedule
+  key: cattle.io/os
+  value: zabbix-server
 # -- Tolerations configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
 
