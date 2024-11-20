@@ -20,7 +20,7 @@ global:
 #See more info in [Zabbix Life Cycle & Release Policy](https://www.zabbix.com/life_cycle_and_release_policy) page
 #When you want use a non-LTS version (example: 6.4.x), you have to set this yourself. You can change version
 #here or overwrite in each component (example: zabbixserver.image.tag, etc).
-zabbixImageTag: ubuntu-7.0-latest
+zabbixImageTag: ubuntu-7.0.5
 
 # **Zabbix Postgresql access / credentials** configurations
 # with this dict, you can set unified PostgreSQL access credentials, IP and so on for both Zabbix Server and Zabbix web frontend
@@ -83,14 +83,14 @@ zabbixServer:
     # -- Zabbix Server Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-server-pgsql #zabbix/zabbix-server-pgsql
     # -- Zabbix Server Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0.0-latest #null
+    tag: ubuntu-7.0.5
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
     pullSecrets: []
   # -- Automatically clean orphaned ha nodes from ha_nodes db table
   nodeSelector:
-    zabbix: "yes"
+    zabbix-server: "yes"
   haNodesAutoClean:
     enabled: true
     image:
@@ -101,7 +101,7 @@ zabbixServer:
       tag: 16
       pullPolicy: IfNotPresent
       pullSecrets: []
-    schedule: "0 1 * * *"
+    schedule: "0 * * * *"
     concurrencyPolicy: "Replace"
     deleteOlderThanSeconds: 3600
     # -- Requests and limits of pod resources. See: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers)
@@ -176,12 +176,12 @@ zabbixServer:
     # -- Port of service in Kubernetes cluster
     port: 10051
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 31052
+    nodePort: 31051
     # -- Annotations for the zabbix-server service
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
   # -- Extra environment variables. A list of additional environment variables. List can be extended with other environment variables listed here: https://github.com/zabbix/zabbix-docker/tree/6.0/Dockerfiles/server-pgsql/alpine#environment-variables. See example: https://github.com/zabbix-community/helm-zabbix/blob/master/charts/zabbix/docs/example/kind/values.yaml
-  extraEnv: #[]
+  extraEnv:
     - name: "ZBX_STARTPOLLERS"
       value: "200"
     - name: "ZBX_STARTPOLLERSUNREACHABLE"
@@ -257,14 +257,14 @@ postgresql:
     # -- Existing persistent volume claim name to be used to store posgres data
     existingClaimName: false
     # -- Size of the PVC to be automatically generated
-    storageSize: 20Gi
+    storageSize: 50Gi
     # -- Kubernetes uses volume access modes to match PersistentVolumeClaims and PersistentVolumes. See: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
     claim_access_mode: ReadWriteOnce
     # -- Storage PVC storageclass to use
     storageClass: "local-path"
 
   nodeSelector:
-    zabbix: "yes"
+    zabbix-server: "yes"
   
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
@@ -555,7 +555,7 @@ zabbixWeb:
     # -- Zabbix Web Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-web-nginx-pgsql
     # -- Zabbix Web Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0-latest
+    tag: ubuntu-7.0.5
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
@@ -597,7 +597,7 @@ zabbixWeb:
     sessionAffinity: None    # -- Port of service in Kubernetes cluster
     port: 80
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 30081
+    nodePort: 30082
     # -- Annotations for the Zabbix Web
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
@@ -652,7 +652,7 @@ zabbixWeb:
   # -- The kubelet uses startup probes to know when a container application has started.  Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   startupProbe: {}
   nodeSelector:
-    zabbix: "yes"
+    zabbix-server: "yes"
 
 # **Zabbix Web Service** configurations
 zabbixWebService:
@@ -887,7 +887,7 @@ route:
 # -- nodeSelector configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 #nodeSelector: {}
 nodeSelector:
-  zabbix: "yes"
+  zabbix-server: "yes"
 
 # -- Tolerations configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
