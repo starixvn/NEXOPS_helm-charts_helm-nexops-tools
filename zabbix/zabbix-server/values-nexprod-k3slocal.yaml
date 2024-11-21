@@ -20,7 +20,7 @@ global:
 #See more info in [Zabbix Life Cycle & Release Policy](https://www.zabbix.com/life_cycle_and_release_policy) page
 #When you want use a non-LTS version (example: 6.4.x), you have to set this yourself. You can change version
 #here or overwrite in each component (example: zabbixserver.image.tag, etc).
-zabbixImageTag: ubuntu-7.0.0
+zabbixImageTag: ubuntu-7.0-latest
 
 # **Zabbix Postgresql access / credentials** configurations
 # with this dict, you can set unified PostgreSQL access credentials, IP and so on for both Zabbix Server and Zabbix web frontend
@@ -83,7 +83,7 @@ zabbixServer:
     # -- Zabbix Server Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-server-pgsql #zabbix/zabbix-server-pgsql
     # -- Zabbix Server Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0.0
+    tag: ubuntu-7.0-latest
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
@@ -563,7 +563,7 @@ zabbixWeb:
     # -- Zabbix Web Docker image name
     repository: hub.nexdev.net/base/zabbix/zabbix-web-nginx-pgsql
     # -- Zabbix Web Docker image tag, if you want to override zabbixImageTag
-    tag: ubuntu-7.0.0
+    tag: ubuntu-7.0-latest
     # -- Pull policy of Docker image
     pullPolicy: IfNotPresent
     # -- List of dockerconfig secrets names to use when pulling images
