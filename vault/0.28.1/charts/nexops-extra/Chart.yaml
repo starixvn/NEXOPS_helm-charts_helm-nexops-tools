@@ -1,0 +1,7 @@
+apiVersion: v2
+name: nexops-extra
+description: NexOps - Extra resources chart for Kubernetes
+
+version: 0.1.0
+
+appVersion: 0.1.0
