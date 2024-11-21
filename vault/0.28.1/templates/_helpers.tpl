@@ -1103,3 +1103,11 @@ config file from values
   {{- end }}
   {{- end }}
 {{- end -}}
+
+{{- define "nexops-extra.render" -}}
+  {{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+  {{- else }}
+    {{- tpl (.value | toYaml) .context }}
+  {{- end }}
+{{- end -}}
