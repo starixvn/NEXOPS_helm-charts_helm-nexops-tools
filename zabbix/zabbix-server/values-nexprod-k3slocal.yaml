@@ -905,7 +905,7 @@ tolerations:
   key: cattle.io/os
   value: zabbix-server
 # -- Tolerations configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
-tolerations: []
+#tolerations: []
 
 # -- Affinity configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 affinity: {}
