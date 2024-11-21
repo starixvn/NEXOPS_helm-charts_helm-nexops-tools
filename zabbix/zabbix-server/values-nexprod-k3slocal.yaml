@@ -852,7 +852,7 @@ ingress:
   # kubernetes.io/tls-acme: "true"
   # -- Ingress hosts
   hosts:
-    - host: zabbix-test.nexdev.net
+    - host: zabbix.nexdev.net
       paths:
         - path: /
           pathType: ImplementationSpecific
