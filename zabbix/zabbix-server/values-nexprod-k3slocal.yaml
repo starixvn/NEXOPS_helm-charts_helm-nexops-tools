@@ -180,7 +180,7 @@ zabbixServer:
     # -- Port of service in Kubernetes cluster
     port: 10051
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 31053
+    nodePort: 31052
     # -- Annotations for the zabbix-server service
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
