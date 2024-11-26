@@ -605,7 +605,7 @@ zabbixWeb:
     sessionAffinity: None    # -- Port of service in Kubernetes cluster
     port: 80
     # -- NodePort port to allocate on each node (only if service.type = NodePort or Loadbalancer)
-    nodePort: 30082
+    nodePort: 30081
     # -- Annotations for the Zabbix Web
     annotations: {}
     # metallb.universe.tf/address-pool: production-public-ips
