@@ -20,7 +20,12 @@ config:
       baseDN: "OU=LUMI,DC=luminet,DC=vn"
       bindDN: "CN=LDAP Reader,OU=ServicesAccounts,OU=UsersGroups,OU=IT,OU=ServersLabs,OU=LUMI,DC=luminet,DC=vn"
       bindPassword: "J5IvWV1+"
-      attributesUsername: "sAMAccountName"
+      attributesUsername: "uid"
+      userQuery: ""
+      attributesEmail: "mail"
+      attributesFullname: "cn"
+      attributesPhoto: "jpegPhoto"
+
 
 
 persistence:
