@@ -18,8 +18,8 @@ config:
       ssl: false
       startTLS: false
       baseDN: "OU=LUMI,DC=luminet,DC=vn"
-      bindDN: "CN=LDAP Reader,OU=ServicesAccounts,OU=UsersGroups,OU=IT,OU=ServersLabs,OU=LUMI,DC=luminet,DC=vn"
-      bindPassword: "J5IvWV1+"
+      bindDN: "CN=Nexops Test,OU=UsersGroups,OU=Nexops,OU=Workstations,OU=LUMI,DC=luminet,DC=vn"
+      bindPassword: "kz@J9laXJaYp"
       attributesUsername: "uid"
       userQuery: ""
       attributesEmail: "mail"
