@@ -6,6 +6,17 @@ config:
   publicUri: "https://penpot.lumigame.com"
   redis:
     clusterDomain: lumi.lumprod    
+  provider:
+    ldap:
+      enabled: true
+      host: "10.10.50.102"
+      port: 389
+      ssl: false
+      startTLS: false
+      baseDN: "OU=LUMI,DC=luminet,DC=vn"
+      bindDN: "CN=LDAP Reader,OU=ServicesAccounts,OU=UsersGroups,OU=IT,OU=ServersLabs,OU=LUMI,DC=luminet,DC=vn"
+      bindPassword: "J5IvWV1+"
+      attributesUsername: "sAMAccountName"
 
 
 persistence:
