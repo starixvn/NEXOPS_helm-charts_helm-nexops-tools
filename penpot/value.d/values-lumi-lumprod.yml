@@ -4,7 +4,7 @@ global:
 
 config:
   publicUri: "https://penpot.lumigame.com"
-  flags: "enable-login-with-ldap disable-registration"
+  flags: "enable-login-with-ldap disable-registration disable-email-verification"
   
   
 
@@ -20,7 +20,7 @@ config:
       baseDN: "OU=LUMI,DC=luminet,DC=vn"
       bindDN: "CN=LDAP Reader,OU=ServicesAccounts,OU=UsersGroups,OU=IT,OU=ServersLabs,OU=LUMI,DC=luminet,DC=vn"
       bindPassword: "J5IvWV1+"
-      attributesUsername: "uid"
+      attributesUsername: "sAMAccountName"
 
 
 persistence:
