@@ -1,0 +1,20 @@
+global:
+  postgresqlEnabled: true
+  redisEnabled: true
+
+config:
+  publicUri: "https://penpot.lumigame.com"
+
+
+persistence:
+  assets:
+    enabled: true
+    storageClass: "longhorn"
+    size: 20Gi
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  hosts:
+    - "penpot.lumigame.com"
+    
