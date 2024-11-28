@@ -21,7 +21,7 @@ config:
       bindDN: "CN=Nexops Test,OU=UsersGroups,OU=Nexops,OU=Workstations,OU=LUMI,DC=luminet,DC=vn"
       bindPassword: "kz@J9laXJaYp"
       attributesUsername: "uid"
-      userQuery: ""
+      userQuery: "(&(|(uid=:username)(mail=:username))(memberOf=CN=NEXOPS,OU=UsersGroups,OU=Nexops,OU=Workstations,OU=LUMI,DC=luminet,DC=vn))"
       attributesEmail: "mail"
       attributesFullname: "cn"
       attributesPhoto: "jpegPhoto"
