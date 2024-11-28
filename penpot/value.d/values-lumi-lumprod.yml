@@ -17,4 +17,6 @@ ingress:
   className: "haproxy"
   hosts:
     - "penpot.lumigame.com"
-    
+
+redis:
+  clusterDomain: lumi.lumprod
