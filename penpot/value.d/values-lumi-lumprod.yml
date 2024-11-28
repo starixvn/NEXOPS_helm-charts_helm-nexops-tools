@@ -4,7 +4,7 @@ global:
 
 config:
   publicUri: "https://penpot.lumigame.com"
-  flags: "enable-login-with-ldap disable-email-verification"
+  flags: "enable-login-with-ldap"
   
   
 
