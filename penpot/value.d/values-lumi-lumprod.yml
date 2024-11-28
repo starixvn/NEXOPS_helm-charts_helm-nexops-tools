@@ -4,6 +4,8 @@ global:
 
 config:
   publicUri: "https://penpot.lumigame.com"
+  redis:
+    clusterDomain: lumi.lumprod    
 
 
 persistence:
