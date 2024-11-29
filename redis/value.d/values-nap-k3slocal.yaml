@@ -29,6 +29,7 @@ commonConfiguration: |-
   save 300 10
   save 60 10000
   appendonly yes
+  appendfilename "appendonly.aof"
   appendfsync everysec
 
 
