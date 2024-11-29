@@ -1,0 +1,24 @@
+# Default values for cert-updater-cronjob.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: hub.nexdev.net/base/nexops-tools/cert-updater
+  tag: "2024.11.28"
+  pullPolicy: IfNotPresent
+
+tlsSecrets:
+- name: nex-info-vn
+- name: nexdev-net
+
+# serviceAccount: "vault-cert-editor-granted-sa"
+
+cronjob:
+  schedule: "20 0 * * *"
+  env:
+  - name: VAULT_ROLE
+    value: cert-updater
+  - name: VAULT_ADDR
+    value: https://vault.nexdev.net
+  - name: ALERT_GROUP_ID
+    value: 19:********************************@thread.tacv2

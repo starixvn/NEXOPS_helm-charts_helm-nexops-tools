@@ -1,0 +1,53 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "cert-updater.name" . }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+  name: {{ include "cert-updater.name" . }}
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  timeZone: "Asia/Bangkok"
+  jobTemplate:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "cert-updater.name" . }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: {{ include "cert-updater.name" . }}
+            app.kubernetes.io/version: {{ .Chart.AppVersion }}
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: true
+          serviceAccountName: {{ template "cert-updater.serviceAccount.name" . }}
+          containers:
+          - name: {{ include "cert-updater.name" . }}
+            {{- with .Values.cronjob.env }}
+            env: 
+            - name: TZ
+              value: Asia/Bangkok
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            volumeMounts:
+            # {{- if .Values.additionalVolumeMounts }}
+            # {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+            # {{- end }}
+            {{- range .Values.tlsSecrets }}
+            - name: {{ .name }}
+              mountPath: /secret-volume/{{ .name }}
+            {{- end }}
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumes:
+          {{- range .Values.tlsSecrets }}
+          - name: {{ .name }}
+            secret:
+              secretName: {{ .name }}
+          {{- end }}
+          # {{- if .Values.additionalVolumes }}
+          # {{- toYaml .Values.additionalVolumes | nindent 10 }}
+          # {{- end }}
