@@ -124,6 +124,7 @@ configuration: |
     tcp-check expect string +OK
     server-template redis-sentinel-nap-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3slocal-headless.redis-sentinel-nap.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
 
+
   frontend redis_nap_replicas_fe
     bind :16879
     default_backend redis_nap_replicas_be
@@ -137,6 +138,44 @@ configuration: |
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
     server-template redis-sentinel-nap-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3slocal-headless.redis-sentinel-nap.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
+
+
+
+
+  frontend redis_alpha_master_fe
+    bind :16380
+    default_backend redis_alpha_master_be
+
+  backend redis_alpha_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-alpha-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
+
+  frontend redis_alpha_replicas_fe
+    bind :16880
+    default_backend redis_alpha_replicas_be
+    
+  backend redis_alpha_replicas_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-alpha-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
+
+
 
   frontend redis_s1_master_fe
     bind :16382
