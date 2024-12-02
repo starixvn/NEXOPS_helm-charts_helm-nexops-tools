@@ -31,6 +31,10 @@ commonConfiguration: |-
   appendonly yes
   appendfilename "appendonly.aof"
   appendfsync everysec
+  active-defrag-threshold-lower 10
+  active-defrag-threshold-upper 100
+  active-defrag-cycle-min 1
+  active-defrag-cycle-max 25
 
 volumePermissions:
   enabled: true
