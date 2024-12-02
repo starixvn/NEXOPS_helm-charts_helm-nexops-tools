@@ -157,7 +157,10 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-alpha-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server redis-sentinel-alpha-k3slocal-node-0  redis-sentinel-alpha-k3slocal-node-0.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server redis-sentinel-alpha-k3slocal-node-1  redis-sentinel-alpha-k3slocal-node-1.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server redis-sentinel-alpha-k3slocal-node-2  redis-sentinel-alpha-k3slocal-node-2.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+
 
 
   frontend redis_alpha_replicas_fe
@@ -172,7 +175,9 @@ configuration: |
     tcp-check expect string PONG
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-alpha-k3slocal-node- 0-2  _tcp-redis._TCP.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server redis-sentinel-alpha-k3slocal-node-0  redis-sentinel-alpha-k3slocal-node-0.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server redis-sentinel-alpha-k3slocal-node-1  redis-sentinel-alpha-k3slocal-node-1.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
+    server redis-sentinel-alpha-k3slocal-node-2  redis-sentinel-alpha-k3slocal-node-2.redis-sentinel-alpha-k3slocal-headless.redis-sentinel-alpha.svc.starix.k3slocal:6379  check inter 1s resolvers k8s init-addr none
 
 
 
