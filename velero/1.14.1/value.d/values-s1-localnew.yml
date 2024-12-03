@@ -18,7 +18,7 @@ kubectl:
 # AWS backend plugin configuration
 initContainers:
   - name: velero-plugin-for-aws
-    image: hub.lumigame.com/base/velero/velero-plugin-for-aws:v1.10.0
+    image: hub.nexdev.net/base/velero/velero-plugin-for-aws:v1.10.0
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
