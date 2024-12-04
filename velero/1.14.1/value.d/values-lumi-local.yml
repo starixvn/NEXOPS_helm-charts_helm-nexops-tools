@@ -55,5 +55,6 @@ schedules:
       - l1
       - l2
       - s1
+      - sk
       - nexops
       # - zabbix-server-nexprod
