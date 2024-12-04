@@ -167,3 +167,16 @@ Create a FQDN for the proxy pods.
 {{- end -}}
 
 {{/* vim: set filetype=mustache: */}}
+
+
+
+{{/*
+Nexops custom resource parser
+*/}}
+{{- define "nexops-extra.render" -}}
+  {{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+  {{- else }}
+    {{- tpl (.value | toYaml) .context }}
+  {{- end }}
+{{- end -}}
