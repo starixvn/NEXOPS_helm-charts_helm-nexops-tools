@@ -41,13 +41,13 @@ snapshotsEnabled: false
 
 schedules:
   web:
-    disabled: false
+    disabled: true
     labels:
       env: local
       org: s1
     schedule: "0 19 * * *"
     useOwnerReferencesInBackup: false
-    paused: false
+    paused: true
     template:
       ttl: "168h"
       includedNamespaces:
