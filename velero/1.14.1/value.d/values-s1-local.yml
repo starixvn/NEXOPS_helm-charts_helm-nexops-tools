@@ -18,7 +18,7 @@ kubectl:
 # AWS backend plugin configuration
 initContainers:
   - name: velero-plugin-for-aws
-    image: hub.lumigame.com/base/velero/velero-plugin-for-aws:v1.10.0
+    image: hub.nexdev.net/base/velero/velero-plugin-for-aws:v1.10.0
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
@@ -41,13 +41,13 @@ snapshotsEnabled: false
 
 schedules:
   web:
-    disabled: true
+    disabled: false
     labels:
       env: local
       org: s1
     schedule: "0 19 * * *"
     useOwnerReferencesInBackup: false
-    paused: true
+    paused: false
     template:
       ttl: "168h"
       includedNamespaces:
