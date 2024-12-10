@@ -1,5 +1,8 @@
 ingress:
   hostname: "sentry-s1.nexentgame.com"
+  additionalHostNames:
+  - "sentry.starixwork.net"
+  - "sentry.starixnet.com"    # internal
 
 filestore:
   filesystem:
