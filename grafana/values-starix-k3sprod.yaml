@@ -628,10 +628,8 @@ datasources: #{}
       type: prometheus
       url: http://202.78.231.51:16090
       access: proxy
+      basicAuth: true
       basicAuthUser: admin
-      #jsonData:
-      #  manageAlerts: true
-      #  prometheusType: Prometheus 
       secureJsonData:
         basicAuthPassword: 1qaz@WSX
 #    - name: CloudWatch
