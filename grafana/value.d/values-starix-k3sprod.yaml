@@ -8,7 +8,7 @@ persistence:
   type: pvc
   enabled: true
   size: 10Gi
-  storageClass: longhorn
+  storageClassName: longhorn
 
 adminUser: admin
 adminPassword: RHk^QbNE0C5Q
