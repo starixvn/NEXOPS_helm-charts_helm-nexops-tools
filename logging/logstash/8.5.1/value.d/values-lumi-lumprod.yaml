@@ -355,11 +355,13 @@ logstashPipeline:
 
       if "haproxy_access" in [tags] {
         grok {
-          match => [
-            "message","%{HAPROXYHTTPBASE}",
-            "message","%{HAPROXYHTTP}",
-            "message","%{HAPROXYTCP}"
-          ]
+          match => {
+            "message" => [
+              "%{HAPROXYHTTPBASE}",
+              "%{HAPROXYHTTP}",
+              "%{HAPROXYTCP}"
+            ]
+          }
         }
         if ![accept_date] {
           grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
