@@ -17,6 +17,9 @@ env:
   HTTPS_PROXY: "lisasqd.nebula.prod:8801"
 
 
+testFramework:
+  enabled: false
+
 # plugins: []
 #   # - digrich-bubblechart-panel
 #   # - grafana-clock-panel
