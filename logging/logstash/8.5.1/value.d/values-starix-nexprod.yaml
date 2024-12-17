@@ -102,15 +102,17 @@ logstashPipeline:
       if "haproxy_access" in [tags] {
         if "hap-gw" in [tags] {
           grok {
-            match => [
-              "message", "%{HAPROXYHTTPBASE}",
-              "message", "%{HAPROXYHTTP}",
-              "message", "%{HAPROXYTCP}",
-              "message", "%{HAPROXYGW}"
-            ]
+            match => {
+              "message" => [
+                "%{HAPROXYHTTPBASE}",
+                "%{HAPROXYHTTP}",
+                "%{HAPROXYTCP}",
+                "%{HAPROXYGW}"
+              ]
+            }
           }
           if ![accept_date] {
-            grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
+            grok { match => {message => ["%{HAPROXYDATE:accept_date}"]} }
           }
           if [captured_request_headers] {
             grok { match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"} }
@@ -160,7 +162,12 @@ logstashPipeline:
         }
         else if "hap-ing" in [tags] {
           grok {
-            match => ["message","%{HAPROXYHTTPBASE}","message","%{HAPROXYHTTP}","message","%{HAPROXYTCP}"]
+            match => { "message" => [
+              "%{HAPROXYHTTPBASE}",
+              "%{HAPROXYHTTP}",
+              "%{HAPROXYTCP}"
+            ]
+            }
           }
           grok {
             match => ["message", "%{HAPROXYDATE:accept_date}"]

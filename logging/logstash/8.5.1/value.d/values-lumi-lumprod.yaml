@@ -313,7 +313,7 @@ logstashPipeline:
             source => "message"
           }
           grok {
-            match => ["log","%{HAPROXYHTTP}","log","%{HAPROXYTCP}"]
+            match => { "log" => [ "%{HAPROXYHTTP}","%{HAPROXYTCP}" ] }
           }  
         }
       }
@@ -364,10 +364,10 @@ logstashPipeline:
           }
         }
         if ![accept_date] {
-          grok { match => ["message", "%{HAPROXYDATE:accept_date}"] }
+          grok { match => { "message" => ["%{HAPROXYDATE:accept_date}"] } }
         }
         if [captured_request_headers] {
-          grok { match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"} }
+          grok { match => { "captured_request_headers" => ["%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"] } }
         }
         mutate {
           remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
