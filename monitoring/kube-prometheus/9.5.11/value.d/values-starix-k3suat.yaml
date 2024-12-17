@@ -41,6 +41,24 @@ prometheus:
     name: ""
     key: ""
 
+node-exporter:
+  extraVolumes:
+  - hostPath:
+      path: /
+      type: ""
+    name: root
+    
+  extraVolumeMounts:
+  - mountPath: /host/root
+    mountPropagation: HostToContainer
+    name: root
+    readOnly: true
+
+  extraArgs:
+    path.rootfs: "/host/root"
+    collector.filesystem.mount-points-exclude: "^/(dev|proc|sys|var/lib/docker/.+)($|/)"
+    collector.filesystem.fs-types-exclude: "^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs|squashfs|nsfs|tmpfs)$"
+
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
