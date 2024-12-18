@@ -36,6 +36,7 @@ configuration:
   extraEnvVars:
     HTTP_PROXY: "lisasqd.nebula.prod:8801"
     HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+    NO_PROXY: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 credentials:
   existingSecret: velero-secret
 # Disable VolumeSnapshotLocation CRD. It is not needed for CSI integration
