@@ -54,4 +54,5 @@ schedules:
       - l1
       - ne
       - nexops
+      - portainer
       # - zabbix-server-nexprod
