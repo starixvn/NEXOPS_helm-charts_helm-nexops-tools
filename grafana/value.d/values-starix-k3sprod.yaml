@@ -23,7 +23,7 @@ datasources:
     datasources:
     - name: ALPHA-SWARM-PROD
       type: prometheus
-      url: http://10.2.27.146:9090
+      url: http://10.2.27.140:9090
       #access: proxy
       basicAuth: true
       basicAuthUser: admin
