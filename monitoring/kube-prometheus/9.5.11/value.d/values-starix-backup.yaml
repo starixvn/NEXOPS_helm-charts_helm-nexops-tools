@@ -45,12 +45,12 @@ node-exporter:
   - hostPath:
       path: /var/lib
       type: ""
-    name: mntDisk
+    name: mnt
     
   extraVolumeMounts:
   - mountPath: /host/root/var/lib
     mountPropagation: HostToContainer
-    name: mntDisk
+    name: mnt
     readOnly: true
 
   extraArgs:
