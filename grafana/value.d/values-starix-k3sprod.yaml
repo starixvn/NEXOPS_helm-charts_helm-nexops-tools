@@ -13,9 +13,9 @@ persistence:
 adminUser: admin
 adminPassword: RHk^QbNE0C5Q
 
-env:
-  HTTP_PROXY: "lisasqd.nebula.prod:8801"
-  HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+#env:
+#  HTTP_PROXY: "lisasqd.nebula.prod:8801"
+#  HTTPS_PROXY: "lisasqd.nebula.prod:8801"
 
 datasources:
   datasources.yaml:
