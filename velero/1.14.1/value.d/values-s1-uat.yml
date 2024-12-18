@@ -33,6 +33,9 @@ configuration:
         region: minio
         s3ForcePathStyle: true
         s3Url: https://s3-api.starixsoft.com:9000
+  extraEnvVars:
+    HTTP_PROXY: "lisasqd.nebula.prod:8801"
+    HTTPS_PROXY: "lisasqd.nebula.prod:8801"
 credentials:
   existingSecret: velero-secret
 # Disable VolumeSnapshotLocation CRD. It is not needed for CSI integration
