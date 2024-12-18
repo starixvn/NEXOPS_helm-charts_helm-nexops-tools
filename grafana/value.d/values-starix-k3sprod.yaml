@@ -29,6 +29,14 @@ datasources:
       basicAuthUser: admin
       secureJsonData:
         basicAuthPassword: 1qaz@WSX
+    - name: K3S-DevOps-LOCAL
+      type: prometheus
+      url: http://202.78.231.52:30067
+      access: proxy
+      env:
+        HTTP_PROXY: "lisasqd.nebula.prod:8801"
+        HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+      
 
 # plugins: []
 #   # - digrich-bubblechart-panel
