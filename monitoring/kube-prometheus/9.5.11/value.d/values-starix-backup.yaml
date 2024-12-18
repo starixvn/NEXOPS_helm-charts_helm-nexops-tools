@@ -43,14 +43,14 @@ prometheus:
 node-exporter:
   extraVolumes:
   - hostPath:
-      path: /
+      path: /var/lib
       type: ""
-    name: root
+    name: mntDisk
     
   extraVolumeMounts:
-  - mountPath: /host/root
+  - mountPath: /host/root/var/lib
     mountPropagation: HostToContainer
-    name: root
+    name: mntDisk
     readOnly: true
 
   extraArgs:
