@@ -1,0 +1,21 @@
+annotations:
+  artifacthub.io/changes: |
+    - Increase default and expose CRD job TTL (#266)
+    - Use Ingress Controller 3.1.0-rc1 version for base image
+apiVersion: v2
+appVersion: 3.1.0-rc1
+description: A Helm chart for HAProxy Kubernetes Ingress Controller
+home: https://github.com/haproxytech/helm-charts/tree/main/kubernetes-ingress
+icon: https://raw.githubusercontent.com/haproxytech/helm-charts/main/kubernetes-ingress/chart-icon.png
+keywords:
+- ingress
+- haproxy
+kubeVersion: '>=1.23.0-0'
+maintainers:
+- email: dkorunic@haproxy.com
+  name: Dinko Korunic
+name: kubernetes-ingress
+sources:
+- https://github.com/haproxytech/kubernetes-ingress
+type: application
+version: 1.43.0
