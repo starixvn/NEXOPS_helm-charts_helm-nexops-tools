@@ -13,9 +13,9 @@ persistence:
 adminUser: admin
 adminPassword: RHk^QbNE0C5Q
 
-#env:
-#  HTTP_PROXY: "lisasqd.nebula.prod:8801"
-#  HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+env:
+  HTTP_PROXY: "lisasqd.nebula.prod:8801"
+  HTTPS_PROXY: "lisasqd.nebula.prod:8801"
 
 datasources:
   datasources.yaml:
@@ -24,19 +24,17 @@ datasources:
     - name: ALPHA-SWARM-PROD
       type: prometheus
       url: http://10.2.27.140:9090
-      #access: proxy
+      access: direct
       basicAuth: true
       basicAuthUser: admin
       secureJsonData:
         basicAuthPassword: 1qaz@WSX
+      editable: true
     - name: K3S-DevOps-LOCAL
       type: prometheus
       url: http://202.78.231.52:30067
       access: proxy
-      jsonData:
-        env:
-          HTTP_PROXY: "lisasqd.nebula.prod:8801"
-          HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+      editable: true
       
 
 # plugins: []
