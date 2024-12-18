@@ -13,11 +13,31 @@ persistence:
 adminUser: admin
 adminPassword: RHk^QbNE0C5Q
 
-env:
-  HTTP_PROXY: "lisasqd.nebula.prod:8801"
-  HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+#env:
+#  HTTP_PROXY: "lisasqd.nebula.prod:8801"
+#  HTTPS_PROXY: "lisasqd.nebula.prod:8801"
 
-
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: ALPHA-SWARM-PROD
+      type: prometheus
+      url: http://10.2.27.140:9090
+      access: proxy
+      basicAuth: true
+      basicAuthUser: admin
+      secureJsonData:
+        basicAuthPassword: 1qaz@WSX
+      editable: true
+    - name: K3S-DevOps-LOCAL
+      type: prometheus
+      url: http://202.78.231.52:30067
+      access: proxy
+      editable: true
+      env:
+      - HTTP_PROXY: "lisasqd.nebula.prod:8801"
+      - HTTPS_PROXY: "lisasqd.nebula.prod:8801"
 
 # plugins: []
 #   # - digrich-bubblechart-panel
