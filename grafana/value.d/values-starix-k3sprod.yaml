@@ -16,15 +16,7 @@ adminPassword: RHk^QbNE0C5Q
 env:
   HTTP_PROXY: "lisasqd.nebula.prod:8801"
   HTTPS_PROXY: "lisasqd.nebula.prod:8801"
-  NO_PROXY: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,http://10.2.27.140:9090"
-
-#sidecar:
-#  datasources:
-#    enabled: true
-#    env:
-#      HTTP_PROXY: "lisasqd.nebula.prod:8801"
-#      HTTPS_PROXY: "lisasqd.nebula.prod:8801"
-      
+  #NO_PROXY: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,http://10.2.27.140:9090"
 
 datasources:
   datasources.yaml:
