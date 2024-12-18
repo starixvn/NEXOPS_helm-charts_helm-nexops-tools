@@ -1,5 +1,5 @@
 image:
-  repository: hub.nexdev.net/base/velero
+  repository: nexhub.nebula.prod/kbt/base/velero
   tag: v1.14.1
 
 metrics:
@@ -12,13 +12,13 @@ metrics:
 
 kubectl:
   image:
-    repository: hub.nexdev.net/base/kubectl
+    repository: nexhub.nebula.prod/kbt/base/kubectl
     tag: "1.16.15"
 
 # AWS backend plugin configuration
 initContainers:
   - name: velero-plugin-for-aws
-    image: hub.nexdev.net/base/velero/velero-plugin-for-aws:v1.10.0
+    image: nexhub.nebula.prod/kbt/base/velero/velero-plugin-for-aws:v1.10.0
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
@@ -33,6 +33,10 @@ configuration:
         region: minio
         s3ForcePathStyle: true
         s3Url: https://s3-api.starixsoft.com:9000
+  extraEnvVars:
+    HTTP_PROXY: "lisasqd.nebula.prod:8801"
+    HTTPS_PROXY: "lisasqd.nebula.prod:8801"
+    NO_PROXY: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 credentials:
   existingSecret: velero-secret
 # Disable VolumeSnapshotLocation CRD. It is not needed for CSI integration
