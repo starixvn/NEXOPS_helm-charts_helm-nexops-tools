@@ -317,8 +317,8 @@ service:
   ## NOTE: choose port between <30000-32767>
   ##
   nodePorts:
-    restAPI: "31920"
-    transport: "31930"
+    restAPI: "30921"
+    transport: "30931"
   ## @param service.clusterIP Elasticsearch service Cluster IP
   ## e.g.:
   ## clusterIP: None
