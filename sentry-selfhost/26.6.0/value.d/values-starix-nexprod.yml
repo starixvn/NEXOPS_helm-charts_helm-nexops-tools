@@ -215,6 +215,20 @@ postgresql:
       username: "postgres"
       password: "passwdpostgres"
       database: "sentry"
+  auth:
+    database: sentry
+    enablePostgresUser: true
+    existingSecret: ""
+    password: "passwdpostgres"
+    postgresPassword: "passwdpostgres"
+    replicationPassword: "passwdpostgres"
+    replicationUsername: repl_user
+    secretKeys:
+      adminPasswordKey: postgres-password
+      replicationPasswordKey: replication-password
+      userPasswordKey: password
+    usePasswordFiles: false
+    username: "postgres"
   primary:
     persistence:
       enabled: true
