@@ -7,7 +7,7 @@ user:
 config:
   relay: |
     cache:
-      envelope_buffer_size: 500000,
+      envelope_buffer_size: 500000
 
 images:
   sentry:
