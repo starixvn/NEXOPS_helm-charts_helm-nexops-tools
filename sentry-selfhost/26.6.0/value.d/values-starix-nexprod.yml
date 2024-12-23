@@ -121,7 +121,7 @@ clickhouse:
     value: "yes"
 
   clickhouse:
-    image: "hub.nexdev.net/base/yandex/clickhouse-server"
+    image: "hub.nexdev.net/base/clickhouse/clickhouse-server"
     persistentVolumeClaim:
       dataPersistentVolume:
         storageClassName: "longhorn-effort"
