@@ -4,6 +4,11 @@ global:
   storageClass: "longhorn-s1-effort"
   imageRegistry: "hub.nexdev.net"
 
+
+image:
+  repository: base/redis
+  tag: 7.2.4-debian-12-r9
+
 auth:
   password: "foo1@bared"
 
