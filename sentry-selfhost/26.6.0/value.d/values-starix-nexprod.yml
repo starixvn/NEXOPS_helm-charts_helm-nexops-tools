@@ -39,7 +39,7 @@ filestore:
   filesystem:
     persistence:
       enabled: true
-      storageClass: "longhorn-effort"
+      storageClass: "local-path"
       size: 20Gi
 
 
@@ -124,7 +124,7 @@ clickhouse:
     image: "hub.nexdev.net/base/clickhouse/clickhouse-server"
     persistentVolumeClaim:
       dataPersistentVolume:
-        storageClassName: "longhorn-effort"
+        storageClassName: "local-path"
         storage: "30Gi"
 
 zookeeper:
@@ -142,7 +142,7 @@ zookeeper:
   persistence:
     enabled: true
     size: 20Gi
-    storageClass: "longhorn-effort"
+    storageClass: "local-path"
 
 
 
@@ -153,7 +153,7 @@ kafka:
     repository: base/bitnami/kafka
     tag: 3.7.0-debian-12-r7
   global:
-    storageClass: "longhorn-effort"
+    storageClass: "local-path"
   controller:
     # heapOpts: -Xmx4g -Xms2g
     replicaCount: 3
@@ -166,7 +166,7 @@ kafka:
     persistence:
       enabled: true
       size: 30Gi
-      storageClass: "longhorn-effort"
+      storageClass: "local-path"
   # broker: 
   #   heapOpts: -Xmx4g -Xms2g
   clusterDomain: starix.nexprod
@@ -181,7 +181,7 @@ redis:
   master:
     persistence:
       enabled: true
-      storageClass: "longhorn-effort"
+      storageClass: "local-path"
       size: 10Gi
     nodeSelector:
       st-sentry: "yes"
@@ -192,7 +192,7 @@ redis:
   replica:
     persistence:
       enabled: true
-      storageClass: "longhorn-effort"
+      storageClass: "local-path"
       size: 10Gi
     nodeSelector:
       st-sentry: "yes"
@@ -232,7 +232,7 @@ postgresql:
   primary:
     persistence:
       enabled: true
-      storageClass: "longhorn-effort"
+      storageClass: "local-path"
       size: "20Gi"
     nodeSelector:
       st-sentry: "yes"
@@ -255,7 +255,7 @@ rabbitmq:
     key: st-sentry
     value: "yes"
   persistence:
-    storageClass: "longhorn-effort"
+    storageClass: "local-path"
     size: "10Gi"
 
 memcached:
