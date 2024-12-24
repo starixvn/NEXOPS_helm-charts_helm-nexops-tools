@@ -2,7 +2,7 @@ ingress:
   enabled: true
   ingressClassName: haproxy
   hosts:
-    - grafana-starix.starixplay.com
+    - grafana.starixplay.com
 
 persistence:
   type: pvc
