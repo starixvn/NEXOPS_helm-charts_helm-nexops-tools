@@ -2,6 +2,7 @@ clusterDomain: "starix.k3slocal"
 
 global:
   storageClass: "longhorn-s1-effort"
+  imageRegistry: "hub.nexdev.net"
 
 auth:
   password: "foo1@bared"
