@@ -134,7 +134,7 @@ storage:
       # cassandra.tls.enabled: "false"
   elasticsearch:
     scheme: http
-    host: 10.99.185.212 #elasticsearch-master
+    host: elasticsearch-master
     port: 30921
     anonymous: true
     #user: elastic
