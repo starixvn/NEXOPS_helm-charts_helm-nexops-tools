@@ -874,7 +874,7 @@ esIndexCleaner:
   # ttlSecondsAfterFinished: 120
 
 esRollover:
-  enabled: true #false
+  enabled: false
   securityContext: {}
   podSecurityContext:
     runAsUser: 1000
