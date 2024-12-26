@@ -13,7 +13,6 @@ ingress:
 service:
   type: NodePort #ClusterIP
   port: 8080
-  NodePort: 30080
 
 postgresql:
   enabled: true
@@ -29,10 +28,10 @@ postgresql:
       size: 1Gi
       storageClassName: longhorn
 
-tolgee:
-  env: {}
-  persistence:
-    type: pvc
-    enabled: true
-    storageClass: longhorn
-    size: 1Gi
+# tolgee:
+#   env: {}
+#   persistence:
+#     type: pvc
+#     enabled: true
+#     storageClass: longhorn
+#     size: 1Gi
