@@ -30,7 +30,10 @@ postgresql:
       storageClass: longhorn
 
 tolgee:
-  env: {}
+  env:
+    TOLGEE_AUTHENTICATION_ENABLED=true
+    TOLGEE_AUTHENTICATION_INITIAL_PASSWORD=admin
+    TOLGEE_AUTHENTICATION_INITIAL_USERNAME=admin
   persistence:
     type: pvc
     enabled: true
