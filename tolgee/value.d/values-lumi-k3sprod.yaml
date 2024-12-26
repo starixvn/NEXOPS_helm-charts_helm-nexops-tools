@@ -1,0 +1,11 @@
+ingress:
+  enabled: true
+  ingressClassName: haproxy
+  hosts:
+    - tolgee.sabagame.com
+
+persistence:
+  type: pvc
+  enabled: true
+  size: 1Gi
+  storageClassName: longhorn
