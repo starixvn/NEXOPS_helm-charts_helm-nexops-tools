@@ -9,10 +9,25 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-        
+
 service:
   type: NodePort #ClusterIP
   port: 8080
+
+postgresql:
+  enabled: true
+  architecture: "standalone"
+  auth:
+    postgresPassword: ""
+    database: tolgee
+    username: tolgee
+    password: tolgee_password
+  primary:
+    persistence: 
+      enabled: true
+      type: pvc
+      size: 1Gi
+      storageClass: longhorn
 
 tolgee:
   env: {}
