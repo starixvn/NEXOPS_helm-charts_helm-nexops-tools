@@ -75,7 +75,7 @@ tolerations: []
 affinity: {}
 
 postgresql:
-  enabled: true
+  enabled: false
   architecture: "standalone"
   auth:
     postgresPassword: ""
