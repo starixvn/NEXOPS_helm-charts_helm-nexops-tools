@@ -85,10 +85,11 @@ postgresql:
   primary:
     persistence: 
       size: 1Gi
+      storageClassName: longhorn
 
 tolgee:
   env: {}
   persistence:
     enabled: true
-    storageClass: ""
+    storageClass: "longhorn"
     size: 1Gi
