@@ -47,6 +47,12 @@ spec:
               path: /
               port: http
           env:
+            - name: "tolgee.authentication.enabled"
+              value: 'true'
+            - name: "tolgee.authentication.initial-password"
+              value: 'admin'
+            - name: "tolgee.authentication.initial-username"
+              value: 'admin'
             - name: "tolgee.postgres-autostart.enabled"
               value: 'false'
             - name: "spring.datasource.url"
