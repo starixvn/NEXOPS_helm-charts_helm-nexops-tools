@@ -1,8 +1,14 @@
 ingress:
   enabled: true
-  ingressClassName: haproxy
+  className: "haproxy"
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   hosts:
-    - tolgee.sabagame.com
+    - host: tolgee.sabagame.com
+      paths:
+        - path: /
+          pathType: Prefix
 
 persistence:
   type: pvc
