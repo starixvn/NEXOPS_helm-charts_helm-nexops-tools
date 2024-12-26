@@ -25,12 +25,14 @@ postgresql:
     password: tolgee_password
   primary:
     persistence: 
+      type: pvc
       size: 1Gi
       storageClassName: longhorn
 
 tolgee:
   env: {}
   persistence:
+    type: pvc
     enabled: true
     storageClass: longhorn
     size: 1Gi
