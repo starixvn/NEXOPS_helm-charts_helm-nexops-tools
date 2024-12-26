@@ -88,14 +88,11 @@ postgresql:
       storageClassName: longhorn
 
 tolgee:
-  authentication:
-    enabled: true
-    #initial-password: admin
-    #initial-username: admin
-    #jwt-secret: my_jwt_secret
-    user-can-create-organizations: false
-    registrations-allowed: true
-  env: {}
+  env: {
+    TOLGEE_AUTHENTICATION_ENABLED=true
+    TOLGEE_AUTHENTICATION_INITIAL_PASSWORD=admin
+    TOLGEE_AUTHENTICATION_INITIAL_USERNAME=admin
+  }
     
   persistence:
     enabled: true
