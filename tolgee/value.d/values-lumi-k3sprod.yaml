@@ -5,7 +5,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: tolgee-sc.sabagame.com
+    - host: tolgee-k3s.sabagame.com
       paths:
         - path: /
           pathType: Prefix
