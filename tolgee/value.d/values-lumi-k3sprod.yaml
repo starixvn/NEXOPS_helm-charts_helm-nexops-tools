@@ -18,7 +18,7 @@ postgresql:
   enabled: true
   architecture: "standalone"
   auth:
-    postgresPassword: ""
+    postgresPassword: 1qaz@WSX
     database: tolgee
     username: tolgee
     password: tolgee_password

@@ -78,7 +78,7 @@ postgresql:
   enabled: false
   architecture: "standalone"
   auth:
-    postgresPassword: 1qaz@WSX
+    postgresPassword: ""
     database: tolgee
     username: tolgee
     password: tolgee_password # MUST be replaced with some secret password! Don't use this in production
