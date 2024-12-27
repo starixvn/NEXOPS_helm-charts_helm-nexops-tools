@@ -3,7 +3,7 @@ name: tolgee
 description: This is the unofficial helm package for Tolgee.io project.
 type: application
 version: 0.3.0
-appVersion: "3.88.0"
+appVersion: "3.79.2"
 icon: https://tolgee.io/img/tolgeeLogo.svg
 dependencies:
   - name: postgresql
