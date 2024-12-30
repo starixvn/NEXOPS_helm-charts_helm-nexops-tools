@@ -17,7 +17,7 @@ service:
 postgresql:
   enabled: true
   image:
-    repository: postgres
+    repository: https://charts.bitnami.com/bitnami
     tag: 13.18
   architecture: "standalone"
   auth:
