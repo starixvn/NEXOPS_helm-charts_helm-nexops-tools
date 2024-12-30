@@ -80,8 +80,8 @@ postgresql:
   auth:
     postgresPassword: ""
     database: tolgee
-    #username: tolgee
-    #password: tolgee_password # MUST be replaced with some secret password! Don't use this in production
+    username: tolgee
+    password: tolgee_password # MUST be replaced with some secret password! Don't use this in production
   primary:
     persistence: 
       size: 1Gi

@@ -23,8 +23,8 @@ postgresql:
   auth:
     postgresPassword: 1qaz@WSX
     database: postgres #tolgee
-    #username: postgres #tolgee
-    #password: tolgee_password
+    username: tolgee
+    password: tolgee_password
   primary:
     persistence:
       enabled: true
