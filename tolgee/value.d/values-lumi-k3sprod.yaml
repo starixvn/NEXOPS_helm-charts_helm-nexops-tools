@@ -16,9 +16,9 @@ service:
 
 postgresql:
   enabled: true
-  image:
-    repository: bitnami/postgresql
-    tag: 13.18
+  #image:
+    #repository: bitnami/postgresql
+    #tag: 13.18
   architecture: "standalone"
   auth:
     postgresPassword: 1qaz@WSX
