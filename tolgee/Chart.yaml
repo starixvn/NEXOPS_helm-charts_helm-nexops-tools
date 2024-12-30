@@ -9,5 +9,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     appVersion: 13.18
     version: 13.18
+    tag: 13.18
     alias: postgresql
     condition: postgresql.enabled
