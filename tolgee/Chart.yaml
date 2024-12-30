@@ -3,12 +3,11 @@ name: tolgee
 description: This is the unofficial helm package for Tolgee.io project.
 type: application
 version: 0.3.0
-appVersion: "3.79.2"
 icon: https://tolgee.io/img/tolgeeLogo.svg
 dependencies:
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami
-    appVersion: "13"
-    version: 13 #11.6.5
+    appVersion: 13
+    version: 13
     alias: postgresql
     condition: postgresql.enabled
