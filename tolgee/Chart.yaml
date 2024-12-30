@@ -7,7 +7,7 @@ icon: https://tolgee.io/img/tolgeeLogo.svg
 dependencies:
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami
-    appVersion: 13.0
-    version: 13.0
+    appVersion: 13.18
+    version: 13.18
     alias: postgresql
     condition: postgresql.enabled
