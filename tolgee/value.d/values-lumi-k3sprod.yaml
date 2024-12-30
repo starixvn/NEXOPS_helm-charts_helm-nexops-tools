@@ -16,6 +16,9 @@ service:
 
 postgresql:
   enabled: true
+  image:
+    repository: postgres
+    tag: 13
   architecture: "standalone"
   auth:
     postgresPassword: 1qaz@WSX
