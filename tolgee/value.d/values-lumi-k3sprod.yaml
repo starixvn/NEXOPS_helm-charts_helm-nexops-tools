@@ -23,7 +23,7 @@ postgresql:
     username: tolgee
     password: tolgee_password
   primary:
-    persistence: 
+    persistence:
       enabled: true
       type: pvc
       size: 1Gi
