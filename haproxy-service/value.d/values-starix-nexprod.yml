@@ -39,6 +39,10 @@ service:
     port: 16401
     targetPort: redis-nexops-r
 
+  - name: rocketor-proxy
+    protocol: TCP
+    port: 8088
+    targetPort: rocketor-proxy
 
 
 containerPorts:
@@ -55,6 +59,9 @@ containerPorts:
   containerPort: 16400
 - name: redis-nexops-r
   containerPort: 16401
+
+- name: rocketor-proxy
+  containerPort: 8088
 
 - name: http
   containerPort: 8080
@@ -169,4 +176,17 @@ configuration: |
     server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
+  frontend rocketor_proxy_fe
+    bind :8088
+    default_backend rocketor_proxy_be
+  
+  backend rocketor_proxy_be
+    mode http
+    option httplog
+    option forwardfor
+    option httpchk GET /
+    http-check expect status 200
+    server 10.18.200.211_http_8088 10.18.200.211:8088 check
+    server 10.18.200.123_http_8088 10.18.200.123:8088 check
 
