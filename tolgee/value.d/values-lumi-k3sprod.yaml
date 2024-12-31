@@ -22,9 +22,9 @@ postgresql:
   architecture: "standalone"
   auth:
     postgresPassword: 1qaz@WSX
-    database: postgres #tolgee
+    database: tolgee
     username: tolgee
-    password: tolgee_password
+    password: tolgee
   primary:
     persistence:
       enabled: true
