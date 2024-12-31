@@ -240,6 +240,8 @@ postgresql:
     - effect: NoSchedule
       key: st-sentry
       value: "yes"
+    extendedConfiguration: |
+      max_connections = 1000
 
 rabbitmq:
   image:
