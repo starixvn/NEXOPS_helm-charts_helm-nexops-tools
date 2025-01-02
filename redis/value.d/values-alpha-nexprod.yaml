@@ -1,4 +1,5 @@
 clusterDomain: "starix.nexprod"
+useHostnames: false
 
 
 
