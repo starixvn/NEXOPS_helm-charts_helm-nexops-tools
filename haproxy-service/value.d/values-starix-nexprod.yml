@@ -44,6 +44,17 @@ service:
     port: 8088
     targetPort: rocketor-proxy
 
+# ALPHA Redis
+  - name: redis-alpha-m
+    protocol: TCP
+    port: 16410
+    targetPort: redis-alpha-m
+
+  - name: redis-alpha-s
+    protocol: TCP
+    port: 16411
+    targetPort: redis-alpha-s
+
 
 containerPorts:
 - name: redis-master
@@ -65,6 +76,12 @@ containerPorts:
 
 - name: http
   containerPort: 8080
+
+# Alpha Redis
+- name: redis-alpha-m
+  containerPort: 16410
+- name: redis-alpha-s
+  containerPort: 16411
 
 
 configuration: |
@@ -189,4 +206,25 @@ configuration: |
     http-check expect status 200
     server 10.18.200.211_http_8088 10.18.200.211:8088 check
     server 10.18.200.123_http_8088 10.18.200.123:8088 check
+
+
+  # ALPHA Redis Master
+  frontend redis_alpha_master_fe
+    bind :16410
+    default_backend redis_alpha_master_be
+
+  backend redis_alpha_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-alpha-nexprod-node-0.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-alpha-nexprod-node-1.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-alpha-nexprod-node-2.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
 
