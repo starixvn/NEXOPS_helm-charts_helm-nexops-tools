@@ -1,0 +1,59 @@
+clusterDomain: "starix.nexprod"
+
+
+
+global:
+  storageClass: "longhorn-effort"
+  imageRegistry: "hub.nexdev.net"
+
+image:
+  repository: base/redis
+  tag: 7.2.4-debian-12-r9
+
+
+metrics:
+  image:
+    repository: base/redis-exporter
+    tag: 1.58.0-debian-12-r3
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  podMonitor:
+    enabled: true
+
+
+auth:
+  password: "foo1@bared"
+
+commonConfiguration: |-
+  save 900 1
+  save 300 10
+  save 60 10000
+  appendonly yes
+  appendfilename "appendonly.aof"
+  appendfsync everysec
+
+
+volumePermissions:
+  enabled: true
+  image:
+    repository: base/os-shell
+    tag: 12-debian-12-r16
+
+master:
+  persistence:
+    size: 8Gi
+
+sentinel:
+  enabled: true
+  image:
+    registry: 
+    repository: base/redis-sentinel
+    tag: 7.2.4-debian-12-r7
+  persistence:
+    size: 1Gi    
+
+replica:
+  replicaCount: 3
+  persistence:
+    size: 8Gi
