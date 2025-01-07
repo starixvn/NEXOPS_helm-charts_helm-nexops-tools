@@ -62,10 +62,5 @@ replica:
   persistence:
     size: 10Gi
   resourcesPreset: "medium"
-  nodeSelector:
-    redis-node: "yes"
-  tolerations:
-  - effect: NoSchedule
-    key: redis-node
-    value: "yes"
+
 
