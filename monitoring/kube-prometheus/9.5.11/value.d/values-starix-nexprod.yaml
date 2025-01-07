@@ -166,6 +166,6 @@ alertmanager:
   ##
   enabled: true
   alertmanagerSpec:
-    useExistingSecret: true
+    useExistingSecret: false
     secrets:
       - alertmanager-prometheus-server-kube-pro-alertmanager
