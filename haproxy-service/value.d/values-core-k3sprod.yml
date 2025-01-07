@@ -225,6 +225,6 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server redis-0 redis-sentinel-alphastate-k3sprod-node-0.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-1 redis-sentinel-alphastate-k3sprod-node-1.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-2 redis-sentinel-alphastate-k3sprod-node-2.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-sentinel-alphastate-k3sprod-node-0.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alphastate.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-alphastate-k3sprod-node-1.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alphastate.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-alphastate-k3sprod-node-2.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alphastate.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
