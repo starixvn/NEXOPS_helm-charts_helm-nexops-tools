@@ -125,7 +125,10 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-nap-k3sprod-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-sentinel-nap-k3sprod-node-0.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-nap-k3sprod-node-1.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-nap-k3sprod-node-2.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+
 
   frontend redis_nap_replicas_fe
     bind :16879
