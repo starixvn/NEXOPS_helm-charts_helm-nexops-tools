@@ -35,6 +35,7 @@ commonConfiguration: |-
   appendonly yes
   appendfilename "appendonly.aof"
   appendfsync everysec
+  notify-keyspace-events Kx
 
 
 volumePermissions:
