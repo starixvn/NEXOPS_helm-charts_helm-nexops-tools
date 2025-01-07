@@ -46,6 +46,18 @@ service:
     port: 16882
     targetPort: redis-s1-r
 
+#Alpha State
+  - name: redis-alpha-sate-m
+    protocol: TCP
+    port: 16383
+    targetPort: redis-alpha-sate-m
+
+  - name: redis-alpha-sate-r
+    protocol: TCP
+    port: 16883
+    targetPort: redis-alpha-sate-r
+
+
   - name: http
     port: 8080
     targetPort: http
@@ -72,6 +84,11 @@ containerPorts:
   containerPort: 16382
 - name: redis-s1-r
   containerPort: 16882
+#ALPHA-STATE
+- name: redis-alpha-sate-m
+  containerPort: 16383
+- name: redis-alpha-sate-r
+  containerPort: 16883
 
 - name: http
   containerPort: 8080
@@ -125,10 +142,7 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server redis-0 redis-sentinel-nap-k3sprod-node-0.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-1 redis-sentinel-nap-k3sprod-node-1.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-2 redis-sentinel-nap-k3sprod-node-2.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
-
+    server-template redis-sentinel-nap-k3sprod-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3sprod-headless.redis-sentinel-nap.svc.starix.k3sprod:6379  check inter 1s resolvers k8s init-addr none
 
   frontend redis_nap_replicas_fe
     bind :16879
@@ -192,3 +206,23 @@ configuration: |
     server redis-0 redis-sentinel-alpha-k3sprod-node-0.redis-sentinel-alpha-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-1 redis-sentinel-alpha-k3sprod-node-1.redis-sentinel-alpha-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-2 redis-sentinel-alpha-k3sprod-node-2.redis-sentinel-alpha-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+
+
+  # ALPHA-STATE Redis Master
+  frontend redis_alpha_state_master_fe
+    bind :16383
+    default_backend redis_alpha_master_be
+
+  backend redis_alpha_state_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-alphastate-k3sprod-node-0.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-alphastate-k3sprod-node-1.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-alphastate-k3sprod-node-2.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
