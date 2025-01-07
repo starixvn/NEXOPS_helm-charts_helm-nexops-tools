@@ -31,6 +31,14 @@ service:
     port: 16381
     targetPort: redis-fps-m
 
+
+#Oddfeed
+  - name: redis-oddfeed-m
+    protocol: TCP
+    port: 16480
+    targetPort: redis-oddfeed-m
+
+
 #   - name: redis-fps-r
 #     protocol: TCP
 #     port: 16881
@@ -77,6 +85,10 @@ containerPorts:
 #FPS
 - name: redis-fps-m
   containerPort: 16381
+
+#Oddfeed
+- name: redis-oddfeed-m
+  containerPort: 16480
 # - name: redis-nap-r
 #   containerPort: 16881
 #S1
@@ -213,7 +225,7 @@ configuration: |
   # ALPHA-STATE Redis Master
   frontend redis_alpha_state_master_fe
     bind :16383
-    default_backend redis_alpha_master_be
+    default_backend redis_alpha_state_master_be
 
   backend redis_alpha_state_master_be
     option tcp-check
@@ -248,3 +260,23 @@ configuration: |
     server redis-0 redis-sentinel-fps-k3sprod-node-0.redis-sentinel-fps-k3sprod-headless.redis-sentinel-fps.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-1 redis-sentinel-fps-k3sprod-node-1.redis-sentinel-fps-k3sprod-headless.redis-sentinel-fps.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-2 redis-sentinel-fps-k3sprod-node-2.redis-sentinel-fps-k3sprod-headless.redis-sentinel-fps.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+
+
+  # Oddfeed Redis Master
+  frontend redis_oddfeed_master_fe
+    bind :16480
+    default_backend redis_oddfeed_master_be
+
+  backend redis_oddfeed_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-oddfeed-k3sprod-node-0.redis-sentinel-oddfeed-k3sprod-headless.redis-sentinel-oddfeed.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-oddfeed-k3sprod-node-1.redis-sentinel-oddfeed-k3sprod-headless.redis-sentinel-oddfeed.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-oddfeed-k3sprod-node-2.redis-sentinel-oddfeed-k3sprod-headless.redis-sentinel-oddfeed.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
