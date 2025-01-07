@@ -228,3 +228,23 @@ configuration: |
     server redis-0 redis-sentinel-alphastate-k3sprod-node-0.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alphastate.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-1 redis-sentinel-alphastate-k3sprod-node-1.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alphastate.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-2 redis-sentinel-alphastate-k3sprod-node-2.redis-sentinel-alphastate-k3sprod-headless.redis-sentinel-alphastate.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+
+
+  # FPS Redis Master
+  frontend redis_fps_master_fe
+    bind :16381
+    default_backend redis_fps_master_be
+
+  backend redis_fps_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-fps-k3sprod-node-0.redis-sentinel-fps-k3sprod-headless.redis-sentinel-fps.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-fps-k3sprod-node-1.redis-sentinel-fps-k3sprod-headless.redis-sentinel-fps.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-fps-k3sprod-node-2.redis-sentinel-fps-k3sprod-headless.redis-sentinel-fps.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
