@@ -170,3 +170,22 @@ configuration: |
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
     server-template redis-sentinel-s1-k3sprod-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3sprod-headless.redis-sentinel-s1.svc.starix.k3sprod:6379  check inter 1s resolvers k8s init-addr none
+
+  # ALPHA Redis Master
+  frontend redis_alpha_master_fe
+    bind :16380
+    default_backend redis_alpha_master_be
+
+  backend redis_alpha_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-alpha-k3sprod-node-0.redis-sentinel-alpha-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-alpha-k3sprod-node-1.redis-sentinel-alpha-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-alpha-k3sprod-node-2.redis-sentinel-alpha-k3sprod-headless.redis-sentinel-alpha.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
