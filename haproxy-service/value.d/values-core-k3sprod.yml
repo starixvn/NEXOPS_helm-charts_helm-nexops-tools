@@ -47,15 +47,15 @@ service:
     targetPort: redis-s1-r
 
 #Alpha State
-  - name: redis-alpha-sate-m
+  - name: redis-alpha-st-m
     protocol: TCP
     port: 16383
-    targetPort: redis-alpha-sate-m
+    targetPort: redis-alphast-m
 
-  - name: redis-alpha-sate-r
+  - name: redis-alpha-st-r
     protocol: TCP
     port: 16883
-    targetPort: redis-alpha-sate-r
+    targetPort: redis-alphast-r
 
 
   - name: http
@@ -85,9 +85,9 @@ containerPorts:
 - name: redis-s1-r
   containerPort: 16882
 #ALPHA-STATE
-- name: redis-alpha-sate-m
+- name: redis-alphast-m
   containerPort: 16383
-- name: redis-alpha-sate-r
+- name: redis-alphast-r
   containerPort: 16883
 
 - name: http
