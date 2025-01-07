@@ -8,7 +8,7 @@ service:
 #NAP
   - name: redis-nap-m
     protocol: TCP
-    port: 16379
+    port: 16777
     targetPort: redis-nap-m
 
   - name: redis-nap-r
@@ -25,11 +25,11 @@ service:
     protocol: TCP
     port: 16880
     targetPort: redis-alpha-r
-##FPS
-#   - name: redis-fps-m
-#     protocol: TCP
-#     port: 16381
-#     targetPort: redis-fps-m
+#FPS
+  - name: redis-fps-m
+    protocol: TCP
+    port: 16381
+    targetPort: redis-fps-m
 
 #   - name: redis-fps-r
 #     protocol: TCP
@@ -66,7 +66,7 @@ service:
 containerPorts:
 #NAP
 - name: redis-nap-m
-  containerPort: 16379
+  containerPort: 16777
 - name: redis-nap-r
   containerPort: 16879
 #ALPHA
@@ -74,9 +74,9 @@ containerPorts:
   containerPort: 16380
 - name: redis-alpha-r
   containerPort: 16880
-##FPS
-# - name: redis-nap-m
-#   containerPort: 16381
+#FPS
+- name: redis-fps-m
+  containerPort: 16381
 # - name: redis-nap-r
 #   containerPort: 16881
 #S1
@@ -129,7 +129,7 @@ configuration: |
     http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable ! Pls contact NexOps if you think this is a mistake... K3s PROD"
 
   frontend redis_nap_master_fe
-    bind :16379
+    bind :16777
     default_backend redis_nap_master_be
 
   backend redis_nap_master_be
