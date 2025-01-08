@@ -164,8 +164,8 @@ node-exporter:
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
-  enabled: true
+  enabled: false
   alertmanagerSpec:
-    useExistingSecret: false
+    useExistingSecret: true
     secrets:
       - alertmanager-prometheus-server-kube-pro-alertmanager
