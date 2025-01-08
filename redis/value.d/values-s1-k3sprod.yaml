@@ -2,13 +2,32 @@ clusterDomain: "starix.k3sprod"
 
 global:
   storageClass: "longhorn-s1-effort"
+  imageRegistry: "nexhub.nebula.prod"
 
 auth:
   password: "foo1@bared"
 
+image:
+  repository: kbt/base/redis
+  tag: 7.2.4-debian-12-r9
+
+metrics:
+  image:
+    repository: kbt/base/redis-exporter
+    tag: 1.58.0-debian-12-r3
+  enabled: true
+  serviceMonitor:
+    enabled: false
+  podMonitor:
+    enabled: true
+
+
 
 volumePermissions:
   enabled: true
+  image:
+    repository: kbt/base/os-shell
+    tag: 12-debian-12-r16
 
 master:
   persistence:
@@ -18,6 +37,11 @@ sentinel:
   enabled: true
   persistence:
     size: 2Gi    
+  image:
+    registry: 
+    repository: kbt/base/redis-sentinel
+    tag: 7.2.4-debian-12-r7
+
 
 replica:
   replicaCount: 3
