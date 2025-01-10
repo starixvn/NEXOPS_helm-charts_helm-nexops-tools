@@ -197,9 +197,10 @@ configuration: |
   frontend rocketor_proxy_fe
     bind :8088
     default_backend rocketor_proxy_be
-  
+
   backend rocketor_proxy_be
     mode http
+    timeout server 10m
     option httplog
     option forwardfor
     option httpchk GET /
