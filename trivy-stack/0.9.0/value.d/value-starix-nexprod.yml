@@ -1,5 +1,5 @@
 trivy:
-  debugMode: true
+  debugMode: false
   skipDBUpdate: true
   
   cache:
