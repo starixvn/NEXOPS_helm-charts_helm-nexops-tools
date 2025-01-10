@@ -1,4 +1,7 @@
 trivy:
+  debugMode: true
+  skipDBUpdate: true
+  
   cache:
     redis:
       enabled: true
