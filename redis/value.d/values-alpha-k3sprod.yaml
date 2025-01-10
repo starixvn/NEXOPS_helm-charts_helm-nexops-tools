@@ -35,6 +35,7 @@ commonConfiguration: |-
   appendonly yes
   appendfilename "appendonly.aof"
   appendfsync everysec
+  lua-time-limit 6500
 
 
 volumePermissions:
