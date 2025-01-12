@@ -39,10 +39,10 @@ service:
     targetPort: redis-oddfeed-m
 
 #Oddfeed1
-  - name: redis-oddfeed1-m
+  - name: redis-oddfd1-m
     protocol: TCP
     port: 16488
-    targetPort: redis-oddfeed1-m
+    targetPort: redis-oddfd1-m
 
 
 #   - name: redis-fps-r
@@ -97,7 +97,7 @@ containerPorts:
   containerPort: 16480
 
 #Oddfeed1
-- name: redis-oddfeed1-m
+- name: redis-oddfd1-m
   containerPort: 16488
 # - name: redis-nap-r
 #   containerPort: 16881
