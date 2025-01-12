@@ -38,6 +38,12 @@ service:
     port: 16480
     targetPort: redis-oddfeed-m
 
+#Oddfeed1
+  - name: redis-oddfeed1-m
+    protocol: TCP
+    port: 16488
+    targetPort: redis-oddfeed1-m
+
 
 #   - name: redis-fps-r
 #     protocol: TCP
@@ -89,6 +95,10 @@ containerPorts:
 #Oddfeed
 - name: redis-oddfeed-m
   containerPort: 16480
+
+#Oddfeed1
+- name: redis-oddfeed1-m
+  containerPort: 16488
 # - name: redis-nap-r
 #   containerPort: 16881
 #S1
@@ -280,3 +290,23 @@ configuration: |
     server redis-0 redis-sentinel-oddfeed-k3sprod-node-0.redis-sentinel-oddfeed-k3sprod-headless.redis-sentinel-oddfeed.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-1 redis-sentinel-oddfeed-k3sprod-node-1.redis-sentinel-oddfeed-k3sprod-headless.redis-sentinel-oddfeed.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
     server redis-2 redis-sentinel-oddfeed-k3sprod-node-2.redis-sentinel-oddfeed-k3sprod-headless.redis-sentinel-oddfeed.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+
+
+  # Oddfeed1 Redis Master
+  frontend redis_oddfeed1_master_fe
+    bind :16488
+    default_backend redis_oddfeed1_master_be
+
+  backend redis_oddfeed1_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-oddfeed1-k3sprod-node-0.redis-sentinel-oddfeed1-k3sprod-headless.redis-sentinel-oddfeed1.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-oddfeed1-k3sprod-node-1.redis-sentinel-oddfeed1-k3sprod-headless.redis-sentinel-oddfeed1.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-oddfeed1-k3sprod-node-2.redis-sentinel-oddfeed1-k3sprod-headless.redis-sentinel-oddfeed1.svc.starix.k3sprod:6379 check inter 1s resolvers k8s init-addr none
