@@ -60,6 +60,9 @@ registry:
     key: cattle.io/os
     value: harbor-main
 trivy:
+  image:
+    repository: goharbor/trivy-adapter-photon
+    tag: v2.12.1
   nodeSelector:
     harbor-main-workload: "yes"
   tolerations:
