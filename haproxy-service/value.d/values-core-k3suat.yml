@@ -1,6 +1,9 @@
 clusterDomain: "starix.k3suat"
 replicaCount: 3
 
+
+resourcesPreset: "none"
+
 service:
   type: LoadBalancer
   loadBalancerIP: "10.99.91.9"
