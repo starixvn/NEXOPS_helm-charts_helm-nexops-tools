@@ -71,7 +71,7 @@ trivy:
     value: harbor-main
   skipUpdate: true
   skipJavaDBUpdate: true
-  offlineScan: true
+  offlineScan: false
 database:
   internal:
     nodeSelector:
