@@ -36,6 +36,15 @@ commonConfiguration: |-
   appendfilename "appendonly.aof"
   appendfsync everysec
   notify-keyspace-events Kx
+  client-output-buffer-limit normal 256mb 128mb 30
+  client-output-buffer-limit pubsub 64mb 32mb 30
+  client-output-buffer-limit slave 512mb 256mb 60
+  slowlog-log-slower-than 5000
+  slowlog-max-len 512
+  latency-monitor-threshold 100
+  timeout 300
+  tcp-keepalive 120
+  lua-time-limit 10000
 
 
 volumePermissions:
