@@ -1,8 +1,8 @@
-#ingress:
-#  enabled: true
-#  ingressClassName: haproxy
-#  hosts:
-#    - n8n.lumigame.com
+ingress:
+  enabled: true
+  ingressClassName: haproxy
+  hosts:
+    - n8n.lumigame.com
 
 service:
   type: NodePort
