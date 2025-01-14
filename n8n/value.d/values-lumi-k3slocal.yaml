@@ -1,12 +1,12 @@
 ingress:
   enabled: true
-  annotations: #{}
-    kubernetes.io/ingress.class: "haproxy"
-    kubernetes.io/tls-acme: "true"
+  #annotations: #{}
+  #  kubernetes.io/ingress.class: "haproxy"
+  #  kubernetes.io/tls-acme: "true"
   hosts:
     - host: n8n.lumigame.com
-      paths: []
-  tls: []
+      #paths: []
+  #tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
