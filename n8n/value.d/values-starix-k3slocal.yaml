@@ -2,7 +2,7 @@ ingress:
   enabled: true
   ingressClassName: haproxy
   hosts:
-    - n8s.nexdev.net
+    - n8n.nexdev.net
 
 service:
   type: NodePort
