@@ -35,7 +35,13 @@ commonConfiguration: |-
   appendonly yes
   appendfilename "appendonly.aof"
   appendfsync everysec
-  lua-time-limit 6500
+  lua-time-limit 7000
+  client-output-buffer-limit normal 256mb 128mb 30
+  client-output-buffer-limit pubsub 64mb 32mb 30
+  client-output-buffer-limit slave 512mb 256mb 60
+  slowlog-log-slower-than 5000
+  slowlog-max-len 512
+  timeout 300
 
 
 volumePermissions:
@@ -61,7 +67,7 @@ replica:
   replicaCount: 3
   persistence:
     size: 10Gi
-  resourcesPreset: "medium"
+  resourcesPreset: "large"
   nodeSelector:
     redis-node: "yes"
   tolerations:
