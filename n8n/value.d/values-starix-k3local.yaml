@@ -1,0 +1,16 @@
+ingress:
+  enabled: true
+  ingressClassName: haproxy
+  hosts:
+    - n8s.nexdev.net
+
+service:
+  type: NodePort
+  port: 80
+  NodePort: 31888
+
+persistence:
+  type: pvc
+  enabled: true
+  size: 1Gi
+  storageClassName: longhorn
