@@ -1,6 +1,8 @@
 clusterDomain: "starix.k3sprod"
 replicaCount: 3
 
+resourcesPreset: "none"
+
 service:
   type: LoadBalancer
   loadBalancerIP: "10.99.185.214"
