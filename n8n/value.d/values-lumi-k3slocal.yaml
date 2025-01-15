@@ -100,7 +100,7 @@ secret: {}
 # Set additional environment variables on the Deployment
 extraEnv: #{}
 # Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
-  WEBHOOK_URL: "https://n8n.lumigame.com/
+  WEBHOOK_URL: "https://n8n.lumigame.com/"
 
 # Set additional environment from existing secrets
 extraEnvSecrets: {}
