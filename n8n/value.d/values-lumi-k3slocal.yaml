@@ -105,6 +105,17 @@ secret:
 #  exclude: # Nodes not to load - default: "[]"
 #  errorTriggerType: # Node Type to use as Error Trigger - default: n8n-nodes-base.errorTrigger
 
+database:
+  type: postgresdb            # Type of database to use - Other possible types ['sqlite', 'mariadb', 'mysqldb', 'postgresdb'] - default: sqlite
+#  tablePrefix:      # Prefix for table names - default: ''
+  postgresdb:
+    database: n8n       # PostgresDB Database - default: n8n
+    host: n8n           # PostgresDB Host - default: localhost
+    password: 1qaz@WSX        # PostgresDB Password - default: ''
+    port: 5432           # PostgresDB Port - default: 5432
+    user: root           # PostgresDB User - default: root
+    schema: public          # PostgresDB Schema - default: public
+
 # Set additional environment variables on the Deployment
 extraEnv:
 # Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
