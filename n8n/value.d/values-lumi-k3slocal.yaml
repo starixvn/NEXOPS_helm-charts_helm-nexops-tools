@@ -98,9 +98,9 @@ secret: {}
 #  errorTriggerType: # Node Type to use as Error Trigger - default: n8n-nodes-base.errorTrigger
 
 # Set additional environment variables on the Deployment
-extraEnv: {}
+extraEnv: #{}
 # Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
-#   WEBHOOK_URL: "https://n8n.myhost.com/
+  WEBHOOK_URL: "https://n8n.lumigame.com/
 
 # Set additional environment from existing secrets
 extraEnvSecrets: {}
@@ -259,8 +259,9 @@ ingress:
   #annotations: {}
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: "n8n.lumigame.com"
+  #hosts:
+  #  - host: n8n.lumigame.com
+  host: n8n.lumigame.com
       #paths: "/healthz"
   #tls: []
   #  - secretName: chart-example-tls
@@ -268,7 +269,7 @@ ingress:
   #      - chart-example.local
 
   # define a custom incressClassName, like "traefik" or "nginx"
-  className: "haproxy"
+  className: haproxy
 
 workerResources:
   {}
