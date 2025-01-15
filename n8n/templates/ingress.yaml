@@ -34,11 +34,11 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: n8n.lumigame.com #{{ .host | quote }}
       http:
         paths:
           {{- range .paths }}
-          - path: {{ . }}
+          - path: / #{{ . }}
             {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
             pathType: Prefix
             {{- end }}
