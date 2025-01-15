@@ -152,7 +152,8 @@ persistence:
   size: 1Gi
   ## Use an existing PVC
   ##
-  # existingClaim:
+  existingClaim: ""
+  existingVolume: ""
 
 replicaCount: 1
 
