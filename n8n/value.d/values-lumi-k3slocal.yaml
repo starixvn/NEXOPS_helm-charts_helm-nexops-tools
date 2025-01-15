@@ -262,7 +262,6 @@ ingress:
   hosts:
     - host: n8n.lumigame.com
       paths: /
-      pathType: ImplementationSpecific
   #tls: []
   #  - secretName: chart-example-tls
   #    hosts:
