@@ -5,13 +5,21 @@ n8n:
   encryption_key:
 defaults:
 
-config: {}
+config:
+  database:
+    type: postgresdb
+    postgresdb:
+      host: postgresdb
+secret:
+  database:
+    postgresdb:
+      password: '1qaz@WSX'
 
 
 # existingSecret and secret are exclusive, with existingSecret taking priority.
 # existingSecret: "" # Use an existing Kubernetes secret, e.g., created by hand or Vault operator.
 # Dict with all n8n JSON config options, unlike config, the values here will end up in a secret.
-secret: {}
+#secret: {}
 
 # Typical Example of a config in combination with a secret.
 # config:
