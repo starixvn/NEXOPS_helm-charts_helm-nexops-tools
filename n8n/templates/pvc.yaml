@@ -21,7 +21,7 @@ spec:
       storage: {{ .Values.persistence.size }}
   {{- if .Values.persistence.storageClass }}
   {{- if eq "-" .Values.persistence.storageClass }}
-  storageClassName: ""
+  storageClassName: "longhorn"
   {{- else }}
   storageClassName: {{ .Values.persistence.storageClass }}
   {{- end }}
