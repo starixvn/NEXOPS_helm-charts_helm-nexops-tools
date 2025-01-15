@@ -5,15 +5,15 @@ n8n:
   encryption_key:
 defaults:
 
-config:
-  database:
-    type: postgresdb
-    postgresdb:
-      host: postgresdb
-secret:
-  database:
-    postgresdb:
-      password: '1qaz@WSX'
+# config:
+#   database:
+#     type: postgresdb
+#     postgresdb:
+#       host: postgresdb
+# secret:
+#   database:
+#     postgresdb:
+#       password: '1qaz@WSX'
 
 
 # existingSecret and secret are exclusive, with existingSecret taking priority.
