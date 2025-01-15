@@ -33,14 +33,14 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    #{{- range .Values.ingress.hosts }}
-    - host: n8n.lumigame.com #{{ .host | quote }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
           {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ .path }}
             {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
-            pathType: ImplementationSpecific #Prefix
+            pathType: {{ .pathType }} #Prefix
             {{- end }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}

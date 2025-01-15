@@ -256,19 +256,23 @@ service:
 
 ingress:
   enabled: true
-  annotations: #{}
-    kubernetes.io/ingress.class: haproxy
+  annotations: {}
+  #  kubernetes.io/ingress.class: haproxy
   # kubernetes.io/tls-acme: "true"
   hosts:
     - host: n8n.lumigame.com
-      paths: /
-  #tls: []
+      paths: 
+        - path: /
+          pathType: ImplementationSpecific
+
+  tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
   # define a custom incressClassName, like "traefik" or "nginx"
-  className: haproxy
+  ingressClassName: "haproxy"
+  pathType: Prefix
 
 workerResources:
   {}
