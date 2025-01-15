@@ -40,11 +40,9 @@ commonConfiguration: |-
   client-output-buffer-limit pubsub 64mb 32mb 30
   client-output-buffer-limit slave 512mb 256mb 60
   slowlog-log-slower-than 5000
-  slowlog-max-len 512
   latency-monitor-threshold 100
-  timeout 300
-  tcp-keepalive 120
-  lua-time-limit 10000
+  slowlog-max-len 512
+  lua-time-limit 7000
 
 
 volumePermissions:
