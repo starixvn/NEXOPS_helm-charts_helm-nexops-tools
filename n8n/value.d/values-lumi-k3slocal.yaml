@@ -98,7 +98,7 @@ secret: {}
 #  errorTriggerType: # Node Type to use as Error Trigger - default: n8n-nodes-base.errorTrigger
 
 # Set additional environment variables on the Deployment
-extraEnv: #{}
+extraEnv:
 # Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
   WEBHOOK_URL: "https://n8n.lumigame.com/"
 
@@ -126,7 +126,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "longhorn"
+  storageClass: longhorn
   ## PVC annotations
   #
   # If you need this annotation include it under `values.yml` file and pvc.yml template will add it.
