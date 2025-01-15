@@ -261,7 +261,8 @@ ingress:
   # kubernetes.io/tls-acme: "true"
   hosts:
     - host: n8n.lumigame.com
-      #paths: /
+      paths: /
+      pathType: ImplementationSpecific
   #tls: []
   #  - secretName: chart-example-tls
   #    hosts:
