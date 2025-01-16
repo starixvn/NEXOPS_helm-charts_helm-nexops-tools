@@ -45,6 +45,5 @@ postgresql:
 
 ingress:
   enabled: true
-  hosts:
-    - host: n8n.lumigame.com
+  host: n8n.lumigame.com
   className: haproxy
