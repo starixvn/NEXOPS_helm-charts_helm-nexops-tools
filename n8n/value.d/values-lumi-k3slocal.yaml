@@ -4,25 +4,29 @@ n8n:
   # if not specified, n8n on first launch creates a random encryption key for encrypting saved credentials and saves it in the ~/.n8n folder
   encryption_key:
 #defaults:
-  webhookUrl: https://n8n.lumigame.com/
   auth:
     enabled: true
     username: "n8n"
     password: "1qaz@WSX"
 
-postgresql:
-  enabled: true
-  auth:
-    database: "n8n"
-    username: "n8n"
-    password: "1qaz@WSX"
-  persistence:
+persistence:
+  data:
     enabled: true
-    size: 1Gi
+    mountPath: "/data"
     type: pvc
     storageClass: longhorn
     accessModes:
       - ReadWriteOnce
+    size: 1Gi
+# Enabled postgres
+cnpg:
+  main:
+    enabled: true
+    user: n8n
+    database: n8n
+portal:
+  open:
+    enabled: true
 
 # Set additional environment variables on the Deployment
 extraEnv:
@@ -254,11 +258,11 @@ scaling:
 ## Bitnami Redis configuration
 ## https://github.com/bitnami/charts/tree/master/bitnami/redis
 redis:
-  enabled: false
+  enabled: true
   architecture: standalone
 
   master:
     persistence:
       enabled: true
       existingClaim: ""
-      size: 2Gi
+      size: 1Gi
