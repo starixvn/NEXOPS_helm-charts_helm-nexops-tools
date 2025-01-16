@@ -199,15 +199,15 @@ logstashPipeline:
     filter {
       if [type] == "debug" {
         grok {
-            match => {
-              "message" => [
-                "%{HAPROXYHTTPBASE}",
-                "%{HAPROXYHTTP}",
-                "%{HAPROXYTCP}",
-                "%{HAPROXYGW}"
-              ]
-            }
+          match => {
+            "message" => [
+              "%{HAPROXYHTTPBASE}",
+              "%{HAPROXYHTTP}",
+              "%{HAPROXYTCP}",
+              "%{HAPROXYGW}"
+            ]
           }
+        }
         if ![accept_date] {
           grok { match => {message => ["%{HAPROXYDATE:accept_date}"]} }
         }
@@ -550,7 +550,7 @@ logstashPipeline:
 
   main_output.conf: |
     output {
-      if [type] not in ["syslog", "vault", "dev-logs", "dev-s1"] {
+      if [type] not in ["syslog", "vault", "dev-logs", "dev-s1", "debug"] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
