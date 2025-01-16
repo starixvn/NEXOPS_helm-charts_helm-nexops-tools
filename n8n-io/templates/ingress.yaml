@@ -26,7 +26,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: n8n.lumigame.com  #{{ .Values.ingress.host | quote }}
+    - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
           - path: /

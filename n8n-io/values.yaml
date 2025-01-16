@@ -29,7 +29,7 @@ n8n:
   timezone: ""
   webhook:
     # TODO: use default service url
-    url: http://localhost
+    #url: http://localhost
   auth:
     enabled: false
     username: "n8n"
@@ -88,8 +88,8 @@ ingress:
     {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  host: n8n.local
-  tls: []
+  #host: n8n.local
+  #tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
