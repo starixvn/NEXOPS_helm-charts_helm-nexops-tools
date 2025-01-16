@@ -47,3 +47,5 @@ ingress:
   enabled: true
   host: n8n.lumigame.com
   className: haproxy
+
+#Admin Login: admin@starixsoft.com/N8nPassW0r$
