@@ -3,7 +3,26 @@
 n8n:
   # if not specified, n8n on first launch creates a random encryption key for encrypting saved credentials and saves it in the ~/.n8n folder
   encryption_key:
-defaults:
+#defaults:
+  webhookUrl: https://n8n.lumigame.com/
+  auth:
+    enabled: true
+    username: "n8n"
+    password: "1qaz@WSX"
+
+postgresql:
+  enabled: true
+  auth:
+    database: "n8n"
+    username: "n8n"
+    password: "1qaz@WSX"
+  persistence:
+    size: 1Gi
+    type: pvc
+    storageClass: longhorn
+    accessModes:
+    - ReadWriteOnce
+
 
 # config:
 #   database:
@@ -270,7 +289,7 @@ ingress:
   # kubernetes.io/tls-acme: "true"
   hosts:
     - host: n8n.lumigame.com
-      paths: 
+      paths:
         - path: /
           pathType: ImplementationSpecific
 
