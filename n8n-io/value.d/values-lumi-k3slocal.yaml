@@ -47,7 +47,7 @@ postgresql:
   auth:
     database: "n8n"
     username: "n8n"
-    password: "N8nNexOps!QAZ"
+    password: "N8nPassW0r$"
   persistence:
     enabled: true
     type: pvc
