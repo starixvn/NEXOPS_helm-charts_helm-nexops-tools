@@ -226,6 +226,7 @@ logstashPipeline:
         }
         date {
           match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
+          timezone => "Asia/Bangkok"
         }
         if [TrueClientIP] {
           geoip { source => "TrueClientIP" }
