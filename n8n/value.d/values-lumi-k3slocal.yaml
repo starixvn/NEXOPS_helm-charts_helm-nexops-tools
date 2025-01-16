@@ -17,6 +17,7 @@ postgresql:
     username: "n8n"
     password: "1qaz@WSX"
   persistence:
+    enabled: true
     size: 1Gi
     type: pvc
     storageClass: longhorn
