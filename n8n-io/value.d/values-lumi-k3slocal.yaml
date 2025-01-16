@@ -32,9 +32,9 @@ n8n:
     # TODO: use default service url
     url: http://n8n.lumigame.com/
   auth:
-    enabled: false
+    enabled: true
     username: "n8n"
-    password: "N8nPassW0r$"
+    password: "N8nNexOps!QAZ"
   data:
     prune:
       enabled: true
@@ -47,7 +47,7 @@ postgresql:
   auth:
     database: "n8n"
     username: "n8n"
-    password: "N8nPassW0r$"
+    password: "N8nNexOps!QAZ"
   persistence:
     enabled: true
     type: pvc
