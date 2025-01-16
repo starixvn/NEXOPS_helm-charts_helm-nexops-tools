@@ -29,7 +29,7 @@ data:
 
   GENERIC_TIMEZONE: {{ .Values.n8n.timezone | default "UTC" }}
   
-  WEBHOOK_URL: {{ .Values.n8n.webhookUrl }}
+  WEBHOOK_URL: {{ .Values.n8n.webhookUrl | default "https://n8n.lumigame.com" }}
   EXECUTIONS_MODE: "queue"
   N8N_DISABLE_PRODUCTION_MAIN_PROCESS: "true"
   N8N_SKIP_WEBHOOK_DEREGISTRATION_SHUTDOWN: "true"
