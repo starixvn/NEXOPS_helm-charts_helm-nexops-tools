@@ -232,7 +232,7 @@ logstashPipeline:
           geoip { source => "TrueClientIP" }
         }
 
-        # if [backend_name] !~ /()/ {drop{}}
+        if [backend_name] !~ /(rome_alpha_content_administration_LOCAL_be)/ {drop{}}
       }
     }
 
