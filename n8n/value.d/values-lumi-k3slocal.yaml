@@ -10,8 +10,19 @@ n8n:
     username: "n8n"
     password: "1qaz@WSX"
 
-database:
-  type: sqlite
+postgresql:
+  enabled: true
+  auth:
+    database: "n8n"
+    username: "n8n"
+    password: "1qaz@WSX"
+  persistence:
+    enabled: true
+    size: 1Gi
+    type: pvc
+    storageClass: longhorn
+    accessModes:
+      - ReadWriteOnce
 
 # Set additional environment variables on the Deployment
 extraEnv:
