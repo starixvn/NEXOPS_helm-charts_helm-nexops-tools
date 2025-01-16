@@ -41,18 +41,10 @@ postgresql:
     storageClass: longhorn
     accessModes:
       - ReadWriteOnce
-    size: 1Gi
+    size: 8Gi
 
 ingress:
   enabled: true
-  annotations:
-    kubernetes.io/ingress.class: haproxy
   hosts:
     - host: n8n.lumigame.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-
-  tls: []
   className: haproxy
-  pathType: Prefix
