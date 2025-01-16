@@ -56,6 +56,12 @@ logstashPipeline:
         type => "vault"
         tags => ["dev", "starix"]
       }
+
+      syslog {
+        port => 5077
+        type => "debug"
+        tags => ["local"]
+      }
     }
 
   vault_filter.conf: |
@@ -186,6 +192,46 @@ logstashPipeline:
           if [http_status_code] == 200 and  [time_backend_response] < 5000 { drop {} }
           else if [backend_name] == "stats" { drop {} }
         }
+      }
+    }
+
+  debug_filter.conf: |
+    filter {
+      if [type] == "debug" {
+        grok {
+            match => {
+              "message" => [
+                "%{HAPROXYHTTPBASE}",
+                "%{HAPROXYHTTP}",
+                "%{HAPROXYTCP}",
+                "%{HAPROXYGW}"
+              ]
+            }
+          }
+        if ![accept_date] {
+          grok { match => {message => ["%{HAPROXYDATE:accept_date}"]} }
+        }
+        if [captured_request_headers] {
+          grok { match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"} }
+        }
+        mutate {
+          remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
+          remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beat","beconn","client_port","haproxy_milliseconds","@version"]
+          remove_field => ["haproxy_minute","offset","haproxy_second","actconn","source","program","haproxy_year","feconn","http_version"]
+          remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","timestamp8601"]
+          convert => {
+            "http_status_code" => "integer"
+            "time_backend_response" => "integer"
+          }
+        }
+        date {
+          match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
+        }
+        if [TrueClientIP] {
+          geoip { source => "TrueClientIP" }
+        }
+
+        # if [backend_name] !~ /()/ {drop{}}
       }
     }
 
@@ -488,6 +534,20 @@ logstashPipeline:
       }
     }
 
+  debug_output.conf: |
+    output {
+      if [type] == "debug" {
+        opensearch {
+          hosts => ["https://opensearch-cluster-master:9200"]
+          user => "logstash"
+          password => "logstash"
+          ssl => true
+          ssl_certificate_verification => false
+          index => "logstash-debug-%{+YYYY.MM.dd}"
+        }   
+      }
+    }
+
   main_output.conf: |
     output {
       if [type] not in ["syslog", "vault", "dev-logs", "dev-s1"] {
@@ -539,6 +599,13 @@ extraPorts:
   - name: vault-st-dev
     containerPort: 5065
 
+  - name: debug-tcp
+    containerPort: 5077
+    protocol: TCP
+  - name: debug-udp
+    containerPort: 5077
+    protocol: UDP
+
 service:
   type: NodePort
   ports:
@@ -587,6 +654,17 @@ service:
     port: 5065
     protocol: TCP
     targetPort: vault-st-dev
+
+  - name: debug-tcp
+    nodePort: 30077
+    port: 5077
+    protocol: TCP
+    targetPort: debug-tcp
+  - name: debug-udp
+    nodePort: 30077
+    port: 5077
+    protocol: UDP
+    targetPort: debug-udp
 
 nodeSelector: 
   nexops-tools: "yes"
