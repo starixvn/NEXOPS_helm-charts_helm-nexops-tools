@@ -27,7 +27,7 @@ redis:
 n8n:
   log_level: "debug"
   timezone: ""
-  webhook:
+  #webhook:
     # TODO: use default service url
     #url: http://localhost
   auth:
