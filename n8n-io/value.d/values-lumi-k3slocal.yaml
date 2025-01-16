@@ -49,6 +49,11 @@ postgresql:
     username: "n8n"
     password: "N8nPassW0r$"
   persistence:
+    enabled: true
+    type: pvc
+    storageClass: longhorn
+    accessModes:
+      - ReadWriteOnce
     size: 1Gi
 
 imagePullSecrets: []
