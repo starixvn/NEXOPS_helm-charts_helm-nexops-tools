@@ -40,5 +40,9 @@ prometheus:
     name: ""
     key: ""
 
+  remoteWrite:
+  - url: "http://prometheus-uat-kube-promet-prometheus.monitoring:9090/api/k6/write"
+  enableRemoteWriteReceiver: true
+
 alertmanager:
   enabled: false
