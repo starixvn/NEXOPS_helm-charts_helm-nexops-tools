@@ -46,15 +46,13 @@ prometheus:
   ## remoteRead:
   ## - url: http://remote1/read
   ##
-  remoteRead:
-  - url: "http://localhost:9090/read"
+  remoteRead: []
   ## @param prometheus.remoteWrite The remote_write spec configuration for Prometheus
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#remotewritespec
   ## remoteWrite:
   ## - url: http://remote1/push
   ##
-  remoteWrite:
-  - url: "http://localhost:9090/push"
+  remoteWrite: []
   # - url: "http://vn-s1-ing-local.starixnet.com:30062/push"
   ## @param prometheus.enableRemoteWriteReceiver Enable Prometheus to be used as a receiver for the Prometheus remote write protocol.
   ##
