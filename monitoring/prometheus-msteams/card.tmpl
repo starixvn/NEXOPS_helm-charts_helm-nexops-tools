@@ -10,18 +10,14 @@
                  {{- else -}}808080{{- end -}}",
   "summary": "{{- if eq .CommonAnnotations.summary "" -}}
                   {{- if eq .CommonAnnotations.message "" -}}
-                    {{- if eq .CommonLabels.alertname "" -}}
-                      Longhorn Alert
-                    {{- else -}}
-                      {{- .CommonLabels.alertname -}}
-                    {{- end -}}
+                    {{- .CommonLabels.alertname -}}
                   {{- else -}}
                     {{- .CommonAnnotations.message -}}
                   {{- end -}}
               {{- else -}}
                   {{- .CommonAnnotations.summary -}}
               {{- end -}}",
-  "title": "Longhorn Alert ({{ .Status | title }})",
+  "title": "Prometheus Alert ({{ .Status }})",
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
@@ -29,22 +25,32 @@
       "facts": [
         {{- range $key, $value := $alert.Annotations }}
         {
-          {{- if ne $key "description" -}}
-            "name": "{{ $key }}",
-            "value": "{{ $value }}"
-          {{- end -}}
+          "name": "{{ reReplaceAll "_" "\\\\_" $key }}",
+          "value": "{{ reReplaceAll "_" "\\\\_" $value }}"
         },
         {{- end -}}
         {{$c := counter}}{{ range $key, $value := $alert.Labels }}{{if call $c}},{{ end }}
         {
-          "name": "{{ $key }}",
-          "value": "{{ $value }}"
+          "name": "{{ reReplaceAll "_" "\\\\_" $key }}",
+          "value": "{{ reReplaceAll "_" "\\\\_" $value }}"
         }
         {{- end }}
       ],
       "markdown": true
     }
     {{- end }}
+  ],
+  "potentialAction": [
+  {{- if .CommonAnnotations.runbook -}}
+    {
+        "@context": "http://schema.org",
+        "@type": "ViewAction",
+        "name": "Runbook",
+        "target": [
+            "{{ reReplaceAll "_" "\\\\_" .CommonAnnotations.runbook }}"
+        ]
+    }
+  {{- end -}}
   ]
 }
 {{ end }}

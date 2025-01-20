@@ -164,7 +164,7 @@ node-exporter:
 alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
-  enabled: false
+  enabled: true
   alertmanagerSpec:
     useExistingSecret: true
     secrets:
