@@ -35,7 +35,7 @@ sentry:
     - name: HTTPS_PROXY
       value: "http://lisasqd.nebula.prod:8801"
     - name: NO_PROXY
-      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-s1.vgamesuat.com"
+      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-s1.vgamesuat.com,sentry-s1-k3suat-symbolicator:3021"
   worker:
     replicas: 1
     env:
@@ -44,7 +44,7 @@ sentry:
     - name: HTTPS_PROXY
       value: "http://lisasqd.nebula.prod:8801"
     - name: NO_PROXY
-      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-s1.vgamesuat.com"
+      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-s1.vgamesuat.com,sentry-s1-k3suat-symbolicator:3021"
     nodeSelector:
       sentry: "yes"
 
