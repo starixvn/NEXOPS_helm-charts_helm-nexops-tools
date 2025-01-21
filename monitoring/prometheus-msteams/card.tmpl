@@ -25,23 +25,15 @@
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
-      "activityTitle": "[{{ $alert.Annotations.summary }}]({{ $externalUrl }})",
+      "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
       "facts": [
         {
-          "name": "Severity",
-          "value": "{{ $alert.Labels.severity }}"
+          "name": "description",
+          "value": "{{ $alert.Annotations.description }}"
         },
         {
-          "name": "PVC",
-          "value": "{{ $alert.Labels.pvc }}"
-        },
-        {
-          "name": "Namespace",
-          "value": "{{ $alert.Labels.pvc_namespace }}"
-        },
-        {
-          "name": "Node",
-          "value": "{{ $alert.Labels.node }}"
+          "name": "alertname",
+          "value": "{{ $alert.Labels.alertname }}"
         }
       ],
       "markdown": true
