@@ -28,12 +28,16 @@
       "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
       "facts": [
         {
-          "name": "description",
-          "value": "{{ $alert.Annotations.description }}"
+          "name": "summary",
+          "value": "{{ .CommonAnnotations.summary }}"
         },
         {
-          "name": "alertname",
-          "value": "{{ $alert.Labels.alertname }}"
+          "name": "node",
+          "value": "{{ $alert.Labels.node }}"
+        }
+        {
+          "name": "pvc",
+          "value": "{{ $alert.Labels.pvc }}"
         }
       ],
       "markdown": true
