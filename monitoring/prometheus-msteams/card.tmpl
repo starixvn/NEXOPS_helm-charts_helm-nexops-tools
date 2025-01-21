@@ -31,6 +31,10 @@
           "name": "Alert",
           "value": "{{ $alert.Labels.alertname }}"
         }
+        {
+          "name": "PVC",
+          "value": "{{ $alert.Labels.pvc }}"
+        }
       ],
       "markdown": true
     }
