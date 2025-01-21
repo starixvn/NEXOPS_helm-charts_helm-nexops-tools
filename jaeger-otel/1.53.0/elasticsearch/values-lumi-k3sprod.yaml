@@ -317,8 +317,8 @@ service:
   ## NOTE: choose port between <30000-32767>
   ##
   nodePorts:
-    restAPI: "30921"
-    transport: "30931"
+    restAPI: "30920"
+    transport: "30930"
   ## @param service.clusterIP Elasticsearch service Cluster IP
   ## e.g.:
   ## clusterIP: None
@@ -809,7 +809,7 @@ master:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: longhorn 
+    storageClass: longhorn
     ## @param master.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -1215,7 +1215,7 @@ data:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: longhorn #longhorn-single
+    storageClass: longhorn
     ## @param data.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound

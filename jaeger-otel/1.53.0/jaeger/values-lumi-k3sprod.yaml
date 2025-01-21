@@ -148,7 +148,7 @@ storage:
     extraEnv: #[]
     ## ES related env vars to be configured on the concerned components
      - name: ES_SERVER_URLS
-       value: http://10.99.185.212:30921 #http://elasticsearch-master:9200
+       value: http://10.99.185.212:30920 
     # - name: ES_USERNAME
     #   value: elastic
     # - name: ES_INDEX_PREFIX
@@ -156,7 +156,7 @@ storage:
     ## ES related cmd line opts to be configured on the concerned components
     cmdlineParams:
       {
-        es.server-urls: http://10.99.185.212:30921
+        es.server-urls: http://10.99.185.212:30920
       }
       # es.server-urls: http://elasticsearch-master:9200
       # es.username: elastic
@@ -486,7 +486,7 @@ collector:
     loadBalancerIP: ""
     # List of IP ranges that are allowed to access the load balancer (if supported)
     loadBalancerSourceRanges: []
-    type: NodePort #ClusterIP
+    type: NodePort
     # Cluster IP address to assign to service. Set to None to make service headless
     clusterIP: ""
     grpc:
@@ -513,7 +513,7 @@ collector:
         port: 4318
         nodePort: 32318
   ingress:
-    enabled: true #false
+    enabled: true
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
     # ingressClassName: nginx
