@@ -27,20 +27,14 @@
     {
       "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
       "facts": [
-        {{- range $key, $value := $alert.Annotations }}
         {
-          {{- if ne $key "description" -}}
-            "name": "{{ $key }}",
-            "value": "{{ $value }}"
-          {{- end -}}
+          "name": "description",
+          "value": "{{ $alert.Annotations.description }}"
         },
-        {{- end -}}
-        {{$c := counter}}{{ range $key, $value := $alert.Labels }}{{if call $c}},{{ end }}
         {
-          "name": "{{ $key }}",
-          "value": "{{ $value }}"
+          "name": "alertname",
+          "value": "{{ $alert.Labels.alertname }}"
         }
-        {{- end }}
       ],
       "markdown": true
     }
