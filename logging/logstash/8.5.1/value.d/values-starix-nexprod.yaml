@@ -208,31 +208,27 @@ logstashPipeline:
             ]
           }
         }
-        if ![accept_date] {
-          grok { match => {message => ["%{HAPROXYDATE:accept_date}"]} }
-        }
-        if [captured_request_headers] {
-          grok { match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"} }
-        }
-        mutate {
-          remove_field => ["captured_response_cookie","haproxy_time","haproxy_month","haproxy_hour","srvconn","backend_queue","retries","termination_state"]
-          remove_field => ["haproxy_monthday","time_backend_connect","pid","srv_queue","beat","beconn","client_port","haproxy_milliseconds","@version"]
-          remove_field => ["haproxy_minute","offset","haproxy_second","actconn","source","program","haproxy_year","feconn","http_version"]
-          remove_field => ["prospector","time_duration","time_queue","syslog_timestamp","captured_request_cookie","timestamp8601"]
-          convert => {
-            "http_status_code" => "integer"
-            "time_backend_response" => "integer"
+        if [backend_name] == "olympus_nap_fanexdataservice_LOCAL_be" or [backend_name] == "olympus_nap_fanexdataservice_LOCAL_1_be" {
+          if ![accept_date] {
+            grok { match => {message => ["%{HAPROXYDATE:accept_date}"]} }
+          }
+          if [captured_request_headers] {
+            grok { match => {"captured_request_headers" => "%{DATA:request_host}\|%{DATA:user-agent}\|(%{DATA:request_referer}\|%{IP:TrueClientIP})"} }
+          }
+          mutate {
+            convert => {
+              "http_status_code" => "integer"
+              "time_backend_response" => "integer"
+            }
+          }
+          date {
+            match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
+            timezone => "Asia/Bangkok"
+          }
+          if [TrueClientIP] {
+            geoip { source => "TrueClientIP" }
           }
         }
-        date {
-          match => ["accept_date", "dd/MMM/yyyy:HH:mm:ss.SSS"]
-          timezone => "Asia/Bangkok"
-        }
-        if [TrueClientIP] {
-          geoip { source => "TrueClientIP" }
-        }
-
-        if [backend_name] !~ /(rome_alpha_content_administration_LOCAL_be)/ {drop{}}
       }
     }
 
