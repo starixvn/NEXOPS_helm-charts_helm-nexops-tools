@@ -22,15 +22,12 @@
                   {{- .CommonAnnotations.summary -}}
               {{- end -}}",
   "title": "Longhorn Alert ({{ .Status | title }})",
+  "summary": "{{ .CommonAnnotations.summary }}",
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
       "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
       "facts": [
-        {
-          "name": "summary",
-          "value": "{{ .CommonAnnotations.summary }}"
-        },
         {
           "name": "node",
           "value": "{{ $alert.Labels.node }}"
