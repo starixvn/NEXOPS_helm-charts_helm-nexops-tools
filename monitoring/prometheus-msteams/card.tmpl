@@ -8,23 +8,37 @@
                     {{- else if eq .CommonLabels.severity "warning" -}}FFA500
                     {{- else -}}808080{{- end -}}
                  {{- else -}}808080{{- end -}}",
-  "summary": "{{ .CommonAnnotations.summary }}",
-  "title": "Prometheus Alert ({{ .Status }})",
+  "summary": "{{- if eq .CommonAnnotations.summary "" -}}
+                  {{- if eq .CommonAnnotations.message "" -}}
+                    {{- if eq .CommonLabels.alertname "" -}}
+                      Longhorn Alert
+                    {{- else -}}
+                      {{- .CommonLabels.alertname -}}
+                    {{- end -}}
+                  {{- else -}}
+                    {{- .CommonAnnotations.message -}}
+                  {{- end -}}
+              {{- else -}}
+                  {{- .CommonAnnotations.summary -}}
+              {{- end -}}",
+  "title": "Longhorn Alert ({{ .Status | title }})",
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
-      "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})", 
+      "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
       "facts": [
         {{- range $key, $value := $alert.Annotations }}
         {
-          "name": "{{ reReplaceAll "_" "\\\\_" $key }}",
-          "value": "{{ reReplaceAll "_" "\\\\_" $value }}"
+          {{- if ne $key "description" -}}
+            "name": "{{ $key }}",
+            "value": "{{ $value }}"
+          {{- end -}}
         },
         {{- end -}}
         {{$c := counter}}{{ range $key, $value := $alert.Labels }}{{if call $c}},{{ end }}
         {
-          "name": "{{ reReplaceAll "_" "\\\\_" $key }}",
-          "value": "{{ reReplaceAll "_" "\\\\_" $value }}"
+          "name": "{{ $key }}",
+          "value": "{{ $value }}"
         }
         {{- end }}
       ],
