@@ -22,7 +22,6 @@
                   {{- .CommonAnnotations.summary -}}
               {{- end -}}",
   "title": "Longhorn Alert ({{ .Status | title }})",
-  "summary": "{{ .CommonAnnotations.summary }}",
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
