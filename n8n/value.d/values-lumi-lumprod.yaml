@@ -47,7 +47,7 @@ service:
   type: NodePort
 ingress:
   enabled: true
-  host: n8n.lumigame.com
+  host: n8n-1.lumigame.com
   className: haproxy
 
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
