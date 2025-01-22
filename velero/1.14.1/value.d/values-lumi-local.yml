@@ -58,4 +58,6 @@ schedules:
       - sk
       - nexops
       - portainer
+      - hd
+      - sp
       # - zabbix-server-nexprod
