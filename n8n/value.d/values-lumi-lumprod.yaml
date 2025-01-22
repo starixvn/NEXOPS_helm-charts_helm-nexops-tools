@@ -43,6 +43,8 @@ postgresql:
       - ReadWriteOnce
     size: 8Gi
 
+service:
+  type: NodePort
 ingress:
   enabled: true
   host: n8n.lumigame.com
