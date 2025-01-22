@@ -27,13 +27,21 @@
     {
       "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
       "facts": [
-        {
-          "name": "description",
-          "value": "{{ $alert.Annotations.description }}"
+       {
+          "name": "Severity",
+          "value": "{{ $alert.Labels.severity }}"
         },
         {
-          "name": "alertname",
-          "value": "{{ $alert.Labels.alertname }}"
+          "name": "PVC",
+          "value": "{{ $alert.Labels.pvc }}"
+        },
+        {
+          "name": "Namespace",
+          "value": "{{ $alert.Labels.pvc_namespace }}"
+        },
+        {
+          "name": "Node",
+          "value": "{{ $alert.Labels.node }}"
         }
       ],
       "markdown": true
