@@ -1,0 +1,51 @@
+# values for Redis helm chart
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      size: 1Gi
+  replica:
+    replicaCount: 1
+    persistence:
+      size: 1Gi
+
+# values for N8N
+n8n:
+  encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
+  log_level: "debug"
+  timezone: ""
+  webhook:
+    url: http://n8n.lumigame.com/
+  auth:
+    enabled: true
+    username: "n8n"
+    password: "N8nPassW0r$"
+  data:
+    prune:
+      enabled: true
+      # prune old executions data after X hours
+      max_age: "72"
+
+# values for PostgreSql helm chart
+postgresql:
+  enabled: true
+  auth:
+    database: "n8n"
+    username: "n8n"
+    password: "N8nPassW0r$"
+  persistence:
+    enabled: true
+    type: pvc
+    storageClass: longhorn
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+
+ingress:
+  enabled: true
+  host: n8n.lumigame.com
+  className: haproxy
+
+#Admin Login: admin@starixsoft.com/N8nPassW0r$
