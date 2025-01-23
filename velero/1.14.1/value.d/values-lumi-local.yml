@@ -54,7 +54,6 @@ schedules:
       - gn
       - l1
       - l2
-      - s1
       - sk
       - nexops
       - portainer
