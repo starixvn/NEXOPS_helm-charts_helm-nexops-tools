@@ -44,8 +44,6 @@ postgresql:
     size: 8Gi
 
 ingress:
-  enabled: true
-  host: n8n.lumigame.com
-  className: haproxy
+  enabled: false
 
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
