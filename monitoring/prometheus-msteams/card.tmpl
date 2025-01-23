@@ -25,7 +25,7 @@
   "sections": [ {{$externalUrl := .ExternalURL}}
   {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
     {
-      "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
+      "activityTitle": "[{{ $alert.Annotations.summary }}]({{ $externalUrl }})",
       "facts": [
        {
           "name": "Severity",
