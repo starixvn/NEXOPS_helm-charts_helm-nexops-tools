@@ -17,7 +17,7 @@ n8n:
   log_level: "debug"
   timezone: ""
   webhook:
-    url: http://localhost/
+    url: https://localhost/
   auth:
     enabled: true
     username: "n8n"
