@@ -48,4 +48,8 @@ ingress:
   host: n8n.lumigame.com
   className: haproxy
 
+extraEnv:
+  #N8N_PROXY_HOPS: "1"
+  WEBHOOK_TUNNEL_URL: "https://n8n.lumigame.com/
+
 #Admin Login: admin@sabawork.com/N8nPassW0r$
