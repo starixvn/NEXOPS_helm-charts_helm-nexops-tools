@@ -31,6 +31,7 @@ data:
   
   WEBHOOK_URL: {{ .Values.n8n.webhookUrl | default "https://n8n.lumigame.com" }}
   WEBHOOK_TUNNEL_URL: "https://n8n.lumigame.com/"
+  N8N_PORT: "5678"
   EXECUTIONS_MODE: "queue"
   N8N_DISABLE_PRODUCTION_MAIN_PROCESS: "true"
   N8N_SKIP_WEBHOOK_DEREGISTRATION_SHUTDOWN: "true"
