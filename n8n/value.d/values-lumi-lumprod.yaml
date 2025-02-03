@@ -17,7 +17,7 @@ n8n:
   log_level: "debug"
   timezone: ""
   webhook:
-    url: https://localhost/
+    url: https://n8n.lumigame.com/
   auth:
     enabled: true
     username: "n8n"
