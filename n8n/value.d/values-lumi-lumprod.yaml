@@ -17,8 +17,6 @@ n8n:
   log_level: "debug"
   timezone: ""
   webhookUrl: https://n8n.lumigame.com/
-  #webhook:
-    #url: https://n8n.lumigame.com/
   auth:
     enabled: true
     username: "n8n"
@@ -48,13 +46,5 @@ ingress:
   enabled: true
   host: n8n.lumigame.com
   className: haproxy
-
-endpoints:
-  rest:             # Path for rest endpoint  default: rest
-  webhook:          # Path for webhook endpoint  default: webhook
-
-extraEnv:
-  WEBHOOK_URL: https://n8n.lumigame.com/
-  WEBHOOK_TUNNEL_URL: https://n8n.lumigame.com/
 
 #Admin Login: admin@sabawork.com/N8nPassW0r$
