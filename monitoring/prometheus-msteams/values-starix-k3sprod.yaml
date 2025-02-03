@@ -2,6 +2,7 @@
 connectors:
   - alertmanager-warning: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/94e5b76eb0144df2857f401eb329312f/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2S4ThKY3yjWRgj_fyF783GTdYBtHaBN-mWke4EQX48BE1
   - alertmanager-critical: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/94e5b76eb0144df2857f401eb329312f/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2S4ThKY3yjWRgj_fyF783GTdYBtHaBN-mWke4EQX48BE1
+  - alertmanager-longhorn: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/94e5b76eb0144df2857f401eb329312f/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2S4ThKY3yjWRgj_fyF783GTdYBtHaBN-mWke4EQX48BE1
   - alertmanager-opensearch: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/49420f17ab9b4141a6481aaef746ff05/e21029dd-93ed-4c2e-bad6-39449033826b/V2MQyH7g2E9xMuJ-qhIUQkq6g5hBoumFLlDLIjWH-7IYk1
 extraEnvs:
   HTTP_PROXY: http://lisasqd.nebula.prod:8801
@@ -19,6 +20,9 @@ extraEnvs:
 customCardTemplate: |
   {{ define "teams.card" }}
 
+    {{/* Should add url on activity title? */}}
+    {{ $should_embed_activity_title_url := false }}
+
     {{/* Should 'http:' in the generator url be replaced with 'https:'? */}}
     {{ $should_enforce_https := true }}
 
@@ -29,10 +33,25 @@ customCardTemplate: |
     {{ $should_filter_annotations := true }}
 
     {{/* Should the potential actions field be included? */}}
-    {{ $should_have_potential_actions := true }}
+    {{ $should_have_potential_actions := false }}
 
     {{/* For example 'https://www.google.com/alertkarma/?'. Ignored if empty. */}}
     {{ $alertkarma_prefix := ""}}
+
+    {{ $templateEmoji := "" }}
+    {{- if eq .Status "resolved" -}} 
+      {{- $templateEmoji = "✅" -}}
+    {{- else if eq .Status "firing" -}}
+      {{- if or (eq .CommonLabels.severity "CRITICAL") (eq .CommonLabels.severity "critical") -}} 
+        {{- $templateEmoji = "🚨" -}}
+      {{- else if or (eq .CommonLabels.severity "WARNING") (eq .CommonLabels.severity "warning") -}}
+        {{- $templateEmoji = "⚠️" -}}
+      {{- else -}}
+        {{- $templateEmoji = "❓" -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $templateEmoji = "❓" -}}
+    {{- end -}}
 
     {
       "@type": "MessageCard",
@@ -55,18 +74,20 @@ customCardTemplate: |
       {{/*====================================================================*/}}
 
       {{ if eq .CommonAnnotations.template "automate" }}
-        "title": "{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | title }}] x {{ len .Alerts }}",
+        "title": "{{ $templateEmoji }} {{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | title }}] x {{ len .Alerts }}",
         "summary": "{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | title }}] x {{ len .Alerts }}",
         "sections": [
           {{/* FIRST SECTION: Common annotations and labels */}}
           {
             "markdown": true,
-            {{ if gt (len .CommonAnnotations.generator_url_override) 0}}
+            {{ if not $should_embed_activity_title_url }}
+              "activityTitle": "{{ .CommonAnnotations.summary }}",
+            {{ else if gt (len .CommonAnnotations.generator_url_override) 0}}
               "activityTitle": "[{{ .CommonAnnotations.summary }}]({{ .CommonAnnotations.enerator_url_override }})",
             {{ else if $should_enforce_https }}
               "activityTitle": "[{{ .CommonAnnotations.summary }}]({{ (index .Alerts 0).GeneratorURL | replace "http:" "https:" }})",
             {{ else }}
-              "activityTitle": "[{{ .CommonAnnotations.summary }}]({{ (index .Alerts 0) }})",
+              "activityTitle": "[{{ .CommonAnnotations.summary }}]({{ (index .Alerts 0).GeneratorURL }})",
             {{ end }}
             "text": "{{ .CommonAnnotations.description }}",
             "facts": [
@@ -82,7 +103,7 @@ customCardTemplate: |
                     ,
                   {{ end }}
                   { 
-                    "name": "{{ $key }}", 
+                    "name": "{{ $key | title }}:", 
                     "value": "{{ $value }}"
                   }
                 {{ end }}
@@ -94,7 +115,7 @@ customCardTemplate: |
                 {{ if and $should_filter_labels (or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "prometheus")) }}
                   {{ if $first }}{{ $first = false }}{{ else }},{{ end }}
                   {
-                    "name": "{{ $key }}", 
+                    "name": "{{ $key | title }}:", 
                     "value": "{{ $value }}" 
                   }
                 {{ end }}
@@ -176,7 +197,7 @@ customCardTemplate: |
                     {{- else -}}
                         {{- .CommonAnnotations.summary -}}
                     {{- end -}}",
-        "title": "Longhorn Alert ({{ .Status | title }})",
+        "title": "{{ $templateEmoji }} Longhorn Alert ({{ .Status | title }})",
         "sections": [ {{$externalUrl := .ExternalURL}}
         {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
           {
