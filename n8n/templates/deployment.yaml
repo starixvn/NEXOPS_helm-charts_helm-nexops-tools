@@ -182,7 +182,7 @@ spec:
                 name: {{ include "n8n.fullname" . }}
           ports:
             - name: http
-              containerPort: 443 #5678
+              containerPort: 5678
               protocol: TCP
           livenessProbe:
             httpGet:
