@@ -13,7 +13,7 @@ redis:
 
 # values for N8N
 n8n:
-  #encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
+  encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
   timezone: ""
   webhookUrl: https://n8n.lumigame.com/
@@ -49,8 +49,12 @@ ingress:
   host: n8n.lumigame.com
   className: haproxy
 
-#env:
-#  WEBHOOK_URL: https://n8n.lumigame.com/
-#  WEBHOOK_TUNNEL_URL: https://n8n.lumigame.com/
+endpoints:
+  rest:             # Path for rest endpoint  default: rest
+  webhook:          # Path for webhook endpoint  default: webhook
+
+extraEnv:
+  WEBHOOK_URL: https://n8n.lumigame.com/
+  WEBHOOK_TUNNEL_URL: https://n8n.lumigame.com/
 
 #Admin Login: admin@sabawork.com/N8nPassW0r$
