@@ -112,7 +112,7 @@ customCardTemplate: |
               {{/* Common Labels (filtered) */}}
               {{$first := true}}
               {{ range $key, $value := .CommonLabels }}
-                {{ if and $should_filter_labels (or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "prometheus")) }}
+                {{ if and $should_filter_labels (or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "prometheus") (eq $key "pvc") (eq $key "namespace") (eq $key "node")) }}
                   {{ if $first }}{{ $first = false }}{{ else }},{{ end }}
                   {
                     "name": "{{ $key | title }}:", 
