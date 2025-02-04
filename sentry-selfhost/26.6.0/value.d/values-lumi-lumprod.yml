@@ -127,7 +127,7 @@ clickhouse:
         storageClassName: "local-path"
         storage: "30Gi"
     nodeSelector:
-      st-sentry: "yes"
+      sc-sentry: "yes"
 
 zookeeper:
   clusterDomain: lumi.lumprod
