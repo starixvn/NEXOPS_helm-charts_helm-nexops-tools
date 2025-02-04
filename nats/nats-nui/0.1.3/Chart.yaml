@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: latest
+description: NATS Free and open source UI
+name: nui
+type: application
+version: 0.1.3
