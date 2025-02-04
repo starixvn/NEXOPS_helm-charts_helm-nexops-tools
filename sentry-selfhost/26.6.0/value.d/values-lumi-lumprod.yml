@@ -126,6 +126,8 @@ clickhouse:
       dataPersistentVolume:
         storageClassName: "local-path"
         storage: "30Gi"
+    nodeSelector:
+      st-sentry: "yes"
 
 zookeeper:
   clusterDomain: lumi.lumprod
