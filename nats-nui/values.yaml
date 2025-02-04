@@ -26,9 +26,8 @@ serviceAccount:
   name: ""
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 31311
-  nodePort: 31311
 
 ingress:
   enabled: false
