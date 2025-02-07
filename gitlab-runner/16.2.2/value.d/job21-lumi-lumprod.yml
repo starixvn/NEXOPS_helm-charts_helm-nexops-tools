@@ -6,7 +6,7 @@ image:
 replicas: 1
 
 gitlabUrl: https://git21.lumigame.com
-runnerRegistrationToken: "glrt-5zghESk-tzMSVQBCSYrd"
+runnerRegistrationToken: "glrt-JRBh2u_AxsmyJ16TE9dz"
 concurrent: 30
 
 runners:
@@ -52,8 +52,8 @@ runners:
         Type = "s3"
         Shared = true
         [runners.cache.s3]
-          ServerAddress = "minio-api.lumigame.com"
-          BucketName = "gitlab"
+          ServerAddress = "s3-api.lumigame.com"
+          BucketName = "gitlab-sc"
           AuthenticationType = "access-key"
       [[runners.kubernetes.services]]
         environment = ["HEALTHCHECK_TCP_PORT=2376"]
