@@ -7,7 +7,7 @@ replicas: 1
 
 gitlabUrl: https://git3.nexdev.net
 # runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
-runnerToken: "glrt-rEDyZsnAfx-DcTj6_P6X"
+runnerToken: "glrt-BPW9t---h7CZkqJGKykq"
 concurrent: 10
 
 runners:
@@ -54,7 +54,7 @@ runners:
         Shared = true
         [runners.cache.s3]
           ServerAddress = "s3-api.lumigame.com"
-          BucketName = "gitlab"
+          BucketName = "gitlab-sc"
           AuthenticationType = "access-key"
       [[runners.kubernetes.services]]
         environment = ["HEALTHCHECK_TCP_PORT=2376"]
