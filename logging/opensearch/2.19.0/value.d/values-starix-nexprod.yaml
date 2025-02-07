@@ -12,4 +12,4 @@ service:
   type: NodePort
   nodePort: "30200"
 
-opensearchJavaOpts: "-Xmx2G -Xms2G"
+opensearchJavaOpts: "-Xmx4G -Xms4G"
