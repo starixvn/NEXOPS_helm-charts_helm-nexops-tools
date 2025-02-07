@@ -52,8 +52,8 @@ runners:
         Type = "s3"
         Shared = true
         [runners.cache.s3]
-          ServerAddress = "minio-api.nexdev.net"
-          BucketName = "gitlab"
+          ServerAddress = "s3-api.nexdev.net"
+          BucketName = "gitlab-st"
           AuthenticationType = "access-key"
       [[runners.kubernetes.services]]
         environment = ["HEALTHCHECK_TCP_PORT=2376"]
