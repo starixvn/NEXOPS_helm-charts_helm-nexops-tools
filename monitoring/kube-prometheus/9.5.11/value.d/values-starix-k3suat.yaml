@@ -63,7 +63,23 @@ alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
   enabled: true
-  alertmanagerSpec:
-    useExistingSecret: true
-    secrets:
-      - alertmanager-prometheus-server-kube-pro-alertmanager
+  config:
+    global:
+      resolve_timeout: 15m
+    receivers:
+    - name: devnull
+    - name: prometheus-msteams-longhorn
+      webhook_configs:
+      - send_resolved: true
+        url: 'http://prometheus-msteams:2000/alertmanager-longhorn' 
+    route:
+      group_by: ['alertname','job']
+      group_interval: 1m
+      group_wait: 1m
+      repeat_interval: 1440m
+      receiver: devnull
+      routes:
+      - receiver: prometheus-msteams-longhorn
+        match:
+          service: Longhorn
+        group_by: ['alertname', 'job', 'pvc']
