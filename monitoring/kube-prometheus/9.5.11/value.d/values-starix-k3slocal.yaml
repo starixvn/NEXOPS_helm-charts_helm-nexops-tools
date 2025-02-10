@@ -63,7 +63,5 @@ alertmanager:
   ## @param alertmanager.enabled Deploy Alertmanager to the cluster
   ##
   enabled: false
-  alertmanagerSpec:
-    useExistingSecret: false
-    secrets:
-      - alertmanager-prometheus-server-kube-pro-alertmanager
+  
+  
