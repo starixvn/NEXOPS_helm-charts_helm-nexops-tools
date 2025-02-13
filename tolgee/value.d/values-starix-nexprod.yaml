@@ -41,9 +41,6 @@ tolgee:
     size: 1Gi
 
 env:
-  - name: "tolgee.smtp.from"
-    value: 'Tolgee <tolgee@starixsoft.com>'
-  - name: "tolgee.smtp.host"
-    value: 'smtp.nexdev.net'
-  - name: "tolgee.smtp.port"
-    value: '25'
+  TOLGEE_SMTP_FROM: Tolgee <tolgee@starixsoft.com>
+  TOLGEE_SMTP_HOST: smtp.nexdev.net
+  TOLGEE_SMTP_PORT: 25
