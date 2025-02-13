@@ -169,6 +169,7 @@ kafka:
       enabled: true
       size: 30Gi
       storageClass: "local-path"
+    resourcesPreset: "large"
   # broker: 
   #   heapOpts: -Xmx4g -Xms2g
   clusterDomain: lumi.lumprod

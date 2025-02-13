@@ -8,7 +8,7 @@ image:
   repository: hub.nexdev.net/base/nexops-tools/vault-snapshot
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2024.8.17"
+  tag: "2025.1.17"
 
 imagePullSecrets: []
 
