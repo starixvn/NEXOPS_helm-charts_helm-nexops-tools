@@ -33,14 +33,13 @@ postgresql:
       storageClass: longhorn
 
 tolgee:
-  env: {}
+  env:
+    TOLGEE_SMTP_FROM: Tolgee <tolgee@starixsoft.com>
+    TOLGEE_SMTP_HOST: smtp.nexdev.net
+    TOLGEE_SMTP_PORT: 25
   persistence:
     type: pvc
     enabled: true
     storageClass: longhorn
     size: 1Gi
-
-env:
-  TOLGEE_SMTP_FROM: Tolgee <tolgee@starixsoft.com>
-  TOLGEE_SMTP_HOST: smtp.nexdev.net
-  TOLGEE_SMTP_PORT: 25
+  
