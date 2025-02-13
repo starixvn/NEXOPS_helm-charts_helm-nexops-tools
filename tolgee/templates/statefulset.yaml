@@ -57,12 +57,12 @@ spec:
               value: 'true'
             - name: "tolgee.authentication.user-can-create-organizations"
               value: 'false'
-            - name: "tolgee.smtp.from"
-              value: 'Tolgee <tolgee@starixsoft.com>'
-            - name: "tolgee.smtp.host"
-              value: '10.40.40.45'
-            - name: "tolgee.smtp.port"
-              value: '25'
+            # - name: "tolgee.smtp.from"
+            #   value: 'Tolgee <tolgee@starixsoft.com>'
+            # - name: "tolgee.smtp.host"
+            #   value: '10.40.40.45'
+            # - name: "tolgee.smtp.port"
+            #   value: '25'
             - name: "tolgee.postgres-autostart.enabled"
               value: 'false'
             - name: "spring.datasource.url"
