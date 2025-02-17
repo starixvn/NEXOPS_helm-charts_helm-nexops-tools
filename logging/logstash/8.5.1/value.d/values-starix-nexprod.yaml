@@ -458,7 +458,7 @@ logstashPipeline:
         }
         else if "Transaction07" in [Tags] {
           opensearch {
-            hosts => ["https://fps-cluster:9200"]
+            hosts => ["https://opensearch-cluster-master:9200"]
             user => "logstash"
             password => "logstash"
             ssl => true
