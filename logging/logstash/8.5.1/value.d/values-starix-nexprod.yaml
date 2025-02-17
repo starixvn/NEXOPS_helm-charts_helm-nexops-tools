@@ -240,7 +240,7 @@ logstashPipeline:
         }
 
         ### FPS TEAM
-        if [Tags] =~ /(LoginTransaction|Transaction07)/ {
+        if "LoginTransaction" in [Tags] or "Transaction07" in [Tags] {
           useragent {
             source => '[Message][UserAgent]'
             target => "user_agent"
