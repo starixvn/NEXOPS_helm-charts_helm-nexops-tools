@@ -68,6 +68,6 @@ replica:
   replicaCount: 3
   persistence:
     size: 10Gi
-  resourcesPreset: "medium"
+  resourcesPreset: "large"
 
 
