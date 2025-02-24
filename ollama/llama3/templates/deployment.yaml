@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama3
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: llama3
+  template:
+    metadata:
+      labels:
+        app: llama3
+    spec:
+      containers:
+      - name: llama3
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8000
+        env:
+        {{- range .Values.env }}
+        - name: {{ .name }}
+          value: "{{ .value }}"
+        {{- end }}
+        volumeMounts:
+        - name: model-storage
+          mountPath: /models
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: llama3-models-pvc
