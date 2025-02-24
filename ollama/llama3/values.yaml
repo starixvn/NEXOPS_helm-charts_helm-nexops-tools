@@ -29,3 +29,10 @@ persistence:
   accessMode: ReadWriteOnce
   size: 10Gi
   mountPath: /models
+
+nodeSelector:
+  ollama: "yes"
+tolerations:
+- effect: NoSchedule
+  key: ollama
+  value: "yes"
