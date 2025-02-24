@@ -1,0 +1,71 @@
+ollama:
+  models:
+    pull:
+      - llama3
+    run:
+     - llama3
+
+    # -- List of models to create at container startup, there are two options
+    # 1. Create a raw model
+    # 2. Load a model from configMaps, configMaps must be created before and are loaded as volume in "/models" directory.
+    # create:
+    #  - name: llama3.1-ctx32768
+    #    configMapRef: my-configmap
+    #    configMapKeyRef: configmap-key
+    #  - name: llama3.1-ctx32768
+    #    template: |
+    #      FROM llama3.1
+    #      PARAMETER num_ctx 32768
+    create: []
+
+service:
+  type: NodePort
+  port: 11434
+  nodePort: 31434
+
+# Configure the ingress resource that allows you to access the
+ingress:
+  enabled: true
+  className: "haproxy"
+  hosts:
+    - host: llama3.lumigame.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  # -- Pod requests
+  requests:
+    # Memory request
+    memory: 4096Mi
+
+    # CPU request
+    # cpu: 2000m
+
+  # -- Pod limit
+  limits:
+    # Memory limit
+    memory: 8192Mi
+
+    # CPU limit
+    # cpu: 4000m
+
+persistentVolume:
+  # -- Enable persistence using PVC
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  annotations: {}
+  existingClaim: ""
+  size: 30Gi
+  storageClass: "local-path"
+
+# -- Node labels for pod assignment.
+nodeSelector:
+  ollama: "yes"
+
+# -- Tolerations for pod assignment
+tolerations:
+- effect: NoSchedule
+  key: ollama
+  value: "yes"
