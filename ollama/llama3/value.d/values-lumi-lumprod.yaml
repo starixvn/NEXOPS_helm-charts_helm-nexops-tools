@@ -1,9 +1,9 @@
 ollama:
   models:
     pull:
-      - llama3
+      - llama3.1
     run:
-     - llama3
+     - llama3.1
 
     # -- List of models to create at container startup, there are two options
     # 1. Create a raw model
