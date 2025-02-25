@@ -91,10 +91,10 @@ zabbixServer:
   # -- Automatically clean orphaned ha nodes from ha_nodes db table
   nodeSelector:
     zabbix-server: "yes"
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    value: zabbix-server
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: cattle.io/os
+  #   value: zabbix-server
   haNodesAutoClean:
     enabled: true
     image:
@@ -105,7 +105,7 @@ zabbixServer:
       tag: 16
       pullPolicy: IfNotPresent
       pullSecrets: []
-    schedule: "0 * * * *"
+    schedule: "0 1 * * *"
     concurrencyPolicy: "Replace"
     deleteOlderThanSeconds: 3600
     # -- Requests and limits of pod resources. See: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers)
@@ -269,10 +269,10 @@ postgresql:
 
   nodeSelector:
     zabbix-server: "yes"
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    value: zabbix-server
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: cattle.io/os
+  #   value: zabbix-server
   
   service:
     # -- Type of service to expose the application. Valid options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
@@ -661,10 +661,10 @@ zabbixWeb:
   startupProbe: {}
   nodeSelector:
     zabbix-server: "yes"
-  tolerations:
-  - effect: NoSchedule
-    key: cattle.io/os
-    value: zabbix-server
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: cattle.io/os
+  #   value: zabbix-server
 
 # **Zabbix Web Service** configurations
 zabbixWebService:
@@ -852,7 +852,7 @@ ingress:
   # kubernetes.io/tls-acme: "true"
   # -- Ingress hosts
   hosts:
-    - host: zabbix.starixplay.com
+    - host: zabbix-k3s.starixplay.com
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -900,10 +900,10 @@ route:
 #nodeSelector: {}
 nodeSelector:
   zabbix-server: "yes"
-tolerations:
-- effect: NoSchedule
-  key: cattle.io/os
-  value: zabbix-server
+# tolerations:
+# - effect: NoSchedule
+#   key: cattle.io/os
+#   value: zabbix-server
 # -- Tolerations configurations. Reference: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 #tolerations: []
 
