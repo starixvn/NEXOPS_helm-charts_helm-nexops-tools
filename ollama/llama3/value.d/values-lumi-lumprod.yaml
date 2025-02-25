@@ -1,0 +1,48 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/ggerganov/llama.cpp
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 11434
+  nodePort: 31434
+
+resources:
+  requests:
+    cpu: "4"
+    memory: "6Gi"
+  limits:
+    cpu: "8"
+    memory: "8Gi"
+
+env:
+  - name: MODEL_PATH
+    value: "/models/llama-3-8b.Q2_K.gguf"
+  - name: THREADS
+    value: "8"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 30Gi
+  storageClass: "local-path"
+  #mountPath: /models
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  hosts:
+    - host: llama3.lumigame.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+nodeSelector:
+  ollama: "yes"
+tolerations:
+- effect: NoSchedule
+  key: ollama
+  value: "yes"
