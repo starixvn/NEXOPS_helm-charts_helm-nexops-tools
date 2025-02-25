@@ -10,13 +10,13 @@ service:
   port: 11434
   nodePort: 31434
 
-resources:
-  requests:
-    cpu: "4"
-    memory: "6Gi"
-  limits:
-    cpu: "8"
-    memory: "8Gi"
+# resources:
+#   requests:
+#     cpu: "4"
+#     memory: "6Gi"
+#   limits:
+#     cpu: "8"
+#     memory: "8Gi"
 
 env:
   - name: MODEL_PATH
