@@ -19,6 +19,8 @@ metrics:
   podMonitor:
     enabled: true
 
+architecture: standalone
+
 auth:
   password: "foo1@bared"
 
@@ -42,7 +44,7 @@ master:
     size: 10Gi
 
 replica:
-  replicaCount: 1
+  replicaCount: 3
   persistence:
     size: 10Gi
 
