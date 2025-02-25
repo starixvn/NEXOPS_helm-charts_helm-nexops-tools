@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/ggerganov/llama.cpp
-  tag: latest
+  repository: ghcr.io/ggml-org/llama.cpp
+  tag: server-cuda-b4764
   pullPolicy: IfNotPresent
 
 service:
