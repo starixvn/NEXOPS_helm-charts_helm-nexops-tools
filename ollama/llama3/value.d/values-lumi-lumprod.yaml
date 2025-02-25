@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/ggerganov/llama.cpp
-  tag: latest
+  tag: light-cuda
   pullPolicy: IfNotPresent
 
 service:
