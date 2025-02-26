@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/ggerganov/llama.cpp
-  tag: 
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
@@ -19,10 +19,10 @@ service:
 #     memory: "8Gi"
 
 env:
-  - name: MODEL_PATH
-    value: "/models/llama-3-8b.Q4_K_M.gguf"
-  - name: THREADS
-    value: "8"
+  #- name: MODEL_PATH
+  #  value: "/models/llama-3-8b.Q4_K_M.gguf"
+  #- name: THREADS
+  #  value: "8"
   - name: LLAMA_BACKEND
     value: "cpu"
 
