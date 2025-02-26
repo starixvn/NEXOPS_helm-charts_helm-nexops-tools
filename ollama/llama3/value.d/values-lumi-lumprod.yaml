@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/ggml-org/llama.cpp
-  tag: server-vulkan-b4779
+  tag: light-vulkan
   pullPolicy: IfNotPresent
 
 service:
