@@ -19,8 +19,8 @@ service:
 #     memory: "8Gi"
 
 env:
-  #- name: MODEL_PATH
-  #  value: "/models/llama-3-8b.Q4_K_M.gguf"
+  - name: MODEL_PATH
+    value: "/models/llama-3-8b.Q4_K_M.gguf"
   #- name: THREADS
   #  value: "8"
   - name: LLAMA_BACKEND
