@@ -10,15 +10,15 @@ service:
   ports:
 ###REDIS
 #Rocketor Redis
-  - name: redis-rocketor-m
+  - name: redis-rocket-m
     protocol: TCP
     port: 16379
-    targetPort: redis-rocketor-m
+    targetPort: redis-rocket-m
 
-  - name: redis-rocketor-r
+  - name: redis-rocket-r
     protocol: TCP
     port: 16380
-    targetPort: redis-rocketor-r
+    targetPort: redis-rocket-r
 
 
 
@@ -31,9 +31,9 @@ service:
 containerPorts:
 
 #NAP
-- name: redis-rocketor-m
+- name: redis-rocket-m
   containerPort: 16379
-- name: redis-rocketor-r
+- name: redis-rocket-r
   containerPort: 16380
 
 
