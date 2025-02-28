@@ -59,3 +59,9 @@ replica:
   replicaCount: 3
   persistence:
     size: 10Gi
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1024Mi
+    limits:
+      memory: 2048Mi
