@@ -31,6 +31,9 @@ cache:
   expireHours: 24
 
 
+metrics:
+  enabled: true
+
 portal:
   nodeSelector:
     hub-main: "yes"
