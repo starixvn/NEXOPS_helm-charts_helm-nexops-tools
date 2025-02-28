@@ -1,0 +1,98 @@
+expose:
+  tls:
+    enabled: false
+  ingress:
+    className: "haproxy"
+    hosts:
+      core: hubmain-new.nexdev.net
+externalURL: https://hubmain-new.nexdev.net
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: "local-path"
+      size: 500Gi
+    jobservice:
+      jobLog:
+        storageClass: "local-path"
+        size: 5Gi
+    database:
+      storageClass: "local-path"
+      size: 10Gi
+    redis:
+      storageClass: "local-path"
+      size: 30Gi
+    trivy:
+      storageClass: "local-path"
+      size: 5Gi
+
+cache:
+  enabled: true
+  expireHours: 24
+
+
+portal:
+  nodeSelector:
+    hub-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: hub-main
+core:
+  nodeSelector:
+    hub-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: hub-main
+jobservice:
+  nodeSelector:
+    hub-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: hub-main
+registry:
+  nodeSelector:
+    hub-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: hub-main
+trivy:
+  image:
+    repository: goharbor/trivy-adapter-photon
+    tag: v2.12.1
+  nodeSelector:
+    hub-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: hub-main
+  skipUpdate: false
+  skipJavaDBUpdate: false
+  offlineScan: false
+database:
+  internal:
+    nodeSelector:
+      hub-main: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: hub-main
+redis:
+  internal:
+    nodeSelector:
+      hub-main: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: cattle.io/os
+      value: hub-main
+exporter:
+  nodeSelector:
+    hub-main: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: hub-main
+
