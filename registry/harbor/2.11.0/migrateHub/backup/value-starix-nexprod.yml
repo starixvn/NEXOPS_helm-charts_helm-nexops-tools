@@ -4,14 +4,14 @@ expose:
   ingress:
     className: "haproxy"
     hosts:
-      core: hubbackup-new.nexdev.net
-externalURL: https://hubbackup-new.nexdev.net
+      core: hub-backup.nexdev.net
+externalURL: https://hub-backup.nexdev.net
 
 persistence:
   persistentVolumeClaim:
     registry:
       storageClass: "local-path"
-      size: 350Gi
+      size: 500Gi
     jobservice:
       jobLog:
         storageClass: "local-path"
@@ -28,71 +28,76 @@ persistence:
 
 cache:
   enabled: true
-  expireHours: 8
+  expireHours: 24
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
 
 
 portal:
   nodeSelector:
-    harbor-main-workload: "yes"
+    hub-backup: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-main
+    value: hub-backup
 core:
   nodeSelector:
-    harbor-main-workload: "yes"
+    hub-backup: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-main
+    value: hub-backup
 jobservice:
   nodeSelector:
-    harbor-main-workload: "yes"
+    hub-backup: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-main
+    value: hub-backup
 registry:
   nodeSelector:
-    harbor-main-workload: "yes"
+    hub-backup: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-main
+    value: hub-backup
 trivy:
   image:
     repository: goharbor/trivy-adapter-photon
     tag: v2.12.1
   nodeSelector:
-    harbor-main-workload: "yes"
+    hub-backup: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-main
-  skipUpdate: true
-  skipJavaDBUpdate: true
-  offlineScan: true
+    value: hub-backup
+  skipUpdate: false
+  skipJavaDBUpdate: false
+  offlineScan: false
 database:
   internal:
     nodeSelector:
-      harbor-main-workload: "yes"
+      hub-backup: "yes"
     tolerations:
     - effect: NoSchedule
       key: cattle.io/os
-      value: harbor-main
+      value: hub-backup
 redis:
   internal:
     nodeSelector:
-      harbor-main-workload: "yes"
+      hub-backup: "yes"
     tolerations:
     - effect: NoSchedule
       key: cattle.io/os
-      value: harbor-main
+      value: hub-backup
 exporter:
   nodeSelector:
-    harbor-main-workload: "yes"
+    hub-backup: "yes"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
-    value: harbor-main
+    value: hub-backup
 
