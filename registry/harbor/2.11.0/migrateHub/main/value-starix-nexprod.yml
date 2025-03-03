@@ -76,6 +76,7 @@ trivy:
   - effect: NoSchedule
     key: cattle.io/os
     value: hub-main
+  debugMode: false
   skipUpdate: true
   skipJavaDBUpdate: true
   offlineScan: true
