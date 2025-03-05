@@ -304,14 +304,6 @@ alertmanager:
       resolve_timeout: 15m
     receivers:
     - name: devnull
-    # - name: prometheus-msteams-warning
-    #   webhook_configs:
-    #   - send_resolved: true
-    #     url: 'http://prometheus-msteams:2000/alertmanager-warning'
-    # - name: prometheus-msteams-critical
-    #   webhook_configs:
-    #   - send_resolved: true
-    #     url: 'http://prometheus-msteams:2000/alertmanager-critical' 
     - name: prometheus-msteams-opensearch
       webhook_configs:
       - send_resolved: true
