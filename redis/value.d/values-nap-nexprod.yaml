@@ -51,7 +51,7 @@ sentinel:
       haproxy.org/check-interval: "1s"
       haproxy.org/backend-config-snippet: |
         option tcp-check
-        tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+        tcp-check send AUTH\ {{ .Values.auth.password }}\r\n
         tcp-check expect string +OK
         tcp-check send PING\r\n
         tcp-check expect string PONG
