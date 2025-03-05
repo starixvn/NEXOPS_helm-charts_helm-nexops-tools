@@ -94,4 +94,4 @@ extraDeploy:
           port: {{ .Values.sentinel.service.tcpIngressMaster.lbPort }}
       service:
         name: {{ template "common.names.fullname" . }}
-        port: {{ .Values.sentinel.service.nodePorts.redis }}
+        port: {{ .Values.sentinel.service.ports.redis }}
