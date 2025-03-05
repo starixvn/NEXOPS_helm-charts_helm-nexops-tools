@@ -201,13 +201,30 @@ alertmanager:
     global:
       resolve_timeout: 15m
     route:
-      receiver: prometheus-msteams-kubernetes
+      receiver: slack-kubernetes
       group_by: ['alertname', 'cluster', 'service']
       group_interval: 1m
       group_wait: 1m
       repeat_interval: 12h
     receivers:
-    - name: prometheus-msteams-kubernetes
-      webhook_configs:
-      - send_resolved: true
-        url: 'http://prometheus-msteams:2000/alertmanager-kubernetes-sc-local'
+    - name: slack-kubernetes
+      slack_configs:
+      - api_url: 'https://hooks.slack.com/services/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'
+        channel: '#kubernetes-sc-local-alerts'
+        text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+        title: '{{ .CommonLabels.alertname }}'
+        pretext: '{{ .CommonAnnotations.description }}'
+        color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+        fields:
+          - title: 'Severity'
+            value: '{{ .CommonLabels.severity }}'
+            short: true
+          - title: 'Namespace'
+            value: '{{ .CommonLabels.namespace }}'
+            short: true
+          - title: 'Pod'
+            value: '{{ .CommonLabels.pod }}'
+            short: true
+          - title: 'Cluster'
+            value: '{{ .CommonLabels.cluster }}'
+            short: true
