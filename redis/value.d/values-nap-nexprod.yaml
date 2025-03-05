@@ -1,0 +1,99 @@
+clusterDomain: "starix.nexprod"
+
+global:
+  storageClass: "longhorn-effort"
+  imageRegistry: "hub.nexdev.net"
+
+image:
+  repository: base/redis
+  tag: 7.2.4-debian-12-r9
+
+
+metrics:
+  image:
+    repository: base/redis-exporter
+    tag: 1.58.0-debian-12-r3
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  podMonitor:
+    enabled: true
+
+auth:
+  password: "foo1@bared"
+
+commonConfiguration: |-
+  save 900 1
+  save 300 10
+  save 60 10000
+  appendonly yes
+  appendfilename "appendonly.aof"
+  appendfsync everysec
+
+
+volumePermissions:
+  enabled: true
+  image:
+    repository: base/os-shell
+    tag: 12-debian-12-r16
+
+sentinel:
+  enabled: true
+  persistence:
+    size: 1Gi
+  image:
+    registry: 
+    repository: base/redis-sentinel
+    tag: 7.2.4-debian-12-r7
+  service:
+    annotations:
+      haproxy.org/check: "true"
+      haproxy.org/check-interval: "1s"
+      haproxy.org/backend-config-snippet: |
+        option tcp-check
+        tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+        tcp-check expect string +OK
+        tcp-check send PING\r\n
+        tcp-check expect string PONG
+        tcp-check send info\ replication\r\n
+        tcp-check expect string role:master
+        tcp-check send QUIT\r\n
+        tcp-check expect string +OK
+    tcpIngressMaster:
+      name: "redis-nap-m"
+      ingressClass: "ops-ingress"
+      lbPort: 16379
+
+replica:
+  replicaCount: 3
+  persistence:
+    size: 10Gi
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1024Mi
+    limits:
+      memory: 2048Mi
+
+extraDeploy:
+- |
+  apiVersion: "ingress.v1.haproxy.org/v1"
+  kind: TCP
+  metadata:
+    name: {{ printf "%s-tcp" (include "common.names.fullname" .) }}
+    namespace: {{ include "common.names.namespace" . | quote }}
+    labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+      app.kubernetes.io/component: node
+    annotations:
+      ingress.class: {{ .Values.sentinel.service.tcpIngressMaster.ingressClass }}
+  spec:
+    - name: {{ .Values.sentinel.service.tcpIngressMaster.name }}
+      frontend:
+        name: {{ printf "%s-tcp" (include "common.names.fullname" .) }}
+        tcplog: true
+        binds:
+        - name: {{ template "common.names.fullname" . }}
+          port: {{ .Values.sentinel.service.tcpIngressMaster.lbPort }}
+      service:
+        name: {{ template "common.names.fullname" . }}
+        port: {{ .Values.sentinel.service.ports.redis }}
