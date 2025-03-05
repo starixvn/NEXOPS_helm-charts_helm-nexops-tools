@@ -200,20 +200,14 @@ alertmanager:
   config:
     global:
       resolve_timeout: 15m
-    receivers:
-    - name: devnull
-    - name: prometheus-msteams-kubernetes
-      webhook_configs:
-      - send_resolved: true
-        url: 'http://prometheus-msteams:2000/alertmanager-kubernetes' 
     route:
+      receiver: prometheus-msteams-kubernetes
       group_by: ['alertname', 'cluster', 'service']
       group_interval: 1m
       group_wait: 1m
       repeat_interval: 12h
-      receiver: devnull
-      routes:
-      - receiver: prometheus-msteams-kubernetes
-        match:
-          service: kubernetes
-        group_by: ['alertname', 'cluster', 'service']
+    receivers:
+    - name: prometheus-msteams-kubernetes
+      webhook_configs:
+      - send_resolved: true
+        url: 'http://prometheus-msteams:2000/alertmanager-kubernetes-sc-local'

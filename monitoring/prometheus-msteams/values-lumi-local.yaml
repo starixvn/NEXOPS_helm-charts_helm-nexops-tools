@@ -1,0 +1,82 @@
+---
+connectors:
+  - alertmanager-kubernetes-sc-local: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/bb9d6bd95355436c896bc1a21f6dca27/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2Kub7Uk05HyPDY1MRqrYUNjQkAlaJeGTfUgAg-7CYmnY1
+customCardTemplate: |
+  {{ define "teams.card" }}
+
+    {{/* Should add url on activity title? */}}
+    {{ $should_embed_activity_title_url := false }}
+
+    {{/* Should 'http:' in the generator url be replaced with 'https:'? */}}
+    {{ $should_enforce_https := true }}
+
+    {{/* Should certain common labels be filtered? */}}
+    {{ $should_filter_labels := true }}
+
+    {{/* Should certain common annotations be filtered? */}}
+    {{ $should_filter_annotations := true }}
+
+    {{/* Should the potential actions field be included? */}}
+    {{ $should_have_potential_actions := false }}
+
+    {{/* For example 'https://www.google.com/alertkarma/?'. Ignored if empty. */}}
+    {{ $alertkarma_prefix := ""}}
+
+    {{ $templateEmoji := "" }}
+    {{- if eq .Status "resolved" -}} 
+      {{- $templateEmoji = "✅" -}}
+    {{- else if eq .Status "firing" -}}
+      {{- if or (eq .CommonLabels.severity "CRITICAL") (eq .CommonLabels.severity "critical") -}} 
+        {{- $templateEmoji = "🚨" -}}
+      {{- else if or (eq .CommonLabels.severity "WARNING") (eq .CommonLabels.severity "warning") -}}
+        {{- $templateEmoji = "⚠️" -}}
+      {{- else -}}
+        {{- $templateEmoji = "❓" -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $templateEmoji = "❓" -}}
+    {{- end -}}
+
+    {
+      "@type": "MessageCard",
+      "@context": "http://schema.org/extensions",
+      "summary": "{{ .CommonLabels.alertname }}",
+      "title": "Kubernetes Alert: {{ .CommonLabels.alertname }}",
+      "sections": [
+        {
+          "activityTitle": "{{ .CommonAnnotations.summary }}",
+          "facts": [
+            {
+              "name": "Severity",
+              "value": "{{ .CommonLabels.severity }}"
+            },
+            {
+              "name": "Namespace",
+              "value": "{{ .CommonLabels.namespace }}"
+            },
+            {
+              "name": "Pod",
+              "value": "{{ .CommonLabels.pod }}"
+            },
+            {
+              "name": "Cluster",
+              "value": "{{ .CommonLabels.cluster }}"
+            }
+          ],
+          "text": "{{ .CommonAnnotations.description }}"
+        }
+      ],
+      "potentialAction": [
+        {
+          "@type": "OpenUri",
+          "name": "View in Prometheus",
+          "targets": [
+            {
+              "os": "default",
+              "uri": "http://<prometheus-url>/graph?g0.expr={{ urlquery .CommonLabels.expr }}"
+            }
+          ]
+        }
+      ]
+    }
+  {{ end }}
