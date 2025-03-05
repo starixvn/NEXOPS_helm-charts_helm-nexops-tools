@@ -334,9 +334,3 @@ alertmanager:
         match:
           service: Longhorn
         group_by: ['alertname', 'job', 'pvc']
-      # - receiver: prometheus-msteams-warning
-      #   match:
-      #     severity: warning
-      # - receiver: prometheus-msteams-critical
-      #   match:
-      #     severity: critical
