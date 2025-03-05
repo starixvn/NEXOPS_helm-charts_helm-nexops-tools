@@ -84,8 +84,6 @@ extraDeploy:
     namespace: {{ include "common.names.namespace" . | quote }}
     labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
       app.kubernetes.io/component: node
-    {{- if or .Values.sentinel.service.annotations .Values.commonAnnotations }}
-    {{- $annotations := include "common.tplvalues.merge" ( dict "values" ( list .Values.sentinel.service.annotations .Values.commonAnnotations ) "context" . ) }}
     annotations:
       ingress.class: {{ .Values.sentinel.service.tcpIngressMaster.ingressClass }}
   spec:
