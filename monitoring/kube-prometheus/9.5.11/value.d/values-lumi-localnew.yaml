@@ -223,19 +223,15 @@ alertmanager:
           - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes-sc-local-alerts'
             text: |
-              {{- define "alertHeader" -}}
-                *[{{ .Status | toUpper }}]* {{ .Labels.alertname }}
-              {{- end -}}
-
-              {{- define "alertDetails" -}}
+              {{- range .Alerts }}
+                {{- if eq .Status "firing" }}
+                :fire: *PROBLEM* :fire:
+                {{- else }}
+                :white_check_mark: *RESOLVED* :white_check_mark:
+                {{- end }}
+                *Alert Name:* {{ .Labels.alertname }}
                 *Description:* {{ .Annotations.description }}
-                *Severity:* {{ .Labels.severity }}
+                *Severity:* {{ .Labels.severity | severityIcon }}
                 *Namespace:* {{ .Labels.namespace }}
                 *Pod:* {{ .Labels.pod }}
-                *Cluster:* {{ .Labels.cluster }}
-              {{- end -}}
-
-              {{ range .Alerts }}
-                {{ template "alertHeader" . }}
-                {{ template "alertDetails" . }}
-              {{ end }}
+                {{- end }}
