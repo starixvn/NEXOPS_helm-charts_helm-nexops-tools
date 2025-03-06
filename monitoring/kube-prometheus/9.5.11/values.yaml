@@ -2230,30 +2230,19 @@ alertmanager:
   ##
   config:
     global:
-      resolve_timeout: 15m
-    receivers:
-    - name: devnull
-    - name: 'prometheus-msteams-warning'
-      webhook_configs:
-        - send_resolved: true
-          url: 'http://prometheus-msteams:2000/alertmanager-warning'
-    - name: 'prometheus-msteams-critical'
-      webhook_configs:
-        - send_resolved: true
-          url: 'http://prometheus-msteams:2000/alertmanager-critical' 
+      resolve_timeout: 5m
     route:
-      group_by: ['alerts-msteams']
-      group_interval: 1m
-      group_wait: 1m
-      repeat_interval: 1440m
-      receiver: devnull
+      group_by: ['job']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'null'
       routes:
-        - receiver: prometheus-msteams-warning
-          match:
-            severity: warning
-        - receiver: prometheus-msteams-critical
-          match:
-            severity: critical
+        - match:
+            alertname: Watchdog
+          receiver: 'null'
+    receivers:
+      - name: 'null'
   ## @param alertmanager.templateFiles Extra files to be added inside the `alertmanager-{{ template "kube-prometheus.alertmanager.fullname" . }}` secret.
   ##
   templateFiles: {}
