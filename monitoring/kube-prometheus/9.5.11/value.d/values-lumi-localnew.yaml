@@ -221,16 +221,9 @@ alertmanager:
       - name: 'slack-kubernetes'
         slack_configs:
           - send_resolved: true
-            api_url: 'https://hooks.slack.com/services/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'
             channel: '#kubernetes-sc-local-alerts'
-            text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
-            title: '{{ .CommonLabels.alertname }}'
-            title_link: '{{ .GeneratorURL }}'
-            color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
-
-    inhibit_rules:
-      - source_match:
-          severity: 'critical'
-        target_match:
-          severity: 'warning'
-        equal: ['alertname', 'cluster', 'service']
+            username: 'Prometheus'
+            title: ":alert: Kubernetes Alert: {{ .CommonLabels.alertname }}"
+            text: "🚨 *Alert:* {{ .CommonLabels.alertname }}\n🔴 *Status:* {{ .Status }}\n📛 *Namespace:* {{ .CommonLabels.namespace }}\n🎯 *Instance:* {{ .CommonLabels.instance }}\n📅 *Starts At:* {{ .StartsAt }}\n\n *Description:* {{ .Annotations.description }}"
+            icon_emoji: ":fire:"
+            api_url: "https://hooks.slack.com/services/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"
