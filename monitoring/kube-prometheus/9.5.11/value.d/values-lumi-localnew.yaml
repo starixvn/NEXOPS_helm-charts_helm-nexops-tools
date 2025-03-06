@@ -198,6 +198,8 @@ prometheus:
 
 kube-state-metrics:
   resourcesPreset: "none"
+  nodeSelector:
+    nexops-tools: "yes"
 
 
 
