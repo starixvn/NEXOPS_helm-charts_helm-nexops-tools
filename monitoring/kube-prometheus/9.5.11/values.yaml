@@ -2228,21 +2228,21 @@ alertmanager:
   ## @skip alertmanager.config.route.routes
   ## @skip alertmanager.config.receivers
   ##
-  config:
-    global:
-      resolve_timeout: 5m
-    route:
-      group_by: ['job']
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 12h
-      receiver: 'null'
-      routes:
-        - match:
-            alertname: Watchdog
-          receiver: 'null'
-    receivers:
-      - name: 'null'
+  # config:
+  #   global:
+  #     resolve_timeout: 5m
+  #   route:
+  #     group_by: ['job']
+  #     group_wait: 30s
+  #     group_interval: 5m
+  #     repeat_interval: 12h
+  #     receiver: 'null'
+  #     routes:
+  #       - match:
+  #           alertname: Watchdog
+  #         receiver: 'null'
+  #   receivers:
+  #     - name: 'null'
   ## @param alertmanager.templateFiles Extra files to be added inside the `alertmanager-{{ template "kube-prometheus.alertmanager.fullname" . }}` secret.
   ##
   templateFiles: {}
