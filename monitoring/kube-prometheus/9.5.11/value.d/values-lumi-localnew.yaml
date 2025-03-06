@@ -223,10 +223,24 @@ alertmanager:
           - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes-sc-local-alerts'
             text: |
-              {{ range .Alerts }}
-                *Alert:* {{ .Annotations.summary }}
+              {{- define "alertHeader" -}}
+                *[{{ .Status | toUpper }}]* {{ .Labels.alertname }}
+              {{- end -}}
+
+              {{- define "alertDetails" -}}
                 *Description:* {{ .Annotations.description }}
                 *Severity:* {{ .Labels.severity }}
-                *Starts At:* {{ .StartsAt }}
-                *Ends At:* {{ .EndsAt }}
+                *Namespace:* {{ .Labels.namespace }}
+                *Pod:* {{ .Labels.pod }}
+                *Cluster:* {{ .Labels.cluster }}
+                *Starts At:* {{ .StartsAt | formatDate }}
+                {{ if eq .Status "firing" }}
+                *Ends At:* {{ .EndsAt | formatDate }}
+                {{ end }}
+                *Details:* <{{ .GeneratorURL }}|View in Prometheus>
+              {{- end -}}
+
+              {{ range .Alerts }}
+                {{ template "alertHeader" . }}
+                {{ template "alertDetails" . }}
               {{ end }}
