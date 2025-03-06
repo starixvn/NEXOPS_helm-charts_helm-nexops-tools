@@ -223,12 +223,15 @@ alertmanager:
           - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes-sc-local-alerts'
             icon_emoji: '{{ if eq .Status "firing" }}:fire:{{ else }}:white_check_mark:{{ end }}'
-            title: '*{{ if eq .Status "firing" }}🚨 ALERT: {{ else }}✅ RESOLVED: {{ end }}{{ .CommonLabels.alertname }}*'
+            title: '{{ if eq .Status "firing" }}🔥PROBLEM: {{ else }}✅ RESOLVED: {{ end }}'
             text: >
-              *🔥 Status:* `{{ .Status | toUpper }}`
-              *💻 Instance:* `{{ .CommonLabels.instance }}`
-              *📍 Severity:* `{{ .CommonLabels.severity }}`
-              *📝 Summary:* `{{ .CommonAnnotations.summary }}`
-              *🔍 Description:* `{{ .CommonAnnotations.description }}`
+              *Severity:* `{{ .CommonLabels.severity }}`
+
+              *Instance:* `{{ .CommonLabels.instance }}`
+
+              *Summary:* `{{ .CommonAnnotations.summary }}`
+
+              *Description:* `{{ .CommonAnnotations.description }}`
+              
               {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
