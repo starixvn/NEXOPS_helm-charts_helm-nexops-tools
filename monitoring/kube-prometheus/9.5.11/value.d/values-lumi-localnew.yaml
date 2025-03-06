@@ -223,13 +223,10 @@ alertmanager:
           - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes-sc-local-alerts'
             icon_emoji: ':rotating_light:'
-            title: '*[{{ .CommonLabels.severity | toUpper }}] {{ .CommonLabels.alertname }}*'
-            text: |
-              *🔥 Status:* `{{ .Status }}`
+            title: '*🔥PROBLEM🔥: {{ .CommonLabels.alertname }}*'
+            text: >
+              *🔴 Severity:* `{{ .CommonLabels.severity }}`
               *💻 Instance:* `{{ .CommonLabels.instance }}`
+              *📝 Summary:* `{{ .CommonAnnotations.summary }}`
               *🔍 Description:* `{{ .CommonAnnotations.description }}`
-            color: > 
-              {{ if eq .CommonLabels.severity "critical" }} #FF0000
-              {{ else if eq .CommonLabels.severity "warning" }} #FFA500
-              {{ else }} #36A64F
-              {{ end }}
+            color: '{{ if eq .Status "firing" }}#FF0000{{ else }}#2ECC71{{ end }}'
