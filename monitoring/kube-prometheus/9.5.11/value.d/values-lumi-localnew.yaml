@@ -231,7 +231,6 @@ alertmanager:
                 {{- end }}
                 *Alert Name:* {{ .Labels.alertname }}
                 *Description:* {{ .Annotations.description }}
-                *Severity:* {{ .Labels.severity | severityIcon }}
                 *Namespace:* {{ .Labels.namespace }}
                 *Pod:* {{ .Labels.pod }}
                 {{- end }}
