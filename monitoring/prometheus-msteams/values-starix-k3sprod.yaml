@@ -190,6 +190,7 @@ customCardTemplate: |
         "sections": [ {{$externalUrl := .ExternalURL}}
         {{- range $index, $alert := .Alerts }}{{- if $index }},{{- end }}
           {
+            "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
             "facts": [
              {
                 "name": "Space Used",
