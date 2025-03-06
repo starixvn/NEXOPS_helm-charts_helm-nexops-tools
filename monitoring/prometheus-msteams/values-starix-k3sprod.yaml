@@ -192,10 +192,6 @@ customCardTemplate: |
           {
             "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
             "facts": [
-             {
-                "name": "Space Used",
-                "value": "{{ $value | printf "%.2f" }}"
-              },
               {
                 "name": "PVC",
                 "value": "{{ $alert.Labels.pvc }}"
