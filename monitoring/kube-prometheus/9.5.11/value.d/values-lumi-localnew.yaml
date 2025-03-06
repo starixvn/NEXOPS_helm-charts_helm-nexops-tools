@@ -199,32 +199,29 @@ alertmanager:
   enabled: true
   config:
     global:
-      resolve_timeout: 15m
+      resolve_timeout: 5m
+
     route:
-      receiver: slack-kubernetes
+      receiver: 'slack-kubernetes'
       group_by: ['alertname', 'cluster', 'service']
-      group_interval: 1m
-      group_wait: 1m
-      repeat_interval: 12h
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 3h
+
     receivers:
-    - name: slack-kubernetes
-      slack_configs:
-      - api_url: 'https://hooks.slack.com/services/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'
-        channel: '#kubernetes-sc-local-alerts'
-        text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
-        title: '{{ .CommonLabels.alertname }}'
-        pretext: '{{ .CommonAnnotations.description }}'
-        color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
-        fields:
-          - title: 'Severity'
-            value: '{{ .CommonLabels.severity }}'
-            short: true
-          - title: 'Namespace'
-            value: '{{ .CommonLabels.namespace }}'
-            short: true
-          - title: 'Pod'
-            value: '{{ .CommonLabels.pod }}'
-            short: true
-          - title: 'Cluster'
-            value: '{{ .CommonLabels.cluster }}'
-            short: true
+      - name: 'slack-kubernetes'
+        slack_configs:
+          - send_resolved: true
+            api_url: 'https://hooks.slack.com/services/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'
+            channel: '#kubernetes-sc-local-alerts'
+            text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+            title: '{{ .CommonLabels.alertname }}'
+            title_link: '{{ .GeneratorURL }}'
+            color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+
+    inhibit_rules:
+      - source_match:
+          severity: 'critical'
+        target_match:
+          severity: 'warning'
+        equal: ['alertname', 'cluster', 'service']
