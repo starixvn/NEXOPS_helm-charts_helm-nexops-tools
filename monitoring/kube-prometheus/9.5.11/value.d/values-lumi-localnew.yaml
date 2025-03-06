@@ -222,11 +222,13 @@ alertmanager:
         slack_configs:
           - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes-sc-local-alerts'
-            icon_emoji: ':rotating_light:'
-            title: '*🔥PROBLEM🔥: {{ .CommonLabels.alertname }}*'
+            icon_emoji: '{{ if eq .Status "firing" }}:fire:{{ else }}:white_check_mark:{{ end }}'
+            title: '*{{ if eq .Status "firing" }}🚨 ALERT: {{ else }}✅ RESOLVED: {{ end }}{{ .CommonLabels.alertname }}*'
             text: >
-              *🔴 Severity:* `{{ .CommonLabels.severity }}`
+              *🔥 Status:* `{{ .Status | toUpper }}`
               *💻 Instance:* `{{ .CommonLabels.instance }}`
+              *📍 Severity:* `{{ .CommonLabels.severity }}`
               *📝 Summary:* `{{ .CommonAnnotations.summary }}`
               *🔍 Description:* `{{ .CommonAnnotations.description }}`
-            color: '{{ if eq .Status "firing" }}#FF0000{{ else }}#2ECC71{{ end }}'
+              {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
