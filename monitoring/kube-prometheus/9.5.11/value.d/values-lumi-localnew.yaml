@@ -233,11 +233,6 @@ alertmanager:
                 *Namespace:* {{ .Labels.namespace }}
                 *Pod:* {{ .Labels.pod }}
                 *Cluster:* {{ .Labels.cluster }}
-                *Starts At:* {{ .StartsAt | formatDate }}
-                {{ if eq .Status "firing" }}
-                *Ends At:* {{ .EndsAt | formatDate }}
-                {{ end }}
-                *Details:* <{{ .GeneratorURL }}|View in Prometheus>
               {{- end -}}
 
               {{ range .Alerts }}
