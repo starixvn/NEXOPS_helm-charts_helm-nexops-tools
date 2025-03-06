@@ -212,7 +212,7 @@ alertmanager:
 
     route:
       receiver: 'slack-kubernetes'
-      group_by: ['alertname', 'cluster', 'service']
+      group_by: ['alertname', 'cluster', 'namespace']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 3h
@@ -220,10 +220,13 @@ alertmanager:
     receivers:
       - name: 'slack-kubernetes'
         slack_configs:
-          - send_resolved: true
+          - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes-sc-local-alerts'
-            username: 'Prometheus'
-            title: ":alert: Kubernetes Alert: {{ .CommonLabels.alertname }}"
-            text: "🚨 *Alert:* {{ .CommonLabels.alertname }}\n🔴 *Status:* {{ .Status }}\n📛 *Namespace:* {{ .CommonLabels.namespace }}\n🎯 *Instance:* {{ .CommonLabels.instance }}\n📅 *Starts At:* {{ .StartsAt }}\n\n *Description:* {{ .Annotations.description }}"
-            icon_emoji: ":fire:"
-            api_url: "https://hooks.slack.com/services/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"
+            text: |
+              {{ range .Alerts }}
+                *Alert:* {{ .Annotations.summary }}
+                *Description:* {{ .Annotations.description }}
+                *Severity:* {{ .Labels.severity }}
+                *Starts At:* {{ .StartsAt }}
+                *Ends At:* {{ .EndsAt }}
+              {{ end }}
