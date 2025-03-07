@@ -8,7 +8,7 @@ global:
 
 image:
   repository: hub.nexdev.net/base/rocketchat
-  tag: 6.8.0
+  tag: 7.4.0
 
 persistence:
   enabled: true
