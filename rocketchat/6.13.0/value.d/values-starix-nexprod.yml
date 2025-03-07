@@ -15,7 +15,15 @@ persistence:
   storageClass: "local-path"
   size: "20Gi"
 
+podAnnotations:
+  prometheus.io/port: "9458"
+  prometheus.io/path: "/metrics"
+  prometheus.io/scrape: "true"
+
 serviceMonitor:
+  enabled: true
+
+prometheusScraping:
   enabled: true
 
 mongodb:
