@@ -1,0 +1,53 @@
+global:
+  nodeSelector:
+    chatting-system: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: chatting-system
+
+image:
+  repository: hub.nexdev.net/base/rocketchat
+  tag: 6.8.0
+
+persistence:
+  enabled: true
+  storageClass: "local-path"
+  size: "20Gi"
+
+serviceMonitor:
+  enabled: true
+
+mongodb:
+  global:
+    storageClass: "local-path"
+  image:
+    registry: hub.nexdev.net
+    repository: base/mongodb
+    tag: 6.0.10-debian-11-r8
+  clusterDomain: "starix.nexprod"
+  auth:
+    rootPassword: "rocketchat"
+    passwords:
+    - rocketchat
+  persistence:
+    enabled: true
+  nodeSelector:
+    chatting-system: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: chatting-system
+
+
+
+host: rocketchat.nexdev.net
+ingress:
+  enabled: true
+  ingressClassName: "haproxy" 
+  hosts:
+    - host: rocketchat.nexdev.net
+      paths:
+        - path: "/"
+          pathType: Prefix
+###
