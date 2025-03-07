@@ -324,7 +324,7 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      receiver: devnull
+      receiver: default-receiver
       routes:
       - receiver: slack-kubernetes
         match:
@@ -339,7 +339,7 @@ alertmanager:
       repeat_interval: 3h
 
     receivers:
-    - name: devnull
+    - name: default-receiver
     - name: prometheus-msteams-longhorn
       webhook_configs:
       - send_resolved: true
