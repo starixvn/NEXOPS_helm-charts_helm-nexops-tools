@@ -59,4 +59,5 @@ schedules:
       - portainer
       - hd
       - sp
+      - tg
       # - zabbix-server-nexprod
