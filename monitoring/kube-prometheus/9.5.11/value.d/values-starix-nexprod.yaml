@@ -324,7 +324,6 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      receiver: default-receiver
       routes:
       - receiver: slack-kubernetes
         match:
@@ -337,9 +336,9 @@ alertmanager:
       group_interval: 1m
       group_wait: 5m
       repeat_interval: 3h
+      receiver: default-receiver
 
     receivers:
-    - name: default-receiver
     - name: prometheus-msteams-longhorn
       webhook_configs:
       - send_resolved: true
@@ -358,3 +357,4 @@ alertmanager:
             {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
     
+    - name: default-receiver
