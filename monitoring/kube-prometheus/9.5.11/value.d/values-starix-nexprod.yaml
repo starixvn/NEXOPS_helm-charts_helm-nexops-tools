@@ -332,7 +332,7 @@ alertmanager:
       - receiver: prometheus-msteams-longhorn
         matchers:
           - service=~"longhorn-backend"
-          - pvc_namespace!="*redis*"
+          - pvc!=".*redis.*"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job']
       group_interval: 1m
