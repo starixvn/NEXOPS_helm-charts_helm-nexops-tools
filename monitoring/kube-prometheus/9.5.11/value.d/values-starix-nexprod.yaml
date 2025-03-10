@@ -330,9 +330,9 @@ alertmanager:
         match_re:
           service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
       - receiver: prometheus-msteams-longhorn
-        match_re:
-          service: "longhorn-backend"
-          pvc_namespace: "^(?!redis$).*"
+        matchers:
+          - service=~"longhorn-backend"
+          - pvc_namespace!="*redis*"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job']
       group_interval: 1m
