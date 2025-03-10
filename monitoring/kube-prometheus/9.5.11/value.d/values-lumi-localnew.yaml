@@ -211,7 +211,7 @@ alertmanager:
       resolve_timeout: 5m
 
     route:
-      receiver: 'slack-kubernetes'
+      receiver: default-receiver #'slack-kubernetes'
       group_by: ['alertname', 'cluster', 'namespace']
       group_wait: 30s
       group_interval: 5m
