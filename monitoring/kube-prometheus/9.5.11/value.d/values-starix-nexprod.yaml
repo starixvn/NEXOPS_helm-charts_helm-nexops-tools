@@ -331,7 +331,7 @@ alertmanager:
           service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
       - receiver: prometheus-msteams-longhorn
         match:
-          service: Longhorn
+          service: "longhorn"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job']
       group_interval: 1m
