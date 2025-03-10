@@ -327,8 +327,8 @@ alertmanager:
       receiver: default-receiver
       routes:
       - receiver: slack-kubernetes
-        match:
-          service: prometheus-nexprod-kube-state-metrics
+        match_re:
+          service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
       - receiver: prometheus-msteams-longhorn
         match:
           service: Longhorn
