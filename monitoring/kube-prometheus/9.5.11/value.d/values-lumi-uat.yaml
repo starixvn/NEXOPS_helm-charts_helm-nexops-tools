@@ -42,3 +42,6 @@ prometheus:
 
 alertmanager:
   enabled: false
+
+node-exporter:
+  resourcesPreset: "medium"
