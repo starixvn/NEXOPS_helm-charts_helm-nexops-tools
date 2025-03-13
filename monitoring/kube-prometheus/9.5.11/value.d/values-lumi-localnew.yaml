@@ -146,25 +146,6 @@ prometheus:
         annotations:
           summary: "Pod Restarting Frequently"
           description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 3 times in the last 5 minutes."
-      
-      #Deployments Alerts
-      - alert: Deployment Replicas Unavailable
-        expr: kube_deployment_status_replicas_unavailable > 0
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Deployment Replicas Unavailable"
-          description: "Deployment {{ $labels.deployment }} in namespace {{ $labels.namespace }} has unavailable replicas."
-
-      - alert: Stateful SetReplicas Unavailable
-        expr: kube_statefulset_status_replicas_unavailable > 0
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "StatefulSet Replicas Unavailable"
-          description: "StatefulSet {{ $labels.statefulset }} in namespace {{ $labels.namespace }} has unavailable replicas."
 
       #Cluster-Level Alerts
       - alert: API Server Down
