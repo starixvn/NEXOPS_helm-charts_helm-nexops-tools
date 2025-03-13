@@ -329,7 +329,7 @@ alertmanager:
       - receiver: kubernetes_nexprod_lumprod
         match_re:
           service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
-      - receiver: longhorn-alerts
+      - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
