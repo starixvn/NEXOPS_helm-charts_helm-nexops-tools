@@ -226,8 +226,8 @@ alertmanager:
             title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
             text: |
               *Severity:* `{{ .CommonLabels.severity }}`
+              *Pod:* `{{ .CommonLabels.pod }}`
+              *NameSpace:* `{{ .CommonLabels.namespace }}`
               *Instance:* `{{ .CommonLabels.instance }}`
-              *Summary:* `{{ .CommonAnnotations.summary }}`
-              *Description:* `{{ if .CommonAnnotations.description }}{{ .CommonAnnotations.description }}{{ else }}No additional details provided.{{ end }}`
               {{ if eq .Status "resolved" }} *Resolved At:* `{{ .EndsAt }}` {{ end }}
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
