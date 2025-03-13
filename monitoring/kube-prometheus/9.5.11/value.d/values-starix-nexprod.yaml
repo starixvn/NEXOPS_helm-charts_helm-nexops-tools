@@ -347,11 +347,11 @@ alertmanager:
           send_resolved: true
           title: "*{{ if eq .Status \"resolved\" }} ✅ RESOLVED: {{ else }} 🚨 ALERT: {{ end }} {{ .CommonLabels.alertname }}*"
           text: |-
-            *📍 Service:* `{{ .CommonLabels.service }}`
-            *📡 Instance:* `{{ .CommonLabels.instance }}`
-            *💾 Storage:* `{{ .CommonLabels.storage }}`
-            *🔍 Severity:* `{{ .CommonLabels.severity }}`
-            *📜 Summary:* {{ .Annotations.summary }}
+            *Service:* `{{ .CommonLabels.service }}`
+            *Instance:* `{{ .CommonLabels.instance }}`
+            *Storage:* `{{ .CommonLabels.storage }}`
+            *Severity:* `{{ .CommonLabels.severity }}`
+            *Summary:* `{{ .Annotations.summary }}`
 
             {{ if eq .Status "resolved" }}
             ✅ *Resolved:* The issue has been fixed. No further action is needed.
