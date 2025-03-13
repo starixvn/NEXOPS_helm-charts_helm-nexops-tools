@@ -350,8 +350,12 @@ alertmanager:
             *Service:* `{{ .CommonLabels.service }}`
             *Instance:* `{{ .CommonLabels.instance }}`
             *Storage:* `{{ .CommonLabels.storage }}`
+            *PVC Name:* `{{ .CommonLabels.pvc }}`
+            *Storage Class:* `{{ .CommonLabels.storageclass }}`
+            *Volume Size:* `{{ .CommonLabels.volumesize }}`
             *Severity:* `{{ .CommonLabels.severity }}`
-            *Summary:* `{{ .CommonLabels.summary }}`
+            *Summary:* {{ .Annotations.summary }}
+
             {{ if eq .Status "resolved" }}
             ✅ *Resolved:* The issue has been fixed. No further action is needed.
             {{ else }}
@@ -368,8 +372,8 @@ alertmanager:
           text: |
             *Severity:* `{{ .CommonLabels.severity }}`
             *Instance:* `{{ .CommonLabels.instance }}`
-            *Summary:* {{ .CommonAnnotations.summary }}
-            *Description:* {{ .CommonAnnotations.description }}
+            *Summary:* `{{ .CommonAnnotations.summary }}`
+            *Description:* `{{ if .CommonAnnotations.description }}{{ .CommonAnnotations.description }}{{ else }}No additional details provided.{{ end }}`
             {{ if eq .Status "resolved" }} *Resolved At:* `{{ .EndsAt }}` {{ end }}
-            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
     
