@@ -246,10 +246,10 @@ alertmanager:
                 text:
                   type: mrkdwn
                   text: "*⏳ Started At:* `{{ .StartsAt }}`"
-                  {{ if eq .Status "resolved" }}
-                  - type: section
-                    text:
-                      type: mrkdwn
-                      text: "*✅ Resolved At:* `{{ .EndsAt }}`"
-                  {{ end }}
-                color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+              {{ if eq .Status "resolved" }}
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "*✅ Resolved At:* `{{ .EndsAt }}`"
+              {{ end }}
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
