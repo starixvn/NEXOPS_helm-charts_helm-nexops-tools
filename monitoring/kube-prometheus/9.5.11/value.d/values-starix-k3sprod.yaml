@@ -308,10 +308,19 @@ alertmanager:
       webhook_configs:
       - send_resolved: true
         url: 'http://prometheus-msteams:2000/alertmanager-opensearch' 
-    - name: prometheus-msteams-longhorn
-      webhook_configs:
-      - send_resolved: true
-        url: 'http://prometheus-msteams:2000/alertmanager-longhorn' 
+    - name: 'longhorn_alerts'
+      slack_configs:
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#longhorn_alerts'
+          icon_emoji: '{{ if eq .Status "firing" }}:fire:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
+          text: |
+            *Severity:* `{{ .CommonLabels.severity }}`
+            *Summary:* `{{ .CommonAnnotations.summary }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
+            {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+          #if: '{{ .CommonLabels.pvc | contains "redis" | not }}'
     route:
       group_by: ['alertname','job']
       group_interval: 1m
@@ -322,7 +331,7 @@ alertmanager:
       - receiver: prometheus-msteams-opensearch
         match:
           service: OpenSearch
-      - receiver: prometheus-msteams-longhorn
+      - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
