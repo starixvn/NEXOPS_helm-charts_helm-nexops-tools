@@ -225,9 +225,8 @@ alertmanager:
             icon_emoji: '{{ if eq .Status "firing" }}:rotating_light:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
             text: |
-              *Status:* `{{ .Status | toUpper }}`
-              *Instance:* `{{ .CommonLabels.instance }}`
               *Severity:* `{{ .CommonLabels.severity }}`
+              *Instance:* `{{ .CommonLabels.instance }}`
               *Summary:* {{ .CommonAnnotations.summary }}
               *Description:* {{ .CommonAnnotations.description }}
               {{ if eq .Status "resolved" }} *Resolved At:* `{{ .EndsAt }}` {{ end }}
