@@ -344,14 +344,21 @@ alertmanager:
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
           channel: '#longhorn_alerts'
-          icon_emoji: '{{ if eq .Status "firing" }}:fire:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
-          text: |
-            *Severity:* `{{ .CommonLabels.severity }}`
-            *Summary:* `{{ .CommonAnnotations.summary }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
-            {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+          send_resolved: true
+          title: "*{{ if eq .Status \"resolved\" }} ✅ RESOLVED: {{ else }} 🚨 ALERT: {{ end }} {{ .CommonLabels.alertname }}*"
+          text: |-
+            *📍 Service:* `{{ .CommonLabels.service }}`
+            *📡 Instance:* `{{ .CommonLabels.instance }}`
+            *💾 Storage:* `{{ .CommonLabels.storage }}`
+            *📆 Time:* `{{ .StartsAt }}`
+            *🔍 Severity:* `{{ .CommonLabels.severity }}`
+            *📜 Summary:* {{ .Annotations.summary }}
+
+            {{ if eq .Status "resolved" }}
+            ✅ *Resolved:* The issue has been fixed. No further action is needed.
+            {{ else }}
+            🔥 *Active Alert:* Immediate action required!
+            {{ end }}
           #if: '{{ .CommonLabels.pvc | contains "redis" | not }}'
 
     - name: 'kubernetes-alerts-test'
