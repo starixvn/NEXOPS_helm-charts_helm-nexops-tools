@@ -330,9 +330,8 @@ alertmanager:
         match_re:
           service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
       - receiver: prometheus-msteams-longhorn
-        matchers:
-          - service=~"longhorn-backend"
-          - pvc!=".*redis.*"
+        match:
+          service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job']
       group_interval: 1m
@@ -358,5 +357,4 @@ alertmanager:
             *Description:* `{{ .CommonAnnotations.description }}`
             {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
-    
     

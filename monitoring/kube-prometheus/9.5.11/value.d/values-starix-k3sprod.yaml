@@ -323,7 +323,6 @@ alertmanager:
         match:
           service: OpenSearch
       - receiver: prometheus-msteams-longhorn
-        match_re:
+        match:
           service: "longhorn-backend"
-          pvc_namespace: "^(?!redis$).*"
         group_by: ['alertname', 'job', 'pvc']

@@ -1,7 +1,6 @@
 ---
 connectors:
   - alertmanager-longhorn: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/94e5b76eb0144df2857f401eb329312f/8d33e434-f6ac-4fb9-a4c8-f2679f86ebc9/V2S4ThKY3yjWRgj_fyF783GTdYBtHaBN-mWke4EQX48BE1
-  #- alertmanager-opensearch: https://starixwork.webhook.office.com/webhookb2/4df879b9-cc79-4a14-a1d9-1de16c7c5e9e@276cca21-d2fd-4d7d-b68a-6e40e91f55cf/IncomingWebhook/49420f17ab9b4141a6481aaef746ff05/e21029dd-93ed-4c2e-bad6-39449033826b/V2MQyH7g2E9xMuJ-qhIUQkq6g5hBoumFLlDLIjWH-7IYk1
 
 customCardTemplate: |
   {{ define "teams.card" }}
@@ -98,7 +97,7 @@ customCardTemplate: |
               {{/* Common Labels (filtered) */}}
               {{$first := true}}
               {{ range $key, $value := .CommonLabels }}
-                {{ if and $should_filter_labels (or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "prometheus") (eq $key "pvc") (eq $key "namespace") (eq $key "node")) }}
+                {{ if and $should_filter_labels (or (eq $key "cluster") (eq $key "alertname") (eq $key "pvc") (eq $key "namespace") (eq $key "node")) }}
                   {{ if $first }}{{ $first = false }}{{ else }},{{ end }}
                   {
                     "name": "{{ $key | title }}:", 
@@ -189,10 +188,6 @@ customCardTemplate: |
           {
             "activityTitle": "[{{ $alert.Annotations.description }}]({{ $externalUrl }})",
             "facts": [
-             {
-                "name": "Severity",
-                "value": "{{ $alert.Labels.severity }}"
-              },
               {
                 "name": "PVC",
                 "value": "{{ $alert.Labels.pvc }}"
