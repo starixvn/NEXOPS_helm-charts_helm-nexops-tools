@@ -326,7 +326,7 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      - receiver: kubernetes_nexprod_lumprod
+      - receiver: kubernetes-alerts-test
         match_re:
           service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
       - receiver: longhorn_alerts
