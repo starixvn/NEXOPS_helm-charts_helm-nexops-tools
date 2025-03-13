@@ -350,7 +350,6 @@ alertmanager:
             *📍 Service:* `{{ .CommonLabels.service }}`
             *📡 Instance:* `{{ .CommonLabels.instance }}`
             *💾 Storage:* `{{ .CommonLabels.storage }}`
-            *📆 Time:* `{{ .StartsAt }}`
             *🔍 Severity:* `{{ .CommonLabels.severity }}`
             *📜 Summary:* {{ .Annotations.summary }}
 
