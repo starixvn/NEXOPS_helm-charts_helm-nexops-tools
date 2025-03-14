@@ -58,4 +58,11 @@ ingress:
       paths:
         - path: "/"
           pathType: Prefix
+
+smtp:
+  enabled: true
+  username: ""
+  password: ""
+  host: smtp.nexdev.net
+  port: 25
 ###
