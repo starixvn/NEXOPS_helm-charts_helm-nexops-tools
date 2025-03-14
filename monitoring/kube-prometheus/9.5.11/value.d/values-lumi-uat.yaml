@@ -186,6 +186,13 @@ prometheus:
 
 alertmanager:
   enabled: true
+  extraEnv:
+    - name: HTTP_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: HTTPS_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: NO_PROXY
+      value: "localhost,127.0.0.1"
   config:
     global:
       resolve_timeout: 15m
