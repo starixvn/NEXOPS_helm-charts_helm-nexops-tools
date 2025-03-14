@@ -314,7 +314,7 @@ alertmanager:
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
-      group_by: ['alertname','job']
+      group_by: ['alertname','job','pod']
       group_interval: 1m
       group_wait: 5m
       repeat_interval: 3h
