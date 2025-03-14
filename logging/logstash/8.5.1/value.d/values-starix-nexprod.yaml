@@ -241,6 +241,9 @@ logstashPipeline:
 
         ### FPS TEAM
         if "LoginTransaction" in [Tags] or "Transaction07" in [Tags] {
+          mutate {
+            add_tag => ["fps"]
+          }
           useragent {
             source => '[Message][UserAgent]'
             target => "user_agent"
@@ -463,7 +466,9 @@ logstashPipeline:
             password => "logstash"
             ssl => true
             ssl_certificate_verification => false
-            index => "logstash-wabisabi-login-trans7-%{+YYYY.MM.dd}"
+            index => "logstash-wabisabi-login-trans7"
+            # index => "logstash-wabisabi-login-trans7-%{+YYYY.MM.dd}"
+            action => "create"
           }      
         }
         else {
