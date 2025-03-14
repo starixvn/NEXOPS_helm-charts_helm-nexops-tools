@@ -314,7 +314,7 @@ alertmanager:
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
-      group_by: ['alertname','job','pod']
+      group_by: ['alertname','job','pod', 'description']
       group_interval: 1m
       group_wait: 5m
       repeat_interval: 3h
@@ -345,7 +345,7 @@ alertmanager:
             *Severity:* `{{ .CommonLabels.severity }}`
             *Pod:* `{{ .CommonLabels.pod }}`
             *NameSpace:* `{{ .CommonLabels.namespace }}`
-            *Instance:* `{{ .CommonLabels.instance }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
             {{ if eq .Status "resolved" }} *Resolved At:* `{{ .EndsAt }}` {{ end }}
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
     
