@@ -332,7 +332,6 @@ alertmanager:
             *Service:* `{{ .CommonLabels.service }}`
             *PVC:* `{{ .CommonLabels.pvc }}`
             *PVC Namespace:* `{{ .CommonLabels.pvc_namespace }}`
-            *Summary:* {{ .Annotations.summary }}
             *Description:* `{{ .CommonAnnotations.description }}`
             {{ if eq .Status "resolved" }}
             ✅ *Resolved:* The issue has been fixed. No further action is needed.
