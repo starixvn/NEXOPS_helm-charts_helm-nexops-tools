@@ -297,8 +297,6 @@ node-exporter:
     collector.filesystem.fs-types-exclude: "^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs|squashfs|nsfs|tmpfs)$"
 
 alertmanager:
-  ## @param alertmanager.enabled Deploy Alertmanager to the cluster
-  ##
   enabled: true
   config:
     global:
@@ -317,7 +315,7 @@ alertmanager:
       group_by: ['alertname','job','pod', 'description']
       group_interval: 1m
       group_wait: 5m
-      repeat_interval: 3h
+      repeat_interval: 24h
 
     receivers:
     - name: default-receiver
@@ -342,11 +340,10 @@ alertmanager:
           channel: '#kubernetes-alerts-test'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
           text: |
             *Severity:* `{{ .CommonLabels.severity }}`
-            *Pod:* `{{ .CommonLabels.pod }}`
-            *Namespace:* `{{ .CommonLabels.namespace }}`
+            *Summary:* `{{ .CommonLabels.alertname }}`
             *Description:* `{{ .CommonAnnotations.description }}`
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
     
