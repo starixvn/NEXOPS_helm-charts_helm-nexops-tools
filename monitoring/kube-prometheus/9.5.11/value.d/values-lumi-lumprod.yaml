@@ -273,6 +273,15 @@ prometheus:
           summary: "Namespace Resource Quota Exceeded"
           description: "Namespace {{ $labels.namespace }} is using more than {{$value}}% of its resource quota."
 
+      - alert: ClusterPodsAlmostFull
+        expr: (sum(count(kube_pod_info)) / sum(kube_node_status_allocatable_pods)) > 0.5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Cluster is nearing Pod capacity"
+          description: "The total number of Pods in the cluster has exceeded 50% of the maximum limit."
+
 node-exporter:
   extraVolumes:
   - hostPath:
