@@ -165,7 +165,7 @@ prometheus:
           severity: warning
         annotations:
           summary: "High CPU Usage on Node"
-          description: "Node {{ $labels.instance }} is using more than 80% CPU."
+          description: "Node {{ $labels.instance }} is using more than {{$value}}% CPU."
       
       - alert: High Node Memory Usage
         expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 < 20
@@ -174,7 +174,7 @@ prometheus:
           severity: warning
         annotations:
           summary: "High Memory Usage on Node"
-          description: "Node {{ $labels.instance }} has less than 20% memory available."
+          description: "Node {{ $labels.instance }} has less than {{$value}}% memory available."
 
       - alert: High Node Disk Usage
         expr: (node_filesystem_avail_bytes{mountpoint="/"} * 100) / node_filesystem_size_bytes{mountpoint="/"} < 20
@@ -183,7 +183,7 @@ prometheus:
           severity: warning
         annotations:
           summary: "High Disk Usage on Node"
-          description: "Node {{ $labels.instance }} has less than 20% disk space available."
+          description: "Node {{ $labels.instance }} has less than {{$value}}% disk space available."
 
       - alert: Node Disk Pressure
         expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
@@ -229,7 +229,7 @@ prometheus:
           severity: warning
         annotations:
           summary: "High CPU Usage in Pod"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is using more than 80% CPU."
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is using more than {{$value}}% CPU."
 
       - alert: High Pod Memory Usage
         expr: sum(container_memory_usage_bytes{namespace="default"}) by (pod) > 1e9 # 1GB
@@ -276,7 +276,7 @@ prometheus:
           severity: warning
         annotations:
           summary: "Namespace Resource Quota Exceeded"
-          description: "Namespace {{ $labels.namespace }} is using more than 90% of its resource quota."
+          description: "Namespace {{ $labels.namespace }} is using more than {{$value}}% of its resource quota."
 
 node-exporter:
   extraVolumes:
