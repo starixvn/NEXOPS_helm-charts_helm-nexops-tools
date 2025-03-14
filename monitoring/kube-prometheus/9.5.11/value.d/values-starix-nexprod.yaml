@@ -56,7 +56,7 @@ prometheus:
       - alert: LonghornVolumeActualSpaceUsedWarning
         annotations:
           description: The actual space used by Longhorn volume {{$labels.volume}} on
-            {{$labels.node}} is at {{$value}}% capacity for more than 5 minutes.
+            {{$labels.node}} is at {{ printf \"%.0f\" $value }}% capacity for more than 5 minutes.
           summary: The actual used space of Longhorn volume is over 90% of the capacity.
         expr: (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) *
           100 > 90
@@ -331,13 +331,8 @@ alertmanager:
             *Severity:* `{{ .CommonLabels.severity }}`
             *Service:* `{{ .CommonLabels.service }}`
             *PVC:* `{{ .CommonLabels.pvc }}`
-            *PVC Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
-            {{ if eq .Status "resolved" }}
-            ✅ *Resolved:* The issue has been fixed. No further action is needed.
-            {{ else }}
-            *Active Alert:* Immediate action required!
-            {{ end }}
           #if: '{{ .CommonLabels.pvc | contains "redis" | not }}'
 
     - name: 'kubernetes-alerts-test'

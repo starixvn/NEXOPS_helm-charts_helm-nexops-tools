@@ -196,7 +196,7 @@ alertmanager:
       group_by: ['alertname', 'cluster', 'namespace']
       group_wait: 30s
       group_interval: 5m
-      repeat_interval: 3h
+      repeat_interval: 24h
 
     receivers:
       - name: 'kubernetes_sc_local'

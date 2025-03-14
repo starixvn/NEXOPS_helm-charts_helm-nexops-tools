@@ -316,10 +316,10 @@ alertmanager:
           title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
           text: |
             *Severity:* `{{ .CommonLabels.severity }}`
-            *Summary:* `{{ .CommonAnnotations.summary }}`
+            *Service:* `{{ .CommonLabels.service }}`
+            *PVC:* `{{ .CommonLabels.pvc }}`
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
-            {{ if eq .Status "resolved" }} *✅ Resolved At:* `{{ .EndsAt }}` {{ end }}
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
           #if: '{{ .CommonLabels.pvc | contains "redis" | not }}'
     route:
       group_by: ['alertname','job']
