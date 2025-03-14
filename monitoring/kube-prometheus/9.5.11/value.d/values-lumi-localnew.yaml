@@ -203,6 +203,7 @@ alertmanager:
         slack_configs:
           - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes_sc_local'
+            send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
             text: |
@@ -210,5 +211,4 @@ alertmanager:
               *Pod:* `{{ .CommonLabels.pod }}`
               *Namespace:* `{{ .CommonLabels.namespace }}`
               *Description:* `{{ .CommonAnnotations.description }}`
-              {{ if eq .Status "resolved" }} *Resolved At:* `{{ .EndsAt }}` {{ end }}
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
