@@ -1,9 +1,9 @@
 # values.yaml
 
 # General configuration
-#jitsi:
-#  host: "jitsi.nexdev.net"  # Replace with your domain
-#  enableHTTP: false          # Disable HTTP (use HTTPS)
+jitsi:
+  host: "jitsi.nexdev.net"  # Replace with your domain
+  enableHTTP: false          # Disable HTTP (use HTTPS)
   #tls:
   #  secretName: "jitsi-tls"  # Name of the TLS secret for HTTPS
 
@@ -39,3 +39,13 @@ web:
 #  enabled: true
 #  service:
 #    type: LoadBalancer  # Use LoadBalancer for external access
+
+ingress:
+    enabled: true
+    ingressClassName: "haproxy"
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: jitsi.nexdev.net
+      paths: ['/']
+    tls: []
