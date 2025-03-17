@@ -196,17 +196,6 @@ jicofo:
     resources: {}
 
 jvb:
-  extraEnv:
-    - name: DOCKER_HOST_ADDRESS
-      valueFrom:
-        fieldRef:
-          fieldPath: status.hostIP
-    - name: JVB_STUN_SERVERS
-      value: "stun:meet-jit-si-turnrelay.jitsi.net:443"
-    - name: JVB_ADVERTISE_IPS
-      valueFrom:
-        fieldRef:
-          fieldPath: status.hostIP
   replicaCount: 1
   image:
     repository: jitsi/jvb
@@ -223,14 +212,14 @@ jvb:
   #  Note that only the first IP address will be used for legacy
   #  `DOCKER_HOST_ADDRESS` environment variable.
   #
-  # publicIPs:
-  #   - 1.2.3.4
-  #   - 5.6.7.8
+  publicIPs:
+    - 10.18.200.192
+  #  - 5.6.7.8
   ## Alternative option: auto-detect Node's external IP address.
   #  Recommended for OCTO setups (with either NodePort service
   #  or hostPort enabled) where every JVB pod should announce it's
   #  own IP address only.
-  useNodeIP: false
+  useNodeIP: true
   ## Use a STUN server to help some users punch through some
   #  especially nasty NAT setups. Usually makes sense for P2P calls.
   stunServers: 'meet-jit-si-turnrelay.jitsi.net:443'
