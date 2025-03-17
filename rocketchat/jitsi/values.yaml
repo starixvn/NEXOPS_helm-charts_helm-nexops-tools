@@ -25,7 +25,7 @@ enableAuth: false
 enableGuests: true
 # Where Jitsi Web UI is made available
 # such as jitsi.example.com
-publicURL: ""
+publicURL: "jitsi.nexdev.net"
 
 tz: Europe/Amsterdam
 
