@@ -3,16 +3,16 @@
 # General configuration
 jitsi:
   host: "jitsi.nexdev.net"  # Replace with your domain
-  publicURL: "https://jitsi.nexdev.net" 
+  publicURL: "https://jitsi.nexdev.net"  # Replace with your domain
   enableHTTP: false          # Disable HTTP (use HTTPS)
-  #tls:
-  #  secretName: "jitsi-tls"  # Name of the TLS secret for HTTPS
+  tls:
+    secretName: "jitsi-tls"  # Name of the TLS secret for HTTPS
 
 # Prosody (XMPP server)
 prosody:
   enabled: true
   xmpp:
-    password: "1234aaAA"  # Set a secure password for XMPP
+    password: "1234aa"  # Set a secure password for XMPP
 
 # Jicofo (Jitsi Conference Focus)
 jicofo:
@@ -20,12 +20,8 @@ jicofo:
 
 # JVB (Jitsi Videobridge)
 jvb:
-  service:
-    type: NodePort
-  publicIPs:
-    - 10.18.200.193
   enabled: true
-  useNodeIP: false  # Use the node's IP address for JVB
+  useNodeIP: true  # Use the node's IP address for JVB
   # publicIPs:      # Alternatively, specify external IPs manually
   #   - "203.0.113.1"
 
@@ -33,23 +29,18 @@ jvb:
 web:
   enabled: true
   replicaCount: 1
+  service:
+    type: NodePort  # Use NodePort for web service
+    nodePort: 30000  # Optional: Specify a NodePort for web
 
-# PostgreSQL (for persistent storage)
-#postgresql:useHostPort
-#  enabled: true
-#  postgresqlPassword: "your-secure-password"  # Set a secure password for PostgreSQL
+# Nginx (for HTTPS termination)
+# nginx:
+#   enabled: true
+#   service:
+#     type: NodePort  # Use NodePort for nginx service
+#     nodePort: 30001  # Optional: Specify a NodePort for nginx
 
-# Nginx (for ingress)
-#nginx:
-#  enabled: true
-#  service:
-#    type: LoadBalancer  # Use LoadBalancer for external access
-
-ingress:
-  enabled: true
-  className: "haproxy"
-  hosts:
-    - host: jitsi.nexdev.net
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+# # PostgreSQL (for persistent storage)
+# postgresql:
+#   enabled: true
+#   postgresqlPassword: "your-secure-password"  # Set a secure password for PostgreSQL
