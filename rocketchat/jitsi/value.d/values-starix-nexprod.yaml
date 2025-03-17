@@ -20,6 +20,10 @@ jicofo:
 
 # JVB (Jitsi Videobridge)
 jvb:
+  service:
+    type: NodePort
+  publicIPs:
+    - 10.18.200.193
   enabled: true
   useNodeIP: true  # Use the node's IP address for JVB
   # publicIPs:      # Alternatively, specify external IPs manually
@@ -48,4 +52,4 @@ ingress:
     - host: jitsi.nexdev.net
       paths:
         - path: /
-          pathType: Prefix
+          pathType: ImplementationSpecific
