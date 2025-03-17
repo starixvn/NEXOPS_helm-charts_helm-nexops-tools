@@ -196,6 +196,17 @@ jicofo:
     resources: {}
 
 jvb:
+  extraEnv:
+    - name: DOCKER_HOST_ADDRESS
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    - name: JVB_STUN_SERVERS
+      value: "stun:meet-jit-si-turnrelay.jitsi.net:443"
+    - name: JVB_ADVERTISE_IPS
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
   replicaCount: 1
   image:
     repository: jitsi/jvb
