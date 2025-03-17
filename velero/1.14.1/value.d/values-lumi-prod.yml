@@ -49,7 +49,7 @@ schedules:
     labels:
       env: prod
       org: lumi
-    schedule: "0 19 * * *"
+    schedule: "0 */2 * * *"
     useOwnerReferencesInBackup: false
     paused: false
     template:
