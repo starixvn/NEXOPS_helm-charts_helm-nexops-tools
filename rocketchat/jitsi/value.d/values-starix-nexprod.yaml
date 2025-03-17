@@ -1,9 +1,9 @@
 # values.yaml
 
 # General configuration
-jitsi:
-  host: "jitsi.nexdev.net"  # Replace with your domain
-  enableHTTP: false          # Disable HTTP (use HTTPS)
+#jitsi:
+#  host: "jitsi.nexdev.net"  # Replace with your domain
+#  enableHTTP: false          # Disable HTTP (use HTTPS)
   #tls:
   #  secretName: "jitsi-tls"  # Name of the TLS secret for HTTPS
 

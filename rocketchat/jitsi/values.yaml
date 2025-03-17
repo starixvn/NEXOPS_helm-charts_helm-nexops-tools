@@ -75,14 +75,14 @@ web:
 
   extraEnvs: {}
   service:
-    type: ClusterIP
-    port: 80
+    #type: ClusterIP
+    #port: 80
     ## If you want to expose the Jitsi Web service directly
     #  (bypassing the Ingress Controller), use this:
     #
-    # type: NodePort
-    # nodePort: 30580
-    # port: 80
+    type: NodePort
+    nodePort: 30580
+    port: 80
     externalIPs: []
 
   ingress:
