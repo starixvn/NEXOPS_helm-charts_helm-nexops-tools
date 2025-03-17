@@ -43,10 +43,9 @@ web:
 
 ingress:
   enabled: true
-  ingressClassName: "haproxy"
-  annotations: {}
-    # kubernetes.io/tls-acme: "true"
+  className: "haproxy"
   hosts:
-  - host: jitsi.nexdev.net
-    paths: ['/']
-  tls: []
+    - host: jitsi.nexdev.net
+      paths:
+        - path: /
+          pathType: Prefix
