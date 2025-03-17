@@ -42,11 +42,11 @@ web:
 #    type: LoadBalancer  # Use LoadBalancer for external access
 
 ingress:
-    enabled: true
-    ingressClassName: "haproxy"
-    annotations: {}
-      # kubernetes.io/tls-acme: "true"
-    hosts:
-    - host: jitsi.nexdev.net
-      paths: ['/']
-    tls: []
+  enabled: true
+  ingressClassName: "haproxy"
+  annotations: {}
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+  - host: jitsi.nexdev.net
+    paths: ['/']
+  tls: []
