@@ -25,7 +25,7 @@ jvb:
   publicIPs:
     - 10.18.200.193
   enabled: true
-  useNodeIP: true  # Use the node's IP address for JVB
+  useNodeIP: false  # Use the node's IP address for JVB
   # publicIPs:      # Alternatively, specify external IPs manually
   #   - "203.0.113.1"
 
@@ -35,7 +35,7 @@ web:
   replicaCount: 1
 
 # PostgreSQL (for persistent storage)
-#postgresql:
+#postgresql:useHostPort
 #  enabled: true
 #  postgresqlPassword: "your-secure-password"  # Set a secure password for PostgreSQL
 
