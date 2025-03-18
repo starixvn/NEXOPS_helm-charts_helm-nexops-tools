@@ -19,8 +19,8 @@ tz: Asia/Ho_Chi_Minh
 
 
 jvb:
-  enabled: true
-  useNodeIP: true  
+  useHostPort: true
+  useNodeIP: true 
 
 # Web UI
 web:
@@ -41,6 +41,8 @@ web:
   - effect: NoSchedule
     key: cattle.io/os
     value: chatting-system 
+
+
 
 prosody:
   image:
