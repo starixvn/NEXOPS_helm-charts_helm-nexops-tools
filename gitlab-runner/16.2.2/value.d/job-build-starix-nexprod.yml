@@ -64,9 +64,9 @@ runners:
         command = ["--experimental", "--mtu=1450"]
         alias = "docker"
     [runners.kubernetes.node_selector]
-      "node-role.kubernetes.io/runner" = "yes"
+      "node-role.kubernetes.io/runner-build" = "yes"
     [runners.kubernetes.node_tolerations]
-      "cattle.io/os=runner" = "NoSchedule"
+      "cattle.io/os=runner-build" = "NoSchedule"
       [[runners.kubernetes.volumes.empty_dir]]
         name = "docker-certs"
         mount_path = "/certs/client"
