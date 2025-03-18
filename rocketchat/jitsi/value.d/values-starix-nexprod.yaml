@@ -1,46 +1,53 @@
 # values.yaml
 
-# General configuration
+global:
+  clusterDomain: starix.nexprod
+  nodeSelector:
+    chatting-system: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: chatting-system
+
+
 jitsi:
-  host: "jitsi.nexdev.net"  # Replace with your domain
-  publicURL: "https://jitsi.nexdev.net"  # Replace with your domain
-  enableHTTP: false          # Disable HTTP (use HTTPS)
-  tls:
-    secretName: "jitsi-tls"  # Name of the TLS secret for HTTPS
+  host: "jitsi.nexdev.net"  
+  publicURL: "https://jitsi.nexdev.net"  
+  enableHTTP: false       
 
-# Prosody (XMPP server)
-prosody:
-  enabled: true
-  xmpp:
-    password: "1234aa"  # Set a secure password for XMPP
+tz: Asia/Ho_Chi_Minh
 
-# Jicofo (Jitsi Conference Focus)
-jicofo:
-  enabled: true
 
-# JVB (Jitsi Videobridge)
 jvb:
   enabled: true
-  useNodeIP: true  # Use the node's IP address for JVB
-  # publicIPs:      # Alternatively, specify external IPs manually
-  #   - "203.0.113.1"
+  useNodeIP: true  
 
 # Web UI
 web:
   enabled: true
   replicaCount: 1
-  service:
-    type: NodePort  # Use NodePort for web service
-    nodePort: 30000  # Optional: Specify a NodePort for web
+  image: 
+    repository: hub.nexdev.net/base/jitsi/web
+  ingress:
+    enabled: true
+    ingressClassName: "haproxy"
+    hosts:
+    - host: jitsi.nexdev.net
 
-# Nginx (for HTTPS termination)
-# nginx:
-#   enabled: true
-#   service:
-#     type: NodePort  # Use NodePort for nginx service
-#     nodePort: 30001  # Optional: Specify a NodePort for nginx
+  nodeSelector:
+    chatting-system: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: chatting-system 
 
-# # PostgreSQL (for persistent storage)
-# postgresql:
-#   enabled: true
-#   postgresqlPassword: "your-secure-password"  # Set a secure password for PostgreSQL
+prosody:
+  image:
+    repository: hub.nexdev.net/base/jitsi/prosody
+    tag: stable-9909
+  nodeSelector:
+    chatting-system: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: chatting-system 
