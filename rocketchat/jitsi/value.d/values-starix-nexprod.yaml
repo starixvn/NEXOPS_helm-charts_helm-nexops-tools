@@ -33,6 +33,7 @@ web:
     ingressClassName: "haproxy"
     hosts:
     - host: jitsi.nexdev.net
+      paths: ['/']
 
   nodeSelector:
     chatting-system: "yes"
