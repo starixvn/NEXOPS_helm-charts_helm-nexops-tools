@@ -3,7 +3,7 @@ image:
   image: base/gitlab-runner
   tag: ubuntu-v16.2.2
 
-replicas: 1
+replicas: 2
 
 gitlabUrl: https://gitlab.nexdev.net
 # runnerRegistrationToken: "VscxAqFvRVcXgpyoBDD_"
@@ -42,6 +42,7 @@ runners:
         namespace = "{{.Release.Namespace}}"
         image = "hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
+        memory_request = "2Gi"
         # cpu_limit = "0.5"
         # memory_limit = "500Mi"
         poll_timeout = 3600
