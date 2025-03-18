@@ -3,7 +3,7 @@ image:
   image: base/gitlab-runner
   tag: ubuntu-v16.2.2
 
-replicas: 1
+replicas: 2
 
 gitlabUrl: https://git3.nexdev.net
 # runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
