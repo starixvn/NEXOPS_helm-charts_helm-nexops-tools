@@ -174,7 +174,7 @@ prometheus:
           severity: warning
         annotations:
           summary: "High Memory Usage on Node"
-          description: "Node {{ $labels.instance }} has less than {{$value}}% memory available."
+          description: "Node {{ $labels.instance }} has less than {{ printf \"%.0f\" $value }}% memory available."
 
       - alert: High Node Disk Usage
         expr: (node_filesystem_avail_bytes{mountpoint="/"} * 100) / node_filesystem_size_bytes{mountpoint="/"} < 20
@@ -353,6 +353,7 @@ alertmanager:
           text: |
             *Severity:* `{{ .CommonLabels.severity }}`
             *Summary:* `{{ .CommonLabels.alertname }}`
+            *Cluster:* `NexProd`
             *Description:* `{{ .CommonAnnotations.description }}`
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
     
