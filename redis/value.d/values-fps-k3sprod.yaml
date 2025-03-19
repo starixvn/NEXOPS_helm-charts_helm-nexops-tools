@@ -60,7 +60,12 @@ replica:
   replicaCount: 3
   persistence:
     size: 10Gi
-  resourcesPreset: "2xlarge"
+  resources:
+    requests:
+      cpu: "1.0"
+      memory: "3072Mi"
+    limits:
+      memory: "12288Mi"
   nodeSelector:
     redis-node: "yes"
   tolerations:
