@@ -57,30 +57,30 @@ prometheus:
       
       - alert: High Node CPU Usage
         expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
-        for: 10m
+        for: 5m
         labels:
           severity: warning
         annotations:
           summary: "High CPU Usage on Node"
-          description: "Node {{ $labels.instance }} is using more than {{$value}}% CPU."
+          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU."
       
       - alert: High Node Memory Usage
-        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 < 20
-        for: 10m
+        expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
+        for: 5m
         labels:
           severity: warning
         annotations:
           summary: "High Memory Usage on Node"
-          description: "Node {{ $labels.instance }} has less than {{$value}}% memory available."
+          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
 
       - alert: High Node Disk Usage
-        expr: (node_filesystem_avail_bytes{mountpoint="/"} * 100) / node_filesystem_size_bytes{mountpoint="/"} < 20
-        for: 10m
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 70
+        for: 5m
         labels:
           severity: warning
         annotations:
           summary: "High Disk Usage on Node"
-          description: "Node {{ $labels.instance }} has less than {{$value}}% disk space available."
+          description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
 
       - alert: Node Disk Pressure
         expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
@@ -221,6 +221,7 @@ alertmanager:
             text: |
               *Severity:* `{{ .CommonLabels.severity }}`
               *Summary:* `{{ .CommonLabels.alertname }}`
+              *Cluster:* `Kubernetes-SC-UAT`
               *Description:* `{{ .CommonAnnotations.description }}`
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
