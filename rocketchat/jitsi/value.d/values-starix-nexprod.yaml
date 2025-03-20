@@ -18,9 +18,18 @@ jitsi:
 tz: Asia/Ho_Chi_Minh
 
 
+
+jicofo:
+  xmpp:
+    password: "~RX92$0sd-v~"
+
 jvb:
   useHostPort: true
   useNodeIP: true 
+
+  xmpp:
+    user: jvb
+    password: "~RX92$0sd-v~"
 
 # Web UI
 web:
