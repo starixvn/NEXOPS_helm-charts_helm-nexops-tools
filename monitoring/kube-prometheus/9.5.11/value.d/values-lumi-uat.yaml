@@ -207,7 +207,7 @@ alertmanager:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      receiver: 'kubernetes_sc_uat'
+      receiver: 'kubernetes-alerts-test'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
       group_interval: 5m
@@ -216,10 +216,10 @@ alertmanager:
         description: "^(?!.*(l1|l2)).*$"
 
     receivers:
-      - name: 'kubernetes_sc_uat'
+      - name: 'kubernetes-alerts-test'
         slack_configs:
           - api_url: "https://hooks.slack.com/services/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"
-            channel: '#kubernetes_sc_uat'
+            channel: '#kubernetes-alerts-test'
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
