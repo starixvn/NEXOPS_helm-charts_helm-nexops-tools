@@ -224,8 +224,7 @@ alertmanager:
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
             text: |
-              *Severity:* `{{ .CommonLabels.severity }}`
+              *Cluster:* `Kubernetes-SC-Local`
               *Summary:* `{{ .CommonLabels.alertname }}`
-              *Cluster:* `Kubernetes-SC-LOCAL`
               *Description:* `{{ .CommonAnnotations.description }}`
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
