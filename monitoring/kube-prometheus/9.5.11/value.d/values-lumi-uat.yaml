@@ -212,6 +212,8 @@ alertmanager:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 24h
+      match_re:
+        description: "^(?!.*(l1|l2)).*$"
 
     receivers:
       - name: 'kubernetes_sc_uat'
