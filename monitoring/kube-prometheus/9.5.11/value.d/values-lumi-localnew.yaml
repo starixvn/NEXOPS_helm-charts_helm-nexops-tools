@@ -209,6 +209,11 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
+      receiver: default-receiver
+      routes:
+      - receiver: 'null'
+        match_re:
+          namespace: "l1"
       receiver: 'kubernetes_sc_local'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
