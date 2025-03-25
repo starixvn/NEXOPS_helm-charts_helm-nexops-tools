@@ -22,9 +22,9 @@ zabbixProxy:
     pullSecrets: []
   resources:
     limits:
-      memory: "4Gi"
+      memory: 2048Mi
     requests:
-      memory: "2Gi"
+      memory: 1024Mi
 
   env:
     ## The variable allows to switch Zabbix proxy mode. By default, value is 0 - active proxy. Allowed values are 0 and 1.
