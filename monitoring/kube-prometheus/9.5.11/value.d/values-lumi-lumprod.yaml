@@ -152,7 +152,7 @@ prometheus:
         annotations:
           summary: "Node Not Ready"
           description: "Node {{ $labels.node }} is not ready."
-      
+
       - alert: High Node CPU Usage
         expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
         for: 5m
@@ -161,7 +161,7 @@ prometheus:
         annotations:
           summary: "High CPU Usage on Node"
           description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU."
-      
+
       - alert: High Node Memory Usage
         expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
         for: 5m
