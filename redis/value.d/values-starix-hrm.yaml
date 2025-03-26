@@ -6,7 +6,7 @@ commonLabels:
 
 
 global:
-  storageClass: "longhorn"
+  storageClass: "longhorn-effort"
   imageRegistry: "harbor.byb6181.com"
 
 image:
