@@ -221,6 +221,7 @@ alertmanager:
       repeat_interval: 24h
 
     receivers:
+      - name: 'null' 
       - name: 'kubernetes_sc_local'
         slack_configs:
           - api_url: "https://hooks.slack.com/services/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"
