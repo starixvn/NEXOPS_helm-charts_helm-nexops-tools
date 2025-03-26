@@ -1,0 +1,91 @@
+clusterDomain: "starix.hrm"
+replicaCount: 3
+
+
+resourcesPreset: "none"
+
+service:
+  type: LoadBalancer
+  # loadBalancerIP: ""
+  ports:
+#HRM
+  - name: redis-hrm-m
+    protocol: TCP
+    port: 16379
+    targetPort: redis-hrm-m
+
+  - name: redis-hrm-r
+    protocol: TCP
+    port: 16879
+    targetPort: redis-hrm-r
+
+
+  - name: http
+    port: 8080
+    targetPort: http
+
+
+containerPorts:
+#HRM
+- name: redis-hrm-m
+  containerPort: 16379
+- name: redis-hrm-r
+  containerPort: 16879
+
+
+
+- name: http
+  containerPort: 8080
+
+
+configuration: |
+  global
+    log stdout format raw local0
+    maxconn 10240
+
+  defaults
+    log global
+    timeout client 360s
+    timeout connect 360s
+    timeout server 360s
+
+  resolvers k8s
+    nameserver dns1 coredns.kube-system:53
+    resolve_retries 3
+    timeout resolve 1s
+    timeout retry 1s
+    hold valid 10s
+    hold obsolete 30s
+
+  frontend fe_main
+    bind :8080
+    mode http
+    stats enable
+    stats uri /stats
+    stats refresh 300s
+    stats show-legends
+    stats show-node
+    stats auth nexcel:NexOps!QAZ
+    default_backend default_backend_nodes
+
+  backend default_backend_nodes
+    mode http
+    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable ! Pls contact NexOps if you think this is a mistake... K3s UAT"
+
+  frontend redis_hrm_master_fe
+    bind :16379
+    default_backend redis_hrm_master_be
+
+  backend redis_hrm_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-starix-hrm-node-0.redis-sentinel-starix-hrm-headless.redis-sentinel-starix.svc.starix.hrm:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-starix-hrm-node-1.redis-sentinel-starix-hrm-headless.redis-sentinel-starix.svc.starix.hrm:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-starix-hrm-node-2.redis-sentinel-starix-hrm-headless.redis-sentinel-starix.svc.starix.hrm:6379 check inter 1s resolvers k8s init-addr none
