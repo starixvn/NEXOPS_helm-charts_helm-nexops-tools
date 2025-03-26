@@ -6,7 +6,7 @@ resourcesPreset: "none"
 
 service:
   type: LoadBalancer
-  # loadBalancerIP: ""
+  loadBalancerIP: "10.188.188.133"
   ports:
 #HRM
   - name: redis-hrm-m
