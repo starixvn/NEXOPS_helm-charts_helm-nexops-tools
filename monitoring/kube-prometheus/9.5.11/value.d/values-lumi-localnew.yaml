@@ -120,13 +120,13 @@ prometheus:
           summary: "Pod Not Running"
           description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
       
-      # - alert: Pod Restart Detected
-      #   expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
-      #   labels:
-      #     severity: warning
-      #   annotations:
-      #     summary: "Pod {{ $labels.pod }} restarted"
-      #     description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
+      - alert: Pod Restart Detected
+        expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod {{ $labels.pod }} restarted"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
 
       - alert: High Pod CPU Usage
         expr: sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (pod) > 0.8
