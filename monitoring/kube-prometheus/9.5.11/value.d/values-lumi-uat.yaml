@@ -211,7 +211,7 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: 'l1|l2'
+          namespace: "l1|l2"
       receiver: 'kubernetes-alerts-test'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
@@ -219,6 +219,7 @@ alertmanager:
       repeat_interval: 24h
 
     receivers:
+      - name: 'null' 
       - name: 'kubernetes-alerts-test'
         slack_configs:
           - api_url: "https://hooks.slack.com/services/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"
