@@ -199,15 +199,6 @@ prometheus:
           description: "Node {{ $labels.node }} is under memory pressure."
 
       #Pod-Level Alerts
-      # - alert: Pod Crash LoopBackOff
-      #   expr: kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"} == 1
-      #   for: 2m
-      #   labels:
-      #     severity: critical
-      #   annotations:
-      #     summary: "Pod in CrashLoopBackOff"
-      #     description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is in CrashLoopBackOff state."
-
       - alert: Pod Not Running
         expr: kube_pod_status_phase{phase!="Running"} == 1
         for: 5m
@@ -288,7 +279,7 @@ node-exporter:
       path: /var/lib
       type: ""
     name: mnt
-    
+
   extraVolumeMounts:
   - mountPath: /host/root/var/lib
     mountPropagation: HostToContainer
@@ -307,12 +298,16 @@ alertmanager:
   config:
     global:
       resolve_timeout: 15m
+
     route:
       receiver: default-receiver
       routes:
+      #- receiver: 'null'
+      #  match_re:
+      #    namespace: ""
       - receiver: kubernetes-alerts-test
         match_re:
-          service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
+          service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
       - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
@@ -323,7 +318,7 @@ alertmanager:
       repeat_interval: 24h
 
     receivers:
-    - name: default-receiver
+    #- name: 'null'
     - name: 'longhorn_alerts'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
@@ -337,7 +332,6 @@ alertmanager:
             *PVC:* `{{ .CommonLabels.pvc }}`
             *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
-          #if: '{{ .CommonLabels.pvc | contains "redis" | not }}'
 
     - name: 'kubernetes-alerts-test'
       slack_configs:
