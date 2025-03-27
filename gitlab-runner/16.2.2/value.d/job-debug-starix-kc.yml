@@ -73,7 +73,7 @@ runners:
         medium = "Memory"
       [[runners.kubernetes.volumes.host_path]]
         name = "nuget-cache"
-        mount_path = "/root/.nuget"
+        mount_path = "/root/.nuget/packages"
         host_path = "/tmp/cache"
         read_only = false
   # tags: "docker,k8s,ci"
