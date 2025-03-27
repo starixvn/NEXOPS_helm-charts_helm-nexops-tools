@@ -71,10 +71,11 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-      [[runners.kubernetes.volumes.empty_dir]]
+      [[runners.kubernetes.volumes.host_path]]
         name = "nuget-cache"
-        mount_path = "/src/packages"
-        medium = "Memory"
+        mount_path = "/root/.nuget/packages"
+        host_path = "/tmp/cache"
+        read_only = false
   # tags: "docker,k8s,ci"
   name: "k8s-runner"
   cache:
