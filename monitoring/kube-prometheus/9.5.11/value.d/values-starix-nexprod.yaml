@@ -48,7 +48,6 @@ prometheus:
         record: gitlab_runner_build_total:concurrent_saturation
       - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
         record: gitlab_runner_jobs:concurrent_saturation
-  
   - name: longhorn.rules
     groups:
     - name: longhorn.rules
