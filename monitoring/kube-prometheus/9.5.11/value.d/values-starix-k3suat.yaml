@@ -312,9 +312,9 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      - receiver: kubernetes_sc_uat
+      - receiver: kubernetes_devops_uat
         match_re:
-          service: "prometheus-lumi-uat-kube-state-metrics|prometheus-lumi-uat-node-exporter"
+          service: "prometheus-starix-k3suat-kube-state-metrics|prometheus-starix-k3suat-node-exporter "
       - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
@@ -340,10 +340,10 @@ alertmanager:
             *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
   
-    - name: 'kubernetes_sc_uat'
+    - name: 'kubernetes_devops_uat'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes_sc_uat'
+          channel: '#kubernetes_devops_uat'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
