@@ -300,7 +300,6 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      receiver: default-receiver
       routes:
       #- receiver: 'null'
       #  match_re:
