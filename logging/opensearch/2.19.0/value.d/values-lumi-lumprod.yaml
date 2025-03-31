@@ -22,3 +22,26 @@ resources:
   requests:
     cpu: "2"
     memory: "5Gi"
+
+extraObjects:
+- |
+  apiVersion: "ingress.v1.haproxy.org/v1"
+  kind: TCP
+  metadata:
+    name: {{ template "opensearch.serviceName" . }}-tcp
+    labels:
+      {{- include "opensearch.labels" . | nindent 4 }}
+      app.kubernetes.io/component: node
+    annotations:
+      ingress.class: sc-ops-ingress
+  spec:
+  - name: {{ template "opensearch.serviceName" . }}
+    frontend:
+      name: {{ template "opensearch.serviceName" }}-tcp
+      tcplog: true
+      binds:
+      - name: {{ template "opensearch.serviceName" . }}
+        port: {{ .Values.transportPort }}
+    service:
+      name: {{ template "opensearch.serviceName" . }}
+      port: {{ .Values.transportPort }}

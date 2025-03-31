@@ -24,17 +24,27 @@ prometheus:
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
   resourcesPreset: "2xlarge"
-
+  
   additionalScrapeConfigs:
-    enabled: false
-    type: external
+    # - job_name: 'gitlab-ci-pipelines-exporter'
+    #   scrape_interval: 10s
+    #   scrape_timeout: 5s
+    #   static_configs:
+    #     - targets: ['nexpe-gitlab-ci-pipelines-exporter-nexprod-service:8080']
+    enabled: true
+    type: internal #external
     external:
       ## Name of the secret that Prometheus should use for the additional scrape configuration
       name: ""
       ## Name of the key inside the secret to be used for the additional scrape configuration.
       key: ""
     internal:
-      jobList: []
+      jobList:
+      - job_name: 'gitlab-ci-pipelines-exporter'
+        scrape_interval: 10s
+        scrape_timeout: 5s
+        static_configs:
+          - targets: ['10.43.82.146:8080']
   ##
 
   additionalPrometheusRules:
