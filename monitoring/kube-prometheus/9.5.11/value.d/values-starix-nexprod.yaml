@@ -25,12 +25,12 @@ prometheus:
   ##
   resourcesPreset: "2xlarge"
 
-  additionalScrapeConfigs:
-    - job_name: 'gitlab-ci-pipelines-exporter'
-      scrape_interval: 10s
-      scrape_timeout: 5s
-      static_configs:
-        - targets: ['nexpe-gitlab-ci-pipelines-exporter-nexprod-service:8080']
+  # additionalScrapeConfigs:
+  #   - job_name: 'gitlab-ci-pipelines-exporter'
+  #     scrape_interval: 10s
+  #     scrape_timeout: 5s
+  #     static_configs:
+  #       - targets: ['nexpe-gitlab-ci-pipelines-exporter-nexprod-service:8080']
     # enabled: false
     # type: external
     # external:
