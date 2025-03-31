@@ -30,9 +30,10 @@ extraObjects:
   metadata:
     name: {{ template "opensearch.serviceName" . }}-tcp
     labels:
+      {{- include "opensearch.labels" . | nindent 4 }}
       app.kubernetes.io/component: node
     annotations:
-      ingress.class: {{ .Values.sentinel.service.tcpIngressMaster.ingressClass }}
+      ingress.class: sc-ops-ingress
   spec:
   - name: {{ template "opensearch.serviceName" . }}
     frontend:
