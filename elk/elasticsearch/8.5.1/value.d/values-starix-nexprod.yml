@@ -10,15 +10,17 @@ resources:
     cpu: "1000m"
     memory: "2Gi"
 
-ingress:
-  enabled: true
-  className: "haproxy"
-  pathtype: ImplementationSpecific
-  hosts:
-    - host: "search.nexdev.net"
-      paths:
-        - path: "/"
+# ingress:
+#   enabled: true
+#   className: "haproxy"
+#   pathtype: ImplementationSpecific
+#   hosts:
+#     - host: "search.nexdev.net"
+#       paths:
+#         - path: "/"
 
+service:
+  type: NodePort
 
 volumeClaimTemplate:
   accessModes: ["ReadWriteOnce"]
@@ -49,5 +51,8 @@ esConfig:
 
 replicas: 3
 minimumMasterNodes: 2
+
+
+
 
 createCert: false
