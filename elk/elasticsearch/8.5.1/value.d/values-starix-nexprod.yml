@@ -25,3 +25,9 @@ volumeClaimTemplate:
   resources:
     requests:
       storage: 20Gi
+
+networkPolicy:
+  http:
+    enabled: true
+  transport:
+    enabled: true
