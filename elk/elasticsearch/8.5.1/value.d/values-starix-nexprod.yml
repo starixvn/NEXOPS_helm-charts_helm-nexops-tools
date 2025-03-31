@@ -1,0 +1,27 @@
+# replicas: 1
+# minimumMasterNodes: 1
+image: hub.nexdev.net/base/elasticsearch/elasticsearch
+imageTag: "8.5.1"
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "2Gi"
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  pathtype: ImplementationSpecific
+  hosts:
+    - name: "elsearch.nexdev.net"
+      paths:
+        - path: "/"
+
+
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 20Gi
