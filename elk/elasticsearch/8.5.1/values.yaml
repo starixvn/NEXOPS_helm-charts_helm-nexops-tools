@@ -30,8 +30,8 @@ esMajorVersion: ""
 # such as elasticsearch.yml and log4j2.properties
 esConfig:
   elasticsearch.yml: |
-    key:
-      nestedkey: value
+    # key:
+    #   nestedkey: value
     xpack.security.enabled: false
 #  log4j2.properties: |
 #    key = value
