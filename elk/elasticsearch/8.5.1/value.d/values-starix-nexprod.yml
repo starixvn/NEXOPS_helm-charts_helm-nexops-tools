@@ -1,7 +1,7 @@
 # replicas: 1
 # minimumMasterNodes: 1
 image: hub.nexdev.net/base/elasticsearch/elasticsearch
-imageTag: "8.5.1"
+imageTag: "7.17.3"
 resources:
   requests:
     cpu: "1000m"
