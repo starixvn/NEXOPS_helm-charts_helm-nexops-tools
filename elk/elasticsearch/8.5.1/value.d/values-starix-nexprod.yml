@@ -15,7 +15,7 @@ ingress:
   className: "haproxy"
   pathtype: ImplementationSpecific
   hosts:
-    - host: "search.nexdev.net"
+    - host: "es.nexdev.net"
       paths:
         - path: "/"
 
