@@ -31,3 +31,20 @@ networkPolicy:
     enabled: true
   transport:
     enabled: true
+
+protocol: http
+antiAffinity: "soft"
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: false
+    xpack.security.http.ssl:
+      enabled: false
+
+    xpack.security.authc:
+      anonymous:
+        username: anonymous_user
+        roles: superuser
+        authz_exception: true
+
+replicas: 1
+minimumMasterNodes: 1
