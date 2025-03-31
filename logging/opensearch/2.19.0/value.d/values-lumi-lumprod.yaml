@@ -24,10 +24,11 @@ resources:
     memory: "5Gi"
 
 extraObjects:
-- apiVersion: "ingress.v1.haproxy.org/v1"
+- |
+  apiVersion: "ingress.v1.haproxy.org/v1"
   kind: TCP
   metadata:
-    name: {{ template "opensearch.serviceName" . }}
+    name: {{ template "opensearch.serviceName" . }}-tcp
     labels:
       app.kubernetes.io/component: node
     annotations:
@@ -35,7 +36,7 @@ extraObjects:
   spec:
   - name: {{ template "opensearch.serviceName" . }}
     frontend:
-      name: {{ template "opensearch.serviceName" }}
+      name: {{ template "opensearch.serviceName" }}-tcp
       tcplog: true
       binds:
       - name: {{ template "opensearch.serviceName" . }}
