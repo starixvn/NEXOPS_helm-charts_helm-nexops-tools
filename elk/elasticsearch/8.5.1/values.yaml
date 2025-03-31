@@ -33,10 +33,6 @@ esConfig:
     key:
       nestedkey: value
     xpack.security.enabled: false
-    xpack.security.enrollment.enabled: false
-    xpack.security.http.ssl:
-      enabled: false
-      keystore.path: certs/http.p12
 #  log4j2.properties: |
 #    key = value
 
