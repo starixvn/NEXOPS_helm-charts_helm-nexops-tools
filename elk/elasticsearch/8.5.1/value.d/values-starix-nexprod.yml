@@ -1,7 +1,7 @@
 # replicas: 1
 # minimumMasterNodes: 1
 image: hub.nexdev.net/base/elasticsearch/elasticsearch
-imageTag: "7.17.3"
+imageTag: "8.5.1"
 resources:
   requests:
     cpu: "1000m"
@@ -36,9 +36,9 @@ protocol: http
 antiAffinity: "soft"
 esConfig:
   elasticsearch.yml: |
-    xpack.security.enabled: false
-    xpack.security.http.ssl:
-      enabled: false
+    # xpack.security.enabled: false
+    # xpack.security.http.ssl:
+    #   enabled: false
 
     xpack.security.authc:
       anonymous:
@@ -48,3 +48,5 @@ esConfig:
 
 replicas: 3
 minimumMasterNodes: 2
+
+createCert: false
