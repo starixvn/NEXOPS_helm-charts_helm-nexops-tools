@@ -28,11 +28,11 @@ volumeClaimTemplate:
     requests:
       storage: 20Gi
 
-networkPolicy:
-  http:
-    enabled: true
-  transport:
-    enabled: true
+# networkPolicy:
+#   http:
+#     enabled: true
+#   transport:
+#     enabled: true
 
 protocol: http
 antiAffinity: "soft"
