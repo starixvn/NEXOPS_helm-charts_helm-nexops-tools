@@ -27,7 +27,7 @@ extraObjects:
 - apiVersion: "ingress.v1.haproxy.org/v1"
   kind: TCP
   metadata:
-    name: {{ printf "%s-tcp" (template "opensearch.serviceName" .) }}
+    name: {{ template "opensearch.serviceName" . }}-tcp
     labels:
       app.kubernetes.io/component: node
     annotations:
@@ -35,7 +35,7 @@ extraObjects:
   spec:
     - name: {{ template "opensearch.serviceName" . }}
       frontend:
-        name: {{ printf "%s-tcp" (template "opensearch.serviceName" .) }}
+        name: {{ template "opensearch.serviceName" }}-tcp
         tcplog: true
         binds:
         - name: {{ template "opensearch.serviceName" . }}
