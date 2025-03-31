@@ -27,19 +27,19 @@ extraObjects:
 - apiVersion: "ingress.v1.haproxy.org/v1"
   kind: TCP
   metadata:
-    name: {{ template "opensearch.serviceName" . }}-tcp
+    name: {{ template "opensearch.serviceName" . }}
     labels:
       app.kubernetes.io/component: node
     annotations:
       ingress.class: {{ .Values.sentinel.service.tcpIngressMaster.ingressClass }}
   spec:
-    - name: {{ template "opensearch.serviceName" . }}
-      frontend:
-        name: {{ template "opensearch.serviceName" }}-tcp
-        tcplog: true
-        binds:
-        - name: {{ template "opensearch.serviceName" . }}
-          port: {{ .Values.transportPort }}
-      service:
-        name: {{ template "opensearch.serviceName" . }}
+  - name: {{ template "opensearch.serviceName" . }}
+    frontend:
+      name: {{ template "opensearch.serviceName" }}
+      tcplog: true
+      binds:
+      - name: {{ template "opensearch.serviceName" . }}
         port: {{ .Values.transportPort }}
+    service:
+      name: {{ template "opensearch.serviceName" . }}
+      port: {{ .Values.transportPort }}
