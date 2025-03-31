@@ -28,8 +28,7 @@ extraObjects:
   kind: TCP
   metadata:
     name: {{ printf "%s-tcp" (template "opensearch.serviceName" .) }}
-    labels: 
-      {{- include "opensearch.labels" . | nindent 4 }}
+    labels: {{- include "opensearch.labels" . | nindent 4 }}
       app.kubernetes.io/component: node
     annotations:
       ingress.class: {{ .Values.sentinel.service.tcpIngressMaster.ingressClass }}
