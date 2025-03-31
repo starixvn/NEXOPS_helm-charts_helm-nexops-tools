@@ -15,7 +15,7 @@ ingress:
   className: "haproxy"
   pathtype: ImplementationSpecific
   hosts:
-    - host: "elsearch.nexdev.net"
+    - host: "search.nexdev.net"
       paths:
         - path: "/"
 
@@ -46,5 +46,5 @@ esConfig:
         roles: superuser
         authz_exception: true
 
-replicas: 1
-minimumMasterNodes: 1
+replicas: 3
+minimumMasterNodes: 2
