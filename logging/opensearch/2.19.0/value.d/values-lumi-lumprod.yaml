@@ -29,7 +29,7 @@ extraObjects:
   metadata:
     name: {{ printf "%s-tcp" (template "opensearch.serviceName" .) }}
     labels: 
-      {{- include "opensearch.labels" . | nindent 4 }}
+      {{- include "opensearch.labels" . | nindent 6 }}
     annotations:
       ingress.class: {{ .Values.sentinel.service.tcpIngressMaster.ingressClass }}
   spec:
