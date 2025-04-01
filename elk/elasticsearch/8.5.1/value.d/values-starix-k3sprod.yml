@@ -1,6 +1,6 @@
 # replicas: 1
 # minimumMasterNodes: 1
-image: hub.nexdev.net/base/elasticsearch/elasticsearch
+image: nexhub.nebula.prod/kbt/base/elasticsearch/elasticsearch
 imageTag: "8.5.1"
 resources:
   requests:
@@ -15,7 +15,7 @@ ingress:
   className: "haproxy"
   pathtype: ImplementationSpecific
   hosts:
-    - host: "es.nexdev.net"
+    - host: "es.nebula.prod"
       paths:
         - path: "/"
 
