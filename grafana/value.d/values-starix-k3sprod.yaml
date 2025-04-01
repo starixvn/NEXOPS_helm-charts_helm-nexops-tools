@@ -18,7 +18,7 @@ env:
   HTTPS_PROXY: "lisasqd.nebula.prod:8801"
   NO_PROXY: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
   GF_SERVER_ROOT_URL: "https://grafana.starixplay.com/"
-  GF_INSTALL_PLUGINS: "grafana-polystat-panel,yesoreyeram-boomtable-panel"
+  #GF_INSTALL_PLUGINS: "grafana-polystat-panel,yesoreyeram-boomtable-panel"
 
 # plugins: []
 #   # - digrich-bubblechart-panel
