@@ -19,8 +19,9 @@ ingress:
       paths:
         - path: "/"
 
-# service:
-#   type: NodePort
+service:
+  type: NodePort
+  nodePort: "30927"
 
 volumeClaimTemplate:
   accessModes: ["ReadWriteOnce"]
