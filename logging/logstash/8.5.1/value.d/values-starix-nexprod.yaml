@@ -472,7 +472,8 @@ logstashPipeline:
               password => "logstash"
               ssl => true
               ssl_certificate_verification => false
-              index => "logstash-haproxy-gw-local-%{+YYYY.MM.dd}"
+              index => "logstash-haproxy-gw-local"
+              action => "create"
             }         
           }
           else if "nexprod" in [tags] {
@@ -517,6 +518,7 @@ logstashPipeline:
             ssl => true
             ssl_certificate_verification => false
             index => "logstash-syslog-unknown-local"
+            action => "create"
           }
         }
       }
