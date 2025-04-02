@@ -208,6 +208,14 @@ prometheus:
           summary: "Pod Not Running"
           description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
 
+      - alert: Pod Restart Detected
+        expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod {{ $labels.pod }} restarted"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
+
       - alert: High Pod CPU Usage
         expr: sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (pod) > 0.8
         for: 5m
@@ -292,8 +300,6 @@ node-exporter:
     collector.filesystem.fs-types-exclude: "^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs|squashfs|nsfs|tmpfs)$"
 
 alertmanager:
-  ## @param alertmanager.enabled Deploy Alertmanager to the cluster
-  ##
   enabled: true
   config:
     global:
@@ -304,7 +310,7 @@ alertmanager:
       #- receiver: 'null'
       #  match_re:
       #    namespace: ""
-      - receiver: kubernetes-alerts-test
+      - receiver: kubernetes_nexprod_lumprod
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
       - receiver: longhorn_alerts
@@ -312,9 +318,9 @@ alertmanager:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
-      group_interval: 1m
-      group_wait: 5m
-      repeat_interval: 24h
+      group_wait: 30s
+      group_interval: 9999h
+      repeat_interval: 9999h
 
     receivers:
     #- name: 'null'

@@ -14,25 +14,6 @@ logstashPipeline:
         add_field => { "[@metadata][input-http]" => "" }
       }
 
-      http {
-        port => 8081
-        type => "dev-s1"
-        tags => ["http-s1"]
-        add_field => { "[@metadata][input-http]" => "" }
-      }
-
-      udp {
-        port => 5099
-        type => "dev-s1"
-        tags => ["udp-s1", "s1"]
-      }
-
-      tcp {
-        port => 5099
-        type => "dev-s1"
-        tags => ["tcp-s1", "s1"]
-      }
-
       tcp {
         port => 5044
         type => "dev-logs"
@@ -90,12 +71,17 @@ logstashPipeline:
         if [program] == "haproxy" {
           if [facility_label] == "local1" {
             mutate {
-              add_tag => ["haproxy_access", "hap-ing"]
+              add_tag => ["haproxy_access", "hap-ing", "nexprod"]
             }
           } 
           else if [facility_label] == "local2" {
             mutate {
-              add_tag => ["haproxy_access", "hap-gw"]
+              add_tag => ["haproxy_access", "hap-gw", "core"]
+            }
+          }
+          else if [facility_label] == "local5" {
+            mutate {
+              add_tag => ["haproxy_access", "hap-ing", "starix"]
             }
           }
           else {
@@ -321,15 +307,6 @@ logstashPipeline:
       }
     }
 
-  dev_s1_filter.conf: |
-    filter {
-      if [type] == "dev-s1" {
-        json {
-          source => "message"
-        }
-      }
-    }
-
   vault_output.conf: |
     output {
       if [type] == "vault" {
@@ -484,35 +461,22 @@ logstashPipeline:
       }
     }
 
-  dev_s1_output.conf: |
-    output {
-      if [type] == "dev-s1" {
-        opensearch {
-          hosts => ["https://opensearch-cluster-master:9200"]
-          user => "logstash"
-          password => "logstash"
-          ssl => true
-          ssl_certificate_verification => false
-          index => "logstash-s1-ne-service-%{+YYYY.MM.dd}"
-        }
-      }
-    }
-
   syslog_output.conf: |
     output {
       if [type] == "syslog" {
         if "haproxy_access" in [tags] {
-          if "hap-gw" in [tags] {
+          if "core" in [tags] {
             opensearch {
               hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
               password => "logstash"
               ssl => true
               ssl_certificate_verification => false
-              index => "logstash-haproxy-gw-local-%{+YYYY.MM.dd}"
+              index => "logstash-haproxy-gw-local"
+              action => "create"
             }         
           }
-          else if "hap-ing" in [tags] {
+          else if "nexprod" in [tags] {
             opensearch {
               hosts => ["https://opensearch-cluster-master:9200"]
               user => "logstash"
@@ -523,6 +487,17 @@ logstashPipeline:
               action => "create"
             }  
           }
+          else if "starix" in [tags] {
+            opensearch {
+              hosts => ["https://opensearch-cluster-master:9200"]
+              user => "logstash"
+              password => "logstash"
+              ssl => true
+              ssl_certificate_verification => false
+              index => "logstash-haproxy-ing-starix-local"
+              action => "create"
+            }  
+          }
           else {
             opensearch {
               hosts => ["https://opensearch-cluster-master:9200"]
@@ -530,7 +505,8 @@ logstashPipeline:
               password => "logstash"
               ssl => true
               ssl_certificate_verification => false
-              index => "%{[@metadata][beat]}-unknown-haproxy-local-%{+YYYY.MM.dd}"
+              index => "logstash-haproxy-unknown-local"
+              action => "create"
             }         
           }
         }
@@ -541,7 +517,8 @@ logstashPipeline:
             password => "logstash"
             ssl => true
             ssl_certificate_verification => false
-            index => "logstash-syslog-unknown-%{+YYYY.MM.dd}"
+            index => "logstash-syslog-unknown-local"
+            action => "create"
           }
         }
       }
@@ -556,21 +533,21 @@ logstashPipeline:
           password => "logstash"
           ssl => true
           ssl_certificate_verification => false
-          index => "logstash-debug-%{+YYYY.MM.dd}"
+          index => "logstash-debug-local"
         }   
       }
     }
 
   main_output.conf: |
     output {
-      if [type] not in ["syslog", "vault", "dev-logs", "dev-s1", "debug"] {
+      if [type] not in ["syslog", "vault", "dev-logs", "debug"] {
         opensearch {
           hosts => ["https://opensearch-cluster-master:9200"]
           user => "logstash"
           password => "logstash"
           ssl => true
           ssl_certificate_verification => false
-          index => "logstash-unknown-%{+YYYY.MM.dd}"
+          index => "logstash-unknown-local"
         }   
       }
     }
@@ -591,14 +568,6 @@ httpPort: 9600
 extraPorts:
   - name: httplog
     containerPort: 8080
-  - name: httplog-s1
-    containerPort: 8081
-  - name: tcp-s1
-    protocol: TCP
-    containerPort: 5099
-  - name: udp-s1
-    protocol: UDP
-    containerPort: 5099
   - name: tcp
     containerPort: 5044
   - name: syslog-tcp
@@ -627,21 +596,6 @@ service:
     nodePort: 31055
     protocol: TCP
     targetPort: httplog
-  - name: httplog-s1
-    port: 8081
-    nodePort: 32012
-    protocol: TCP
-    targetPort: httplog-s1
-  - name: tcp-s1
-    port: 5099
-    protocol: TCP
-    nodePort: 31853
-    targetPort: tcp-s1
-  - name: udp-s1
-    port: 5099
-    protocol: UDP
-    nodePort: 31853
-    targetPort: udp-s1
   - name: tcp
     nodePort: 30504
     port: 5044
