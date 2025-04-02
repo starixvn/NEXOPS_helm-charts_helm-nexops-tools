@@ -1,0 +1,15 @@
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: lisaqd-dev-probe
+  namespace: monitoring
+spec:
+  interval: 60s
+  module: http_2xx_with_lisaqd_dev
+  prober:
+    url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+  targets:
+    staticConfig:
+      static:
+      - https://hub.nexdev.net
+      - https://hub.lumigame.com
