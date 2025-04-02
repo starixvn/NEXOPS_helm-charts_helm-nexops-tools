@@ -336,3 +336,22 @@ alertmanager:
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
+
+
+blackboxExporter:
+  configuration: |
+    modules:
+      http_2xx:
+        prober: http
+        timeout: 5s
+        http:
+          valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+          method: GET
+          headers:
+            Host: hub.nexdev.net
+          preferred_ip_protocol: "ip4"
+      http_with_proxy:
+        prober: http
+        http:
+          proxy_url: "lisasqd-dev.nebula.prod:8801"
+  
