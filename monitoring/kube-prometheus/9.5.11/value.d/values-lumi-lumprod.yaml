@@ -300,8 +300,6 @@ node-exporter:
     collector.filesystem.fs-types-exclude: "^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs|squashfs|nsfs|tmpfs)$"
 
 alertmanager:
-  ## @param alertmanager.enabled Deploy Alertmanager to the cluster
-  ##
   enabled: true
   config:
     global:

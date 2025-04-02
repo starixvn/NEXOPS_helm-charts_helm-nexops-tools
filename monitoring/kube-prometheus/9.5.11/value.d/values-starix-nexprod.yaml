@@ -321,7 +321,6 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      receiver: default-receiver
       routes:
       - receiver: kubernetes-alerts-test
         match_re:
@@ -336,7 +335,6 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    - name: default-receiver
     - name: 'longhorn_alerts'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
