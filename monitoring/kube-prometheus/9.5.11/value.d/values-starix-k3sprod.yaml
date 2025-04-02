@@ -341,17 +341,12 @@ alertmanager:
 blackboxExporter:
   configuration: |
     modules:
-      http_2xx:
+      http_2xx_with_lisaqd:
         prober: http
-        timeout: 5s
         http:
-          valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
-          method: GET
-          headers:
-            Host: hub.nexdev.net
-          preferred_ip_protocol: "ip4"
-      http_with_proxy:
+          proxy_url: "lisasqd.nebula.prod:8801"
+      http_2xx_with_lisaqd_dev:
         prober: http
         http:
           proxy_url: "lisasqd-dev.nebula.prod:8801"
-  
+          
