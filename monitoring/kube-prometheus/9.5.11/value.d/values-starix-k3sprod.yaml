@@ -345,8 +345,10 @@ blackboxExporter:
         prober: http
         http:
           proxy_url: "lisasqd.nebula.prod:8801"
+          skip_resolve_phase_with_proxy: true
       http_2xx_with_lisaqd_dev:
         prober: http
         http:
           proxy_url: "lisasqd-dev.nebula.prod:8801"
-          
+          skip_resolve_phase_with_proxy: true
+
