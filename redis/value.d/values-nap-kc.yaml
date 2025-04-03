@@ -61,13 +61,13 @@ replica:
   replicaCount: 1
   persistence:
     size: 10Gi
+    existingClaim: "pvc-redis-data-redis-sentinel-nap-k3sprod-node-0"
   resources:
     requests:
       cpu: "500m"
       memory: "1024Mi"
     limits:
       memory: "2048Mi"
-  existingClaim: "pvc-redis-data-redis-sentinel-nap-k3sprod-node-0"
   # nodeSelector:
   #   redis-node: "yes"
   # tolerations:
