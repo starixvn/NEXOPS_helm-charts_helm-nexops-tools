@@ -9,7 +9,7 @@ persistence:
   enabled: true
   size: 10Gi
   storageClassName: longhorn
-  existingClaim: "grafana-k3sprod-dr"
+  existingClaim: "pvc-grafana-starix-k3sprod"
 
 adminUser: admin
 adminPassword: RHk^QbNE0C5Q
