@@ -1,4 +1,8 @@
-# values for Redis helm chart
+image:
+  repository: hub.lumigame.com/base/n8n
+  pullPolicy: IfNotPresent
+  tag: "1.85.4"
+
 redis:
   architecture: standalone
   auth:
