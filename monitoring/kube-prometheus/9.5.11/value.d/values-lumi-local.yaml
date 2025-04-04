@@ -13,11 +13,11 @@ prometheus:
       http: "30062"
 
   retention: 7d
-  retentionSize: "18GB"
+  retentionSize: "30GB"
 
   persistence:
     enabled: true
-    size: 20Gi
+    size: 30Gi
 
 
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
