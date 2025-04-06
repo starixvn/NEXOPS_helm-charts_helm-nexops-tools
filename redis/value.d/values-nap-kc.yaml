@@ -58,7 +58,7 @@ sentinel:
     size: 1Gi    
 
 replica:
-  replicaCount: 3
+  replicaCount: 1
   persistence:
     size: 10Gi
     # existingClaim: "pvc-redis-data-redis-sentinel-nap-k3sprod-node-0"
