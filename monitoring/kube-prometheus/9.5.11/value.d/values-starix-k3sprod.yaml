@@ -446,11 +446,11 @@ alertmanager:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      receiver: devnull
+      #receiver: devnull
       routes:
       - receiver: kubernetes-alerts-test
         match_re:
-          service: "prometheus-starix-k3prod-kube-state-metrics|prometheus-starix-k3prod-node-exporter"
+          service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
       - receiver: prometheus-msteams-opensearch
         match:
           service: OpenSearch
@@ -464,7 +464,7 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    - name: devnull
+    #- name: devnull
     - name: prometheus-msteams-opensearch
       webhook_configs:
       - send_resolved: true
