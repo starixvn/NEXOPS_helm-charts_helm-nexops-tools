@@ -447,7 +447,7 @@ alertmanager:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      #receiver: devnull
+      receiver: default-receiver
       routes:
       - receiver: kubernetes-alerts-test
         match_re:
@@ -465,7 +465,7 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    #- name: devnull
+    #- name: default-receiver
     - name: prometheus-msteams-opensearch
       webhook_configs:
       - send_resolved: true

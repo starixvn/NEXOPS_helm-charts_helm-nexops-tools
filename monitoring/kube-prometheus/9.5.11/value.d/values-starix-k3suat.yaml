@@ -311,7 +311,7 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      #receiver: default-receiver
+      receiver: default-receiver
       routes:
       - receiver: kubernetes_devops_uat
         match_re:
