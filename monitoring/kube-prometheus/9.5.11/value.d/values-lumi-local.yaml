@@ -187,7 +187,7 @@ prometheus:
       - alert: ClusterPodCountExceedsHalfCapacity
         expr: |
           (count(kube_pod_info) / sum(kube_node_status_allocatable_pods)) > 0.5
-        for: 0.5m
+        for: 0s
         labels:
           severity: warning
         annotations:
