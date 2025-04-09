@@ -184,15 +184,23 @@ prometheus:
           summary: "Cluster is nearing Pod capacity"
           description: "The total number of Pods in the cluster has exceeded 50% of the maximum limit."
 
-      - alert: ClusterPodCountExceedsHalfCapacity
+      - alert: ClusterPodCapacityWarning
         expr: |
-          (count(kube_pod_info) / sum(kube_node_status_allocatable_pods)) > 0.5
+          # Calculate total running pods in the cluster
+          sum(kube_pod_status_phase{phase=~"Running|Pending"}) by (cluster) 
+          /
+          # Calculate total pod capacity (sum of allocatable pods across all nodes)
+          sum(kube_node_status_allocatable{resource="pods"}) by (cluster) * 0.5
+          > 1
         for: 5m
         labels:
           severity: warning
         annotations:
-          summary: "Total number of Pods (all phases) exceeds 50% of cluster capacity"
-          description: "There are currently {{ $value | humanizePercentage }} of the cluster's total pod capacity being used (including non-running pods)."
+          summary: "Cluster pod capacity exceeded 50% ({{ $value | humanizePercentage }})"
+          description: |
+            The cluster has exceeded 50% of its total pod capacity.
+            Current pod count: {{ printf "%.0f" (sum(kube_pod_status_phase{phase=~"Running|Pending"}) by (cluster) }}
+            Total capacity: {{ printf "%.0f" (sum(kube_node_status_allocatable{resource="pods"}) by (cluster)) }}
 
 
 kube-state-metrics:
@@ -214,7 +222,7 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "l1|l2|gn"
+          namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
       receiver: 'kubernetes_sc_local'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
