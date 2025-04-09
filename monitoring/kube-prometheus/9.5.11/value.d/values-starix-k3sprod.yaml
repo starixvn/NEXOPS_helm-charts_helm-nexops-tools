@@ -465,7 +465,6 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    - name: default-receiver
     - name: prometheus-msteams-opensearch
       webhook_configs:
       - send_resolved: true
