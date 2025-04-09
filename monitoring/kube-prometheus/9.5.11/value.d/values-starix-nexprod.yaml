@@ -284,7 +284,7 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      - receiver: kubernetes-alerts-test
+      - receiver: kubernetes_nexprod_lumprod
         match_re:
           service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
       - receiver: longhorn_alerts
@@ -310,12 +310,11 @@ alertmanager:
             *PVC:* `{{ .CommonLabels.pvc }}`
             *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
-          #if: '{{ .CommonLabels.pvc | contains "redis" | not }}'
 
-    - name: 'kubernetes-alerts-test'
+    - name: 'kubernetes_nexprod_lumprod'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes-alerts-test'
+          channel: '#kubernetes_nexprod_lumprod'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'

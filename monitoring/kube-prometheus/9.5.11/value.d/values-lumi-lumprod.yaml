@@ -300,10 +300,10 @@ alertmanager:
             *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
 
-    - name: 'kubernetes-alerts-test'
+    - name: 'kubernetes_nexprod_lumprod'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes-alerts-test'
+          channel: '#kubernetes_nexprod_lumprod'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
