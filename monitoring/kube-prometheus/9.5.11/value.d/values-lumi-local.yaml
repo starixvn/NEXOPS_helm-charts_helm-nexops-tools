@@ -225,3 +225,5 @@ alertmanager:
               *Summary:* `{{ .CommonLabels.alertname }}`
               *Description:* `{{ .CommonAnnotations.description }}`
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+      - name: default-receiver

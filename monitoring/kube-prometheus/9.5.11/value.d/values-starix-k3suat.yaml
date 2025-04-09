@@ -326,7 +326,6 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    #- name: default-receiver
     - name: 'longhorn_alerts'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
@@ -353,3 +352,5 @@ alertmanager:
             *Summary:* `{{ .CommonLabels.alertname }}`
             *Description:* `{{ .CommonAnnotations.description }}`
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+    - name: default-receiver

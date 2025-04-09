@@ -465,7 +465,7 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    #- name: default-receiver
+    - name: default-receiver
     - name: prometheus-msteams-opensearch
       webhook_configs:
       - send_resolved: true
@@ -495,6 +495,8 @@ alertmanager:
             *Summary:* `{{ .CommonLabels.alertname }}`
             *Description:* `{{ .CommonAnnotations.description }}`
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+        
+    - name: default-receiver
 
 blackboxExporter:
   configuration: |
