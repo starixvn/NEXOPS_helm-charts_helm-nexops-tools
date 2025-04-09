@@ -269,9 +269,9 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      #- receiver: 'null'
-      #  match_re:
-      #    namespace: ""
+      - receiver: 'null'
+        match_re:
+          namespace: "gitlab-runner"
       - receiver: kubernetes_nexprod_lumprod
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
@@ -285,7 +285,7 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
-    #- name: 'null'
+    - name: 'null'
     - name: 'longhorn_alerts'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
