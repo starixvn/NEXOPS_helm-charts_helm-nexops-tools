@@ -184,6 +184,16 @@ prometheus:
           summary: "Cluster is nearing Pod capacity"
           description: "The total number of Pods in the cluster has exceeded 50% of the maximum limit."
 
+      - alert: ClusterPodCountExceedsHalfCapacity
+        expr: |
+          (count(kube_pod_info) / sum(kube_node_status_allocatable_pods)) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Total number of Pods (all phases) exceeds 50% of cluster capacity"
+          description: "There are currently {{ $value | humanizePercentage }} of the cluster's total pod capacity being used (including non-running pods)."
+
 
 kube-state-metrics:
   resourcesPreset: "none"
