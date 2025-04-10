@@ -412,7 +412,7 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "zabbix-proxy-devops|zabbix-server-devops"
+          namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
       - receiver: 'null'
         match_re:
           pod: "backup-.*|c-.*|jaeger-lumi-k3sprod-es-index-cleaner-.*"
