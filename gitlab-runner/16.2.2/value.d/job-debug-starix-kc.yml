@@ -47,7 +47,7 @@ runners:
         # memory_limit = "500Mi"
         poll_timeout = 3600
         poll_interval = 5
-        cache_dir = "/packages"
+        cache_dir = "/root/.cache/pip"
         # service_cpu_limit = "1"
         # service_memory_limit = "1Gi"
         # helper_cpu_limit = "500m"
