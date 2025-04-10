@@ -74,7 +74,7 @@ runners:
         medium = "Memory"
       [[runners.kubernetes.volumes.pvc]]
         name = "nuget-cache"
-        mount_path = "/packages"
+        mount_path = "/root/.cache/pip"
         read_only = false
         mount_propagation = "Bidirectional"
   # tags: "docker,k8s,ci"
