@@ -71,10 +71,9 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-      [[runners.kubernetes.volumes.host_path]]
+      [[runners.kubernetes.volumes.pvc]]
         name = "nuget-cache"
         mount_path = "/packages"
-        host_path = "/tmp/cache"
         read_only = false
         mount_propagation = "Bidirectional"
   # tags: "docker,k8s,ci"
