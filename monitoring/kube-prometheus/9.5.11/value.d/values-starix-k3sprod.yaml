@@ -410,6 +410,12 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
+      - receiver: 'null'
+        match_re:
+          namespace: "zabbix-proxy-devops|zabbix-server-devops"
+      - receiver: 'null'
+        match_re:
+          pod: "backup-.*|c-.*|jaeger-lumi-k3sprod-es-index-cleaner-.*"
       - receiver: kubernetes_devops_prod
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
@@ -426,10 +432,12 @@ alertmanager:
       repeat_interval: 9999h
 
     receivers:
+    - name: 'null'
     - name: prometheus-msteams-opensearch
       webhook_configs:
       - send_resolved: true
         url: 'http://prometheus-msteams:2000/alertmanager-opensearch' 
+
     - name: 'longhorn_alerts'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
@@ -443,6 +451,7 @@ alertmanager:
             *PVC:* `{{ .CommonLabels.pvc }}`
             *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
             *Description:* `{{ .CommonAnnotations.description }}`
+
     - name: 'kubernetes_devops_prod'
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
