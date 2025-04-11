@@ -13,12 +13,12 @@ prometheus:
       http: "30062"
 
   retention: 3d
-  retentionSize: "20GB"
+  retentionSize: "28GB"
 
   persistence:
     enabled: true
     storageClass: "longhorn"
-    size: 20Gi
+    size: 30Gi
 
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
