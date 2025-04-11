@@ -31,7 +31,7 @@ auth:
   register: false
 
 ingress:
-  hostname: "sentryuat-sc.starixplay.com"
+  hostname: "sentry-k8s.sgamesuat.com"
   additionalHostNames:
   - "sentryuat-sc.nebula.prod"
   ingressClassName: "haproxy"
