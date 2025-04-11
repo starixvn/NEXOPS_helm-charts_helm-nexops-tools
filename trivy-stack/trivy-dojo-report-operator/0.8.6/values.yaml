@@ -1,0 +1,63 @@
+defectDojoApiCredentials:
+  createSecret: true
+  apiKey: "YOUR_DEFECTDOJO_API_KEY"
+  url: "YOUR_DEFECTDOJO_URL"
+kubernetesClusterDomain: cluster.local
+account:
+  serviceAccount:
+    annotations: {}
+operator:
+  ports:
+    - name: metrics
+      port: 80
+      protocol: TCP
+      targetPort: metrics
+  replicas: 1
+  trivyDojoReportOperator:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 1000
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    resources: {}
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    extraVolumeMounts: []
+    extraVolumes: []
+    env:
+      defectDojoActive: "true"
+      defectDojoAutoCreateContext: "true"
+      defectDojoCloseOldFindings: "false"
+      defectDojoCloseOldFindingsProductScope: "false"
+      defectDojoDeduplicationOnEngagement: "true"
+      defectDojoDoNotReactivate: "true"
+      defectDojoEngagementName: engagement
+      defectDojoEnvName: Development
+      defectDojoEvalEngagementName: "false"
+      defectDojoEvalEnvName: "false"
+      defectDojoEvalProductName: "false"
+      defectDojoEvalProductTypeName: "false"
+      defectDojoEvalTestTitle: "false"
+      defectDojoMinimumSeverity: Info
+      defectDojoProductName: product
+      defectDojoProductTypeName: Research and Development
+      defectDojoPushToJira: "false"
+      defectDojoTestTitle: Kubernetes
+      defectDojoVerified: "false"
+      reports: vulnerabilityreports
+    image:
+      repository: ghcr.io/telekom-mms/docker-trivy-dojo-operator
+      tag: 0.8.6
+    imagePullSecrets: []
+  type: ClusterIP
+  podSecurityContext:
+    runAsNonRoot: true
+    fsGroupChangePolicy: Always
+    fsGroup: 1000
