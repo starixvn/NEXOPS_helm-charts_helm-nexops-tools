@@ -141,14 +141,14 @@ prometheus:
           summary: "API Server Down"
           description: "The Kubernetes API server is down."
 
-      - alert: Cluster Pod Usage Above 50%
+      - alert: Cluster Pod Usage Above 80%
         expr: |
-          (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 50
+          (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 80
         for: 5m
         labels:
           severity: warning
         annotations:
-          summary: "Pod usage exceeds 50% of total allocatable pods in the cluster"
+          summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
           description: "Pod usage is currently {{ printf \"%.0f\" $value }}% of the total cluster pod capacity."
 
   - name: runners.metrics
