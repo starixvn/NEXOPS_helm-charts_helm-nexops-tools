@@ -37,6 +37,12 @@ prometheus:
       jobList: []
   ##
 
+
+kube-state-metrics:
+  resourcesPreset: "none"
+  nodeSelector:
+    nexops-tools: "yes"
+
   additionalPrometheusRules:
   - name: runners.metrics
     rules:
