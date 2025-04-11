@@ -44,7 +44,7 @@ prometheus:
         scrape_interval: 10s
         scrape_timeout: 5s
         static_configs:
-          - targets: ['10.43.82.146:8080']
+          - targets: ['nexpe-gitlab-ci-pipelines-exporter-nexprod-service.nexpe:8080']
   ##
 
   additionalPrometheusRules:
