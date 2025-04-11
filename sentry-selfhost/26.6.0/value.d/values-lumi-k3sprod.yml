@@ -104,7 +104,7 @@ nginx:
   clusterDomain: starix.k3sprod
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/nginx
+    repository: kbt/base/bitnami/nginx
     tag: 1.27.0-debian-12-r1
   nodeSelector:
     sc-sentry: "yes"
@@ -135,7 +135,7 @@ zookeeper:
   clusterDomain: starix.k3sprod
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/zookeeper
+    repository: kbt/base/bitnami/zookeeper
     tag: 3.8.2-debian-11-r27
   nodeSelector:
     sc-sentry: "yes"
@@ -154,7 +154,7 @@ zookeeper:
 kafka:
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/kafka
+    repository: kbt/base/bitnami/kafka
     tag: 3.7.0-debian-12-r7
   global:
     storageClass: "local-path"
@@ -181,7 +181,7 @@ redis:
   clusterDomain: starix.k3sprod
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/redis
+    repository: kbt/base/bitnami/redis
     tag: 7.0.11-debian-11-r12
   master:
     persistence:
@@ -212,7 +212,7 @@ redis:
 postgresql:
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/postgresql
+    repository: kbt/base/bitnami/postgresql
     tag: 15.3.0-debian-11-r0   
   clusterDomain: starix.k3sprod
   global:
@@ -251,7 +251,7 @@ postgresql:
 rabbitmq:
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/rabbitmq
+    repository: kbt/base/bitnami/rabbitmq
     tag: 3.11.18-debian-11-r0
   clusterDomain: starix.k3sprod
   ulimitNofiles: "none"
@@ -268,7 +268,7 @@ rabbitmq:
 memcached:
   image:
     registry: nexhub.nebula.prod
-    repository: base/bitnami/memcached
+    repository: kbt/base/bitnami/memcached
     tag: 1.6.29-debian-12-r0
   clusterDomain: starix.k3sprod
   nodeSelector:
