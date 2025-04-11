@@ -39,107 +39,105 @@ prometheus:
 
   additionalPrometheusRules:
   - name: kubernetes.rules
-    groups:
-    - name: kubernetes.rules
-      rules:
-      - alert: Node Not Ready
-        expr: kube_node_status_condition{condition="Ready", status="false"} == 1
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node Not Ready"
-          description: "Node {{ $labels.node }} is not ready."
+    rules:
+    - alert: Node Not Ready
+      expr: kube_node_status_condition{condition="Ready", status="false"} == 1
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Node Not Ready"
+        description: "Node {{ $labels.node }} is not ready."
 
-      - alert: High Node CPU Usage
-        expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High CPU Usage on Node"
-          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU."
+    - alert: High Node CPU Usage
+      expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU Usage on Node"
+        description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU."
 
-      - alert: High Node Memory Usage
-        expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High Memory Usage on Node"
-          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
+    - alert: High Node Memory Usage
+      expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High Memory Usage on Node"
+        description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
 
-      - alert: High Node Disk Usage
-        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 70
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High Disk Usage on Node"
-          description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
+    - alert: High Node Disk Usage
+      expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 70
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High Disk Usage on Node"
+        description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
 
-      - alert: Node Disk Pressure
-        expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node Disk Pressure"
-          description: "Node {{ $labels.node }} is under disk pressure."
+    - alert: Node Disk Pressure
+      expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Node Disk Pressure"
+        description: "Node {{ $labels.node }} is under disk pressure."
 
-      - alert: Node Memory Pressure
-        expr: kube_node_status_condition{condition="MemoryPressure", status="true"} == 1
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node Memory Pressure"
-          description: "Node {{ $labels.node }} is under memory pressure."
+    - alert: Node Memory Pressure
+      expr: kube_node_status_condition{condition="MemoryPressure", status="true"} == 1
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Node Memory Pressure"
+        description: "Node {{ $labels.node }} is under memory pressure."
 
-      - alert: Pod Not Running
-        expr: kube_pod_status_phase{phase!="Running"} == 1
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod Not Running"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
+    - alert: Pod Not Running
+      expr: kube_pod_status_phase{phase!="Running"} == 1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Pod Not Running"
+        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
 
-      - alert: Pod Restart Detected
-        expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod {{ $labels.pod }} restarted"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
+    - alert: Pod Restart Detected
+      expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
+      labels:
+        severity: warning
+      annotations:
+        summary: "Pod {{ $labels.pod }} restarted"
+        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
 
-      - alert: Pod Restarting Frequently
-        expr: increase(kube_pod_container_status_restarts_total[5m])  > 3
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod Restarting Frequently"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 3 times in the last 5 minutes."
+    - alert: Pod Restarting Frequently
+      expr: increase(kube_pod_container_status_restarts_total[5m])  > 3
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Pod Restarting Frequently"
+        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 3 times in the last 5 minutes."
 
-      - alert: API Server Down
-        expr: up{job="apiserver"} == 0
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          summary: "API Server Down"
-          description: "The Kubernetes API server is down."
+    - alert: API Server Down
+      expr: up{job="apiserver"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "API Server Down"
+        description: "The Kubernetes API server is down."
 
-      - alert: Cluster Pod Usage Above 50%
-        expr: |
-          (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 50
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod usage exceeds 50% of total allocatable pods in the cluster"
-          description: "Pod usage is currently {{ printf \"%.0f\" $value }}% of the total cluster pod capacity."
+    - alert: Cluster Pod Usage Above 80%
+      expr: |
+        (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
+        description: "Pod usage is currently {{ printf \"%.0f\" $value }}% of the total cluster pod capacity."
 
   - name: runners.metrics
     rules:
@@ -149,6 +147,7 @@ prometheus:
       record: gitlab_runner_build_total:concurrent_saturation
     - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
       record: gitlab_runner_jobs:concurrent_saturation
+
   - name: longhorn.rules
     rules:
     - alert: LonghornVolumeActualSpaceUsedWarning
