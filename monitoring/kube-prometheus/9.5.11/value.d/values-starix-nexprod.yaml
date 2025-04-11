@@ -287,6 +287,9 @@ alertmanager:
       - receiver: 'null'
         match_re:
           namespace: "gitlab-runner"
+      - receiver: 'null'
+        match_re:
+          pod: "scan-vulnerabilityreport-.*|c-.*|jaeger-lumprod-es-rollover-.*|jaeger-lumprod-es-index-cleaner-.*|sentry-lumi-lumprod-sentry-cleanup-.*"
       - receiver: kubernetes_nexprod_lumprod
         match_re:
           service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
