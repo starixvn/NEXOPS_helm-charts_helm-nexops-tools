@@ -289,7 +289,7 @@ alertmanager:
           namespace: "gitlab-runner"
       - receiver: kubernetes_nexprod_lumprod
         match_re:
-          service: "prometheus-nexprod-kube-state-metrics|prometheus-nexprod-node-exporter"
+          service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
       - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
