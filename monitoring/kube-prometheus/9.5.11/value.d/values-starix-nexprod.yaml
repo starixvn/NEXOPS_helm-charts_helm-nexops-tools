@@ -286,7 +286,7 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "gitlab-runner"
+          namespace: "gitlab-runner|defectdojo-starix"
       - receiver: 'null'
         match_re:
           pod: "scan-vulnerabilityreport-.*|c-.*|jaeger-lumprod-es-rollover-.*|jaeger-lumprod-es-index-cleaner-.*|sentry-lumi-lumprod-sentry-cleanup-.*"
