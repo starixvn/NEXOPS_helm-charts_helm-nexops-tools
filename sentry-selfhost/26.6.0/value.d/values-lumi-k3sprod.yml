@@ -296,7 +296,7 @@ sentry:
     - name: HTTPS_PROXY
       value: "http://lisasqd.nebula.prod:8801"
     - name: NO_PROXY
-      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentryuat-sc.starixplay.com"
+      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentrypro-sc.starixplay.com"
 
   worker:
     enabled: true
@@ -314,7 +314,7 @@ sentry:
     - name: HTTPS_PROXY
       value: "http://lisasqd.nebula.prod:8801"
     - name: NO_PROXY
-      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentryuat-sc.starixplay.com"
+      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentrypro-sc.starixplay.com"
 
   workerEvents:
     enabled: true
