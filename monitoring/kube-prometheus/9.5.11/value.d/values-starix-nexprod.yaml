@@ -286,10 +286,10 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "gitlab-runner|defectdojo-starix"
+          namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager"
       - receiver: 'null'
         match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|jaeger-lumprod-es-rollover-.*|jaeger-lumprod-es-index-cleaner-.*|sentry-lumi-lumprod-sentry-cleanup-.*"
+          pod: "scan-vulnerabilityreport-.*|c-.*|jaeger-lumprod-es-rollover-.*|jaeger-lumprod-es-index-cleaner-.*|sentry-lumi-lumprod-sentry-cleanup-.*|sentry-starix-nexprod-sentry-cleanup-.*|zabbix-server-nodesclean-.*|vault-raft-snapshot-.*"
       - receiver: kubernetes_nexprod_lumprod
         match_re:
           service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
