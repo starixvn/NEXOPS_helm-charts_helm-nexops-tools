@@ -29,71 +29,7 @@ prometheus:
     enabled: true
     type: internal
     internal:
-      jobList:
-      ###########################################################################
-      ### Req from DBA: https://teams.microsoft.com/l/message/19:b042b9fae1704402b7582ace18f21fea@thread.v2/1728025357615?context=%7B%22contextType%22%3A%22chat%22%7D
-      ###########################################################################
-      - job_name: 's1-db-servers'
-        scrape_interval: 5s
-        # UAT MongoDB
-        static_configs:
-        - targets:
-          - 'vn-s1-mongodb-uat.nebula.prod:8080'
-          labels:
-            environment: 'uat'
-            db: 'mongodb'
-            exporter: 'cadvisor'
-        - targets:
-          - 'vn-s1-mongodb-uat.nebula.prod:9216'
-          labels:
-            environment: 'uat'
-            db: 'mongodb'
-            exporter: 'mongodb_exporter'
-        - targets:
-          - 'vn-s1-mongodb-uat.nebula.prod:9100'
-          labels:
-            environment: 'uat'
-            db: 'mongodb'
-            exporter: 'node_exporter'
-        # UAT Postgres
-        - targets:
-          - 'vn-s1-postgresql-uat.nebula.prod:8080'
-          labels:
-            environment: 'uat'
-            db: 'postgres'
-            exporter: 'cadvisor'
-        - targets:
-          - 'vn-s1-postgresql-uat.nebula.prod:9187'
-          labels:
-            environment: 'uat'
-            db: 'postgres'
-            exporter: 'postgres_exporter'
-        - targets:
-          - 'vn-s1-postgresql-uat.nebula.prod:9100'
-          labels:
-            environment: 'uat'
-            db: 'postgres'
-            exporter: 'node_exporter'
-        # PROD MongoDB
-        - targets:
-          - 'vn-s1-mongodb-prod.nebula.prod:8080'
-          labels:
-            environment: 'production'
-            db: 'mongodb'
-            exporter: 'cadvisor'
-        - targets:
-          - 'vn-s1-mongodb-prod.nebula.prod:9216'
-          labels:
-            environment: 'production'
-            db: 'mongodb'
-            exporter: 'mongodb_exporter'
-        - targets:
-          - 'vn-s1-mongodb-prod.nebula.prod:9100'
-          labels:
-            environment: 'production'
-            db: 'mongodb'
-            exporter: 'node_exporter'
-      ###########################################################################
+      jobList: []
 
 
   additionalPrometheusRules:
@@ -419,7 +355,7 @@ alertmanager:
       - receiver: kubernetes_devops_prod
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
-      - receiver: prometheus-msteams-opensearch
+      - receiver: slack-fps-opensearch
         match:
           service: OpenSearch
       - receiver: longhorn_alerts
@@ -433,10 +369,38 @@ alertmanager:
 
     receivers:
     - name: 'null'
-    - name: prometheus-msteams-opensearch
-      webhook_configs:
-      - send_resolved: true
-        url: 'http://prometheus-msteams:2000/alertmanager-opensearch' 
+
+    - name: slack-fps-opensearch
+      slack_configs:
+      - api_url: "https://hooks.slack.com/services/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"
+        channel: '#dev-services'
+        send_resolved: true
+        icon_emoji: ':opensearch-ico:'
+        username: 'FPS OpenSearch - PROD'
+        title: >-
+          {{ if eq .Status "firing" }}
+            {{ if eq (toUpper .CommonLabels.severity) "CRITICAL") }}
+              🚨{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}🚨 
+            {{ if eq (toUpper .CommonLabels.severity) "WARNING") }}
+              ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}⚠️
+            {{ else }} 
+              ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}❓
+          {{ else }}
+            ✅{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}✅ 
+          {{ end }}
+        text: >-
+          *Description:* {{ .CommonAnnotations.description }}
+          *AlertName:* {{ .CommonLabels.alertname }}
+          *Cluster:* {{ .CommonLabels.cluster }}
+        color: >-
+          {{ if eq .Status "firing" }}
+            {{ if eq .CommonLabels.severity "critical" }}
+              #8C1A1A
+            {{ else if eq .CommonLabels.severity "warning" }}
+              #FFA500
+          {{ else }}
+            #2ECC71
+          {{ end }}
 
     - name: 'longhorn_alerts'
       slack_configs:
