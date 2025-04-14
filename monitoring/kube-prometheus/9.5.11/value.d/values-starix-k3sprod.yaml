@@ -169,7 +169,7 @@ prometheus:
 
       # Opensearch Cluster Red 
       - alert: OpensearchClusterRed
-        expr: opensearch_cluster_status == 2
+        expr: opensearch_cluster_status == 0
         for: 0m
         labels:
           severity: CRITICAL
@@ -386,7 +386,7 @@ alertmanager:
             {{ else }} 
               ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}❓
           {{ else }}
-            ✅{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}✅ 
+            :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}:pepe-yay: 
           {{ end }}
         text: >-
           *Description:* {{ .CommonAnnotations.description }}
