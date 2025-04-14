@@ -175,7 +175,7 @@ prometheus:
           severity: CRITICAL
           service: OpenSearch
         annotations:
-          title: "Opensearch: Cluster in Read Health"
+          title: "Opensearch: Cluster in Red Health"
           summary: Opensearch Cluster Red (component {{ $labels.job }})
           description: "Opensearch Cluster Red status"
           template: "automate"
