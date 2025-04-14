@@ -358,6 +358,7 @@ alertmanager:
       - receiver: slack-fps-opensearch
         match:
           service: "OpenSearch"
+        group_by: ['alertname', 'job']
       - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
