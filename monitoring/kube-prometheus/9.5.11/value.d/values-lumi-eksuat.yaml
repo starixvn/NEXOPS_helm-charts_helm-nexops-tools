@@ -164,8 +164,8 @@ alertmanager:
       receiver: 'kubernetes_sc_uat'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
-      group_interval: 9999h
-      repeat_interval: 9999h
+      group_interval: 0s
+      repeat_interval: 0s
 
     receivers:
       - name: 'null'

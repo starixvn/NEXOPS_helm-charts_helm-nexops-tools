@@ -415,7 +415,7 @@ alertmanager:
           namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
       - receiver: 'null'
         match_re:
-          pod: "backup-.*|c-.*|jaeger-lumi-k3sprod-es-index-cleaner-.*|vault-raft-snapshot-.*|sentry-lumi-k3sprod-sentry-cleanup-.*"
+          pod: "backup-.*|c-.*|*.-cleaner-.*|*.snapshot-.*|*.-cleanup-.*|*.-cron-.*"
       - receiver: kubernetes_devops_prod
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
@@ -428,8 +428,8 @@ alertmanager:
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
-      group_interval: 9999h
-      repeat_interval: 9999h
+      group_interval: 0s
+      repeat_interval: 0s
 
     receivers:
     - name: 'null'
