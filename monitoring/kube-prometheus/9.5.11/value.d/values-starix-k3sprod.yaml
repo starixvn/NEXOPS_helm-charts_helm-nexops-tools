@@ -389,9 +389,14 @@ alertmanager:
             :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}:pepe-yay: 
           {{ end }}
         text: >-
-          *Description:* {{ .CommonAnnotations.description }}
-          *AlertName:* {{ .CommonLabels.alertname }}
-          *Cluster:* {{ .CommonLabels.cluster }}
+          *Description:* `{{ .CommonAnnotations.description }}`
+          *Details:*
+            {{ range .Labels.SortedPairs }}
+              {{ if or (or (eq $key "cluster") (eq $key "alertname") }} • *{{ .Name }}:* `{{ .Value }}`
+              }
+            {{ end }}
+          *AlertName:* `{{ .CommonLabels.alertname }}`
+          *Cluster:* `{{ .CommonLabels.cluster }}`
         color: >-
           {{ if eq .Status "firing" }}
             {{ if eq .CommonLabels.severity "critical" }}
