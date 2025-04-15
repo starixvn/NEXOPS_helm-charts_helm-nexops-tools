@@ -149,7 +149,7 @@ prometheus:
           service: OpenSearch
         annotations:
           investigate_link: "https://ops-fps.starixplay.com"
-          title: "Opensearch: Disk running out of space"
+          title: "Disk running out of space"
           summary: Opensearch disk out of space (component {{ $labels.job }})
           description: "The disk usage is over 90%"
           template: "automate"
@@ -162,7 +162,7 @@ prometheus:
           severity: CRITICAL
           service: OpenSearch
         annotations:
-          title: "Opensearch: Nodes go Offline"
+          title: "Nodes go Offline"
           summary: Opensearch node goes offline (component {{ $labels.job }})
           description: "Some node go offline!"
           template: "automate"
@@ -175,7 +175,7 @@ prometheus:
           severity: CRITICAL
           service: OpenSearch
         annotations:
-          title: "Opensearch: Cluster in Red Health"
+          title: "Cluster in Red Health"
           summary: Opensearch Cluster Red (component {{ $labels.job }})
           description: "Opensearch Cluster Red status"
           template: "automate"
@@ -188,7 +188,7 @@ prometheus:
           severity: WARNING
           service: OpenSearch
         annotations:
-          title: "Opensearch: Cluster in Yellow Health"
+          title: "Cluster in Yellow Health"
           summary: Opensearch Cluster Yellow (component {{ $labels.job }})
           description: "Elastic Cluster Yellow status"
           template: "automate"
@@ -201,7 +201,7 @@ prometheus:
           severity: WARNING
           service: OpenSearch
         annotations:
-          title: "Opensearch: No new Docs been written"
+          title: "No new Docs been written"
           summary: Opensearch no new documents (component {{ $labels.job }})
           description: "No new documents for 10 min!"
           template: "automate"
