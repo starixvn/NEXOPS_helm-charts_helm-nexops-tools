@@ -169,7 +169,7 @@ prometheus:
 
       # Opensearch Cluster Red 
       - alert: OpensearchClusterRed
-        expr: opensearch_cluster_status == 0
+        expr: opensearch_cluster_status == 2
         for: 0m
         labels:
           severity: CRITICAL
