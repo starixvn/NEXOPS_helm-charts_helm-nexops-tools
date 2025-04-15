@@ -377,7 +377,7 @@ alertmanager:
         channel: "#dev-services"
         send_resolved: true
         icon_emoji: ":opensearch-ico:"
-        username: "FPS OpenSearch - PROD"
+        # username: "FPS OpenSearch - PROD"
         title: >-
           {{ if eq .Status "firing" }}
             {{ if eq (toUpper .CommonLabels.severity) "CRITICAL") }}
