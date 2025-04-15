@@ -381,14 +381,14 @@ alertmanager:
         title: |-
           {{ if eq .Status "firing" }}
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              🚨{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}🚨
+              :pepe-rage:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-rage:
             {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
               ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}⚠️
             {{ else }} 
               ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}❓
             {{ end }}
           {{ else }}
-            ✅{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}✅ 
+            :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-yay: 
           {{ end }}
         text: >-
           *Description:* {{ .CommonAnnotations.description }}
