@@ -387,19 +387,19 @@ alertmanager:
             {{ else }} 
               ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}❓
           {{ else }}
-            :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-yay: 
+            ✅{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}✅ 
           {{ end }}
         text: >-
-          *Description:* `{{ .CommonAnnotations.description }}`
+          *Description:* {{ .CommonAnnotations.description }}
           *Details:*
             {{ range $key, $value := .CommonLabels }}
               {{ if or (eq $key "cluster") (eq $key "alertname") }} • *{{ $key }}:* `{{ $value }}`
             {{ end }}
         color: |-
           {{ if eq .Status "firing" }}
-            {{ if eq .CommonLabels.severity "critical" }}
+            {{ if eq (.CommonLabels.severity | toUpper) "critical" }}
               #8C1A1A
-            {{ else if eq .CommonLabels.severity "warning" }}
+            {{ else if eq (.CommonLabels.severity | toUpper) "warning" }}
               #FFA500
           {{ else }}
             #2ECC71
