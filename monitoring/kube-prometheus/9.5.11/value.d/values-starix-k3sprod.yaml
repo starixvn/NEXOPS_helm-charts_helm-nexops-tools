@@ -392,14 +392,15 @@ alertmanager:
           {{ end }}
         text: >-
           *Description:* {{ .CommonAnnotations.description }}
+          
           *Details:*
             {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "cluster") (eq $key "alertname") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
             {{ end }}
         color: |-
           {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "critical" }}
+            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               #8C1A1A
-            {{ else if eq (.CommonLabels.severity | toUpper) "warning" }}
+            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
               #FFA500
             {{ end }}
           {{ else }}
