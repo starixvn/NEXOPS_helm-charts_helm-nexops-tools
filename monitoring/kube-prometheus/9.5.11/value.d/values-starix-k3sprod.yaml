@@ -402,6 +402,7 @@ alertmanager:
               #8C1A1A
             {{ else if eq (.CommonLabels.severity | toUpper) "warning" }}
               #FFA500
+            {{ end }}
           {{ else }}
             #2ECC71
           {{ end }}
