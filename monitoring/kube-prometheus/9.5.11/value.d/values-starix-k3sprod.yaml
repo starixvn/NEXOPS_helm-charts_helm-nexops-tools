@@ -382,10 +382,11 @@ alertmanager:
           {{ if eq .Status "firing" }}
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               🚨{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}🚨
-            {{ if eq (toUpper .CommonLabels.severity) "WARNING" }}
+            {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
               ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}⚠️
             {{ else }} 
               ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}❓
+            {{ end }}
           {{ else }}
             ✅{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}✅ 
           {{ end }}
