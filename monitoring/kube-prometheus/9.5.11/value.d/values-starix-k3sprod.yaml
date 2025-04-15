@@ -394,7 +394,7 @@ alertmanager:
           *Description:* {{ .CommonAnnotations.description }}
           
           *Details:*
-            {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "cluster") (eq $key "alertname") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
+            {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
             {{ end }}
         color: |-
           {{ if eq .Status "firing" }}
