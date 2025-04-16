@@ -283,7 +283,7 @@ alertmanager:
           namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
       - receiver: 'null'
         match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|*.-rollover-.*|*.-cleaner-.*|*.-cleanup-.*|*.node-exporter.*"
+          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
