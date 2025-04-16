@@ -363,13 +363,10 @@ alertmanager:
              • *Cluster:* `Kubernetes-LumProd`
         color: |
           {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              #8C1A1A
-            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
-              #FFA500
+            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }} "#8C1A1A"
+            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }} "#FFA500"
             {{ end }}
-          {{ else }}
-            #2ECC71
+          {{ else }} "#2ECC71"
           {{ end }}
           
     - name: default-receiver
