@@ -208,8 +208,8 @@ alertmanager:
       receiver: 'kubernetes_st_local'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
-      group_interval: 0s
-      repeat_interval: 0s
+      group_interval: 1m
+      repeat_interval: 24h
 
     receivers:
       - name: 'null'
