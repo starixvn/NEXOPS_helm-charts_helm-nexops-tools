@@ -212,13 +212,13 @@ alertmanager:
       repeat_interval: 24h
 
     receivers:
-      - name: 'null'
-      - name: 'kubernetes_st_local'
-        slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes_st_local'
-          send_resolved: true
-          icon_emoji: ':prometheus-ico:'
+    - name: 'null'
+    - name: 'kubernetes_st_local'
+      slack_configs:
+      - api_url: "https://hooks.slack.com/services/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"
+        channel: '#kubernetes_st_local'
+        send_resolved: true
+        icon_emoji: ':prometheus-ico:'
         username: "Kubernetes - K8S-ST-LOCAL"
         title: |-
           {{ if eq .Status "firing" }}
@@ -250,4 +250,4 @@ alertmanager:
             #2ECC71
           {{ end }}
 
-      - name: default-receiver
+    - name: default-receiver
