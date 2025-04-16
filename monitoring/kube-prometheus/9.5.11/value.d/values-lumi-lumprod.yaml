@@ -340,7 +340,7 @@ alertmanager:
         send_resolved: true
         icon_emoji: ':prometheus-ico:'
         username: "Kubernetes - K3S-SC-LUMPROD"
-        title: |-
+        title: |
           {{ if eq .Status "firing" }}
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
@@ -352,7 +352,7 @@ alertmanager:
           {{ else }}
             :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
           {{ end }}
-        text: |-
+        text: |
           *Description:* {{ .CommonAnnotations.description }}
           *Details:*
             {{ range $key, $value := .CommonLabels }} 
@@ -361,7 +361,7 @@ alertmanager:
               {{ end }}
             {{ end }}
              • *Cluster:* `Kubernetes-LumProd`
-        color: |-
+        color: |
           {{ if eq .Status "firing" }}
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               #8C1A1A
