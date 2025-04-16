@@ -352,11 +352,13 @@ alertmanager:
           {{ else }}
             :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
           {{ end }}
-        text: >-
+        text: |-
           *Description:* {{ .CommonAnnotations.description }}
-
           *Details:*
-            {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "namespace") (eq $key "container") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
+            {{ range $key, $value := .CommonLabels }} 
+              {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "namespace") (eq $key "container") }}
+               • *{{ $key }}:* `{{ $value }}` 
+              {{ end }}
             {{ end }}
              • *Cluster:* `Kubernetes-LumProd`
         color: >-
