@@ -383,9 +383,9 @@ alertmanager:
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
             {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
-              ⚠️ [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
+              :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
             {{ else }} 
-              ❓ [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
+              :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
             {{ end }}
           {{ else }}
             :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
