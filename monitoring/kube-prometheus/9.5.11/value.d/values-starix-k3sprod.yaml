@@ -396,7 +396,7 @@ alertmanager:
           *Details:*
             {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
             {{ end }}
-        color: |-
+        color: >-
           {{ if eq .Status "firing" }}
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               #8C1A1A
