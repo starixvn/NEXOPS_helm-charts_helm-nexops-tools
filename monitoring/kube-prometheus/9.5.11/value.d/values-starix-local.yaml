@@ -215,15 +215,39 @@ alertmanager:
       - name: 'null'
       - name: 'kubernetes_st_local'
         slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
-            channel: '#kubernetes_st_local'
-            send_resolved: true
-            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-            text: |
-              *Cluster:* `Kubernetes-SC-Local`
-              *Summary:* `{{ .CommonLabels.alertname }}`
-              *Description:* `{{ .CommonAnnotations.description }}`
-            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#kubernetes_st_local'
+          send_resolved: true
+          icon_emoji: ':prometheus-ico:'
+        username: "Kubernetes - K8S-ST-LOCAL"
+        title: |-
+          {{ if eq .Status "firing" }}
+            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
+              :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+            {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
+              :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+            {{ else }} 
+              :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+            {{ end }}
+          {{ else }}
+            :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
+          {{ end }}
+        text: >-
+          *Description:* {{ .CommonAnnotations.description }}
+
+          *Details:*
+            {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "namespace") (eq $key "container") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
+            {{ end }}
+             • *Cluster:* `Kubernetes-ST-Local`
+        color: >-
+          {{ if eq .Status "firing" }}
+            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
+              #8C1A1A
+            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
+              #FFA500
+            {{ end }}
+          {{ else }}
+            #2ECC71
+          {{ end }}
 
       - name: default-receiver
