@@ -305,7 +305,7 @@ alertmanager:
         send_resolved: true
         icon_emoji: ':longhorn-ico:'
         username: "Longhorn - K3S-ST-NEXPROD"
-        title: |-
+        title: |
           {{ if eq .Status "firing" }}
             {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
               :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
@@ -315,22 +315,22 @@ alertmanager:
               :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
             {{ end }}
           {{ else }}
-            :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
+            :pepe-saber: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
           {{ end }}
         text: |
           *Severity:* `{{ .CommonLabels.severity }}`
           *PVC:* `{{ .CommonLabels.pvc }}`
           *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
           *Description:* `{{ .CommonAnnotations.description }}`
-        color: >-
+        color: |
           {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              #8C1A1A
-            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
-              #FFA500
+            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }} 
+              "#8C1A1A"
+            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }} 
+              "#FFA500"
             {{ end }}
           {{ else }}
-            #2ECC71
+            "#2ECC71"
           {{ end }}
 
     - name: 'kubernetes_nexprod_lumprod'
