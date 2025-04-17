@@ -272,10 +272,6 @@ node-exporter:
 alertmanager:
   enabled: true
   config:
-    global:
-      resolve_timeout: 15m
-      slack_api_url: https://hooks.slack.com/services/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
-
     route:
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
@@ -306,11 +302,10 @@ alertmanager:
         send_resolved: true
         username: "Longhorn - K3S-ST-LUMPROD"
         title: '{{ template "sre.slack.title" . }}'
-        text: |
-          *Severity:* `{{ .CommonLabels.severity }}`
-          *PVC:* `{{ .CommonLabels.pvc }}`
+        text: |-
+          {{ template "sre.slack.body" . }}
+          *Service:* `{{ .CommonLabels.service }}`
           *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
-          *Description:* `{{ .CommonAnnotations.description }}`
 
     - name: kube-alert
       slack_configs:
@@ -323,7 +318,4 @@ alertmanager:
         title: '{{ template "sre.slack.title" . }}'
         title_link: '{{ template "sre.slack.titlelink" . }}'
         text: '{{ template "sre.slack.body" . }}'
-          
-    templates:
-    - /etc/alertmanager/config/*.tmpl
-    #
+        
