@@ -281,19 +281,18 @@ alertmanager:
       group_wait: 30s
       group_interval: 1m
       repeat_interval: 24h
-      receiver: default-receiver
       routes:
       - receiver: 'null'
         match_re:
-        - namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
-        - pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
+          namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
+          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
       - receiver: 'kube-alert'
         match_re:
-        - service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
+          service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
       - receiver: 'longhorn_alerts'
         group_by: ['alertname', 'job', 'pvc']
         match:
-        - service: "longhorn-backend"
+          service: "longhorn-backend"
 
     receivers:
     - name: 'null'
@@ -324,8 +323,6 @@ alertmanager:
         title_link: '{{ template "sre.slack.titlelink" . }}'
         text: '{{ template "sre.slack.body" . }}'
           
-    - name: default-receiver
-
     templates:
     - /etc/alertmanager/config/*.template
     #
