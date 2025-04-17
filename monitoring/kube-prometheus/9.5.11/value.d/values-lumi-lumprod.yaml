@@ -345,7 +345,7 @@ alertmanager:
       {{- end }}
 
       {{- define "sre.slack.body" -}}
-        *Alert:* {{ .Labels.alertname }}
+        *Alert:* {{ .CommonLabels.alertname }}
         {{- .Annotations.description | printf "\n%s" }}
       {{- end }}
 
