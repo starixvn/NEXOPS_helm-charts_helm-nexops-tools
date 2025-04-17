@@ -20,8 +20,13 @@ alertmanager:
 
         *Details:*
         {{- range $key, $value := .CommonLabels -}}
-          {{- if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") }}
-           • *{{ $key }}:* `{{ $value }}`
+          {{- if or 
+            (eq $key "cluster")
+            (eq $key "job")
+            (eq $key "pod")
+            (eq $key "pvc")
+          }}
+           • *{{ $key | title }}:* `{{ $value }}`
           {{- end -}}
         {{- end -}}
       {{- end }}

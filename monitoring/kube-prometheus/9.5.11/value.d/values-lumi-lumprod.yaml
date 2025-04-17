@@ -304,7 +304,7 @@ alertmanager:
         fallback: '{{ template "sre.slack.fallback" . }}'
         icon_emoji: ':longhorn-ico:'
         send_resolved: true
-        username: "Longhorn - K3S-ST-NEXPROD"
+        username: "Longhorn - K3S-ST-LUMPROD"
         title: '{{ template "sre.slack.title" . }}'
         text: |
           *Severity:* `{{ .CommonLabels.severity }}`
@@ -327,44 +327,3 @@ alertmanager:
     templates:
     - /etc/alertmanager/config/*.tmpl
     #
-
-  templateFiles:
-    sre-template.tmpl: |-
-      {{ define "sre.slack.title" -}}
-        {{- if eq .Status "firing" -}}
-          {{- if eq (.CommonLabels.severity | toUpper) "CRITICAL" -}}
-            :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-          {{- else if eq (toUpper .CommonLabels.severity) "WARNING" -}}
-            :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-          {{- else -}} 
-            :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-          {{- end -}}
-        {{- else -}}
-          :pepe-saber: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
-        {{- end -}}
-      {{- end }}
-
-      {{- define "sre.slack.body" -}}
-        *Alert:* {{ .CommonLabels.alertname }}
-        {{- .CommonAnnotations.description | printf "\n%s" }}
-      {{- end }}
-
-      {{ define "sre.slack.fallback" }}
-        {{ template "sre.slack.title" . }}
-      {{ end }}
-
-      {{ define "sre.slack.color" -}}
-        {{- if eq .Status "firing" -}}
-          {{- if eq (.CommonLabels.severity | toUpper) "CRITICAL" -}}
-            #FF5733
-          {{- else if eq (.CommonLabels.severity | toUpper) "WARNING" -}}
-            #FFA500
-          {{- end -}}
-        {{- else -}}
-          #32CD32
-        {{- end -}}
-      {{- end }}
-
-      {{ define "sre.slack.titlelink" -}}
-        {{ range .Alerts }}{{ .Annotations.DashboardURL }}{{ end }} 
-      {{- end }}
