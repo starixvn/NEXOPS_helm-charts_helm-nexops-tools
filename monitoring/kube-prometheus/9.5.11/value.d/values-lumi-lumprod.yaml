@@ -354,15 +354,15 @@ alertmanager:
       {{ end }}
 
       {{ define "sre.slack.color" -}}
-        {{ if eq .Status "firing" }}
-          {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
+        {{- if eq .Status "firing" -}}
+          {{- if eq (.CommonLabels.severity | toUpper) "CRITICAL" -}}
             #FF5733
-          {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
+          {{- else if eq (.CommonLabels.severity | toUpper) "WARNING" -}}
             #FFA500
-          {{ end }}
-        {{ else }}
+          {{- end -}}
+        {{- else -}}
           #32CD32
-        {{ end }}
+        {{- end -}
       {{- end }}
 
       {{ define "sre.slack.titlelink" -}}
