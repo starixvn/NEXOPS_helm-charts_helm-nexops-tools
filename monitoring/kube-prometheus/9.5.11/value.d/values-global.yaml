@@ -16,7 +16,7 @@ alertmanager:
       {{- end }}
 
       {{ define "sre.slack.body" -}}
-        *Description:* {{- .CommonAnnotations.description" }}
+        *Description:* {{ .CommonAnnotations.description }}
 
         *Details:*
         {{- range $key, $value := .CommonLabels -}}
