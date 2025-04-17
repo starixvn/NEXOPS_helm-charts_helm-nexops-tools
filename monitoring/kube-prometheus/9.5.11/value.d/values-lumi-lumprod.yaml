@@ -274,27 +274,26 @@ alertmanager:
   config:
     global:
       resolve_timeout: 15m
+      slack_api_url: https://hooks.slack.com/services/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
 
     route:
-      receiver: default-receiver
-      routes:
-      - receiver: 'null'
-        match_re:
-          namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
-      - receiver: 'null'
-        match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
-      - receiver: 'kubernetes_nexprod_lumprod'
-        match_re:
-          service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
-      - receiver: 'longhorn_alerts'
-        match:
-          service: "longhorn-backend"
-        group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
       group_interval: 1m
       repeat_interval: 24h
+      receiver: default-receiver
+      routes:
+      - receiver: 'null'
+        match_re:
+        - namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
+        - pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
+      - receiver: 'kube-alert'
+        match_re:
+        - service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
+      - receiver: 'longhorn_alerts'
+        group_by: ['alertname', 'job', 'pvc']
+        match:
+        - service: "longhorn-backend"
 
     receivers:
     - name: 'null'
@@ -333,35 +332,53 @@ alertmanager:
             "#2ECC71"
           {{ end }}
 
-    - name: 'kubernetes_nexprod_lumprod'
+    - name: kube-alert
       slack_configs:
-      - api_url: "https://hooks.slack.com/services/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"
-        channel: '#kubernetes_nexprod_lumprod'
-        send_resolved: true
+      - channel: '#kubernetes_nexprod_lumprod'
+        color: '{{ template "sre.slack.color" . }}'
+        fallback: '{{ template "sre.slack.fallback" . }}'
         icon_emoji: ':prometheus-ico:'
+        send_resolved: true
         username: "Kubernetes - K3S-SC-LUMPROD"
-        title: |
-          {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-            {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
-              :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-            {{ else }} 
-              :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-            {{ end }}
-          {{ else }}
-            :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
-          {{ end }}
-        text: >-
-          *Description:* {{ .CommonAnnotations.description }}
-
-          *Details:*
-           • *Cluster:* `Kubernetes-LUMPROD`
-          {{ range $key, $value := .CommonLabels }} 
-          {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") (eq $key "namespace") (eq $key "container") }}
-           • *{{ $key }}:* `{{ $value }}` {{ end }}
-          {{ end }}
-        color: '{{ if eq .Status "firing" }}{{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }} #8C1A1A{{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}#FFA500{{ end }}{{ else }}#2ECC71{{ end }}'
+        title: '{{ template "sre.slack.title" . }}'
+        title_link: '{{ template "sre.slack.titlelink" . }}'
+        text: '{{ template "sre.slack.body" . }}'
           
     - name: default-receiver
     #
+
+  templateFiles:
+    sre-template.tmpl: |-
+      {{ define "sre.slack.title" -}}
+        {{- if eq .Status "firing" -}}
+          {{- if eq (.CommonLabels.severity | toUpper) "CRITICAL" -}}
+            :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+          {{- else if eq (toUpper .CommonLabels.severity) "WARNING" -}}
+            :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+          {{- else -}} 
+            :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+          {{- end -}}
+        {{- else -}}
+          :pepe-saber: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
+        {{- end -}}
+      {{- end }}
+
+      {{ define "sre.slack.fallback" }}
+        {{ template "sre.slack.title" . }}
+      {{ end }}
+
+      {{ define "sre.slack.color" -}}
+        {{ if eq .Status "firing" }}
+          {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
+            #FF5733
+          {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
+            #FFA500
+          {{ end }}
+        {{ else }}
+          #32CD32
+        {{ end }}
+      {{- end }}
+
+      {{ define "sre.slack.titlelink" -}}
+        {{ range .Alerts }}{{ .Annotations.DashboardURL }}{{ end }} 
+      {{- end }}
