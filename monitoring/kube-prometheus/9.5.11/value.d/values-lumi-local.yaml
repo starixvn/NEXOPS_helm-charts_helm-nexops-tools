@@ -74,10 +74,10 @@ prometheus:
           description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
 
       - alert: High Node Disk Usage
-        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 70
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 80
         for: 5m
         labels:
-          severity: warning
+          severity: critical
         annotations:
           summary: "High Disk Usage on Node"
           description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
