@@ -293,7 +293,7 @@ alertmanager:
 
     receivers:
     - name: 'null'
-    - name: 'longhorn_alerts'
+    - name: longhorn_alerts
       slack_configs:
       - channel: '#longhorn_alerts'
         color: '{{ template "sre.slack.color" . }}'
