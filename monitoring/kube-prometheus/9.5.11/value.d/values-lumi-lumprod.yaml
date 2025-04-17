@@ -362,7 +362,7 @@ alertmanager:
           {{- end -}}
         {{- else -}}
           #32CD32
-        {{- end -}
+        {{- end -}}
       {{- end }}
 
       {{ define "sre.slack.titlelink" -}}
