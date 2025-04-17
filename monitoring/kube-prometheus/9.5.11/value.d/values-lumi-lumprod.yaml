@@ -325,7 +325,7 @@ alertmanager:
         text: '{{ template "sre.slack.body" . }}'
           
     templates:
-    - /etc/alertmanager/config/*.template
+    - /etc/alertmanager/config/*.tmpl
     #
 
   templateFiles:
