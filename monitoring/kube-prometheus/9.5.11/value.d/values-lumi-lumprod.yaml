@@ -281,6 +281,7 @@ alertmanager:
       group_wait: 30s
       group_interval: 1m
       repeat_interval: 24h
+      receiver: kube-alert
       routes:
       - receiver: 'null'
         match_re:
