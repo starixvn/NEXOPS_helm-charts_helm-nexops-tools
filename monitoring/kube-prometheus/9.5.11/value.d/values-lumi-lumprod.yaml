@@ -344,6 +344,11 @@ alertmanager:
         {{- end -}}
       {{- end }}
 
+      {{- define "sre.slack.body" -}}
+        *Alert:* {{ .Labels.alertname }}
+        {{- .Annotations.description | printf "\n%s" }}
+      {{- end }}
+
       {{ define "sre.slack.fallback" }}
         {{ template "sre.slack.title" . }}
       {{ end }}
