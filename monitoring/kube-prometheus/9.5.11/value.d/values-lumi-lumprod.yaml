@@ -287,10 +287,10 @@ alertmanager:
         match_re:
           namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
           pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
-      - receiver: 'kube-alert'
+      - receiver: kube-alert
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
-      - receiver: 'longhorn_alerts'
+      - receiver: longhorn_alerts
         group_by: ['alertname', 'job', 'pvc']
         match:
           service: "longhorn-backend"

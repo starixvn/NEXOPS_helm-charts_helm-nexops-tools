@@ -1,4 +1,9 @@
 alertmanager:
+  config:
+    global:
+      resolve_timeout: 15m
+      slack_api_url: https://hooks.slack.com/services/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
+      
   templateFiles:
     sre-template.tmpl: |-
       {{ define "sre.slack.title" -}}
