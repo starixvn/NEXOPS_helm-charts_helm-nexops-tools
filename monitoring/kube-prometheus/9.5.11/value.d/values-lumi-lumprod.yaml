@@ -299,38 +299,18 @@ alertmanager:
     - name: 'null'
     - name: 'longhorn_alerts'
       slack_configs:
-      - api_url: "https://hooks.slack.com/services/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"
-        channel: '#longhorn_alerts'
-        send_resolved: true
+      - channel: '#longhorn_alerts'
+        color: '{{ template "sre.slack.color" . }}'
+        fallback: '{{ template "sre.slack.fallback" . }}'
         icon_emoji: ':longhorn-ico:'
+        send_resolved: true
         username: "Longhorn - K3S-ST-NEXPROD"
-        title: |
-          {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-            {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
-              :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-            {{ else }} 
-              :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
-            {{ end }}
-          {{ else }}
-            :pepe-saber: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
-          {{ end }}
+        title: '{{ template "sre.slack.title" . }}'
         text: |
           *Severity:* `{{ .CommonLabels.severity }}`
           *PVC:* `{{ .CommonLabels.pvc }}`
           *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
           *Description:* `{{ .CommonAnnotations.description }}`
-        color: |
-          {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }} 
-              "#8C1A1A"
-            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }} 
-              "#FFA500"
-            {{ end }}
-          {{ else }}
-            "#2ECC71"
-          {{ end }}
 
     - name: kube-alert
       slack_configs:
@@ -345,6 +325,9 @@ alertmanager:
         text: '{{ template "sre.slack.body" . }}'
           
     - name: default-receiver
+
+    templates:
+    - /etc/alertmanager/config/*.template
     #
 
   templateFiles:
