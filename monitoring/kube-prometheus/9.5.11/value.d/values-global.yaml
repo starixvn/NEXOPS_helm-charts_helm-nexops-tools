@@ -3,6 +3,8 @@ alertmanager:
     global:
       resolve_timeout: 15m
       slack_api_url: https://hooks.slack.com/services/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
+    templates:
+    - /etc/alertmanager/config/*.tmpl
       
   templateFiles:
     sre-template.tmpl: |-
