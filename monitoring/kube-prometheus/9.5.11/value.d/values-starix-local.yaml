@@ -196,9 +196,6 @@ alertmanager:
   resourcesPreset: "none"
   enabled: true
   config:
-    global:
-      resolve_timeout: 15m
-
     route:
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
