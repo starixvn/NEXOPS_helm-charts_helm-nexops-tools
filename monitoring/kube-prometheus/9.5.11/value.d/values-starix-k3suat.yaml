@@ -306,7 +306,7 @@ alertmanager:
   
     - name: kube-alert
       slack_configs:
-      - channel: '#kubernetes_nexprod_lumprod'
+      - channel: '#kubernetes_devops_uat'
         color: '{{ template "sre.slack.color" . }}'
         fallback: '{{ template "sre.slack.fallback" . }}'
         icon_emoji: ':prometheus-ico:'
