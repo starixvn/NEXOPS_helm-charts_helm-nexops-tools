@@ -13,9 +13,9 @@ alertmanager:
           {{- if eq (.CommonLabels.severity | toUpper) "CRITICAL" -}}
             :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
           {{- else if eq (toUpper .CommonLabels.severity) "WARNING" -}}
-            :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+            :meow-stare: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
           {{- else -}} 
-            :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
+            :meow-disputed: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.summary }}
           {{- end -}}
         {{- else -}}
           :pepe-saber: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.summary }}
@@ -48,6 +48,8 @@ alertmanager:
             #FF5733
           {{- else if eq (.CommonLabels.severity | toUpper) "WARNING" -}}
             #FFA500
+          {{- else -}}
+            #4350E0
           {{- end -}}
         {{- else -}}
           #32CD32
