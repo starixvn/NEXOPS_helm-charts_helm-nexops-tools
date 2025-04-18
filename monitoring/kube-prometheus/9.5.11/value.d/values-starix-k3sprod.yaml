@@ -339,20 +339,17 @@ alertmanager:
 
   config:
     global:
-      resolve_timeout: 15m
       http_config:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      receiver: default-receiver
+      receiver: kube-alert
       routes:
       - receiver: 'null'
         match_re:
           namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
-      - receiver: 'null'
-        match_re:
           pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*update.*"
-      - receiver: kubernetes_devops_prod
+      - receiver: kube-alert
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
       - receiver: dev-services
@@ -373,69 +370,41 @@ alertmanager:
 
     - name: dev-services
       slack_configs:
-      - api_url: "https://hooks.slack.com/services/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"
-        channel: '#dev-services'
-        send_resolved: true
+      - channel: '#dev-services'
+        color: '{{ template "sre.slack.color" . }}'
+        fallback: '{{ template "sre.slack.fallback" . }}'
         icon_emoji: ":opensearch-ico:"
+        send_resolved: true
         username: "FPS OpenSearch - PROD"
-        title: |-
-          {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              :pepe-rage: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
-            {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
-              :warning: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
-            {{ else }} 
-              :question: [{{ .CommonLabels.severity | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
-            {{ end }}
-          {{ else }}
-            :pepe-yay: [{{ .CommonLabels.severity | toUpper }} | {{ .Status | toUpper }}] {{ .CommonAnnotations.title }} x {{ len .Alerts }}
-          {{ end }}
-        text: >-
-          *Description:* {{ .CommonAnnotations.description }}
-          
-          *Details:*
-            {{ range $key, $value := .CommonLabels }} {{ if or (eq $key "job") (eq $key "cluster") (eq $key "alertname") }} • *{{ $key }}:* `{{ $value }}` {{ end }}
-            {{ end }}
-        color: >-
-          {{ if eq .Status "firing" }}
-            {{ if eq (.CommonLabels.severity | toUpper) "CRITICAL" }}
-              #8C1A1A
-            {{ else if eq (.CommonLabels.severity | toUpper) "WARNING" }}
-              #FFA500
-            {{ end }}
-          {{ else }}
-            #2ECC71
-          {{ end }}
+        title: '{{ template "sre.slack.title" . }}'
+        text: {{ template "sre.slack.body" . }}
 
-    - name: 'longhorn_alerts'
+    - name: longhorn_alerts
       slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#longhorn_alerts'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
-          text: |
-            *Severity:* `{{ .CommonLabels.severity }}`
-            *Service:* `{{ .CommonLabels.service }}`
-            *PVC:* `{{ .CommonLabels.pvc }}`
-            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
+      - channel: '#longhorn_alerts'
+        color: '{{ template "sre.slack.color" . }}'
+        fallback: '{{ template "sre.slack.fallback" . }}'
+        icon_emoji: ':longhorn-ico:'
+        send_resolved: true
+        username: "Longhorn - K3S-ST-K3SPROD"
+        title: '{{ template "sre.slack.title" . }}'
+        text: |-
+          {{ template "sre.slack.body" . }}
+          *Service:* `{{ .CommonLabels.service }}`
+          *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
 
-    - name: 'kubernetes_devops_prod'
+    - name: kube-alert
       slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes_devops_prod'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-DevOps-PROD`
-            *Summary:* `{{ .CommonLabels.alertname }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+      - channel: '#kubernetes_nexprod_lumprod'
+        color: '{{ template "sre.slack.color" . }}'
+        fallback: '{{ template "sre.slack.fallback" . }}'
+        icon_emoji: ':prometheus-ico:'
+        send_resolved: true
+        username: "Kubernetes - K3S-ST-K3SPROD"
+        title: '{{ template "sre.slack.title" . }}'
+        title_link: '{{ template "sre.slack.titlelink" . }}'
+        text: '{{ template "sre.slack.body" . }}'
         
-    - name: default-receiver
-
 blackboxExporter:
   configuration: |
     modules:
