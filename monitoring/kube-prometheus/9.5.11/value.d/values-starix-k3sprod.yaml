@@ -377,7 +377,7 @@ alertmanager:
         send_resolved: true
         username: "FPS OpenSearch - PROD"
         title: '{{ template "sre.slack.title" . }}'
-        text: {{ template "sre.slack.body" . }}
+        text: '{{ template "sre.slack.body" . }}'
 
     - name: longhorn_alerts
       slack_configs:
