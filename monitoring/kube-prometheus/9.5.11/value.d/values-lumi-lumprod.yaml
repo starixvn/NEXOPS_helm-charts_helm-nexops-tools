@@ -289,7 +289,7 @@ alertmanager:
       - receiver: longhorn_alerts
         group_by: ['alertname', 'job', 'pvc']
         match:
-          service: "longhorn-backend"
+          job: "longhorn-backend"
 
     receivers:
     - name: 'null'

@@ -282,7 +282,7 @@ alertmanager:
           service: "prometheus-starix-k3suat-kube-state-metrics|prometheus-starix-k3suat-node-exporter"
       - receiver: longhorn_alerts
         match:
-          service: "longhorn-backend"
+          job: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s

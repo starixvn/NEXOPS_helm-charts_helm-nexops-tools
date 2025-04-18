@@ -294,7 +294,7 @@ alertmanager:
           service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
       - receiver: longhorn_alerts
         match:
-          service: "longhorn-backend"
+          job: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
 
     receivers:
