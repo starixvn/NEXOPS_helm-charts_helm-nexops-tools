@@ -271,49 +271,49 @@ alertmanager:
   enabled: true
   config:
     global:
-      http_config:
-        proxy_url: "http://lisasqd.nebula.prod:8801"
+      resolve_timeout: 15m
 
     route:
-      receiver: kube-alert
+      receiver: default-receiver
       routes:
-      - receiver: kube-alert
+      - receiver: kubernetes_devops_uat
         match_re:
           service: "prometheus-starix-k3suat-kube-state-metrics|prometheus-starix-k3suat-node-exporter"
       - receiver: longhorn_alerts
         match:
-          job: "longhorn-backend"
+          service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
-      group_interval: 1m
-      repeat_interval: 24h
+      group_interval: 0s
+      repeat_interval: 0s
 
     receivers:
-    - name: longhorn_alerts
+    - name: 'longhorn_alerts'
       slack_configs:
-      - channel: '#longhorn_alerts'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ':longhorn-ico:'
-        send_resolved: true
-        username: "Longhorn - K3S-ST-K3SUAT"
-        title: '{{ template "sre.slack.title" . }}'
-        text: |-
-          {{ template "sre.slack.body" . }}
-          *Service:* `{{ .CommonLabels.service }}`
-          *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#longhorn_alerts'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+          text: |
+            *Severity:* `{{ .CommonLabels.severity }}`
+            *Service:* `{{ .CommonLabels.service }}`
+            *PVC:* `{{ .CommonLabels.pvc }}`
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
   
-    - name: kube-alert
+    - name: 'kubernetes_devops_uat'
       slack_configs:
-      - channel: '#kubernetes_devops_uat'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ':prometheus-ico:'
-        send_resolved: true
-        username: "Kubernetes - K3S-ST-K3SUAT"
-        title: '{{ template "sre.slack.title" . }}'
-        title_link: '{{ template "sre.slack.titlelink" . }}'
-        text: '{{ template "sre.slack.body" . }}'
-        
-    - name: 'null'
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#kubernetes_devops_uat'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+          text: |
+            *Cluster:* `Kubernetes-DevOps-UAT`
+            *Summary:* `{{ .CommonLabels.alertname }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+    - name: default-receiver
