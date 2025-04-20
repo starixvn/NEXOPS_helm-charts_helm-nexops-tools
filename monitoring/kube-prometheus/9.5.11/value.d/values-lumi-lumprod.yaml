@@ -180,10 +180,10 @@ kube-state-metrics:
           description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
 
       - alert: High Node Disk Usage
-        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 80
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 70
         for: 5m
         labels:
-          severity: critical
+          severity: warning
         annotations:
           summary: "High Disk Usage on Node"
           description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
@@ -272,50 +272,56 @@ node-exporter:
 alertmanager:
   enabled: true
   config:
+    global:
+      resolve_timeout: 15m
+
     route:
-      group_by: ['alertname','job','pod', 'description']
-      group_wait: 30s
-      group_interval: 1m
-      repeat_interval: 24h
-      receiver: kube-alert
+      receiver: default-receiver
       routes:
       - receiver: 'null'
         match_re:
           namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*node-exporter.*"
-      - receiver: kube-alert
+      - receiver: 'null'
+        match_re:
+          pod: "scan-vulnerabilityreport-.*|c-.*|*.-rollover-.*|*.-cleaner-.*|*.-cleanup-.*|*.node-exporter.*"
+      - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
-      - receiver: longhorn_alerts
-        group_by: ['alertname', 'job', 'pvc']
+      - receiver: 'longhorn_alerts'
         match:
           service: "longhorn-backend"
+        group_by: ['alertname', 'job', 'pvc']
+      group_by: ['alertname','job','pod', 'description']
+      group_wait: 30s
+      group_interval: 0s
+      repeat_interval: 0s
 
     receivers:
     - name: 'null'
-    - name: longhorn_alerts
+    - name: 'longhorn_alerts'
       slack_configs:
-      - channel: '#longhorn_alerts'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ':longhorn-ico:'
-        send_resolved: true
-        username: "Longhorn - K3S-ST-LUMPROD"
-        title: '{{ template "sre.slack.title" . }}'
-        text: |-
-          {{ template "sre.slack.body" . }}
-          *Service:* `{{ .CommonLabels.service }}`
-          *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#longhorn_alerts'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+          text: |
+            *Severity:* `{{ .CommonLabels.severity }}`
+            *PVC:* `{{ .CommonLabels.pvc }}`
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
 
-    - name: kube-alert
+    - name: 'kubernetes_nexprod_lumprod'
       slack_configs:
-      - channel: '#kubernetes_nexprod_lumprod'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ':prometheus-ico:'
-        send_resolved: true
-        username: "Kubernetes - K3S-SC-LUMPROD"
-        title: '{{ template "sre.slack.title" . }}'
-        title_link: '{{ template "sre.slack.titlelink" . }}'
-        text: '{{ template "sre.slack.body" . }}'
-        
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#kubernetes_nexprod_lumprod'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+          text: |
+            *Cluster:* `Kubernetes-LumProd`
+            *Summary:* `{{ .CommonLabels.alertname }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+    - name: default-receiver

@@ -149,7 +149,7 @@ prometheus:
           service: OpenSearch
         annotations:
           investigate_link: "https://ops-fps.starixplay.com"
-          title: "Disk running out of space"
+          title: "Opensearch: Disk running out of space"
           summary: Opensearch disk out of space (component {{ $labels.job }})
           description: "The disk usage is over 90%"
           template: "automate"
@@ -162,20 +162,20 @@ prometheus:
           severity: CRITICAL
           service: OpenSearch
         annotations:
-          title: "Nodes go Offline"
+          title: "Opensearch: Nodes go Offline"
           summary: Opensearch node goes offline (component {{ $labels.job }})
           description: "Some node go offline!"
           template: "automate"
 
       # Opensearch Cluster Red 
       - alert: OpensearchClusterRed
-        expr: opensearch_cluster_status == 2
+        expr: opensearch_cluster_status == 0
         for: 0m
         labels:
           severity: CRITICAL
           service: OpenSearch
         annotations:
-          title: "Cluster in Red Health"
+          title: "Opensearch: Cluster in Red Health"
           summary: Opensearch Cluster Red (component {{ $labels.job }})
           description: "Opensearch Cluster Red status"
           template: "automate"
@@ -188,7 +188,7 @@ prometheus:
           severity: WARNING
           service: OpenSearch
         annotations:
-          title: "Cluster in Yellow Health"
+          title: "Opensearch: Cluster in Yellow Health"
           summary: Opensearch Cluster Yellow (component {{ $labels.job }})
           description: "Elastic Cluster Yellow status"
           template: "automate"
@@ -201,7 +201,7 @@ prometheus:
           severity: WARNING
           service: OpenSearch
         annotations:
-          title: "No new Docs been written"
+          title: "Opensearch: No new Docs been written"
           summary: Opensearch no new documents (component {{ $labels.job }})
           description: "No new documents for 10 min!"
           template: "automate"
@@ -339,17 +339,20 @@ alertmanager:
 
   config:
     global:
+      resolve_timeout: 15m
       http_config:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      receiver: kube-alert
+      receiver: default-receiver
       routes:
       - receiver: 'null'
         match_re:
           namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
+      - receiver: 'null'
+        match_re:
           pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*update.*"
-      - receiver: kube-alert
+      - receiver: kubernetes_devops_prod
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
       - receiver: dev-services
@@ -370,41 +373,70 @@ alertmanager:
 
     - name: dev-services
       slack_configs:
-      - channel: '#dev-services'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
+      - api_url: "https://hooks.slack.com/services/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"
+        channel: "#dev-services"
+        send_resolved: true
         icon_emoji: ":opensearch-ico:"
-        send_resolved: true
-        username: "FPS OpenSearch - PROD"
-        title: '{{ template "sre.slack.title" . }}'
-        text: '{{ template "sre.slack.body" . }}'
+        # username: "FPS OpenSearch - PROD"
+        title: |
+          {{ if eq .Status "firing" }}
+            {{ if eq (toUpper .CommonLabels.severity) "CRITICAL") }}
+              :pepe-rage:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}:pepe-rage:
+            {{ if eq (toUpper .CommonLabels.severity) "WARNING") }}
+              ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}⚠️
+            {{ else }} 
+              ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}❓
+          {{ else }}
+            :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}:pepe-yay: 
+          {{ end }}
+        text: |
+          *Description:* `{{ .CommonAnnotations.description }}`
+          *Details:*
+            {{ range .Labels.SortedPairs }}
+              {{ if or (or (eq $key "cluster") (eq $key "alertname") }} • *{{ .Name }}:* `{{ .Value }}`
+              }
+            {{ end }}
+          *AlertName:* `{{ .CommonLabels.alertname }}`
+          *Cluster:* `{{ .CommonLabels.cluster }}`
+        color: |
+          {{ if eq .Status "firing" }}
+            {{ if eq .CommonLabels.severity "critical" }}
+              #8C1A1A
+            {{ else if eq .CommonLabels.severity "warning" }}
+              #FFA500
+          {{ else }}
+            #2ECC71
+          {{ end }}
 
-    - name: longhorn_alerts
+    - name: 'longhorn_alerts'
       slack_configs:
-      - channel: '#longhorn_alerts'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ':longhorn-ico:'
-        send_resolved: true
-        username: "Longhorn - K3S-ST-K3SPROD"
-        title: '{{ template "sre.slack.title" . }}'
-        text: |-
-          {{ template "sre.slack.body" . }}
-          *Service:* `{{ .CommonLabels.service }}`
-          *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#longhorn_alerts'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
+          text: |
+            *Severity:* `{{ .CommonLabels.severity }}`
+            *Service:* `{{ .CommonLabels.service }}`
+            *PVC:* `{{ .CommonLabels.pvc }}`
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
 
-    - name: kube-alert
+    - name: 'kubernetes_devops_prod'
       slack_configs:
-      - channel: '#kubernetes_devops_prod'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ':prometheus-ico:'
-        send_resolved: true
-        username: "Kubernetes - K3S-ST-K3SPROD"
-        title: '{{ template "sre.slack.title" . }}'
-        title_link: '{{ template "sre.slack.titlelink" . }}'
-        text: '{{ template "sre.slack.body" . }}'
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#kubernetes_devops_prod'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+          text: |
+            *Cluster:* `Kubernetes-DevOps-PROD`
+            *Summary:* `{{ .CommonLabels.alertname }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
         
+    - name: default-receiver
+
 blackboxExporter:
   configuration: |
     modules:
@@ -418,4 +450,3 @@ blackboxExporter:
         http:
           proxy_url: "http://lisasqd.nebula.prod:8801"
           skip_resolve_phase_with_proxy: true
-
