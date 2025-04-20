@@ -47,7 +47,6 @@ runners:
         # memory_limit = "500Mi"
         poll_timeout = 3600
         poll_interval = 5
-        cache_dir = "/root/.cache/pip"
         # service_cpu_limit = "1"
         # service_memory_limit = "1Gi"
         # helper_cpu_limit = "500m"
@@ -72,11 +71,11 @@ runners:
         name = "docker-certs"
         mount_path = "/certs/client"
         medium = "Memory"
-      [[runners.kubernetes.volumes.pvc]]
-        name = "nuget-cache"
-        mount_path = "/root/.cache/pip"
+      [[runners.kubernetes.volumes.host_path]]
+        name = "docker-data"
+        mount_path = "/var/lib/docker"
+        host_path = "/tmp/cache"
         read_only = false
-        mount_propagation = "Bidirectional"
   # tags: "docker,k8s,ci"
   name: "k8s-runner"
   cache:
