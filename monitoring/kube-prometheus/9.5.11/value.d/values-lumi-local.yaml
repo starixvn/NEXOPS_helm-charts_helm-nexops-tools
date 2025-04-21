@@ -111,6 +111,7 @@ prometheus:
 
       - alert: Pod Restart Detected
         expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
+        for: 0s
         labels:
           severity: warning
         annotations:
@@ -151,8 +152,6 @@ kube-state-metrics:
   nodeSelector:
     nexops-tools: "yes"
 
-
-
 alertmanager:
   resourcesPreset: "none"
   enabled: true
@@ -169,7 +168,7 @@ alertmanager:
       receiver: 'kubernetes_sc_local'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
-      group_interval: 0s
+      #group_interval: 0s
       repeat_interval: 0s
 
     receivers:
