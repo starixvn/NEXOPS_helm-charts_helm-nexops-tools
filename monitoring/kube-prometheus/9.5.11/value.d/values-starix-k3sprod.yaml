@@ -355,10 +355,10 @@ alertmanager:
       - receiver: kubernetes_devops_prod
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
-      - receiver: dev-services
-        match:
-          service: "OpenSearch"
-        group_by: ['alertname', 'job']
+      # - receiver: dev-services
+      #   match:
+      #     service: "OpenSearch"
+      #   group_by: ['alertname', 'job']
       - receiver: longhorn_alerts
         match:
           service: "longhorn-backend"
@@ -371,44 +371,44 @@ alertmanager:
     receivers:
     - name: 'null'
 
-    - name: dev-services
-      slack_configs:
-      - api_url: "https://hooks.slack.com/services/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"
-        channel: "#dev-services"
-        send_resolved: true
-        icon_emoji: ":opensearch-ico:"
-        # username: "FPS OpenSearch - PROD"
-        title: |
-          {{ if eq .Status "firing" }}
-            {{ if eq (toUpper .CommonLabels.severity) "CRITICAL" }}
-              :pepe-rage:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-rage:
-            {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
-              ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}⚠️
-            {{ else }}
-              ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}❓
-            {{ end }}
-          {{ else }}
-            :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-yay:
-          {{ end }}
-        text: |
-          *Description:* `{{ .CommonAnnotations.description }}`
-          *Details:*
-            {{ range .CommonLabels.SortedPairs }}
-              {{ if or (eq .Name "cluster") (eq .Name "alertname") }}
-                • *{{ .Name }}:* `{{ .Value }}`
-              {{ end }}
-            {{ end }}
-          *AlertName:* `{{ .CommonLabels.alertname }}`
-          *Cluster:* `{{ .CommonLabels.cluster }}`
-        color: |
-          {{ if eq .Status "firing" }}
-            {{ if eq .CommonLabels.severity "critical" }}
-              #8C1A1A
-            {{ else if eq .CommonLabels.severity "warning" }}
-              #FFA500
-          {{ else }}
-            #2ECC71
-          {{ end }}
+    # - name: dev-services
+    #   slack_configs:
+    #   - api_url: "https://hooks.slack.com/services/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"
+    #     channel: "#dev-services"
+    #     send_resolved: true
+    #     icon_emoji: ":opensearch-ico:"
+    #     # username: "FPS OpenSearch - PROD"
+    #     title: |
+    #       {{ if eq .Status "firing" }}
+    #         {{ if eq (toUpper .CommonLabels.severity) "CRITICAL" }}
+    #           :pepe-rage:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-rage:
+    #         {{ else if eq (toUpper .CommonLabels.severity) "WARNING" }}
+    #           ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}⚠️
+    #         {{ else }}
+    #           ❓{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}❓
+    #         {{ end }}
+    #       {{ else }}
+    #         :pepe-yay:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | toUpper }}] x {{ len .Alerts }}:pepe-yay:
+    #       {{ end }}
+    #     text: |
+    #       *Description:* `{{ .CommonAnnotations.description }}`
+    #       *Details:*
+    #         {{ range .CommonLabels.SortedPairs }}
+    #           {{ if or (eq .Name "cluster") (eq .Name "alertname") }}
+    #             • *{{ .Name }}:* `{{ .Value }}`
+    #           {{ end }}
+    #         {{ end }}
+    #       *AlertName:* `{{ .CommonLabels.alertname }}`
+    #       *Cluster:* `{{ .CommonLabels.cluster }}`
+    #     color: |
+    #       {{ if eq .Status "firing" }}
+    #         {{ if eq .CommonLabels.severity "critical" }}
+    #           #8C1A1A
+    #         {{ else if eq .CommonLabels.severity "warning" }}
+    #           #FFA500
+    #       {{ else }}
+    #         #2ECC71
+    #       {{ end }}
 
     - name: 'longhorn_alerts'
       slack_configs:
