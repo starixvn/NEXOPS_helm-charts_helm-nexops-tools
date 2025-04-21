@@ -302,7 +302,7 @@ alertmanager:
           namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix"
       - receiver: 'null'
         match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-node-exporter-.*"
+          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-node-exporter-.*|.*-zabbix-server-.*"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
           service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
