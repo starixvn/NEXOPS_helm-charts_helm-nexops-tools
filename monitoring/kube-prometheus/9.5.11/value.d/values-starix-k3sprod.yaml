@@ -344,7 +344,7 @@ alertmanager:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      receiver: default-receiver
+      receiver: 'default-receiver'
       routes:
       - receiver: 'null'
         match_re:
@@ -352,14 +352,14 @@ alertmanager:
       - receiver: 'null'
         match_re:
           pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*"
-      - receiver: kubernetes_devops_prod
+      - receiver: 'kubernetes_devops_prod'
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
       # - receiver: dev-services
       #   match:
       #     service: "OpenSearch"
       #   group_by: ['alertname', 'job']
-      - receiver: longhorn_alerts
+      - receiver: 'longhorn_alerts'
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']

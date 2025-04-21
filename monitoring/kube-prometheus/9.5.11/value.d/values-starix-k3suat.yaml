@@ -274,12 +274,12 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      receiver: default-receiver
+      receiver: 'default-receiver'
       routes:
-      - receiver: kubernetes_devops_uat
+      - receiver: 'kubernetes_devops_uat'
         match_re:
           service: "prometheus-starix-k3suat-kube-state-metrics|prometheus-starix-k3suat-node-exporter"
-      - receiver: longhorn_alerts
+      - receiver: 'longhorn_alerts'
         match:
           service: "longhorn-backend"
         group_by: ['alertname', 'job', 'pvc']
