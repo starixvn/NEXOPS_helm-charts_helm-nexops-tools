@@ -91,6 +91,7 @@ runners:
       #   host_path = "/tmp/cache"
       #   read_only = false
   # tags: "docker,k8s,ci"
+  image: "ubuntu:22.04"
   name: "k8s-runner"
   cache:
     secretName: s3access
