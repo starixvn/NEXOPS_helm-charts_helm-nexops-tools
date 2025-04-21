@@ -82,14 +82,15 @@ runners:
       #   name = "docker-certs"
       #   mount_path = "/certs/client"
       #   medium = "Memory"
-      # [[runners.kubernetes.volumes.host_path]]
-      #   name = "docker-data"
-      #   mount_path = "/var/lib/docker"
-      #   host_path = "/tmp/cache"
-      #   read_only = false
+      [[runners.kubernetes.volumes.host_path]]
+        name = "docker-data"
+        mount_path = "/var/lib/docker"
+        host_path = "/tmp/cache"
+        read_only = false
       [[runners.kubernetes.volumes.host_path]]
         name = "docker-socket"
         mount_path = "/var/run/docker.sock"
+        host_path = "/var/run/docker.sock"
   # tags: "docker,k8s,ci"
   image: "ubuntu:22.04"
   name: "k8s-runner"
