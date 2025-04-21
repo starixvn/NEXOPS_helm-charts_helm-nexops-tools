@@ -365,8 +365,8 @@ alertmanager:
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
-      group_interval: 1m
-      repeat_interval: 24h
+      group_interval: 5m
+      repeat_interval: 9999h
 
     receivers:
     - name: 'null'
@@ -434,7 +434,7 @@ alertmanager:
             *Summary:* `{{ .CommonLabels.alertname }}`
             *Description:* `{{ .CommonAnnotations.description }}`
           color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
-        
+
     - name: default-receiver
 
 blackboxExporter:
