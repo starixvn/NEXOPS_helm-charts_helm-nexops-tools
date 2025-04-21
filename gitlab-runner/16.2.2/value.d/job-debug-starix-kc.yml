@@ -10,7 +10,7 @@ gitlabUrl: https://gitlab.nexdev.net
 # runnerToken: "glrt-A5s63SQkC1xSV6JKbYmF"
 runnerToken: "glrt-QATKx1G-RgBp6Eevn3yP"
 concurrent: 10
-
+checkInterval: 1
 
 # sessionServer:
 #   enabled: true
