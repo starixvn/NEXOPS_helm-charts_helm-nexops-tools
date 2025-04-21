@@ -1,0 +1,64 @@
+image:
+  registry: hub.nexdev.net
+  image: base/gitlab-runner
+  tag: ubuntu-v16.2.2
+
+replicas: 1
+
+gitlabUrl: https://gitlab.nexdev.net
+# runnerRegistrationToken: "VscxAqFvRVcXgpyoBDD_"
+# runnerToken: "glrt-A5s63SQkC1xSV6JKbYmF"
+runnerToken: "glrt-QATKx1G-RgBp6Eevn3yP"
+concurrent: 10
+checkInterval: 1
+
+# sessionServer:
+#   enabled: true
+#   serviceType: NodePort
+#   nodePort: 30093
+#   ingress:
+#     enabled: true
+#     className: "haproxy"
+#     hosts:
+#       - runner.nexdev.net
+
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja"
+        privileged = true
+        # memory_request = "1Gi"
+        # cpu_limit = "0.5"
+        # memory_limit = "500Mi"
+        poll_timeout = 3600
+        poll_interval = 5
+        # service_cpu_limit = "1"
+        # service_memory_limit = "1Gi"
+        # helper_cpu_limit = "500m"
+        # helper_memory_limit = "100Mi"
+      [runners.cache]
+        Type = "s3"
+        Shared = true
+        [runners.cache.s3]
+          ServerAddress = "s3-api.nexdev.net"
+          BucketName = "gitlab-st"
+          AuthenticationType = "access-key"
+    [runners.kubernetes.node_selector]
+      "node-role.kubernetes.io/runner-build-debug" = "yes"
+    [runners.kubernetes.node_tolerations]
+      "cattle.io/os=runner-build" = "NoSchedule"
+      [[runners.kubernetes.volumes.host_path]]
+        name = "docker-socket"
+        mount_path = "/var/run/docker.sock"
+        host_path = "/var/run/docker.sock"
+        read_only = true
+  # tags: "docker,k8s,ci"
+  name: "k8s-runner"
+  cache:
+    secretName: s3access
+
+podSecurityContext:
+  runAsUser: 999
+  fsGroup: 999

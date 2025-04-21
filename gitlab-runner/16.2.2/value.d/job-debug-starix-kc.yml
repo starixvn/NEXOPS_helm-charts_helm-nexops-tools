@@ -25,30 +25,6 @@ checkInterval: 1
 runners:
   config: |
     [[runners]]
-      # environment = [
-      #   # "FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY=false",
-      #   "DOCKER_HOST=tcp://localhost:2376",
-      #   "DOCKER_TLS_VERIFY=1",
-      #   "DOCKER_TLS_CERTDIR=/certs",
-      #   "DOCKER_CERT_PATH=$DOCKER_TLS_CERTDIR/client",
-      #   "DOCKER_BUILDKIT=1",
-      #   "DOCKER_CLI_EXPERIMENTAL=enabled",
-      # ]
-      # pre_build_script = """
-      # if ! command -v docker &> /dev/null; then
-      #   echo "Docker command could not be found."
-      # else
-      #   while true; do
-      #       if docker info >/dev/null 2>&1; then
-      #           echo "Docker has started!"
-      #           break
-      #       else
-      #           echo "Waiting for Docker to start..."
-      #           sleep 1
-      #       fi
-      #   done
-      # fi
-      # """
       [runners.kubernetes]
         namespace = "{{.Release.Namespace}}"
         image = "hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja"
@@ -69,31 +45,16 @@ runners:
           ServerAddress = "s3-api.nexdev.net"
           BucketName = "gitlab-st"
           AuthenticationType = "access-key"
-      # [[runners.kubernetes.services]]
-      #   environment = ["HEALTHCHECK_TCP_PORT=2376"]
-      #   name = "hub.nexdev.net/base/docker:24.0.4"
-      #   command = ["--experimental", "--mtu=1450"]
-      #   alias = "docker"
     [runners.kubernetes.node_selector]
-      "node-role.kubernetes.io/runner-build" = "yes"
+      "node-role.kubernetes.io/runner-build-debug" = "yes"
     [runners.kubernetes.node_tolerations]
       "cattle.io/os=runner-build" = "NoSchedule"
-      # [[runners.kubernetes.volumes.empty_dir]]
-      #   name = "docker-certs"
-      #   mount_path = "/certs/client"
-      #   medium = "Memory"
-      # [[runners.kubernetes.volumes.host_path]]
-      #   name = "docker-data"
-      #   mount_path = "/var/lib/docker"
-      #   host_path = "/tmp/cache"
-      #   read_only = false
       [[runners.kubernetes.volumes.host_path]]
         name = "docker-socket"
         mount_path = "/var/run/docker.sock"
         host_path = "/var/run/docker.sock"
         read_only = true
   # tags: "docker,k8s,ci"
-  image: "ubuntu:22.04"
   name: "k8s-runner"
   cache:
     secretName: s3access
