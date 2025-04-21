@@ -351,7 +351,7 @@ alertmanager:
           namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
       - receiver: 'null'
         match_re:
-          pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*update.*"
+          pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*"
       - receiver: kubernetes_devops_prod
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
@@ -380,7 +380,7 @@ alertmanager:
         # username: "FPS OpenSearch - PROD"
         title: |
           {{ if eq .Status "firing" }}
-            {{ if eq (toUpper .CommonLabels.severity) "CRITICAL") }}
+            {{ if eq (toUpper .CommonLabels.severity) "CRITICAL" }}
               :pepe-rage:{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}:pepe-rage:
             {{ if eq (toUpper .CommonLabels.severity) "WARNING") }}
               ⚠️{{ .CommonAnnotations.title }} [{{ .Status | title }}, {{ .CommonLabels.severity | upper }}] x {{ len .Alerts }}⚠️
