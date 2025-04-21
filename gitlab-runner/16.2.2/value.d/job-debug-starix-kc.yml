@@ -90,7 +90,8 @@ runners:
       [[runners.kubernetes.volumes.host_path]]
         name = "docker-socket"
         mount_path = "/var/run/docker.sock"
-        host_path = "/var/run/docker.sock"
+        # host_path = "/var/run/docker.sock"
+        read_only = true
   # tags: "docker,k8s,ci"
   image: "ubuntu:22.04"
   name: "k8s-runner"
