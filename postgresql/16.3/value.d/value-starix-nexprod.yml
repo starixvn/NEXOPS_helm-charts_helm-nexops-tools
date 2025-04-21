@@ -1,6 +1,7 @@
 global:
-  defaultStorageClass: "longhorn"
+  defaultStorageClass: "longhorn-effort"
 clusterDomain: starix.nexprod
+
 
 
 
@@ -17,28 +18,7 @@ primary:
     log_connections = 'on'
     log_disconnections = 'on'
     log_lock_waits = 'on'
-  extraVolumes:
-    - name: filebeat-config-pg
-      configMap:
-        name: filebeat-config-pg
-  sidecars:
-    - name: logging-collector-flbeat
-      image: "hub.lumigame.com/base/filebeat:8.8.2"
-      env:
-      - name: PG_LOG_PATH
-        value: "/bitnami/postgresql/data/log"
-      - name: PG_ENV
-        value: "lumprod"
-      - name: LOGSTASH_HOST
-        value: "10.10.50.121"
-      - name: LOGSTASH_PORT
-        value: "30500"
-      volumeMounts:
-        - name: data
-          mountPath: /bitnami/postgresql
-        - name: filebeat-config-pg
-          mountPath: /usr/share/filebeat/filebeat.yml
-          subPath: filebeat.yml
-      securityContext:
-        allowPrivilegeEscalation: false
-        runAsUser: 0
+  resourcesPreset: "none"
+  persistence:
+    enabled: true
+    size: 10Gi
