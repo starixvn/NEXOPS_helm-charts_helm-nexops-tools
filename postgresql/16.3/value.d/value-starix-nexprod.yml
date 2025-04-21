@@ -26,3 +26,5 @@ primary:
     enabled: false
   containerSecurityContext:
     enabled: false
+    runAsUser: 0
+    runAsNonRoot: false
