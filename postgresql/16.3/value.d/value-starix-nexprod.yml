@@ -22,9 +22,9 @@ primary:
   persistence:
     enabled: true
     size: 10Gi
-  podSecurityContext:
-    enabled: false
-  containerSecurityContext:
-    enabled: true
-    runAsUser: 0
-    runAsNonRoot: false
+  # podSecurityContext:
+  #   enabled: false
+  # containerSecurityContext:
+  #   enabled: true
+  #   runAsUser: 0
+  #   runAsNonRoot: false
