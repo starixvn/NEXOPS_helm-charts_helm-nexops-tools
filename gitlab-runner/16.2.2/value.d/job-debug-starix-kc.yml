@@ -12,15 +12,15 @@ runnerToken: "glrt-QATKx1G-RgBp6Eevn3yP"
 concurrent: 10
 
 
-sessionServer:
-  enabled: true
-  serviceType: NodePort
-  nodePort: 30093
-  ingress:
-    enabled: true
-    className: "haproxy"
-    hosts:
-      - runner.nexdev.net
+# sessionServer:
+#   enabled: true
+#   serviceType: NodePort
+#   nodePort: 30093
+#   ingress:
+#     enabled: true
+#     className: "haproxy"
+#     hosts:
+#       - runner.nexdev.net
 
 runners:
   config: |
@@ -59,8 +59,8 @@ runners:
         # memory_request = "1Gi"
         # cpu_limit = "0.5"
         # memory_limit = "500Mi"
-        # poll_timeout = 3600
-        # poll_interval = 5
+        poll_timeout = 3600
+        poll_interval = 5
         # service_cpu_limit = "1"
         # service_memory_limit = "1Gi"
         # helper_cpu_limit = "500m"
