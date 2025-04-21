@@ -393,9 +393,10 @@ alertmanager:
         text: |
           *Description:* `{{ .CommonAnnotations.description }}`
           *Details:*
-            {{ range .Labels.SortedPairs }}
-              {{ if or (or (eq $key "cluster") (eq $key "alertname") }} • *{{ .Name }}:* `{{ .Value }}`
-              }
+            {{ range .CommonLabels.SortedPairs }}
+              {{ if or (eq .Name "cluster") (eq .Name "alertname") }}
+                • *{{ .Name }}:* `{{ .Value }}`
+              {{ end }}
             {{ end }}
           *AlertName:* `{{ .CommonLabels.alertname }}`
           *Cluster:* `{{ .CommonLabels.cluster }}`
