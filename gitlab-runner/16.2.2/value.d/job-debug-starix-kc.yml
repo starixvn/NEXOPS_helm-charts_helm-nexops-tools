@@ -50,9 +50,6 @@ runners:
       # fi
       # """
       [runners.kubernetes]
-        [[runners.kubernetes.volumes.host_path]]
-          name = "docker-socket"
-          mount_path = "/var/run/docker.sock"
         namespace = "{{.Release.Namespace}}"
         image = "hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
@@ -90,6 +87,9 @@ runners:
       #   mount_path = "/var/lib/docker"
       #   host_path = "/tmp/cache"
       #   read_only = false
+      [[runners.kubernetes.volumes.host_path]]
+        name = "docker-socket"
+        mount_path = "/var/run/docker.sock"
   # tags: "docker,k8s,ci"
   image: "ubuntu:22.04"
   name: "k8s-runner"
