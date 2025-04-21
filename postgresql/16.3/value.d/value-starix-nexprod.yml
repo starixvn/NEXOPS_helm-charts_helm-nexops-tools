@@ -25,6 +25,6 @@ primary:
   podSecurityContext:
     enabled: false
   containerSecurityContext:
-    enabled: false
+    enabled: true
     runAsUser: 0
     runAsNonRoot: false
