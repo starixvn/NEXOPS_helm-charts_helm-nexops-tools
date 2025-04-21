@@ -11,6 +11,17 @@ gitlabUrl: https://gitlab.nexdev.net
 runnerToken: "glrt-QATKx1G-RgBp6Eevn3yP"
 concurrent: 10
 
+
+sessionServer:
+  enabled: true
+  serviceType: NodePort
+  nodePort: 30093
+  ingress:
+    enabled: true
+    className: "haproxy"
+    hosts:
+      - runner.nexdev.net
+
 runners:
   config: |
     [[runners]]
