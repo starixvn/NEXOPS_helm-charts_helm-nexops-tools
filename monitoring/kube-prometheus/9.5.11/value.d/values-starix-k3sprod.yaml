@@ -361,7 +361,7 @@ alertmanager:
       #   group_by: ['alertname', 'job']
       - receiver: 'longhorn_alerts'
         match:
-          service: ".*longhorn.*"
+          service: "Longhorn"
         group_by: ['alertname', 'job', 'pvc']
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
