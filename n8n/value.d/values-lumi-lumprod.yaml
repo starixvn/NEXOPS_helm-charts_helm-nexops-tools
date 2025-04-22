@@ -3,6 +3,12 @@ image:
   pullPolicy: IfNotPresent
   tag: "1.88.0"
 
+env:
+  - name: N8N_MCP_ENABLED
+    value: "true"
+  - name: N8N_MCP_SERVER_URL
+    value: "https://n8n.lumigame.com"
+
 redis:
   architecture: standalone
   auth:
