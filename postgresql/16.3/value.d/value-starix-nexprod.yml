@@ -22,7 +22,11 @@ primary:
   #   log_connections = 'on'
   #   log_disconnections = 'on'
   #   log_lock_waits = 'on'
-  resourcesPreset: "none"
+  resources:
+    requests:
+      memory: 512Mi
+    limits:
+      memory: 2048Mi
   persistence:
     enabled: true
     size: 10Gi
