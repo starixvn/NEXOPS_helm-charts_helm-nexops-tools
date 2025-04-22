@@ -53,7 +53,15 @@ postgresql:
 
 ingress:
   enabled: true
-  host: n8n.lumigame.com
+  #host: n8n.lumigame.com
   className: haproxy
+  annotations:
+    haproxy.ingress.kubernetes.io/ssl-redirect: "true"
+    haproxy.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: n8n.lumigame.com
+      paths:
+        - path: /
+          pathType: Prefix
 
 #Admin Login: admin@sabawork.com/N8nPassW0r$
