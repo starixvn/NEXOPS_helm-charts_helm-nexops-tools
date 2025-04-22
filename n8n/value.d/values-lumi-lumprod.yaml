@@ -4,10 +4,10 @@ image:
   tag: "1.88.0"
 
 extraEnv:
-  - name: N8N_MCP_ENABLED
-    value: "true"
-  - name: N8N_MCP_SERVER_URL
-    value: "https://n8n.lumigame.com"
+  N8N_MCP_ENABLED:
+  value: "true"
+  N8N_MCP_SERVER_URL:
+  value: "https://n8n.lumigame.com"
 
 redis:
   architecture: standalone
