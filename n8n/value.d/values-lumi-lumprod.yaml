@@ -30,6 +30,8 @@ n8n:
       value: "true"
     - name: N8N_MCP_SERVER_URL
       value: "https://n8n.lumigame.com"
+    - name: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
+      value: "true"
   data:
     prune:
       enabled: true
