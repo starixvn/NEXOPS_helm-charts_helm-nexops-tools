@@ -163,7 +163,7 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
+          namespace: "l1|l2|gn|hd|sk|sp|tg|mg|cattle-system"
       receiver: 'kubernetes_sc_uat'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
