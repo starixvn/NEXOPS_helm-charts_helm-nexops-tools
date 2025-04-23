@@ -1,0 +1,19 @@
+global:
+  defaultStorageClass: "longhorn-best-effort"
+clusterDomain: lumi.lumprod
+
+
+image:
+  registry: docker.io
+  repository: bitnami/postgresql
+  tag: 16.3.0-debian-12-r19
+
+primary:
+  resources:
+    requests:
+      memory: 512Mi
+    limits:
+      memory: 2048Mi
+  persistence:
+    enabled: true
+    size: 5Gi
