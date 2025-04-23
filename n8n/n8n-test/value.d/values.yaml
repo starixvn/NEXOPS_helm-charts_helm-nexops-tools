@@ -7,14 +7,12 @@ imagePullSecrets: []
 
 ingress:
   enabled: true
-  annotations: {}
-  className: "haproxy"
-  host: n8n-test.lumigame.com
-  # hosts:
-  #   - host: n8n-test.lumigame.com
-  #     paths:
-  #       - path: /
-  #         pathType: Prefix
+  className: haproxy
+  hosts:
+    - host: n8n-test.lumigame.com
+      paths:
+        - path: /
+          pathType: Prefix
 
 main:
   config: {}
