@@ -62,7 +62,7 @@ ingress:
     haproxy.ingress.kubernetes.io/rewrite-target: /
     haproxy.ingress.kubernetes.io/config-snippet: |
       acl is_mcp path_beg /mcp/
-      http-request set-header Accept-Encoding "" if is_mcp
+      http-response del-header Accept-Encoding if is_mcp
   hosts:
     - host: n8n.lumigame.com
       paths:
