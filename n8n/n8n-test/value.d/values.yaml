@@ -6,7 +6,7 @@ imagePullSecrets: []
 
 
 ingress:
-  enabled: true
+  enabled: false
   className: haproxy
   hosts:
     - host: n8n-test.lumigame.com
@@ -183,9 +183,10 @@ main:
     annotations: {}
     # -- Service types allow you to specify what kind of Service you want.
     # E.g., ClusterIP, NodePort, LoadBalancer, ExternalName
-    type: ClusterIP
+    type: NodePort
     # -- Service port
     port: 80
+    nodePort: 32456
 
   resources: {}
   # We usually recommend not specifying default resources and to leave this as a conscious
