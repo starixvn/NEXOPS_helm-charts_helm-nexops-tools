@@ -11,9 +11,6 @@ ingress:
   annotations: {}
   hosts:
     - host: "n8n-test.lumigame.com"
-      paths: 
-        - path: /
-          pathType: Prefix
   tls: []
 
 main:
