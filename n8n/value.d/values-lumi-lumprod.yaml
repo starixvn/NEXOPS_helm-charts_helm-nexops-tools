@@ -60,9 +60,14 @@ ingress:
   annotations:
     haproxy.ingress.kubernetes.io/ssl-redirect: "true"
     haproxy.ingress.kubernetes.io/rewrite-target: /
+    haproxy.ingress.kubernetes.io/config-snippet: |
+      acl is_mcp path_beg /mcp/
+      http-request set-header Accept-Encoding "" if is_mcp
   hosts:
     - host: n8n.lumigame.com
       paths:
+        - path: /mcp/
+          pathType: Prefix
         - path: /
           pathType: Prefix
 
