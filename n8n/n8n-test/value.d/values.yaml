@@ -37,6 +37,12 @@ main:
 
   # Extra environmental variables, so you can reference other configmaps and secrets into n8n as env vars.
   extraEnv:
+    - name: N8N_MCP_ENABLED
+      value: "true"
+    - name: N8N_MCP_SERVER_URL
+      value: "https://n8n-test.lumigame.com"
+    - name: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
+      value: "true"
   #    N8N_DB_POSTGRESDB_NAME:
   #      valueFrom:
   #        secretKeyRef:
