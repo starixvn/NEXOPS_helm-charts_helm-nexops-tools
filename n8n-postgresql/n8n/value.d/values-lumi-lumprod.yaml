@@ -8,18 +8,12 @@ imagePullSecrets: []
 ingress:
   enabled: true
   className: "haproxy"
-  annotations: {}
+  annotations:
   hosts:
     - host: "n8n-test.lumigame.com"
       paths:
         - path: /
           pathType: Prefix
-      #     backend:
-      #       service:
-      #         name: n8n-postgresql-lumi-lumprod
-      #         port:
-      #           number: 80
-  #tls: []
 
 main:
   config: 
