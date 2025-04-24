@@ -55,8 +55,8 @@ main:
     - name: DB_POSTGRESDB_PASSWORD
       valueFrom:
         secretKeyRef:
-          name: n8n-db-secret
-          key: password
+          name: n8n-postgresql-lumi-lumprod
+          key: postgres-password
   #    N8N_DB_POSTGRESDB_NAME:
   #      valueFrom:
   #        secretKeyRef:
