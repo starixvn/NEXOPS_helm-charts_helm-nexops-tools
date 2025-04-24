@@ -1,0 +1,28 @@
+image:
+  repository: dpage/pgadmin4
+  tag: "7.7"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+pgadmin:
+  email: admin@domain.com
+  password: adminpassword
+
+  persistentVolume:
+    enabled: true
+    size: 1Gi
+    storageClass: "standard"
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: pgadmin.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []

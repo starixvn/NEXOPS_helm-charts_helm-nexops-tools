@@ -1,0 +1,24 @@
+image:
+  repository: hub.nexdev.net/base/dpage/pgadmin4
+  tag: "9.2.0"
+  pullPolicy: Always
+
+
+
+pgadmin:
+  email: admin@domain.com
+  password: $9zuZv+a2q%E
+
+  persistentVolume:
+    enabled: true
+    size: 10Gi
+    storageClass: "longhorn"
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  hosts:
+    - host: pgadmin.nexdev.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
