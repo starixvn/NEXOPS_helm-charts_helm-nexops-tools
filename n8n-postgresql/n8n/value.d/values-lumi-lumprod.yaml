@@ -51,9 +51,9 @@ main:
     - name: DB_POSTGRESDB_PORT
       value: "31603"
     - name: DB_POSTGRESDB_DATABASE
-      value: "n8n"
+      value: "postgres"
     - name: DB_POSTGRESDB_USER
-      value: "n8n"
+      value: "postgres"
     - name: DB_POSTGRESDB_PASSWORD
       valueFrom:
         secretKeyRef:
