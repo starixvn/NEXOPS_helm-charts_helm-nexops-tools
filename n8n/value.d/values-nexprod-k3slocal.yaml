@@ -48,30 +48,8 @@ postgresql:
 
 ingress:
   enabled: true
-  ingressClassName: haproxy
-  hosts:
-    - host: n8n.nexdev.net
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: n8n-nexprod-k3slocal-main
-              port:
-                name: http
-        - path: /webhook/
-          pathType: Prefix
-          backend:
-            service:
-              name: n8n-nexprod-k3slocal-webhook
-              port:
-                name: http
-        - path: /form/
-          pathType: Prefix
-          backend:
-            service:
-              name: n8n-nexprod-k3slocal-webhook
-              port:
-                name: http
+  className: "haproxy"
+  host: "n8n.nexdev.net"
+  annotations: {}
 
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
