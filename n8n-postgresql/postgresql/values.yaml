@@ -719,7 +719,7 @@ primary:
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
     nodePorts:
-      postgresql: "30603"
+      postgresql: "31603"
     ## @param primary.service.clusterIP Static clusterIP or None for headless services
     ## e.g:
     ## clusterIP: None
