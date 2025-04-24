@@ -16,18 +16,18 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              name: n8n-test-lumi-lumprod
+              name: n8n-postgresql-lumi-lumprod
               #port:
                 #number: 80
   #tls: []
 
 main:
-  config: {}
-  #    n8n:
-  #    db:
-  #      type: postgresdb
-  #      postgresdb:
-  #        host: 192.168.0.52
+  config: 
+     n8n:
+     db:
+       type: postgresdb
+       postgresdb:
+         host: 10.10.50.121:31603
 
   # Dictionary for secrets, unlike config:, the values here will end up in the secret file.
   # The YAML entry db.postgresdb.password: my_secret is transformed DB_POSTGRESDB_password=bXlfc2VjcmV0
@@ -57,13 +57,13 @@ main:
   #
   # N8n Kubernetes specific settings
   #
-  persistence:
-    enabled: false
-    type: pvc
-    storageClass: "longhorn"
-    accessModes:
-      - ReadWriteOnce
-    size: 5Gi
+  # persistence:
+  #   enabled: false
+  #   type: pvc
+  #   storageClass: "longhorn"
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   size: 5Gi
 
   extraVolumes: []
   #    - name: db-ca-cert
