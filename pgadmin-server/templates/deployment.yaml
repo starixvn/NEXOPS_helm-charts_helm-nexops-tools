@@ -12,6 +12,17 @@ spec:
       labels:
         app: {{ .Release.Name }}-pgadmin
     spec:
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - chown -R 5050:5050 /var/lib/pgadmin
+        image: hub.nexdev.net/base/busybox:1.37.0
+        imagePullPolicy: Always
+        name: volume-permission
+        volumeMounts:
+        - mountPath: /var/lib/pgadmin
+          name: pgadmin-data
       containers:
         - name: pgadmin
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -31,6 +42,22 @@ spec:
           volumeMounts:
             - name: pgadmin-data
               mountPath: /var/lib/pgadmin
+          livenessProbe:
+            httpGet:
+              path: /misc/ping
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /misc/ping
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
       volumes:
         - name: pgadmin-data
           {{- if .Values.pgadmin.persistentVolume.enabled }}
