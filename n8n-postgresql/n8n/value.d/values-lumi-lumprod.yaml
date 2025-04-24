@@ -42,6 +42,8 @@ main:
       value: "https://n8n-test.lumigame.com"
     - name: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
       value: "true"
+    - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+      value: "true"
     - name: DB_TYPE
       value: postgres
     - name: DB_POSTGRESDB_HOST
