@@ -17,8 +17,8 @@ ingress:
           backend:
             service:
               name: n8n-postgresql-lumi-lumprod
-              #port:
-                #number: 80
+              port:
+                number: 80
   #tls: []
 
 main:
