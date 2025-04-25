@@ -55,20 +55,8 @@ postgresql:
 
 ingress:
   enabled: true
-  #host: n8n.lumigame.com
-  className: haproxy
-  annotations:
-    haproxy.ingress.kubernetes.io/ssl-redirect: "true"
-    haproxy.ingress.kubernetes.io/rewrite-target: /
-    haproxy.ingress.kubernetes.io/config-snippet: |
-      acl is_mcp path_beg /mcp/
-      http-response del-header Accept-Encoding if is_mcp
-  hosts:
-    - host: n8n.lumigame.com
-      paths:
-        - path: /mcp/
-          pathType: Prefix
-        - path: /
-          pathType: Prefix
+  className: "haproxy"
+  host: "n8n.lumigame.com"
+  annotations: {}
 
 #Admin Login: admin@sabawork.com/N8nPassW0r$

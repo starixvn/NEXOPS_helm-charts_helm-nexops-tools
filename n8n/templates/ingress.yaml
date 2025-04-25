@@ -50,4 +50,11 @@ spec:
                 name: {{ include "n8n.fullname" . }}-webhook
                 port:
                   name: http
+          - path: /mcp/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "n8n.fullname" . }}-webhook
+                port:
+                  name: http
   {{- end }}
