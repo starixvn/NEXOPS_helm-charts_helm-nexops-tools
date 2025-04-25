@@ -1,0 +1,185 @@
+---
+clusterDomain: cluster.local
+
+operator:
+  enabled: true
+  nodeSelector:
+    nexops: "yes"
+
+prometheus:
+  service:
+    type: NodePort
+    ports:
+      http: 9090
+    nodePorts:
+      http: "30062"
+  nodeSelector:
+    nexops: "yes"
+
+  retention: 5d
+  retentionSize: "20GB"
+
+  persistence:
+    enabled: true
+    size: 20Gi
+
+  ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: "none"
+
+  additionalScrapeConfigs:
+    enabled: false
+    type: external
+    external:
+      ## Name of the secret that Prometheus should use for the additional scrape configuration
+      name: ""
+      ## Name of the key inside the secret to be used for the additional scrape configuration.
+      key: ""
+    internal:
+      jobList: []
+  ##
+  additionalScrapeConfigsExternal:
+    enabled: false
+    name: ""
+    key: ""
+
+  additionalPrometheusRules:
+  - name: kubernetes.rules
+    groups:
+    - name: kubernetes.rules
+      rules:
+      - alert: Node Not Ready
+        expr: kube_node_status_condition{condition="Ready", status="false"} == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node Not Ready"
+          description: "Node {{ $labels.node }} is not ready."
+
+      - alert: High Node CPU Usage
+        expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU Usage on Node"
+          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU."
+
+      - alert: High Node Memory Usage
+        expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Memory Usage on Node"
+          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
+
+      - alert: High Node Disk Usage
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 70
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Disk Usage on Node"
+          description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
+
+      - alert: Node Disk Pressure
+        expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node Disk Pressure"
+          description: "Node {{ $labels.node }} is under disk pressure."
+
+      - alert: Node Memory Pressure
+        expr: kube_node_status_condition{condition="MemoryPressure", status="true"} == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node Memory Pressure"
+          description: "Node {{ $labels.node }} is under memory pressure."
+
+      - alert: Pod Not Running
+        expr: kube_pod_status_phase{phase!~"Running|Succeeded"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod Not Running"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
+
+      - alert: Pod Restart Detected
+        expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod {{ $labels.pod }} restarted"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
+
+      - alert: Pod Restarting Frequently
+        expr: increase(kube_pod_container_status_restarts_total[5m])  > 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod Restarting Frequently"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 3 times in the last 5 minutes."
+
+      - alert: API Server Down
+        expr: up{job="apiserver"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API Server Down"
+          description: "The Kubernetes API server is down."
+
+      - alert: Cluster Pod Usage Above 80%
+        expr: |
+          (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
+          description: "Pod usage is currently {{ printf \"%.0f\" $value }}% of the total cluster pod capacity."
+
+alertmanager:
+  resourcesPreset: "none"
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 15m
+
+    route:
+      receiver: default-receiver
+      routes:
+       - receiver: 'null'
+         match_re:
+           namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
+      receiver: 'kubernetes_sc_prod'
+      group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
+      group_wait: 30s
+      group_interval: 0s
+      repeat_interval: 0s
+
+    receivers:
+      - name: 'null'
+      - name: 'kubernetes_sc_prod'
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: '#kubernetes_sc_prod'
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-EKS-PROD`
+              *Summary:* `{{ .CommonLabels.alertname }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+      - name: default-receiver
