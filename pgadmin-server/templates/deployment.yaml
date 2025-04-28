@@ -52,6 +52,8 @@ spec:
               value: {{ .Values.pgadmin.ldap.usernameAttribute | quote }}
             - name: PGADMIN_CONFIG_LDAP_SEARCH_FILTER
               value: {{ .Values.pgadmin.ldap.searchFilter | quote }}
+            - name: PGADMIN_CONFIG_LDAP_SEARCH_DOMAIN
+              value: {{ .Values.pgadmin.ldap.searchDomain | quote }}
             {{- end }}
           ports:
             - containerPort: 80

@@ -23,6 +23,7 @@ pgadmin:
     baseDn: "\"OU=NEXSOL,DC=spvn,DC=local\""
     usernameAttribute: "\"sAMAccountName\""
     searchFilter: "\"(sAMAccountName=%s)\""
+    searchDomain: "\"spvn.local\"" 
 
 ingress:
   enabled: true
