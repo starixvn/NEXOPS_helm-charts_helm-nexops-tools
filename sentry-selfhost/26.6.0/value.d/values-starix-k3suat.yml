@@ -33,7 +33,7 @@ auth:
 ingress:
   hostname: "sentry-k8s.starixuat.com"
   additionalHostNames:
-  - "sentryuat-st.nebula.prod"
+  - "vn-sentryuat-st.nebula.prod"
   ingressClassName: "haproxy"
 
 
