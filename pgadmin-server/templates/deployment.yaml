@@ -39,7 +39,7 @@ spec:
               value: "0.0.0.0"
             {{- if .Values.pgadmin.ldap.enabled }}
             - name: PGADMIN_CONFIG_AUTHENTICATION_SOURCES
-              value: '["ldap"]' 
+              value: '["ldap", "internal"]' 
             - name: PGADMIN_CONFIG_LDAP_SERVER_URI
               value: {{ .Values.pgadmin.ldap.serverUri | quote }}
             - name: PGADMIN_CONFIG_LDAP_BIND_USER
