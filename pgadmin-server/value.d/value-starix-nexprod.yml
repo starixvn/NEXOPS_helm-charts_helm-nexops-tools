@@ -17,7 +17,7 @@ pgadmin:
   # LDAP Authentication
   ldap:
     enabled: true   # <<<< TURN ON HERE
-    serverUri: "ldap://10.18.200.101"
+    serverUri: "\"ldap://10.18.200.101\""
     bindDn: "CN=ldapnex,OU=ServicesAccounts,OU=UsersGroups,OU=IT,OU=ServersLabs,OU=NEXSOL,DC=spvn,DC=local"
     bindPassword: "D5TcVuqk%L"
     baseDn: "OU=NEXSOL,DC=spvn,DC=local"
