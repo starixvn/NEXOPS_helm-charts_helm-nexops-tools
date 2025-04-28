@@ -54,6 +54,8 @@ spec:
               value: {{ .Values.pgadmin.ldap.searchFilter | quote }}
             - name: PGADMIN_CONFIG_LDAP_SEARCH_DOMAIN
               value: {{ .Values.pgadmin.ldap.searchDomain | quote }}
+            - name: PGADMIN_CONFIG_LDAP_AUTO_CREATE_USER
+              value: "True"  # Enable automatic user creation
             {{- end }}
           ports:
             - containerPort: 80
