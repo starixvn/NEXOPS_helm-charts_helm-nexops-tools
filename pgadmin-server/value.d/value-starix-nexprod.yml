@@ -22,7 +22,7 @@ pgadmin:
     bindPassword: "\"D5TcVuqk%L\""
     baseDn: "\"OU=NEXSOL,DC=spvn,DC=local\""
     usernameAttribute: "\"mail\""
-    searchFilter: "\"(mail=%s)\""
+    searchFilter: "\"(objectclass=*)\""
     searchDomain: "\"spvn.local\"" 
 
 ingress:
