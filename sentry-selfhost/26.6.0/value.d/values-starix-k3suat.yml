@@ -1,0 +1,815 @@
+ipv6: false
+user:
+  create: true
+  email: admin@sentry.local
+  password: "?nxhrJ3kfAsK"
+
+config:
+  relay: |
+    cache:
+      envelope_buffer_size: 500000
+
+images:
+  sentry:
+    repository: nexhub.nebula.prod/kbt/base/getsentry/sentry
+    tag: 24.9.0
+  snuba:
+    repository: nexhub.nebula.prod/kbt/base/getsentry/snuba
+    tag: 24.9.0
+  relay:
+    repository: nexhub.nebula.prod/kbt/base/getsentry/relay
+    tag: 24.9.0
+  symbolicator:
+    repository: nexhub.nebula.prod/kbt/base/getsentry/symbolicator
+    tag: 24.9.0
+  vroom:
+    repository: nexhub.nebula.prod/kbt/base/getsentry/vroom
+    tag: 24.9.0  
+
+
+auth:
+  register: false
+
+ingress:
+  hostname: "sentry-k8s.starixuat.com"
+  additionalHostNames:
+  - "sentryuat-st.nebula.prod"
+  ingressClassName: "haproxy"
+
+
+filestore:
+  filesystem:
+    persistence:
+      enabled: true
+      storageClass: "local-path"
+      size: 20Gi
+
+
+relay:
+  env:
+  - name: HTTP_PROXY
+    value: "http://lisasqd.nebula.prod:8801"
+  - name: HTTPS_PROXY
+    value: "http://lisasqd.nebula.prod:8801"
+  - name: NO_PROXY
+    value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-k8s.starixuat.com,sentry-starix-k3suat-web"
+  nodeSelector:
+    st-sentry: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: st-sentry
+    value: "yes"
+
+hooks:
+  activeDeadlineSeconds: 2000
+  dbCheck:
+    image:
+      repository: nexhub.nebula.prod/kbt/base/subfuzion/netcat
+      tag: latest
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+  dbInit:
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  snubaInit:
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+symbolicator:
+  enabled: true
+  api:
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+nginx:
+  clusterDomain: starix.k3suat
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/nginx
+    tag: 1.27.0-debian-12-r1
+  nodeSelector:
+    st-sentry: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: st-sentry
+    value: "yes"
+
+clickhouse:
+  clusterDomain: starix.k3suat
+  nodeSelector:
+    st-sentry: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: st-sentry
+    value: "yes"
+
+  clickhouse:
+    image: "nexhub.nebula.prod/kbt/base/clickhouse/clickhouse-server"
+    persistentVolumeClaim:
+      dataPersistentVolume:
+        storageClassName: "local-path"
+        storage: "30Gi"
+    nodeSelector:
+      st-sentry: "yes"
+
+zookeeper:
+  clusterDomain: starix.k3suat
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/zookeeper
+    tag: 3.8.2-debian-11-r27
+  nodeSelector:
+    st-sentry: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: st-sentry
+    value: "yes"
+  persistence:
+    enabled: true
+    size: 20Gi
+    storageClass: "local-path"
+
+
+
+
+kafka:
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/kafka
+    tag: 3.7.0-debian-12-r7
+  global:
+    storageClass: "local-path"
+  controller:
+    # heapOpts: -Xmx4g -Xms2g
+    replicaCount: 3
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    persistence:
+      enabled: true
+      size: 30Gi
+      storageClass: "local-path"
+    resourcesPreset: "2xlarge"
+  # broker: 
+  #   heapOpts: -Xmx4g -Xms2g
+  clusterDomain: starix.k3suat
+
+
+redis:
+  clusterDomain: starix.k3suat
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/redis
+    tag: 7.0.11-debian-11-r12
+  master:
+    persistence:
+      enabled: true
+      storageClass: "local-path"
+      size: 10Gi
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+  replica:
+    persistence:
+      enabled: true
+      storageClass: "local-path"
+      size: 10Gi
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+
+
+
+postgresql:
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/postgresql
+    tag: 15.3.0-debian-11-r0   
+  clusterDomain: starix.k3suat
+  global:
+    postgresql:
+      username: "postgres"
+      password: "passwdpostgres"
+      database: "sentry"
+  auth:
+    database: sentry
+    enablePostgresUser: true
+    existingSecret: ""
+    password: "passwdpostgres"
+    postgresPassword: "passwdpostgres"
+    replicationPassword: "passwdpostgres"
+    replicationUsername: repl_user
+    secretKeys:
+      adminPasswordKey: postgres-password
+      replicationPasswordKey: replication-password
+      userPasswordKey: password
+    usePasswordFiles: false
+    username: "postgres"
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "local-path"
+      size: "20Gi"
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    extendedConfiguration: |
+      max_connections = 1000
+
+rabbitmq:
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/rabbitmq
+    tag: 3.11.18-debian-11-r0
+  clusterDomain: starix.k3suat
+  ulimitNofiles: "none"
+  nodeSelector:
+    st-sentry: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: st-sentry
+    value: "yes"
+  persistence:
+    storageClass: "local-path"
+    size: "10Gi"
+
+memcached:
+  image:
+    registry: nexhub.nebula.prod
+    repository: kbt/base/bitnami/memcached
+    tag: 1.6.29-debian-12-r0
+  clusterDomain: starix.k3suat
+  nodeSelector:
+    st-sentry: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: st-sentry
+    value: "yes"
+
+
+
+sentry:
+  web:
+    strategyType: Recreate
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    env:
+    - name: HTTP_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: HTTPS_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: NO_PROXY
+      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-k8s.starixuat.com"
+
+  worker:
+    enabled: true
+    replicas: 3
+    concurrency: 10
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    env:
+    - name: HTTP_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: HTTPS_PROXY
+      value: "http://lisasqd.nebula.prod:8801"
+    - name: NO_PROXY
+      value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-k8s.starixuat.com"
+
+  workerEvents:
+    enabled: true
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"  
+
+  workerTransactions:
+    enabled: true
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  ingestConsumerAttachments:
+    enabled: true
+    replicas: 1
+    concurrency: 4      
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  ingestConsumerEvents:
+    enabled: true
+    replicas: 1
+    concurrency: 4
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  ingestConsumerTransactions:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  ingestReplayRecordings:
+    enabled: true
+    replicas: 1    
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  ingestProfiles:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+
+  ingestOccurrences:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  ingestMonitors:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  billingMetricsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  genericMetricsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  metricsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+
+  cron:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  subscriptionConsumerEvents:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  subscriptionConsumerSessions:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  subscriptionConsumerTransactions:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  postProcessForwardErrors:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  postProcessForwardTransactions:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"  
+
+  postProcessForwardIssuePlatform:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"  
+
+  subscriptionConsumerGenericMetrics:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  subscriptionConsumerMetrics:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"   
+
+  cleanup:
+    days: 3
+
+
+
+snuba:
+  api:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+
+  consumer:
+    replicas: 1
+    enabled: true
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+
+  outcomesConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  outcomesBillingConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  replacer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  metricsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+  
+  subscriptionConsumerEvents:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  genericMetricsCountersConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"  
+
+  genericMetricsDistributionConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  genericMetricsSetsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  subscriptionConsumerMetrics:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  subscriptionConsumerTransactions:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  subscriptionConsumerSessions:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  replaysConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  sessionsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  transactionsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  profilingProfilesConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  profilingFunctionsConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  issueOccurrenceConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  spansConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  groupAttributesConsumer:
+    enabled: true
+    replicas: 1
+
+    nodeSelector:
+      st-sentry: "yes"
+    tolerations:
+    - effect: NoSchedule
+      key: st-sentry
+      value: "yes"
+    autoOffsetReset: "latest"
+
+  # dbInitJob:
+  # migrateJob:
+
+  clickhouse:
+    maxConnections: 100
+
