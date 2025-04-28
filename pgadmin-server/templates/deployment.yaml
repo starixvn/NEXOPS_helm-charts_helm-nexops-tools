@@ -46,14 +46,12 @@ spec:
               value: {{ .Values.pgadmin.ldap.bindDn | quote }}
             - name: PGADMIN_CONFIG_LDAP_BIND_PASSWORD
               value: {{ .Values.pgadmin.ldap.bindPassword | quote }}
-            - name: PGADMIN_CONFIG_LDAP_BASE_DN
+            - name: PGADMIN_CONFIG_LDAP_SEARCH_BASE_DN
               value: {{ .Values.pgadmin.ldap.baseDn | quote }}
             - name: PGADMIN_CONFIG_LDAP_USERNAME_ATTRIBUTE
               value: {{ .Values.pgadmin.ldap.usernameAttribute | quote }}
             - name: PGADMIN_CONFIG_LDAP_SEARCH_FILTER
               value: {{ .Values.pgadmin.ldap.searchFilter | quote }}
-            - name: PGADMIN_CONFIG_LDAP_SEARCH_DOMAIN
-              value: {{ .Values.pgadmin.ldap.searchDomain | quote }}
             - name: PGADMIN_CONFIG_LDAP_AUTO_CREATE_USER
               value: "True"  # Enable automatic user creation
             {{- end }}
