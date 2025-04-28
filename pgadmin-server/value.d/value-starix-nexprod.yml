@@ -21,8 +21,8 @@ pgadmin:
     bindDn: "\"CN=ldapnex,OU=ServicesAccounts,OU=UsersGroups,OU=IT,OU=ServersLabs,OU=NEXSOL,DC=spvn,DC=local\""
     bindPassword: "\"D5TcVuqk%L\""
     baseDn: "\"OU=NEXSOL,DC=spvn,DC=local\""
-    usernameAttribute: "\"sAMAccountName\""
-    searchFilter: "\"(sAMAccountName=%s)\""
+    usernameAttribute: "\"mail\""
+    searchFilter: "\"(mail=%s)\""
     searchDomain: "\"spvn.local\"" 
 
 ingress:
