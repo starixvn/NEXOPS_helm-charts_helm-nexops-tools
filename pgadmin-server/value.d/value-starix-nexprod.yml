@@ -22,7 +22,7 @@ pgadmin:
     bindPassword: "D5TcVuqk%L"
     baseDn: "OU=NEXSOL,DC=spvn,DC=local"
     usernameAttribute: "sAMAccountName"
-    searchFilter: "(sAMAccountName=%s)"
+    searchFilter: "\"(sAMAccountName=%s)\""
 
 ingress:
   enabled: true
