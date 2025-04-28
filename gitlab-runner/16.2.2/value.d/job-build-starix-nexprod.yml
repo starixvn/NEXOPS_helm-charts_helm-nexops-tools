@@ -20,6 +20,7 @@ runners:
         image = "hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
         memory_request = "200Mi"
+        ephemeral_storage_request = "500Mi"
         # cpu_limit = "0.5"
         # memory_limit = "500Mi"
         poll_timeout = 3600
