@@ -15,6 +15,15 @@ pgadmin:
     enabled: true
     size: 1Gi
     storageClass: "standard"
+  # LDAP Authentication
+  ldap:
+    enabled: false   # <<<< TURN ON HERE
+    serverUri: "ldap://ldap.example.com"
+    bindDn: "cn=admin,dc=example,dc=com"
+    bindPassword: "changeme"
+    baseDn: "dc=example,dc=com"
+    usernameAttribute: "uid"
+    searchFilter: "(uid=%s)"
 
 ingress:
   enabled: false

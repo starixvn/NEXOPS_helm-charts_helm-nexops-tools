@@ -37,6 +37,22 @@ spec:
                   key: password
             - name: PGADMIN_LISTEN_ADDRESS
               value: "0.0.0.0"
+            {{- if .Values.pgadmin.ldap.enabled }}
+            - name: PGADMIN_CONFIG_AUTHENTICATION_SOURCES
+              value: "ldap"
+            - name: PGADMIN_CONFIG_LDAP_SERVER_URI
+              value: {{ .Values.pgadmin.ldap.serverUri | quote }}
+            - name: PGADMIN_CONFIG_LDAP_BIND_USER
+              value: {{ .Values.pgadmin.ldap.bindDn | quote }}
+            - name: PGADMIN_CONFIG_LDAP_BIND_PASSWORD
+              value: {{ .Values.pgadmin.ldap.bindPassword | quote }}
+            - name: PGADMIN_CONFIG_LDAP_BASE_DN
+              value: {{ .Values.pgadmin.ldap.baseDn | quote }}
+            - name: PGADMIN_CONFIG_LDAP_USERNAME_ATTRIBUTE
+              value: {{ .Values.pgadmin.ldap.usernameAttribute | quote }}
+            - name: PGADMIN_CONFIG_LDAP_SEARCH_FILTER
+              value: {{ .Values.pgadmin.ldap.searchFilter | quote }}
+            {{- end }}
           ports:
             - containerPort: 80
           volumeMounts:
