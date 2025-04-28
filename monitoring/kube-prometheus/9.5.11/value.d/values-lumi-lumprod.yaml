@@ -301,10 +301,10 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi"
+          namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi|sample"
       - receiver: 'null'
         match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*\\.rollover.*|.*\\.cleaner.*|.*\\.cleanup.*|.*\\.node-exporter.*"
+          pod: "scan-vulnerabilityreport-.*|c-.*|.*\\.rollover.*|.*\\.cleaner.*|.*\\.cleanup.*|.*\\.node-exporter.*|.*packagebuider.*"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"

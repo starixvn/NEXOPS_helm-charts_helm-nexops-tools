@@ -308,10 +308,10 @@ alertmanager:
       routes:
       - receiver: 'null'
         match_re:
-          namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix"
+          namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample"
       - receiver: 'null'
         match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*"
+          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*packagebuider.*"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
           service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
