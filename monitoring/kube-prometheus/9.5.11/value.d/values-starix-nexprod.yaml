@@ -334,6 +334,7 @@ alertmanager:
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
           text: |
+            *Cluster:* `Kubernetes-NexProd`
             *Severity:* `{{ .CommonLabels.severity }}`
             *Service:* `{{ .CommonLabels.service }}`
             *PVC:* `{{ .CommonLabels.pvc }}`

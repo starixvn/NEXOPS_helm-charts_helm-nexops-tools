@@ -327,6 +327,7 @@ alertmanager:
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
           text: |
+            *Cluster:* `Kubernetes-LumProd`
             *Severity:* `{{ .CommonLabels.severity }}`
             *PVC:* `{{ .CommonLabels.pvc }}`
             *Namespace:* `{{ .CommonLabels.pvc_namespace }}`

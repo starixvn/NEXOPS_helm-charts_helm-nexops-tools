@@ -418,6 +418,7 @@ alertmanager:
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
           text: |
+            *Cluster:* `Kubernetes-DevOps-PROD`
             *Severity:* `{{ .CommonLabels.severity }}`
             *Service:* `{{ .CommonLabels.service }}`
             *PVC:* `{{ .CommonLabels.pvc }}`
