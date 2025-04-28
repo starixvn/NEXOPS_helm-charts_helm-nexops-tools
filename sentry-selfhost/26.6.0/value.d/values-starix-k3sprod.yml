@@ -52,7 +52,7 @@ relay:
   - name: HTTPS_PROXY
     value: "http://lisasqd.nebula.prod:8801"
   - name: NO_PROXY
-    value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-k8s.starixplay.com,sentry-starix-k3prod-web"
+    value: "0.0.0.0,localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,sentry-k8s.starixplay.com,sentry-starix-k3sprod-web"
   nodeSelector:
     st-sentry: "yes"
   tolerations:
@@ -283,7 +283,7 @@ memcached:
 sentry:
   cleanup:
     days: 7
-    
+
   web:
     strategyType: Recreate
 
