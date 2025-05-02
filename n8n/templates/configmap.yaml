@@ -41,3 +41,4 @@ data:
   DB_LOGGING_ENABLED: {{ .Values.n8n.db_logging_enabled | default "true" | quote }}
   DB_LOGGING_OPTIONS: {{ .Values.n8n.db_logging_options | default "all" | quote }}
   N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: "true"
+  N8N_TEMPLATES_HOST: {{ .Values.n8n.webhookUrl }}
