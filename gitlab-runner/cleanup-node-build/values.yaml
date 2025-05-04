@@ -18,6 +18,5 @@ manualPruneJob:
   enabled: false
   name: "on-node-1"
   parallelism: 1
-  nodeSelector:
-    prune: "true"
+  nodeSelector: {}
   tolerations: []
