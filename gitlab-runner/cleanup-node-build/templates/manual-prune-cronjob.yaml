@@ -33,6 +33,15 @@ spec:
                   docker builder prune --all --filter "until={{ .Values.prune.builder.until }}" -f
                   docker system prune -af --volumes
                   echo "[✓] Finished at $(date)"
+              volumeMounts:
+                - name: docker-sock
+                  mountPath: /var/run/docker.sock
+                - name: localtime
+                  mountPath: /etc/localtime
+                  readOnly: true
+                - name: timezone
+                  mountPath: /etc/timezone
+                  readOnly: true
           volumes:
             - name: docker-sock
               hostPath:
