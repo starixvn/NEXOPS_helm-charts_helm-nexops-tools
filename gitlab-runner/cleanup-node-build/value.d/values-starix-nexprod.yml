@@ -17,8 +17,9 @@ prune:
     enabled: true
 
 manualPruneJob:
+  enabled: true
   name: prune-docker-job
-  enabled: false
+  schedule: "0 0 1 1 *"
   parallelism: 4
   nodeSelector:
     node-role.kubernetes.io/runner-build: "yes"
@@ -26,3 +27,5 @@ manualPruneJob:
   - effect: NoSchedule
     key: cattle.io/os
     value: runner-build
+
+
