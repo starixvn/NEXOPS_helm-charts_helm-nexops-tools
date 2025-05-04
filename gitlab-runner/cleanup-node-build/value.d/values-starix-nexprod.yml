@@ -1,0 +1,20 @@
+
+imageDocker: hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja
+
+prune:
+  nodeSelector:
+    node-role.kubernetes.io/runner-build: "yes"
+  cronSchedule: "0 3 * * *"
+  image:
+    until: "120h"
+  builder:
+    until: "240h"
+  volumes:
+    enabled: true
+
+manualPruneJob:
+  name: prune-docker-job
+  enabled: true
+  parallelism: 4
+  nodeSelector:
+    node-role.kubernetes.io/runner-build: "yes"

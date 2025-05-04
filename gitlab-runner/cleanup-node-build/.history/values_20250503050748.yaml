@@ -1,0 +1,14 @@
+prune:
+  cronSchedule: "0 3 * * *"
+  image:
+    until: "168h"
+  builder:
+    until: "72h"
+  volumes:
+    enabled: true
+
+manualPruneJob:
+  enabled: false
+  name: "on-node-1"
+  nodeSelector:
+    kubernetes.io/hostname: "worker-node-1"

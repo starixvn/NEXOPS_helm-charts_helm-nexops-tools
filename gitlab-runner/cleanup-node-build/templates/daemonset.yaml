@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "docker-prune.fullname" . }}-cron
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "docker-prune.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "docker-prune.name" . }}
+    spec:
+      nodeSelector:
+        {{- range $key, $val := .Values.prune.nodeSelector }}
+        {{ $key }}: {{ $val | quote }}
+        {{- end }}
+      containers:
+        - name: docker-pruner
+          image: {{ .Values.imageDocker }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo '{{ .Values.prune.cronSchedule }} /usr/local/bin/prune.sh >> /var/log/prune.log 2>&1' > /etc/crontabs/root
+              crond -f -d 8
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: prune-script
+              mountPath: /usr/local/bin/prune.sh
+              subPath: prune.sh
+              readOnly: true
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
+            - name: timezone
+              mountPath: /etc/timezone
+              readOnly: true
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: prune-script
+          configMap:
+            name: {{ include "docker-prune.fullname" . }}-prune-script
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+        - name: timezone
+          hostPath:
+            path: /etc/timezone
+      restartPolicy: Always
