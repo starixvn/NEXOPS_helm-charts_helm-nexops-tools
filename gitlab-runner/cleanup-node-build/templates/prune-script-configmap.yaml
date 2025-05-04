@@ -8,14 +8,14 @@ data:
     echo "[*] Docker cleanup on $(hostname) at $(date)"
 
     echo "Pruning images unused for {{ .Values.prune.image.until }}"
-    docker image prune -a --filter "until={{ .Values.prune.image.until }}" -f
+    docker image prune --filter "until={{ .Values.prune.image.until }}" -f
 
     echo "Pruning builder cache unused for {{ .Values.prune.builder.until }}"
-    docker builder prune --all --filter "until={{ .Values.prune.builder.until }}" -f
+    docker builder prune --filter "until={{ .Values.prune.builder.until }}" -f
 
     {{- if .Values.prune.volumes.enabled }}
     echo "Pruning system (with volumes)..."
-    docker system prune -af --volumes
+    docker system prune -f --volumes
     {{- end }}
 
     echo "[✓] Finished at $(date)"
