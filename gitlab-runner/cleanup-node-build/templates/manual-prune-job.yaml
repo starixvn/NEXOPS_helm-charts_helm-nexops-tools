@@ -14,6 +14,8 @@ spec:
         {{- range $key, $val := .Values.manualPruneJob.nodeSelector }}
         {{ $key }}: {{ $val | quote }}
         {{- end }}
+      tolerations:
+        {{- toYaml .Values.prune.tolerations | nindent 8 }}
       containers:
         - name: docker-pruner
           image: {{ .Values.imageDocker }}

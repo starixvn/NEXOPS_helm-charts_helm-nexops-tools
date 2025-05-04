@@ -4,6 +4,7 @@ imageDocker: hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja
 
 prune:
   nodeSelector: {}
+  tolerations: []
   cronSchedule: "0 3 * * *"
   image:
     until: "168h"
@@ -19,3 +20,4 @@ manualPruneJob:
   parallelism: 1
   nodeSelector:
     prune: "true"
+  tolerations: []
