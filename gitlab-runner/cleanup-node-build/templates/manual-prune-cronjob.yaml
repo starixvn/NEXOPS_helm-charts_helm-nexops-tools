@@ -5,6 +5,8 @@ metadata:
   name: {{ include "docker-prune.fullname" . }}-manual-prune
 spec:
   schedule: "{{ .Values.manualPruneJob.schedule }}"
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 10
   jobTemplate:
     spec:
       parallelism: {{ .Values.manualPruneJob.parallelism }}
