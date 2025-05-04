@@ -18,7 +18,7 @@ prune:
 
 manualPruneJob:
   name: prune-docker-job
-  enabled: true
+  enabled: false
   parallelism: 4
   nodeSelector:
     node-role.kubernetes.io/runner-build: "yes"
