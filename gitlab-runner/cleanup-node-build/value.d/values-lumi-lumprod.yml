@@ -1,1 +1,31 @@
 
+
+imageDocker: hub.lumigame.com/base/docker:24.0.4-bash-jq-jinja
+
+prune:
+  nodeSelector:
+    node-role.kubernetes.io/runner-build: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: runner-build
+  cronSchedule: "0 3 * * *" # at 3 AM everyday
+  # cronSchedule: "*/5 * * * *" each 5m for testing
+  image:
+    until: "120h"
+  builder:
+    until: "240h"
+  volumes:
+    enabled: true
+
+manualPruneJob:
+  enabled: true
+  name: prune-docker-job
+  schedule: "0 0 1 1 *"
+  parallelism: 4
+  nodeSelector:
+    node-role.kubernetes.io/runner-build: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cattle.io/os
+    value: runner-build
