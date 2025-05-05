@@ -8,6 +8,7 @@ replicas: 2
 gitlabUrl: https://git3.nexdev.net
 # runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
 runnerToken: "glrt-zJuctHhNUgsaMYCU54ng"
+checkInterval: 1
 concurrent: 120
 
 runners:
