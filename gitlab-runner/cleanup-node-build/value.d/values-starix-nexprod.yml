@@ -8,7 +8,8 @@ prune:
   - effect: NoSchedule
     key: cattle.io/os
     value: runner-build
-  cronSchedule: "0 3 * * *"
+  # cronSchedule: "0 3 * * *"
+  cronSchedule: "*/5 * * * *"
   image:
     until: "120h"
   builder:
