@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "docker-prune.fullname" . }}-prune-script
+data:
+  prune.sh: |-
+    #!/bin/sh
+    echo "[*] Docker cleanup on $(hostname) at $(date)"
+
+    echo "Pruning images unused for {{ .Values.prune.image.until }}"
+    docker image prune --filter "until={{ .Values.prune.image.until }}" -f
+
+    echo "Pruning builder cache unused for {{ .Values.prune.builder.until }}"
+    docker builder prune --filter "until={{ .Values.prune.builder.until }}" -f
+
+    {{- if .Values.prune.volumes.enabled }}
+    echo "Pruning system (with volumes)..."
+    docker system prune -f --volumes
+    {{- end }}
+
+    echo "[✓] Finished at $(date)"

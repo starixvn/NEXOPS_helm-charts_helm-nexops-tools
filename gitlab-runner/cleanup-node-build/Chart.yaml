@@ -1,0 +1,4 @@
+apiVersion: v2
+name: docker-prune
+version: 0.1.0
+description: Helm chart to prune Docker resources on selected nodes
