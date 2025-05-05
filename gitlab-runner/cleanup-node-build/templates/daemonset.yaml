@@ -24,6 +24,7 @@ spec:
             - /bin/sh
             - -c
             - |
+              chmod +x /usr/local/bin/prune.sh
               echo '{{ .Values.prune.cronSchedule }} /usr/local/bin/prune.sh >> /var/log/prune.log 2>&1' > /etc/crontabs/root
               crond -f -d 8
           volumeMounts:
