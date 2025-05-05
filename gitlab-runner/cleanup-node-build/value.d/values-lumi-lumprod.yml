@@ -22,7 +22,7 @@ manualPruneJob:
   enabled: true
   name: prune-docker-job
   schedule: "0 0 1 1 *"
-  parallelism: 4
+  parallelism: 3 # number of total node runner
   nodeSelector:
     node-role.kubernetes.io/runner-build: "yes"
   tolerations:
