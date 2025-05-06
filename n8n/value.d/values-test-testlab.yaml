@@ -20,7 +20,7 @@ n8n:
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
   timezone: ""
-  webhookUrl: https://n8n-test.nexdev.net/
+  webhookUrl: http://10.70.70.140:30080/
   auth:
     enabled: true
     username: "n8n"
@@ -46,8 +46,15 @@ postgresql:
       - ReadWriteOnce
     size: 2Gi
 
+service:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
+
 ingress:
-  enabled: true
+  enabled: false
   className: "haproxy"
   host: "n8n-test.nexdev.net"
   annotations: {}
