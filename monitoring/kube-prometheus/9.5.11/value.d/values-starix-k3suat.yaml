@@ -300,9 +300,9 @@ alertmanager:
             *Cluster:* `Kubernetes-DevOps-UAT`
             *Severity:* `{{ .CommonLabels.severity }}`
             *Service:* `{{ .CommonLabels.service }}`
-            *PVC:* `{{ .CommonLabels.pvc }}`
-            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
+            {{ if .CommonLabels.pvc }}*PVC:* `{{ .CommonLabels.pvc }}`{{ end }}
+            {{ if .CommonLabels.pvc_namespace }}*Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}
+            {{ if .CommonAnnotations.description }}*Description:* `{{ .CommonAnnotations.description }}`{{ end }}
   
     - name: 'kubernetes_devops_uat'
       slack_configs:
