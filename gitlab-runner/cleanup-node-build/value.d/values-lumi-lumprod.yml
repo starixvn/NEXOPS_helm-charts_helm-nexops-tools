@@ -16,7 +16,7 @@ prune:
   builder:
     until: "240h"
   volumes:
-    enabled: true
+    enabled: false
 
 manualPruneJob:
   enabled: true
