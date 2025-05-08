@@ -412,7 +412,7 @@ alertmanager:
 
     - name: 'longhorn_alerts'
       slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
+        - api_url: "https://hooks.slack.com/services/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"
           channel: '#longhorn_alerts'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
@@ -427,7 +427,7 @@ alertmanager:
 
     - name: 'kubernetes_devops_prod'
       slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
+        - api_url: "https://hooks.slack.com/services/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"
           channel: '#kubernetes_devops_prod'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
