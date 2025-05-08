@@ -171,9 +171,9 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      - receiver: 'null'
-        match_re:
-          namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
+       - receiver: 'null'
+         match_re:
+           namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
       receiver: 'kubernetes_sc_local'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
@@ -184,7 +184,7 @@ alertmanager:
       - name: 'null'
       - name: 'kubernetes_sc_local'
         slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
+          - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes_sc_local'
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'

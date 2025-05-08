@@ -174,7 +174,7 @@ alertmanager:
       - name: 'null'
       - name: 'kubernetes_sc_uat'
         slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
+          - api_url: "https://hooks.slack.com/services/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"
             channel: '#kubernetes_sc_uat'
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
