@@ -11,7 +11,7 @@ prune:
   cronSchedule: "0 3 * * *" # at 3 AM everyday
   # cronSchedule: "*/5 * * * *" each 5m for testing
   image:
-    until: "96h"
+    until: "72h"
   builder:
     until: "240h"
   volumes:
