@@ -41,7 +41,7 @@ spec:
                 - -c
                 - |
                   echo "[*] Docker cleanup on $(hostname) at $(date)"
-                  docker image prune  --filter "until={{ .Values.prune.image.until }}" -f
+                  docker image prune  --filter "until={{ .Values.prune.image.until }}" -af
                   docker builder prune  --filter "until={{ .Values.prune.builder.until }}" -f
                   echo "[✓] Finished at $(date)"
               volumeMounts:
