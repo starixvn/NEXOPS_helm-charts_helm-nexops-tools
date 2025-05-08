@@ -10,3 +10,8 @@
 {{- printf "%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end }}
 {{- end }}
+
+{{- /* Optional: if you use sha256sum for configmap checksum */ -}}
+{{- define "sha256sum" -}}
+{{- printf "%s" . | sha256sum -}}
+{{- end }}

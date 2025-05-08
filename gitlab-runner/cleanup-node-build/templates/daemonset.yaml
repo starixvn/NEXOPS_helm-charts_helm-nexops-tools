@@ -10,6 +10,8 @@ spec:
     metadata:
       labels:
         app: {{ include "docker-prune.name" . }}
+      annotations:
+        configmap-hash: {{ include (print $.Template.BasePath "/prune-script-configmap.yaml") . | sha256sum }}
     spec:
       nodeSelector:
         {{- range $key, $val := .Values.prune.nodeSelector }}
