@@ -13,7 +13,7 @@ prune:
   image:
     until: "72h"
   builder:
-    until: "240h"
+    until: "168h"
   volumes:
     enabled: false
 
