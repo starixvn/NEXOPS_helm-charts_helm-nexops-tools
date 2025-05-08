@@ -171,21 +171,21 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      - receiver: 'null'
-        match_re:
-          namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
-      receiver: 'kubernetes_sc_local'
+      # - receiver: 'null'
+      #   match_re:
+      #     namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
+      receiver: 'kubernetes-alerts-test'
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
 
     receivers:
-      - name: 'null'
-      - name: 'kubernetes_sc_local'
+      #- name: 'null'
+      - name: 'kubernetes-alerts-test'
         slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
-            channel: '#kubernetes_sc_local'
+          - api_url: "https://hooks.slack.com/services/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" #"https://hooks.slack.com/services/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"
+            channel: '#kubernetes-alerts-test'
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
