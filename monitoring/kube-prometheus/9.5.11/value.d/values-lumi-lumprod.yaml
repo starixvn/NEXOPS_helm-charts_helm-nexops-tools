@@ -305,6 +305,9 @@ alertmanager:
       - receiver: 'null'
         match_re:
           pod: "scan-vulnerabilityreport-.*|c-.*|.*\\.rollover.*|.*\\.cleaner.*|.*\\.cleanup.*|.*\\.node-exporter.*|.*packagebuider.*"
+      - receiver: 'nexpe-services-alert'
+        match_re:
+          namespace: "nexpe|gosql|tw|nexops"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
           service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
@@ -337,6 +340,19 @@ alertmanager:
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
           channel: '#kubernetes_nexprod_lumprod'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+          text: |
+            *Cluster:* `Kubernetes-LumProd`
+            *Summary:* `{{ .CommonLabels.alertname }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+    - name: 'nexpe-services-alert'
+      slack_configs:
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#nexpe-services-alert'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'

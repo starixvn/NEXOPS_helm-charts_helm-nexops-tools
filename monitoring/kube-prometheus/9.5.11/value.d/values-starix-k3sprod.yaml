@@ -352,6 +352,9 @@ alertmanager:
       - receiver: 'null'
         match_re:
           pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*"
+      - receiver: 'nexpe-services-alert'
+        match_re:
+          namespace: "nexpe|gosql|tw|nexops"
       - receiver: 'kubernetes_devops_prod'
         match_re:
           service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
@@ -429,6 +432,19 @@ alertmanager:
       slack_configs:
         - api_url: "https://hooks.slack.com/services/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"
           channel: '#kubernetes_devops_prod'
+          send_resolved: true
+          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+          text: |
+            *Cluster:* `Kubernetes-DevOps-PROD`
+            *Summary:* `{{ .CommonLabels.alertname }}`
+            *Description:* `{{ .CommonAnnotations.description }}`
+          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+    - name: 'nexpe-services-alert'
+      slack_configs:
+        - api_url: "https://hooks.slack.com/services/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"
+          channel: '#nexpe-services-alert'
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
