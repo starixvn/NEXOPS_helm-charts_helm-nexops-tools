@@ -23,6 +23,16 @@ spec:
             {{- end }}
           tolerations:
             {{- toYaml .Values.manualPruneJob.tolerations | nindent 12 }}
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: node-role.kubernetes.io/runner-build
+                        operator: In
+                        values:
+                          - "yes"
+                  topologyKey: "kubernetes.io/hostname"
           containers:
             - name: docker-pruner
               image: {{ .Values.imageDocker }}
