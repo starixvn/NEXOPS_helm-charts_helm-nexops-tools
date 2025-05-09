@@ -41,8 +41,9 @@ spec:
                 - -c
                 - |
                   echo "[*] Docker cleanup on $(hostname) at $(date)"
-                  docker image prune  --filter "until={{ .Values.prune.image.until }}" -af
-                  docker builder prune  --filter "until={{ .Values.prune.builder.until }}" -f
+                  docker image prune  --filter "until=48h" -af
+                  sleep 1
+                  docker builder prune  --filter "until=72h" -af
                   echo "[✓] Finished at $(date)"
               volumeMounts:
                 - name: docker-sock
