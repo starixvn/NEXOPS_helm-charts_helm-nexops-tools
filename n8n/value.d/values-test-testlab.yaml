@@ -56,4 +56,11 @@ service:
 ingress:
   enabled: "false"
 
+persistence:
+  enabled: true
+  storageClass: longhorn
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /home/node/.n8n
+
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
