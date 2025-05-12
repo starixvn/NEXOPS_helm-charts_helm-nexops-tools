@@ -181,6 +181,15 @@ kube-state-metrics:
         annotations:
           summary: "Node Down Detected"
           description: "Node {{ $labels.node }} may be down or disconnected from the cluster."
+      
+      - alert: NodeRestarted
+        expr: changes(node_boot_time_seconds[5m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Node {{ $labels.instance }} Restarted"
+          description: "The node {{ $labels.instance }} has restarted within the last 5 minutes."
 
       - alert: High Node CPU Usage
         expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
