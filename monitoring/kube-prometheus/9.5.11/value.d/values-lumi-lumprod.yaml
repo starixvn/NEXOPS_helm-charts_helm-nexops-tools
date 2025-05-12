@@ -173,6 +173,15 @@ kube-state-metrics:
           summary: "Node Not Ready"
           description: "Node {{ $labels.node }} is not ready."
 
+      - alert: NodeDown
+        expr: count_over_time(kube_node_status_condition{condition="Ready", status="true"}[1m]) < 1
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node Down Detected"
+          description: "Node {{ $labels.node }} may be down or disconnected from the cluster."
+
       - alert: High Node CPU Usage
         expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
         for: 5m
