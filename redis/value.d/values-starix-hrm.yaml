@@ -7,16 +7,16 @@ commonLabels:
 
 global:
   storageClass: "longhorn-effort"
-  imageRegistry: "harbor.byb6181.com"
+  imageRegistry: "hub.nexdev.net"
 
 image:
-  repository: vn-st/base/redis
+  repository: base/redis
   tag: 7.2.4-debian-12-r9
 
 
 metrics:
   image:
-    repository: vn-st/base/redis-exporter
+    repository: base/redis-exporter
     tag: 1.58.0-debian-12-r3
   enabled: true
   serviceMonitor:
@@ -41,7 +41,7 @@ commonConfiguration: |-
 volumePermissions:
   enabled: true
   image:
-    repository: vn-st/base/os-shell
+    repository: base/os-shell
     tag: 12-debian-12-r16
 
 master:
@@ -52,7 +52,7 @@ sentinel:
   enabled: true
   image:
     registry: 
-    repository: vn-st/base/redis-sentinel
+    repository: base/redis-sentinel
     tag: 7.2.4-debian-12-r7
   persistence:
     size: 1Gi    
