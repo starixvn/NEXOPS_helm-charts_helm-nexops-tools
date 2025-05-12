@@ -1,6 +1,8 @@
 clusterDomain: "starix.nexprod"
 replicaCount: 3
 
+resourcesPreset: "none"
+
 service:
   type: LoadBalancer
   loadBalancerIP: "10.18.200.194"
