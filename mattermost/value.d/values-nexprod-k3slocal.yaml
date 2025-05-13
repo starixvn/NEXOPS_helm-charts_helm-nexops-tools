@@ -38,9 +38,9 @@ ingress:
 
 mysql:
   enabled: true
-  mysqlRootPassword: ""
-  mysqlUser: ""
-  mysqlPassword: ""
+  mysqlRootPassword: mattermost1qaz@WSX
+  mysqlUser: mattermost
+  mysqlPassword:  mattermost1qaz@WSX
   mysqlDatabase: mattermost
 
   repository: mysql
