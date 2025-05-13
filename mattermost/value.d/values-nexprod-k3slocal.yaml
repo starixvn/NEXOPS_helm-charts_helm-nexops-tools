@@ -58,5 +58,5 @@ extraEnvVars:
   - name: MM_SQLSETTINGS_DRIVERNAME
     value: "mysql"
   - name: MM_SQLSETTINGS_DATASOURCE
-    value: "mattermost:mattermost1qaz@WSX@tcp(mattermost-nexprod-k3slocal-mysql.mattermost.svc.cluster.local:3306)/mattermost?charset=utf8mb4,utf8"
+    value: "mattermost:mattermost1qaz@WSX@tcp(mattermost-nexprod-k3slocal-mysql.mattermost-nexprod.svc.cluster.local:3306)/mattermost?charset=utf8mb4,utf8"
 
