@@ -30,6 +30,8 @@ n8n:
       enabled: true
       # prune old executions data after X hours
       max_age: "72"
+  nodeSelector:
+    nexops-tools: "yes"
 
 # values for PostgreSql helm chart
 postgresql:
@@ -45,6 +47,8 @@ postgresql:
     accessModes:
       - ReadWriteOnce
     size: 8Gi
+  nodeSelector:
+    nexops-tools: "yes"
 
 ingress:
   enabled: true
