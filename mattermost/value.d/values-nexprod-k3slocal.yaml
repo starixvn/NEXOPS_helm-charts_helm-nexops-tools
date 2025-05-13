@@ -1,0 +1,56 @@
+image:
+  repository: mattermost/mattermost-team-edition
+  tag: 10.7.1
+  imagePullPolicy: IfNotPresent
+
+initContainerImage:
+  repository: appropriate/curl
+  tag: latest
+  imagePullPolicy: IfNotPresent
+
+persistence:
+  data:
+    enabled: true
+    size: 5Gi
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+  plugins:
+    enabled: true
+    size: 1Gi
+    # storageClass:
+    accessMode: ReadWriteOnce
+
+service:
+  type: NodePort
+  externalPort: 8065
+  internalPort: 8065
+  annotations: {}
+  loadBalancerSourceRanges: []
+  nodePort: 30065
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  path: /
+  annotations: {}
+  hosts:
+    - mattermost.nexdev.net
+
+mysql:
+  enabled: true
+  mysqlRootPassword: ""
+  mysqlUser: ""
+  mysqlPassword: ""
+  mysqlDatabase: mattermost
+
+  repository: mysql
+  imageTag: '8.0.18'
+  testFramework:
+    enabled: false
+
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
