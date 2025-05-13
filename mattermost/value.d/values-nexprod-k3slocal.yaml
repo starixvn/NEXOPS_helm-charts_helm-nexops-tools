@@ -54,3 +54,9 @@ mysql:
     accessMode: ReadWriteOnce
     size: 5Gi
 
+extraEnvVars:
+  - name: MM_SQLSETTINGS_DRIVERNAME
+    value: "mysql"
+  - name: MM_SQLSETTINGS_DATASOURCE
+    value: "mattermost:mattermost1qaz@WSX@tcp(mattermost-mysql:3306)/mattermost?charset=utf8mb4,utf8"
+
