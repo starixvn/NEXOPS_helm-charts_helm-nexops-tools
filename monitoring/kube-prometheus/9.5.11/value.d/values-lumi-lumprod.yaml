@@ -17,7 +17,7 @@ prometheus:
 
   persistence:
     enabled: true
-    storageClass: "local-path"
+    storageClass: "longhorn-best-effort"
     size: 100Gi
 
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
