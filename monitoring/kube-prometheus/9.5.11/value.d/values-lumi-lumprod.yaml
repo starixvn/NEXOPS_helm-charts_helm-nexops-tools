@@ -17,13 +17,15 @@ prometheus:
       http: 9090
     nodePorts:
       http: "30062"
+  nodeSelector:
+    prometheus-node: "yes"
 
   retention: 7d
   retentionSize: "100GB"
 
   persistence:
     enabled: true
-    storageClass: "longhorn-best-effort"
+    storageClass: "local-path"
     size: 100Gi
 
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
