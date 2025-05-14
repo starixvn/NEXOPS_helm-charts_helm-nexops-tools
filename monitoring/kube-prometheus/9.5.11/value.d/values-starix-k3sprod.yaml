@@ -422,11 +422,10 @@ alertmanager:
           title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
           text: |
             *Cluster:* `Kubernetes-DevOps-PROD`
-            *Severity:* `{{ .CommonLabels.severity }}`
-            *Service:* `{{ .CommonLabels.service }}`
-            {{ if .CommonLabels.pvc }}*PVC:* `{{ .CommonLabels.pvc }}`{{ end }}
-            {{ if .CommonLabels.pvc_namespace }}*Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}
-            {{ if .CommonAnnotations.description }}*Description:* `{{ .CommonAnnotations.description }}`{{ end }}
+            *Severity:* `{{ .CommonLabels.severity }}`{{ if .CommonLabels.pvc }}
+            *PVC:* `{{ .CommonLabels.pvc }}`{{ end }}{{ if .CommonLabels.pvc_namespace }}
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}{{ if .CommonAnnotations.description }}
+            *Description:* `{{ .CommonAnnotations.description }}`{{ end }}
 
     - name: 'kubernetes_devops_prod'
       slack_configs:

@@ -358,12 +358,12 @@ alertmanager:
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
-          text: >-
+          text: |
             *Cluster:* `Kubernetes-LumProd`
-            *Severity:* `{{ .CommonLabels.severity }}`
-            {{ if .CommonLabels.pvc }}*PVC:* `{{ .CommonLabels.pvc }}`{{ end }}
-            {{ if .CommonLabels.pvc_namespace }}*Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}
-            {{ if .CommonAnnotations.description }}*Description:* `{{ .CommonAnnotations.description }}`{{ end }}
+            *Severity:* `{{ .CommonLabels.severity }}`{{ if .CommonLabels.pvc }}
+            *PVC:* `{{ .CommonLabels.pvc }}`{{ end }}{{ if .CommonLabels.pvc_namespace }}
+            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}{{ if .CommonAnnotations.description }}
+            *Description:* `{{ .CommonAnnotations.description }}`{{ end }}
 
     - name: 'kubernetes_nexprod_lumprod'
       slack_configs:
