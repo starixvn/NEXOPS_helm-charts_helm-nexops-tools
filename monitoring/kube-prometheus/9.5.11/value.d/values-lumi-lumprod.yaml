@@ -358,7 +358,7 @@ alertmanager:
           send_resolved: true
           icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
           title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
-          text: |
+          text: >-
             *Cluster:* `Kubernetes-LumProd`
             *Severity:* `{{ .CommonLabels.severity }}`
             {{ if .CommonLabels.pvc }}*PVC:* `{{ .CommonLabels.pvc }}`{{ end }}
