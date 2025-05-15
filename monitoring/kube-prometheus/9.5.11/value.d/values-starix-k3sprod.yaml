@@ -369,7 +369,7 @@ alertmanager:
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
       group_interval: 5m
-      repeat_interval: 24h
+      repeat_interval: 9999h
 
     receivers:
     - name: 'null'
