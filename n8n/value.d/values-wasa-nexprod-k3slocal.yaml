@@ -1,0 +1,55 @@
+image:
+  repository: hub.nexdev.net/base/n8n
+  pullPolicy: IfNotPresent
+  tag: "1.89.2"
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      size: 1Gi
+  replica:
+    replicaCount: 1
+    persistence:
+      size: 1Gi
+
+# values for N8N
+n8n:
+  encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
+  log_level: "debug"
+  timezone: ""
+  webhookUrl: https://n8n-wasa.nexdev.net/
+  auth:
+    enabled: true
+    username: "n8n"
+    password: "N8nWasa$"
+  data:
+    prune:
+      enabled: true
+      # prune old executions data after X hours
+      max_age: "72"
+
+# values for PostgreSql helm chart
+postgresql:
+  enabled: true
+  auth:
+    database: "n8n"
+    username: "n8n"
+    password: "N8nWasa$"
+  persistence:
+    enabled: true
+    type: pvc
+    storageClass: longhorn
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  host: "n8n-wasa.nexdev.net"
+  annotations: {}
+
+#Admin Login: admin@starixsoft.com/N8nWasa$
