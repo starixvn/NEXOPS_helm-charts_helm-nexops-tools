@@ -125,8 +125,8 @@ prometheus:
           description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
 
       - alert: Pod Restart Detected
-        expr: increase(kube_pod_container_status_restarts_total[1m]) > 0
-        for: 0s
+        expr: increase(kube_pod_container_status_restarts_total[5m]) > 0
+        for: 1m
         labels:
           severity: warning
         annotations:
