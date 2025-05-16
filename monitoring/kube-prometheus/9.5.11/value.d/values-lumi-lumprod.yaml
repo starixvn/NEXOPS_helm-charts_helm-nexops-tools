@@ -220,8 +220,8 @@ prometheus:
           summary: "High Memory Usage on Node"
           description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
 
-      - alert: Node Disk Usage High > 80%
-        expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 80
+      - alert: Node Disk Usage High > 85%
+        expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 85
         for: 5m
         labels:
           severity: warning
@@ -229,8 +229,8 @@ prometheus:
           summary: "High Node Disk Usage"
           description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
 
-      - alert: Node Disk Usage High > 90%
-        expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 90
+      - alert: Node Disk Usage High > 95%
+        expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 95
         for: 5m
         labels:
           severity: critical
