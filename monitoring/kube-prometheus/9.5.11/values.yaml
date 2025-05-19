@@ -1447,17 +1447,6 @@ prometheus:
                 summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
                 description: 'Pod usage is currently {{ printf "%.0f" $value }}% of the total cluster pod capacity.'
 
-    - name: runners.metrics
-      groups:
-        - name: runners.metrics
-          rules:
-            - expr: sum(gitlab_runner_jobs{job=~".*gitlab-runner.*"}) OR clamp_max(absent(notExists{job=~".*gitlab-runner.*"}),0)
-              record: gitlab_runner_jobs_build_total
-            - expr: gitlab_runner_jobs_build_total/sum(gitlab_runner_concurrent{job=~".*gitlab-runner.*"})
-              record: gitlab_runner_build_total:concurrent_saturation
-            - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
-              record: gitlab_runner_jobs:concurrent_saturation
-
     - name: longhorn.rules
       groups:
         - name: longhorn.rules
@@ -1585,6 +1574,17 @@ prometheus:
               for: 15m
               labels:
                 severity: warning
+
+    - name: runners.metrics
+      groups:
+        - name: runners.metrics
+          rules:
+            - expr: sum(gitlab_runner_jobs{job=~".*gitlab-runner.*"}) OR clamp_max(absent(notExists{job=~".*gitlab-runner.*"}),0)
+              record: gitlab_runner_jobs_build_total
+            - expr: gitlab_runner_jobs_build_total/sum(gitlab_runner_concurrent{job=~".*gitlab-runner.*"})
+              record: gitlab_runner_build_total:concurrent_saturation
+            - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
+              record: gitlab_runner_jobs:concurrent_saturation
 
   ## Note that the prometheus will fail to provision if the correct secret does not exist.
   ## @param prometheus.additionalScrapeConfigs.enabled Enable additional scrape configs
