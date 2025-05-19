@@ -154,8 +154,9 @@ alertmanager:
             title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
             text: |
               *Cluster:* `Kubernetes-NexProd`
-              *Severity:* `{{ .CommonLabels.severity }}`
-              *Description:* `{{ .CommonAnnotations.description }}`
-            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+              🚨 *{{ .CommonLabels.alertname }}* ({{ .Status | toUpper }})
+              🔁 Schedule: `{{ .CommonLabels.schedule }}`
+              ❗ Severity: `{{ .CommonLabels.severity }}`
+              📝 {{ .CommonAnnotations.description }}
 
       - name: default-receiver
