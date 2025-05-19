@@ -50,14 +50,28 @@ schedules:
     paused: false
     template:
       ttl: "168h"
-      includedNamespaces:
-      - gn
-      - l1
-      - l2
-      - sk
-      - nexops
-      - portainer
-      - hd
-      - sp
-      - tg
-      # - zabbix-server-nexprod
+      # includedNamespaces:
+      # - gn
+      # - l1
+      # - l2
+      # - sk
+      # - nexops
+      # - portainer
+      # - hd
+      # - sp
+      # - tg
+      # # - zabbix-server-nexprod
+      excludedNamespaces:
+      - cattle-fleet-system
+      - cattle-impersonation-system
+      - cattle-system
+      - haproxy-ingress
+      - kube-node-lease
+      - kube-public
+      - kube-system
+      - local
+      - local-path-storage
+      - monitoring
+      - trivy-operator-lumi
+      - vault-lumi
+      - velero
