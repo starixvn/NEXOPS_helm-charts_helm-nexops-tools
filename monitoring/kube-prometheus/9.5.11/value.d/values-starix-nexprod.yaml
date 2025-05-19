@@ -24,7 +24,7 @@ prometheus:
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
   resourcesPreset: "2xlarge"
-  
+
   additionalScrapeConfigs:
     # - job_name: 'gitlab-ci-pipelines-exporter'
     #   scrape_interval: 10s
@@ -40,279 +40,281 @@ prometheus:
       key: ""
     internal:
       jobList:
-      - job_name: 'gitlab-ci-pipelines-exporter'
-        scrape_interval: 10s
-        scrape_timeout: 5s
-        static_configs:
-          - targets: ['nexpe-gitlab-ci-pipelines-exporter-nexprod-service.nexpe:8080']
+        - job_name: "gitlab-ci-pipelines-exporter"
+          scrape_interval: 10s
+          scrape_timeout: 5s
+          static_configs:
+            - targets:
+                [
+                  "nexpe-gitlab-ci-pipelines-exporter-nexprod-service.nexpe:8080",
+                ]
   ##
 
   additionalPrometheusRules:
-  - name: kubernetes.rules
-    groups:
     - name: kubernetes.rules
-      rules:
-      - alert: Node Not Ready
-        expr: kube_node_status_condition{condition="Ready", status="false"} == 1
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node Not Ready"
-          description: "Node {{ $labels.node }} is not ready."
+      groups:
+        - name: kubernetes.rules
+          rules:
+            - alert: Node Not Ready
+              expr: kube_node_status_condition{condition="Ready", status="false"} == 1
+              for: 5m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Node Not Ready"
+                description: "Node {{ $labels.node }} is not ready."
 
-      - alert: High Node CPU Usage
-        expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High CPU Usage on Node"
-          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU."
+            - alert: High Node CPU Usage
+              expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "High CPU Usage on Node"
+                description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% CPU.'
 
-      - alert: High Node Memory Usage
-        expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High Memory Usage on Node"
-          description: "Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory."
+            - alert: High Node Memory Usage
+              expr: (node_memory_Active_bytes / node_memory_MemTotal_bytes) * 100 > 80
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "High Memory Usage on Node"
+                description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% of its memory.'
 
-      - alert: Node Disk Usage High > 85%
-        expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 85
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High Node Disk Usage"
-          description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
+            - alert: Node Disk Usage High > 85%
+              expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 85
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "High Node Disk Usage"
+                description: 'Node {{ $labels.instance }} has more than {{ printf "%.0f" $value }}% disk usage.'
 
-      - alert: Node Disk Usage High > 95%
-        expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 95
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "High Node Disk Usage"
-          description: "Node {{ $labels.instance }} has more than {{ printf \"%.0f\" $value }}% disk usage."
+            - alert: Node Disk Usage High > 95%
+              expr: (100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100)) > 95
+              for: 5m
+              labels:
+                severity: critical
+              annotations:
+                summary: "High Node Disk Usage"
+                description: 'Node {{ $labels.instance }} has more than {{ printf "%.0f" $value }}% disk usage.'
 
-      - alert: Node Disk Pressure
-        expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node Disk Pressure"
-          description: "Node {{ $labels.node }} is under disk pressure."
+            - alert: Node Disk Pressure
+              expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
+              for: 5m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Node Disk Pressure"
+                description: "Node {{ $labels.node }} is under disk pressure."
 
-      - alert: Node Memory Pressure
-        expr: kube_node_status_condition{condition="MemoryPressure", status="true"} == 1
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Node Memory Pressure"
-          description: "Node {{ $labels.node }} is under memory pressure."
+            - alert: Node Memory Pressure
+              expr: kube_node_status_condition{condition="MemoryPressure", status="true"} == 1
+              for: 5m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Node Memory Pressure"
+                description: "Node {{ $labels.node }} is under memory pressure."
 
-      - alert: Pod Not Running
-        expr: kube_pod_status_phase{phase!~"Running|Succeeded"} == 1
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod Not Running"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
+            - alert: Pod Not Running
+              expr: kube_pod_status_phase{phase!~"Running|Succeeded"} == 1
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Pod Not Running"
+                description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
 
-      - alert: Pod Restart Detected
-        expr: increase(kube_pod_container_status_restarts_total[5m]) > 0
-        for: 1m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod {{ $labels.pod }} restarted"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
+            - alert: Pod Restart Detected
+              expr: increase(kube_pod_container_status_restarts_total[5m]) > 0
+              for: 1m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Pod {{ $labels.pod }} restarted"
+                description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
 
-      - alert: Pod Restarting Frequently
-        expr: increase(kube_pod_container_status_restarts_total[5m])  > 3
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod Restarting Frequently"
-          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 3 times in the last 5 minutes."
+            - alert: Pod Restarting Frequently
+              expr: increase(kube_pod_container_status_restarts_total[5m])  > 3
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Pod Restarting Frequently"
+                description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted more than 3 times in the last 5 minutes."
 
-      - alert: API Server Down
-        expr: up{job="apiserver"} == 0
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          summary: "API Server Down"
-          description: "The Kubernetes API server is down."
+            - alert: API Server Down
+              expr: up{job="apiserver"} == 0
+              for: 1m
+              labels:
+                severity: critical
+              annotations:
+                summary: "API Server Down"
+                description: "The Kubernetes API server is down."
 
-      - alert: Cluster Pod Usage Above 80%
-        expr: |
-          (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
-          description: "Pod usage is currently {{ printf \"%.0f\" $value }}% of the total cluster pod capacity."
+            - alert: Cluster Pod Usage Above 80%
+              expr: |
+                (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 80
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
+                description: 'Pod usage is currently {{ printf "%.0f" $value }}% of the total cluster pod capacity.'
 
-  - name: runners.metrics
-    groups:
     - name: runners.metrics
-      rules:
-      - expr: sum(gitlab_runner_jobs{job=~".*gitlab-runner.*"}) OR clamp_max(absent(notExists{job=~".*gitlab-runner.*"}),0)
-        record: gitlab_runner_jobs_build_total
-      - expr: gitlab_runner_jobs_build_total/sum(gitlab_runner_concurrent{job=~".*gitlab-runner.*"})
-        record: gitlab_runner_build_total:concurrent_saturation
-      - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
-        record: gitlab_runner_jobs:concurrent_saturation
+      groups:
+        - name: runners.metrics
+          rules:
+            - expr: sum(gitlab_runner_jobs{job=~".*gitlab-runner.*"}) OR clamp_max(absent(notExists{job=~".*gitlab-runner.*"}),0)
+              record: gitlab_runner_jobs_build_total
+            - expr: gitlab_runner_jobs_build_total/sum(gitlab_runner_concurrent{job=~".*gitlab-runner.*"})
+              record: gitlab_runner_build_total:concurrent_saturation
+            - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
+              record: gitlab_runner_jobs:concurrent_saturation
 
-  - name: longhorn.rules
-    groups:
     - name: longhorn.rules
-      rules:
-      - alert: LonghornVolumeActualSpaceUsedWarning
-        expr: (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) * 100 > 90) or absent(longhorn_volume_actual_size_bytes)
-        for: 5m
-        labels:
-          severity: warning
-          service: Longhorn
-        annotations:
-          title: "Longhorn: Volume Actual Space Used Warning"
-          summary: The actual used space of Longhorn volume is over 90% of the capacity.
-          description: The actual space used by Longhorn volume {{$labels.volume}} on {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
-          template: "automate"
+      groups:
+        - name: longhorn.rules
+          rules:
+            - alert: LonghornVolumeActualSpaceUsedWarning
+              expr: (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) * 100 > 90) or absent(longhorn_volume_actual_size_bytes)
+              for: 5m
+              labels:
+                severity: warning
+                service: Longhorn
+              annotations:
+                title: "Longhorn: Volume Actual Space Used Warning"
+                summary: The actual used space of Longhorn volume is over 90% of the capacity.
+                description: The actual space used by Longhorn volume {{$labels.volume}} on {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
+                template: "automate"
 
-      - alert: LonghornVolumeStatusCritical
-        expr: longhorn_volume_robustness == 3
-        for: 5m
-        labels:
-          severity: critical
-          service: Longhorn
-          issue: Longhorn volume {{$labels.volume}} is Fault.
-        annotations:
-          title: "Longhorn: Volume Status Critical"
-          summary: Longhorn volume {{$labels.volume}} is Fault
-          description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Fault for more than 2 minutes.
-          template: "automate"
+            - alert: LonghornVolumeStatusCritical
+              expr: longhorn_volume_robustness == 3
+              for: 5m
+              labels:
+                severity: critical
+                service: Longhorn
+                issue: Longhorn volume {{$labels.volume}} is Fault.
+              annotations:
+                title: "Longhorn: Volume Status Critical"
+                summary: Longhorn volume {{$labels.volume}} is Fault
+                description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Fault for more than 2 minutes.
+                template: "automate"
 
-      - alert: LonghornVolumeStatusWarning
-        expr: longhorn_volume_robustness == 2
-        for: 5m
-        labels:
-          severity: warning
-          service: Longhorn
-          issue: Longhorn volume {{$labels.volume}} is Degraded.
-        annotations:
-          title: "Longhorn: Volume Status Warning"
-          summary: Longhorn volume {{$labels.volume}} is Degraded
-          description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Degraded for more than 5 minutes.
-          template: "automate"
+            - alert: LonghornVolumeStatusWarning
+              expr: longhorn_volume_robustness == 2
+              for: 5m
+              labels:
+                severity: warning
+                service: Longhorn
+                issue: Longhorn volume {{$labels.volume}} is Degraded.
+              annotations:
+                title: "Longhorn: Volume Status Warning"
+                summary: Longhorn volume {{$labels.volume}} is Degraded
+                description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Degraded for more than 5 minutes.
+                template: "automate"
 
-      - alert: LonghornNodeStorageWarning
-        expr: (longhorn_node_storage_usage_bytes / longhorn_node_storage_capacity_bytes) * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-          service: Longhorn
-          issue: The used storage of node {{$labels.node}} is high.
-        annotations:
-          title: "Longhorn: Node Storage Warning"
-          summary: The used storage of node is over 80% of the capacity.
-          description: The used storage of node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
-          template: "automate"
+            - alert: LonghornNodeStorageWarning
+              expr: (longhorn_node_storage_usage_bytes / longhorn_node_storage_capacity_bytes) * 100 > 80
+              for: 5m
+              labels:
+                severity: warning
+                service: Longhorn
+                issue: The used storage of node {{$labels.node}} is high.
+              annotations:
+                title: "Longhorn: Node Storage Warning"
+                summary: The used storage of node is over 80% of the capacity.
+                description: The used storage of node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
+                template: "automate"
 
-      - alert: LonghornDiskStorageWarning
-        expr: (longhorn_disk_usage_bytes / longhorn_disk_capacity_bytes) * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-          service: Longhorn
-          issue: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is high.
-        annotations:
-          title: "Longhorn: Disk Storage Warning"
-          summary: The used storage of disk is over 80% of the capacity.
-          description: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
-          template: "automate"
+            - alert: LonghornDiskStorageWarning
+              expr: (longhorn_disk_usage_bytes / longhorn_disk_capacity_bytes) * 100 > 80
+              for: 5m
+              labels:
+                severity: warning
+                service: Longhorn
+                issue: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is high.
+              annotations:
+                title: "Longhorn: Disk Storage Warning"
+                summary: The used storage of disk is over 80% of the capacity.
+                description: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
+                template: "automate"
 
-      - alert: LonghornNodeDown
-        expr: (avg(longhorn_node_count_total) or on() vector(0)) - (count(longhorn_node_status{condition="ready"} == 1) or on() vector(0)) > 0
-        for: 5m
-        labels:
-          severity: critical
-          service: Longhorn
-          issue: There are {{$value}} Longhorn nodes are offline
-        annotations:
-          title: "Longhorn: Node Down"
-          summary: Longhorn nodes is offline
-          description: There are {{$value}} Longhorn nodes which have been offline for more than 5 minutes.
-          template: "automate"
+            - alert: LonghornNodeDown
+              expr: (avg(longhorn_node_count_total) or on() vector(0)) - (count(longhorn_node_status{condition="ready"} == 1) or on() vector(0)) > 0
+              for: 5m
+              labels:
+                severity: critical
+                service: Longhorn
+                issue: There are {{$value}} Longhorn nodes are offline
+              annotations:
+                title: "Longhorn: Node Down"
+                summary: Longhorn nodes is offline
+                description: There are {{$value}} Longhorn nodes which have been offline for more than 5 minutes.
+                template: "automate"
 
-      - alert: LonghornInstanceManagerCPUUsageWarning
-        expr: (longhorn_instance_manager_cpu_usage_millicpu/longhorn_instance_manager_cpu_requests_millicpu) * 100 > 300
-        for: 5m
-        labels:
-          severity: warning
-          service: Longhorn
-          issue: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} consumes 3 times the CPU request.
-        annotations:
-          title: "Longhorn: Instance Manager CPU Usage Warning"
-          summary: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is over 300%.
-          description: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is {{$value | printf "%.2f"}}% for more than 5 minutes.
-          template: "automate"
+            - alert: LonghornInstanceManagerCPUUsageWarning
+              expr: (longhorn_instance_manager_cpu_usage_millicpu/longhorn_instance_manager_cpu_requests_millicpu) * 100 > 300
+              for: 5m
+              labels:
+                severity: warning
+                service: Longhorn
+                issue: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} consumes 3 times the CPU request.
+              annotations:
+                title: "Longhorn: Instance Manager CPU Usage Warning"
+                summary: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is over 300%.
+                description: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is {{$value | printf "%.2f"}}% for more than 5 minutes.
+                template: "automate"
 
-      - alert: LonghornNodeCPUUsageWarning
-        expr: (longhorn_node_cpu_usage_millicpu / longhorn_node_cpu_capacity_millicpu) * 100 > 90
-        for: 5m
-        labels:
-          severity: warning
-          service: Longhorn
-          issue: Longhorn node {{$labels.node}} experiences high CPU pressure.
-        annotations:
-          title: "Longhorn: Node CPU Usage Warning"
-          summary: Longhorn node {{$labels.node}} experiences high CPU pressure for more than 5m.
-          description: Longhorn node {{$labels.node}} has CPU Usage / CPU capacity is {{$value | printf "%.2f"}}% for more than 5 minutes.
-          template: "automate"
+            - alert: LonghornNodeCPUUsageWarning
+              expr: (longhorn_node_cpu_usage_millicpu / longhorn_node_cpu_capacity_millicpu) * 100 > 90
+              for: 5m
+              labels:
+                severity: warning
+                service: Longhorn
+                issue: Longhorn node {{$labels.node}} experiences high CPU pressure.
+              annotations:
+                title: "Longhorn: Node CPU Usage Warning"
+                summary: Longhorn node {{$labels.node}} experiences high CPU pressure for more than 5m.
+                description: Longhorn node {{$labels.node}} has CPU Usage / CPU capacity is {{$value | printf "%.2f"}}% for more than 5 minutes.
+                template: "automate"
 
-  - name: velero.rules
-    groups:
     - name: velero.rules
-      rules:
-      - alert: VeleroBackupPartialFailures
-      annotations:
-        message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
-      expr: |-
-        velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
-      for: 15m
-      labels:
-        severity: warning
-    - alert: VeleroBackupFailures
-      annotations:
-        message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
-      expr: |-
-        velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
-      for: 15m
-      labels:
-        severity: warning
-
+      groups:
+        - name: velero.rules
+          rules:
+            - alert: VeleroBackupPartialFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
+          expr: |-
+            velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
+        - alert: VeleroBackupFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
+          expr: |-
+            velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
 
 node-exporter:
   extraVolumes:
-  - hostPath:
-      path: /var/lib
-      type: ""
-    name: mnt
+    - hostPath:
+        path: /var/lib
+        type: ""
+      name: mnt
 
   extraVolumeMounts:
-  - mountPath: /host/root/var/lib
-    mountPropagation: HostToContainer
-    name: mnt
-    readOnly: true
+    - mountPath: /host/root/var/lib
+      mountPropagation: HostToContainer
+      name: mnt
+      readOnly: true
 
   extraArgs:
     path.rootfs: "/host/root"
@@ -328,68 +330,83 @@ alertmanager:
     route:
       receiver: default-receiver
       routes:
-      - receiver: 'null'
-        match_re:
-          namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample"
-      - receiver: 'null'
-        match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*packagebuider.*"
-      - receiver: 'nexpe-services-alert'
-        match_re:
-          namespace: "nexpe|gosql|tw|nexops"
-      - receiver: 'kubernetes_nexprod_lumprod'
-        match_re:
-          service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
-      - receiver: 'longhorn_alerts'
-        match:
-          service: "Longhorn"
-        group_by: ['alertname', 'job', 'pvc']
-      group_by: ['alertname','job','pod', 'description']
+        - receiver: "null"
+          match_re:
+            namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample"
+        - receiver: "null"
+          match_re:
+            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*packagebuider.*"
+        - receiver: "nexpe-services-alert"
+          match_re:
+            namespace: "nexpe|gosql|tw|nexops"
+        - receiver: "kubernetes_nexprod_lumprod"
+          match_re:
+            service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
+        - receiver: "longhorn_alerts"
+          match:
+            service: "Longhorn"
+          group_by: ["alertname", "job", "pvc"]
+        - receiver: "velero_alerts"
+          match:
+            service: ".*velero.*"
+      group_by: ["alertname", "job", "pod", "description"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
 
     receivers:
-    - name: 'null'
-    - name: 'longhorn_alerts'
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#longhorn_alerts'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-NexProd`
-            *Severity:* `{{ .CommonLabels.severity }}`{{ if .CommonLabels.pvc }}
-            *PVC:* `{{ .CommonLabels.pvc }}`{{ end }}{{ if .CommonLabels.pvc_namespace }}
-            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}{{ if .CommonAnnotations.description }}
-            *Description:* `{{ .CommonAnnotations.description }}`{{ end }}
-            
+      - name: "null"
+      - name: "longhorn_alerts"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#longhorn_alerts"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-NexProd`
+              *Severity:* `{{ .CommonLabels.severity }}`{{ if .CommonLabels.pvc }}
+              *PVC:* `{{ .CommonLabels.pvc }}`{{ end }}{{ if .CommonLabels.pvc_namespace }}
+              *Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}{{ if .CommonAnnotations.description }}
+              *Description:* `{{ .CommonAnnotations.description }}`{{ end }}
 
-    - name: 'kubernetes_nexprod_lumprod'
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes_nexprod_lumprod'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-NexProd`
-            *Summary:* `{{ .CommonLabels.alertname }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+      - name: "kubernetes_nexprod_lumprod"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#kubernetes_nexprod_lumprod"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-NexProd`
+              *Summary:* `{{ .CommonLabels.alertname }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
-    - name: 'nexpe-services-alert'
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#nexpe-services-alert'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-NexProd`
-            *Summary:* `{{ .CommonLabels.alertname }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+      - name: "nexpe-services-alert"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#nexpe-services-alert"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-NexProd`
+              *Summary:* `{{ .CommonLabels.alertname }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
-    - name: default-receiver
+      - name: "velero_alerts"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#alerts-test"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-NexProd`
+              *Severity:* `{{ .CommonLabels.severity }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+      - name: default-receiver
