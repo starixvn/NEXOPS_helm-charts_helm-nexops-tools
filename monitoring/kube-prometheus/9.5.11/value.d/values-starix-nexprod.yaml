@@ -62,112 +62,112 @@ prometheus:
   #           - expr: gitlab_runner_jobs/ on(namespace, pod) gitlab_runner_concurrent
   #             record: gitlab_runner_jobs:concurrent_saturation
 
-    - name: longhorn.rules
-      groups:
-        - name: longhorn.rules
-          rules:
-            - alert: LonghornVolumeActualSpaceUsedWarning
-              expr: (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) * 100 > 90) or absent(longhorn_volume_actual_size_bytes)
-              for: 5m
-              labels:
-                severity: warning
-                service: Longhorn
-              annotations:
-                title: "Longhorn: Volume Actual Space Used Warning"
-                summary: The actual used space of Longhorn volume is over 90% of the capacity.
-                description: The actual space used by Longhorn volume {{$labels.volume}} on {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
-                template: "automate"
+  - name: longhorn.rules
+    groups:
+      - name: longhorn.rules
+        rules:
+          - alert: LonghornVolumeActualSpaceUsedWarning
+            expr: (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) * 100 > 90) or absent(longhorn_volume_actual_size_bytes)
+            for: 5m
+            labels:
+              severity: warning
+              service: Longhorn
+            annotations:
+              title: "Longhorn: Volume Actual Space Used Warning"
+              summary: The actual used space of Longhorn volume is over 90% of the capacity.
+              description: The actual space used by Longhorn volume {{$labels.volume}} on {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
+              template: "automate"
 
-            - alert: LonghornVolumeStatusCritical
-              expr: longhorn_volume_robustness == 3
-              for: 5m
-              labels:
-                severity: critical
-                service: Longhorn
-                issue: Longhorn volume {{$labels.volume}} is Fault.
-              annotations:
-                title: "Longhorn: Volume Status Critical"
-                summary: Longhorn volume {{$labels.volume}} is Fault
-                description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Fault for more than 2 minutes.
-                template: "automate"
+          - alert: LonghornVolumeStatusCritical
+            expr: longhorn_volume_robustness == 3
+            for: 5m
+            labels:
+              severity: critical
+              service: Longhorn
+              issue: Longhorn volume {{$labels.volume}} is Fault.
+            annotations:
+              title: "Longhorn: Volume Status Critical"
+              summary: Longhorn volume {{$labels.volume}} is Fault
+              description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Fault for more than 2 minutes.
+              template: "automate"
 
-            - alert: LonghornVolumeStatusWarning
-              expr: longhorn_volume_robustness == 2
-              for: 5m
-              labels:
-                severity: warning
-                service: Longhorn
-                issue: Longhorn volume {{$labels.volume}} is Degraded.
-              annotations:
-                title: "Longhorn: Volume Status Warning"
-                summary: Longhorn volume {{$labels.volume}} is Degraded
-                description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Degraded for more than 5 minutes.
-                template: "automate"
+          - alert: LonghornVolumeStatusWarning
+            expr: longhorn_volume_robustness == 2
+            for: 5m
+            labels:
+              severity: warning
+              service: Longhorn
+              issue: Longhorn volume {{$labels.volume}} is Degraded.
+            annotations:
+              title: "Longhorn: Volume Status Warning"
+              summary: Longhorn volume {{$labels.volume}} is Degraded
+              description: Longhorn volume {{$labels.volume}} on {{$labels.node}} is Degraded for more than 5 minutes.
+              template: "automate"
 
-            - alert: LonghornNodeStorageWarning
-              expr: (longhorn_node_storage_usage_bytes / longhorn_node_storage_capacity_bytes) * 100 > 80
-              for: 5m
-              labels:
-                severity: warning
-                service: Longhorn
-                issue: The used storage of node {{$labels.node}} is high.
-              annotations:
-                title: "Longhorn: Node Storage Warning"
-                summary: The used storage of node is over 80% of the capacity.
-                description: The used storage of node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
-                template: "automate"
+          - alert: LonghornNodeStorageWarning
+            expr: (longhorn_node_storage_usage_bytes / longhorn_node_storage_capacity_bytes) * 100 > 80
+            for: 5m
+            labels:
+              severity: warning
+              service: Longhorn
+              issue: The used storage of node {{$labels.node}} is high.
+            annotations:
+              title: "Longhorn: Node Storage Warning"
+              summary: The used storage of node is over 80% of the capacity.
+              description: The used storage of node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
+              template: "automate"
 
-            - alert: LonghornDiskStorageWarning
-              expr: (longhorn_disk_usage_bytes / longhorn_disk_capacity_bytes) * 100 > 80
-              for: 5m
-              labels:
-                severity: warning
-                service: Longhorn
-                issue: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is high.
-              annotations:
-                title: "Longhorn: Disk Storage Warning"
-                summary: The used storage of disk is over 80% of the capacity.
-                description: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
-                template: "automate"
+          - alert: LonghornDiskStorageWarning
+            expr: (longhorn_disk_usage_bytes / longhorn_disk_capacity_bytes) * 100 > 80
+            for: 5m
+            labels:
+              severity: warning
+              service: Longhorn
+              issue: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is high.
+            annotations:
+              title: "Longhorn: Disk Storage Warning"
+              summary: The used storage of disk is over 80% of the capacity.
+              description: The used storage of disk {{$labels.disk}} on node {{$labels.node}} is at {{$value | printf "%.2f"}}% capacity for more than 5 minutes.
+              template: "automate"
 
-            - alert: LonghornNodeDown
-              expr: (avg(longhorn_node_count_total) or on() vector(0)) - (count(longhorn_node_status{condition="ready"} == 1) or on() vector(0)) > 0
-              for: 5m
-              labels:
-                severity: critical
-                service: Longhorn
-                issue: There are {{$value}} Longhorn nodes are offline
-              annotations:
-                title: "Longhorn: Node Down"
-                summary: Longhorn nodes is offline
-                description: There are {{$value}} Longhorn nodes which have been offline for more than 5 minutes.
-                template: "automate"
+          - alert: LonghornNodeDown
+            expr: (avg(longhorn_node_count_total) or on() vector(0)) - (count(longhorn_node_status{condition="ready"} == 1) or on() vector(0)) > 0
+            for: 5m
+            labels:
+              severity: critical
+              service: Longhorn
+              issue: There are {{$value}} Longhorn nodes are offline
+            annotations:
+              title: "Longhorn: Node Down"
+              summary: Longhorn nodes is offline
+              description: There are {{$value}} Longhorn nodes which have been offline for more than 5 minutes.
+              template: "automate"
 
-            - alert: LonghornInstanceManagerCPUUsageWarning
-              expr: (longhorn_instance_manager_cpu_usage_millicpu/longhorn_instance_manager_cpu_requests_millicpu) * 100 > 300
-              for: 5m
-              labels:
-                severity: warning
-                service: Longhorn
-                issue: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} consumes 3 times the CPU request.
-              annotations:
-                title: "Longhorn: Instance Manager CPU Usage Warning"
-                summary: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is over 300%.
-                description: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is {{$value | printf "%.2f"}}% for more than 5 minutes.
-                template: "automate"
+          - alert: LonghornInstanceManagerCPUUsageWarning
+            expr: (longhorn_instance_manager_cpu_usage_millicpu/longhorn_instance_manager_cpu_requests_millicpu) * 100 > 300
+            for: 5m
+            labels:
+              severity: warning
+              service: Longhorn
+              issue: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} consumes 3 times the CPU request.
+            annotations:
+              title: "Longhorn: Instance Manager CPU Usage Warning"
+              summary: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is over 300%.
+              description: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} has CPU Usage / CPU request is {{$value | printf "%.2f"}}% for more than 5 minutes.
+              template: "automate"
 
-            - alert: LonghornNodeCPUUsageWarning
-              expr: (longhorn_node_cpu_usage_millicpu / longhorn_node_cpu_capacity_millicpu) * 100 > 90
-              for: 5m
-              labels:
-                severity: warning
-                service: Longhorn
-                issue: Longhorn node {{$labels.node}} experiences high CPU pressure.
-              annotations:
-                title: "Longhorn: Node CPU Usage Warning"
-                summary: Longhorn node {{$labels.node}} experiences high CPU pressure for more than 5m.
-                description: Longhorn node {{$labels.node}} has CPU Usage / CPU capacity is {{$value | printf "%.2f"}}% for more than 5 minutes.
-                template: "automate"
+          - alert: LonghornNodeCPUUsageWarning
+            expr: (longhorn_node_cpu_usage_millicpu / longhorn_node_cpu_capacity_millicpu) * 100 > 90
+            for: 5m
+            labels:
+              severity: warning
+              service: Longhorn
+              issue: Longhorn node {{$labels.node}} experiences high CPU pressure.
+            annotations:
+              title: "Longhorn: Node CPU Usage Warning"
+              summary: Longhorn node {{$labels.node}} experiences high CPU pressure for more than 5m.
+              description: Longhorn node {{$labels.node}} has CPU Usage / CPU capacity is {{$value | printf "%.2f"}}% for more than 5 minutes.
+              template: "automate"
 
 node-exporter:
   extraVolumes:
