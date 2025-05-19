@@ -1452,7 +1452,7 @@ prometheus:
         - name: longhorn.rules
           rules:
             - alert: LonghornVolumeActualSpaceUsedWarning
-              expr: (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) * 100 > 90) or absent(longhorn_volume_actual_size_bytes)
+              expr: ((longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) * 100 > 90) or absent(longhorn_volume_actual_size_bytes)
               for: 5m
               labels:
                 severity: warning
