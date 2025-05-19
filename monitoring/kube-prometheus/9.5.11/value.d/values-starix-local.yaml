@@ -41,7 +41,7 @@ prometheus:
     name: ""
     key: ""
 
-  additionalPrometheusRules: []
+  #additionalPrometheusRules: []
 
 
 kube-state-metrics:

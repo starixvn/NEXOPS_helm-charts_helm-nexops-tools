@@ -44,7 +44,7 @@ prometheus:
     name: ""
     key: ""
 
-  additionalPrometheusRules: []
+  #additionalPrometheusRules: []
 
 alertmanager:
   resourcesPreset: "none"
