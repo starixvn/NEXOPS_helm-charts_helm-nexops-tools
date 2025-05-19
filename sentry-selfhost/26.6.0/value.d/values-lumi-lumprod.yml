@@ -533,7 +533,7 @@ sentry:
       value: "yes"   
 
   cleanup:
-    days: 3
+    days: 2
 
 
 
