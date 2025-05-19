@@ -50,7 +50,7 @@ prometheus:
                 ]
   ##
 
-  additionalPrometheusRules: []
+  #additionalPrometheusRules: []
   #   - name: runners.metrics
   #     groups:
   #       - name: runners.metrics
