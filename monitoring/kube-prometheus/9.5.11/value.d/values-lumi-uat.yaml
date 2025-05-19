@@ -62,7 +62,9 @@ alertmanager:
       - receiver: 'null'
         match_re:
           namespace: "l1|l2|gn|hd|sk|sp|tg|mg|cattle-system"
-      receiver: 'kubernetes_sc_uat'
+      - receiver: 'kubernetes_sc_uat'
+        match_re:
+          service: "prometheus-lumi-uat-kube-state-metrics|prometheus-lumi-uat-node-exporter"
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
       group_interval: 5m
