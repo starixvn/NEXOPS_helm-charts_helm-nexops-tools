@@ -240,6 +240,14 @@ prometheus:
               for: 15m
               labels:
                 severity: warning
+            - alert: VeleroBackupSuccess
+              annotations:
+                message: Velero backup {{ $labels.schedule }} completed successfully.
+              expr: |-
+                velero_backup_success_total{schedule!=""} > 0 and changes(velero_backup_success_total{schedule!=""}[1m]) > 0
+              for: 1m
+              labels:
+                severity: info
 
     - name: runners.metrics
       groups:
@@ -254,74 +262,73 @@ prometheus:
 
     - name: opensearch.rules
       groups:
-      - name: opensearch.rules
-        rules:
-        # Opensearch disk out of space 
-        - alert: OpensearchDiskOutOfSpace
-          expr: opensearch_fs_total_available_bytes / opensearch_fs_total_total_bytes * 100 < 10
-          for: 0m
-          labels:
-            severity: CRITICAL
-            service: OpenSearch
-          annotations:
-            investigate_link: "https://ops-fps.starixplay.com"
-            title: "Opensearch: Disk running out of space"
-            summary: Opensearch disk out of space (component {{ $labels.job }})
-            description: "The disk usage is over 90%"
-            template: "automate"
-          
-        #  Opensearch Node Offline
-        - alert: OpensearchNodeOffline
-          expr: max_over_time(opensearch_cluster_nodes_number[5m]) < max_over_time(opensearch_cluster_nodes_number[1d:5m])
-          for: 0m
-          labels:
-            severity: CRITICAL
-            service: OpenSearch
-          annotations:
-            title: "Opensearch: Nodes go Offline"
-            summary: Opensearch node goes offline (component {{ $labels.job }})
-            description: "Some node go offline!"
-            template: "automate"
+        - name: opensearch.rules
+          rules:
+            # Opensearch disk out of space
+            - alert: OpensearchDiskOutOfSpace
+              expr: opensearch_fs_total_available_bytes / opensearch_fs_total_total_bytes * 100 < 10
+              for: 0m
+              labels:
+                severity: CRITICAL
+                service: OpenSearch
+              annotations:
+                investigate_link: "https://ops-fps.starixplay.com"
+                title: "Opensearch: Disk running out of space"
+                summary: Opensearch disk out of space (component {{ $labels.job }})
+                description: "The disk usage is over 90%"
+                template: "automate"
 
-        # Opensearch Cluster Red 
-        - alert: OpensearchClusterRed
-          expr: opensearch_cluster_status == 2
-          for: 0m
-          labels:
-            severity: CRITICAL
-            service: OpenSearch
-          annotations:
-            title: "Opensearch: Cluster in Red Health"
-            summary: Opensearch Cluster Red (component {{ $labels.job }})
-            description: "Opensearch Cluster Red status"
-            template: "automate"
+            #  Opensearch Node Offline
+            - alert: OpensearchNodeOffline
+              expr: max_over_time(opensearch_cluster_nodes_number[5m]) < max_over_time(opensearch_cluster_nodes_number[1d:5m])
+              for: 0m
+              labels:
+                severity: CRITICAL
+                service: OpenSearch
+              annotations:
+                title: "Opensearch: Nodes go Offline"
+                summary: Opensearch node goes offline (component {{ $labels.job }})
+                description: "Some node go offline!"
+                template: "automate"
 
-        # Opensearch Cluster Yellow 
-        - alert: OpensearchClusterYellow
-          expr: opensearch_cluster_status == 1
-          for: 0m
-          labels:
-            severity: WARNING
-            service: OpenSearch
-          annotations:
-            title: "Opensearch: Cluster in Yellow Health"
-            summary: Opensearch Cluster Yellow (component {{ $labels.job }})
-            description: "Elastic Cluster Yellow status"
-            template: "automate"
+            # Opensearch Cluster Red
+            - alert: OpensearchClusterRed
+              expr: opensearch_cluster_status == 2
+              for: 0m
+              labels:
+                severity: CRITICAL
+                service: OpenSearch
+              annotations:
+                title: "Opensearch: Cluster in Red Health"
+                summary: Opensearch Cluster Red (component {{ $labels.job }})
+                description: "Opensearch Cluster Red status"
+                template: "automate"
 
-        #  Opensearch no new documents 
-        - alert: OpensearchNoNewDocuments
-          expr: increase(opensearch_indices_indexing_index_count{job="ops-cluster-nodes-hot"}[10m]) < 1
-          for: 0m
-          labels:
-            severity: WARNING
-            service: OpenSearch
-          annotations:
-            title: "Opensearch: No new Docs been written"
-            summary: Opensearch no new documents (component {{ $labels.job }})
-            description: "No new documents for 10 min!"
-            template: "automate"
+            # Opensearch Cluster Yellow
+            - alert: OpensearchClusterYellow
+              expr: opensearch_cluster_status == 1
+              for: 0m
+              labels:
+                severity: WARNING
+                service: OpenSearch
+              annotations:
+                title: "Opensearch: Cluster in Yellow Health"
+                summary: Opensearch Cluster Yellow (component {{ $labels.job }})
+                description: "Elastic Cluster Yellow status"
+                template: "automate"
 
+            #  Opensearch no new documents
+            - alert: OpensearchNoNewDocuments
+              expr: increase(opensearch_indices_indexing_index_count{job="ops-cluster-nodes-hot"}[10m]) < 1
+              for: 0m
+              labels:
+                severity: WARNING
+                service: OpenSearch
+              annotations:
+                title: "Opensearch: No new Docs been written"
+                summary: Opensearch no new documents (component {{ $labels.job }})
+                description: "No new documents for 10 min!"
+                template: "automate"
 
 alertmanager:
   config:
@@ -329,8 +336,8 @@ alertmanager:
       resolve_timeout: 15m
       slack_api_url: https://hooks.slack.com/services/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
     templates:
-    - /etc/alertmanager/config/*.tmpl
-      
+      - /etc/alertmanager/config/*.tmpl
+
   templateFiles:
     sre-template.tmpl: |-
       {{ define "sre.slack.title" -}}

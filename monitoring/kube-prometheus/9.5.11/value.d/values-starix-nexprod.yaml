@@ -147,8 +147,8 @@ alertmanager:
 
       - name: "velero_alerts"
         slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
-            channel: "#alerts-test"
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#velero_alerts"
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
