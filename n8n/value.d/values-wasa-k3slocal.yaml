@@ -1,7 +1,7 @@
 image:
   repository: hub.nexdev.net/base/n8n
   pullPolicy: IfNotPresent
-  tag: "1.89.2"
+  tag: "1.94.0"
 
 redis:
   architecture: standalone
