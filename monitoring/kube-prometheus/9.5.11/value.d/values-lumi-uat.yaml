@@ -65,6 +65,9 @@ alertmanager:
       - receiver: 'kubernetes_sc_uat'
         match_re:
           service: "prometheus-lumi-uat-kube-state-metrics|prometheus-lumi-uat-node-exporter"
+      - receiver: "velero_alerts"
+        match:
+          service: ".*velero.*"
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
       group_interval: 5m
@@ -84,6 +87,20 @@ alertmanager:
               *Summary:* `{{ .CommonLabels.alertname }}`
               *Description:* `{{ .CommonAnnotations.description }}`
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+      - name: "velero_alerts"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#velero_alerts"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-NexProd`
+              🚨 *{{ .CommonLabels.alertname }}* ({{ .Status | toUpper }})
+              🔁 Schedule: `{{ .CommonLabels.schedule }}`
+              ❗ Severity: `{{ .CommonLabels.severity }}`
+              📝 {{ .CommonAnnotations.description }}
 
       - name: default-receiver
 
