@@ -40,11 +40,10 @@ prometheus:
       key: ""
     internal:
       jobList:
-        - job_name: "gitlab-ci-pipelines-metrics"
-          scrape_interval: 10s
-          scrape_timeout: 5s
         - job_name: "n8n_gcp_metrics"
           metrics_path: "/webhook/gcp-metrics"
+          scrape_interval: 10s
+          scrape_timeout: 5s
           scheme: "https"
           static_configs:
             - targets: ["n8n.nexdev.net"]
