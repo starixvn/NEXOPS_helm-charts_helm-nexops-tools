@@ -40,43 +40,6 @@ prometheus:
     enabled: false
     name: ""
     key: ""
-
-  additionalProbes:
-    - name: domain-http-2xx
-      interval: 60s
-      module: http_2xx
-      prober:
-        url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
-      targets:
-        staticConfig:
-          static:
-            - https://gitlab.nexdev.net
-            - https://zabbix.nexdev.net
-            - https://dennis.nexdev.net
-
-    - name: domain-http-connect
-      interval: 60s
-      module: http_connect
-      prober:
-        url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
-      targets:
-        staticConfig:
-          static:
-            - https://gitlab.nexdev.net
-            - https://zabbix.nexdev.net
-            - https://dennis.nexdev.net
-
-    - name: domain-ssl-check
-      interval: 60s
-      module: ssl_cert
-      prober:
-        url: pprometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
-      targets:
-        staticConfig:
-          static:
-            - gitlab.nexdev.net:443
-            - zabbix.nexdev.net:443
-            - dennis.nexdev.net:443
   #additionalPrometheusRules: []
   additionalPrometheusRules:
     - name: domain.rules
@@ -149,27 +112,14 @@ alertmanager:
 blackboxExporter:
   configuration: |
     modules:
-      domain-http-2xx:
+      http_2xx:
         prober: http
         timeout: 5s
         http:
-          method: GET
-          valid_http_versions: [ "HTTP/1.1", "HTTP/2" ]
+          valid_http_versions: ["HTTP/1.1", "HTTP/2"]
           valid_status_codes: [200]
+          method: GET
           fail_if_ssl: false
           fail_if_not_ssl: false
-          preferred_ip_protocol: "ip4"
-
-      domain-http-connect:
-        prober: http
-        timeout: 5s
-        http:
-          method: GET
-          preferred_ip_protocol: "ip4"
-
-      domain-ssl-check:
-        prober: tcp
-        timeout: 5s
-        tcp:
-          tls: true
-          preferred_ip_protocol: "ip4"
+          tls_config:
+            insecure_skip_verify: true
