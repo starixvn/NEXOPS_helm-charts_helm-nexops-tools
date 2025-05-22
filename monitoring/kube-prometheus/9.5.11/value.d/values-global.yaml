@@ -244,7 +244,7 @@ prometheus:
               annotations:
                 message: Velero backup {{ $labels.schedule }} completed successfully.
               expr: |-
-                velero_backup_success_total{schedule!=""} > 0 and changes(velero_backup_success_total{schedule!=""}[1m]) > 0
+                rate(velero_backup_attempt_total{schedule!=""}[5m]) > 0 and rate(velero_backup_failure_total{schedule!=""}[5m]) == 0
               for: 1m
               labels:
                 severity: info
