@@ -7,7 +7,7 @@ spec:
   interval: 60s
   module: http_2xx
   prober:
-    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local::19115
+    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
   targets:
     staticConfig:
       static:
