@@ -31,27 +31,25 @@ prometheus:
     internal:
       jobList: []
 
-
   #additionalPrometheusRules:
 
 node-exporter:
   extraVolumes:
-  - hostPath:
-      path: /var/lib
-      type: ""
-    name: mnt
-    
+    - hostPath:
+        path: /var/lib
+        type: ""
+      name: mnt
+
   extraVolumeMounts:
-  - mountPath: /host/root/var/lib
-    mountPropagation: HostToContainer
-    name: mnt
-    readOnly: true
+    - mountPath: /host/root/var/lib
+      mountPropagation: HostToContainer
+      name: mnt
+      readOnly: true
 
   extraArgs:
     path.rootfs: "/host/root"
     collector.filesystem.mount-points-exclude: "^/(dev|proc|sys|var/lib/docker/.+)($|/)"
     collector.filesystem.fs-types-exclude: "^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs|squashfs|nsfs|tmpfs)$"
-
 
 alertmanager:
   resourcesPreset: "none"
@@ -64,105 +62,104 @@ alertmanager:
         proxy_url: "http://lisasqd.nebula.prod:8801"
 
     route:
-      receiver: 'default-receiver'
+      receiver: "default-receiver"
       routes:
-      - receiver: 'null'
-        match_re:
-          namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
-      - receiver: 'null'
-        match_re:
-          pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*"
-      - receiver: 'nexpe-services-alert'
-        match_re:
-          namespace: "nexpe|gosql|tw|nexops"
-      - receiver: 'kubernetes_devops_prod'
-        match_re:
-          service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
-      - receiver: 'longhorn_alerts'
-        match:
-          service: "Longhorn"
-      - receiver: "velero_alerts"
-        match:
-          service: ".*velero.*"
-        group_by: ['alertname', 'job', 'pvc']
-      - receiver: dev-services
-        match:
-          service: "OpenSearch"
-        group_by: ['alertname', 'job']
-      group_by: ['alertname','job','pod', 'description']
+        - receiver: "null"
+          match_re:
+            namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
+        - receiver: "null"
+          match_re:
+            pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*|cpuad.*"
+        - receiver: "nexpe-services-alert"
+          match_re:
+            namespace: "nexpe|gosql|tw|nexops"
+        - receiver: "kubernetes_devops_prod"
+          match_re:
+            service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
+        - receiver: "longhorn_alerts"
+          match:
+            service: "Longhorn"
+        - receiver: "velero_alerts"
+          match:
+            service: ".*velero.*"
+          group_by: ["alertname", "job", "pvc"]
+        - receiver: dev-services
+          match:
+            service: "OpenSearch"
+          group_by: ["alertname", "job"]
+      group_by: ["alertname", "job", "pod", "description"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
 
     receivers:
-    - name: 'null'
-    - name: 'longhorn_alerts'
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#longhorn_alerts'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-DevOps-PROD`
-            *Severity:* `{{ .CommonLabels.severity }}`{{ if .CommonLabels.pvc }}
-            *PVC:* `{{ .CommonLabels.pvc }}`{{ end }}{{ if .CommonLabels.pvc_namespace }}
-            *Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}{{ if .CommonAnnotations.description }}
-            *Description:* `{{ .CommonAnnotations.description }}`{{ end }}
+      - name: "null"
+      - name: "longhorn_alerts"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#longhorn_alerts"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }}🔥PROBLEM🔥 {{ else }}✅RESOLVED✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-DevOps-PROD`
+              *Severity:* `{{ .CommonLabels.severity }}`{{ if .CommonLabels.pvc }}
+              *PVC:* `{{ .CommonLabels.pvc }}`{{ end }}{{ if .CommonLabels.pvc_namespace }}
+              *Namespace:* `{{ .CommonLabels.pvc_namespace }}`{{ end }}{{ if .CommonAnnotations.description }}
+              *Description:* `{{ .CommonAnnotations.description }}`{{ end }}
 
-    - name: 'kubernetes_devops_prod'
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#kubernetes_devops_prod'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-DevOps-PROD`
-            *Summary:* `{{ .CommonLabels.alertname }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+      - name: "kubernetes_devops_prod"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#kubernetes_devops_prod"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-DevOps-PROD`
+              *Summary:* `{{ .CommonLabels.alertname }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
-    - name: 'nexpe-services-alert'
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: '#nexpe-services-alert'
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-DevOps-PROD`
-            *Summary:* `{{ .CommonLabels.alertname }}`
-            *Description:* `{{ .CommonAnnotations.description }}`
-          color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
-    
-    - name: "velero_alerts"
-      slack_configs:
-        - api_url: "https://hooks.slack.com/services/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"
-          channel: "#alerts-test"
-          send_resolved: true
-          icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-          title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
-          text: |
-            *Cluster:* `Kubernetes-NexProd`
-            🚨 *{{ .CommonLabels.alertname }}* ({{ .Status | toUpper }})
-            🔁 Schedule: `{{ .CommonLabels.schedule }}`
-            ❗ Severity: `{{ .CommonLabels.severity }}`
-            📝 {{ .CommonAnnotations.description }}
+      - name: "nexpe-services-alert"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#nexpe-services-alert"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-DevOps-PROD`
+              *Summary:* `{{ .CommonLabels.alertname }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
-    - name: dev-services
-      slack_configs:
-      - channel: '#dev-services'
-        color: '{{ template "sre.slack.color" . }}'
-        fallback: '{{ template "sre.slack.fallback" . }}'
-        icon_emoji: ":opensearch-ico:"
-        send_resolved: true
-        username: "FPS OpenSearch - PROD"
-        title: '{{ template "sre.slack.title" . }}'
-        text: '{{ template "sre.slack.body" . }}'
+      - name: "velero_alerts"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#alerts-test"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-NexProd`
+              🚨 *{{ .CommonLabels.alertname }}* ({{ .Status | toUpper }})
+              🔁 Schedule: `{{ .CommonLabels.schedule }}`
+              ❗ Severity: `{{ .CommonLabels.severity }}`
+              📝 {{ .CommonAnnotations.description }}
 
+      - name: dev-services
+        slack_configs:
+          - channel: "#dev-services"
+            color: '{{ template "sre.slack.color" . }}'
+            fallback: '{{ template "sre.slack.fallback" . }}'
+            icon_emoji: ":opensearch-ico:"
+            send_resolved: true
+            username: "FPS OpenSearch - PROD"
+            title: '{{ template "sre.slack.title" . }}'
+            text: '{{ template "sre.slack.body" . }}'
 
-    - name: default-receiver
+      - name: default-receiver
 
 blackboxExporter:
   configuration: |
