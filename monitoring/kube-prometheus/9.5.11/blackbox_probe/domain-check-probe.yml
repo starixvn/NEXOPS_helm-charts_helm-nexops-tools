@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
-  name: multi-check-probe
+  name: domain-check-probe
   namespace: monitoring
 spec:
   interval: 60s
