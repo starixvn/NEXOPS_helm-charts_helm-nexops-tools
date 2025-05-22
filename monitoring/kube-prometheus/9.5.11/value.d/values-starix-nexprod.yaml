@@ -40,7 +40,7 @@ prometheus:
       key: ""
     internal:
       jobList:
-        - job_name: "gitlab-ci-pipelines-exporter"
+        - job_name: "gitlab-ci-pipelines-metrics"
           scrape_interval: 10s
           scrape_timeout: 5s
           static_configs:
