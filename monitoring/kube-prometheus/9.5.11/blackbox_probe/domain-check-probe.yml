@@ -1,8 +1,11 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
-  name: domain-check-probe
+  name: domain-http-2xx
   namespace: monitoring
+  labels:
+    prometheus: main
 spec:
   interval: 60s
   module: http_2xx
@@ -14,3 +17,41 @@ spec:
         - https://gitlab.nexdev.net
         - https://zabbix.nexdev.net
         - https://dennis.nexdev.net
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: domain-http-connect
+  namespace: monitoring
+  labels:
+    prometheus: main
+spec:
+  interval: 60s
+  module: http_connect
+  prober:
+    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
+  targets:
+    staticConfig:
+      static:
+        - https://gitlab.nexdev.net
+        - https://zabbix.nexdev.net
+        - https://dennis.nexdev.net
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: domain-ssl-check
+  namespace: monitoring
+  labels:
+    prometheus: main
+spec:
+  interval: 60s
+  module: ssl_cert
+  prober:
+    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
+  targets:
+    staticConfig:
+      static:
+        - gitlab.nexdev.net:443
+        - zabbix.nexdev.net:443
+        - dennis.nexdev.net:443
