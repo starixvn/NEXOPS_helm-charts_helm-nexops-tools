@@ -19,7 +19,6 @@ prometheus:
     enabled: true
     size: 30Gi
 
-
   ## @param prometheus.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if prometheus.resources is set (prometheus.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
@@ -62,7 +61,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: "SSL certificate has expired"
-                description: "The SSL certificate for {{ $labels.instance }} has already expired {{ (0 - ($value | float)) / 86400 | printf \"%.1f\" }} days ago."
+                description: 'The SSL certificate for {{ $labels.instance }} has already expired {{ (0 - ($value | float)) / 86400 | printf "%.1f" }} days ago.'
 
             - alert: SSLCertExpireIn7Days
               expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 7
@@ -71,7 +70,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "SSL certificate expires in less than 7 days"
-                description: "The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf \"%.1f\" }} days."
+                description: 'The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf "%.1f" }} days.'
 
             - alert: SSLCertExpireSoon
               expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 15
@@ -80,7 +79,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "SSL certificate is expiring soon"
-                description: "The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf \"%.1f\" }} days."
+                description: 'The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf "%.1f" }} days.'
 
 kube-state-metrics:
   resourcesPreset: "none"
@@ -95,23 +94,25 @@ alertmanager:
       resolve_timeout: 15m
 
     route:
-      receiver: 'default-receiver'
+      receiver: "default-receiver"
       routes:
-      - receiver: 'null'
-        match_re:
-          namespace: "hrm"
-      receiver: 'alerts-test'
-      group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
+        - receiver: "null"
+          match_re:
+            namespace: "hrm"
+        - receiver: "alerts-test"
+          match_re:
+            namespace: "monitoring"
+      group_by: ["alertname", "cluster", "namespace", "pod", "description"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
 
     receivers:
-      - name: 'null'
-      - name: 'alerts-test'
+      - name: "null"
+      - name: "alerts-test"
         slack_configs:
           - api_url: "https://hooks.slack.com/services/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"
-            channel: '#alerts-test'
+            channel: "#alerts-test"
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
@@ -151,4 +152,3 @@ blackboxExporter:
         tcp:
           preferred_ip_protocol: "ip4"
           tls: true
-    
