@@ -73,7 +73,7 @@ prometheus:
                 description: 'The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf "%.1f" }} days.'
 
             - alert: SSLCertExpireSoon
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 15
+              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 80
               for: 1h
               labels:
                 severity: warning
