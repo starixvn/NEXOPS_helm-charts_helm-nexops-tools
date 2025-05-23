@@ -46,13 +46,13 @@ prometheus:
         - name: domain.rules
           rules:
             - alert: DomainDown
-              expr: probe_http_status_code != 200
+              expr: probe_success == 0 OR probe_http_status_code != 200
               for: 2m
               labels:
                 severity: critical
               annotations:
-                summary: "Domain is not returning HTTP 200"
-                description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
+                summary: "Domain is down or not returning HTTP 200"
+                description: "The domain {{ $labels.instance }} is either down (probe_success=0) or returning status code {{ $value }} instead of 200."
 
             - alert: SSLCertExpired
               expr: (probe_ssl_earliest_cert_expiry - time()) < 0
