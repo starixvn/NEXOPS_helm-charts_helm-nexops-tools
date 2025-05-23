@@ -41,45 +41,18 @@ prometheus:
   #   key: ""
   # additionalPrometheusRules: []
   additionalPrometheusRules:
-    - name: domain.rules
+    - name: kubernetes.rules
       groups:
-        - name: domain.rules
+        - name: kubernetes.rules
           rules:
-            - alert: DomainDown
-              expr: probe_success == 0 or probe_http_status_code != 200
-              for: 2m
-              labels:
-                severity: critical
-              annotations:
-                summary: "Domain is down or not returning HTTP 200"
-                description: "The domain {{ $labels.instance }} is either down (probe_success=0) or returning status code {{ $value }} instead of 200."
-
-            - alert: SSLCertExpired
-              expr: (probe_ssl_earliest_cert_expiry - time()) < 0
+            - alert: Node Not Ready
+              expr: kube_node_status_condition{condition="Ready", status="false"} == 1
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: "SSL certificate has expired"
-                description: 'The SSL certificate for {{ $labels.instance }} has already expired {{ (0 - ($value | float)) / 86400 | printf "%.1f" }} days ago.'
-
-            - alert: SSLCertExpireIn7Days
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 7
-              for: 30m
-              labels:
-                severity: warning
-              annotations:
-                summary: "SSL certificate expires in less than 7 days"
-                description: 'The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf "%.1f" }} days.'
-
-            - alert: SSLCertExpireSoon
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 80
-              for: 1h
-              labels:
-                severity: warning
-              annotations:
-                summary: "SSL certificate is expiring soon"
-                description: 'The SSL certificate for {{ $labels.instance }} will expire in {{ $value | printf "%.1f" }} days.'
+                summary: "Node Not Ready"
+                description: "Node {{ $labels.node }} is not ready."
 
 kube-state-metrics:
   resourcesPreset: "none"
