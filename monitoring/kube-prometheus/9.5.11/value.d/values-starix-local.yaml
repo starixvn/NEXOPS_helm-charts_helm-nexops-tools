@@ -100,7 +100,7 @@ alertmanager:
       - name: "null"
       - name: "alerts-test"
         slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
+          - api_url: "https://hooks.slack.com/services/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"
             channel: "#alerts-test"
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
