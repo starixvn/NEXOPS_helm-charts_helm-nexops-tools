@@ -61,6 +61,14 @@ prometheus:
               annotations:
                 summary: "Domain is not returning HTTP 200"
                 description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
+            - alert: DomainHttpConnectFailed
+              expr: probe_http_connect_success != 1
+              for: 1m
+              labels:
+                severity: critical
+              annotations:
+                summary: "HTTP connect failed"
+                description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
 
 kube-state-metrics:
   resourcesPreset: "none"
