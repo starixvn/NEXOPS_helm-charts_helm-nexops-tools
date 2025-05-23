@@ -53,14 +53,14 @@ prometheus:
               annotations:
                 summary: "SSL certificate is expiring soon"
                 description: "The SSL certificate for {{ $labels.instance }} will expire in less than 80 days. Remaining: {{ $value }} days."
-        - alert: DomainStatusNot200
-          expr: probe_http_status_code != 200
-          for: 2m
-          labels:
-            severity: critical
-          annotations:
-            summary: "Domain is not returning HTTP 200"
-            description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
+            - alert: DomainStatusNot200
+              expr: probe_http_status_code != 200
+              for: 2m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Domain is not returning HTTP 200"
+                description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
 
 kube-state-metrics:
   resourcesPreset: "none"
