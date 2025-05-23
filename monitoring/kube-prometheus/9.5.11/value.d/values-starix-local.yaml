@@ -46,7 +46,7 @@ prometheus:
         - name: domain.rules
           rules:
             - alert: DomainDown
-              expr: probe_success == 0 OR probe_http_status_code != 200
+              expr: probe_success == 0 or probe_http_status_code != 200
               for: 2m
               labels:
                 severity: critical
