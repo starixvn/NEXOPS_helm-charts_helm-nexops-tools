@@ -166,22 +166,18 @@ alertmanager:
           - api_url: "https://hooks.slack.com/services/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"
             channel: "#alerts-test"
             send_resolved: true
-            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-            color: >-
+            title: ":globe_with_meridians: {{ .Labels.instance }}"
+            pretext: "[{{ .Status | toUpper }}] {{ .Annotations.summary }}"
+            color: >
               {{ if eq .Status "firing" }}
-                {{ if eq .CommonLabels.severity "critical" }}#FF0000
-                {{ else if eq .CommonLabels.severity "warning" }}#FFA500
+                {{ if eq .Labels.severity "critical" }}#FF0000
+                {{ else if eq .Labels.severity "warning" }}#FFA500
                 {{ else }}#FF4500{{ end }}
               {{ else }}#2ECC71{{ end }}
-            text: >
-              {{ range .Alerts }}
-              *Domain:* `{{ .Labels.instance }}`
+            text: |
               *Alert:* `{{ .Labels.alertname }}`
-              *Summary:* `{{ .Annotations.summary }}`
-              *Description:* `{{ .Annotations.description }}`
-              ---
-              {{ end }}
+              *Status:* `{{ .Status | toUpper }}`
+              *Description:* {{ .Annotations.description }}
 
       - name: default-receiver
 
