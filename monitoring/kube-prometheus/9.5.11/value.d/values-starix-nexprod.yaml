@@ -168,13 +168,20 @@ alertmanager:
             send_resolved: true
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-            text: |
-              *Domain:* `{{ .CommonLabels.instance }}`
-              *Alert:* `{{ .CommonLabels.alertname }}`
-              *Status:* `{{ .Status | toUpper }}`
-              *Summary:* `{{ .CommonAnnotations.summary }}`
-              *Description:* `{{ .CommonAnnotations.description }}`
-            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+            color: >-
+              {{ if eq .Status "firing" }}
+                {{ if eq .CommonLabels.severity "critical" }}#FF0000
+                {{ else if eq .CommonLabels.severity "warning" }}#FFA500
+                {{ else }}#FF4500{{ end }}
+              {{ else }}#2ECC71{{ end }}
+            text: >
+              {{ range .Alerts }}
+              *Domain:* `{{ .Labels.instance }}`
+              *Alert:* `{{ .Labels.alertname }}`
+              *Summary:* `{{ .Annotations.summary }}`
+              *Description:* `{{ .Annotations.description }}`
+              ---
+              {{ end }}
 
       - name: default-receiver
 
