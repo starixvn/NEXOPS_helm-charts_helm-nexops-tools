@@ -14,10 +14,10 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://gitlab.nexdev.net
-        - https://zabbix.nexdev.net
-        - https://dennis.nexdev.net
-        - https://abc.nexdev.net
+        - https://git3.nexdev.net
+        - https://portainer.nexdev.net
+        - https://dennis1.nexdev.net
+        - https://abc-1.nexdev.net
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -34,9 +34,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://gitlab.nexdev.net
-        - https://zabbix.nexdev.net
-        - https://dennis.nexdev.net
+        - https://git3.nexdev.net
+        - https://portainer.nexdev.net
+        - https://dennis-1.nexdev.net
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -53,7 +53,7 @@ spec:
   targets:
     staticConfig:
       static:
-        - gitlab.nexdev.net:443
-        - zabbix.nexdev.net:443
-        - dennis.nexdev.net:443
-        - abc.nexdev.net:443
+        - git3.nexdev.net:443
+        - portainer.nexdev.net:443
+        - dennis-1.nexdev.net:443
+        - abc-1.nexdev.net:443
