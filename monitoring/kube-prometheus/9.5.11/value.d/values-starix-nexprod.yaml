@@ -97,6 +97,9 @@ alertmanager:
         - receiver: "velero_alerts"
           match:
             service: ".*velero.*"
+        - receiver: "alerts-test"
+          match_re:
+            namespace: "monitoring"
       group_by: ["alertname", "job", "pod", "description"]
       group_wait: 30s
       group_interval: 5m
@@ -157,5 +160,20 @@ alertmanager:
               🔁 Schedule: `{{ .CommonLabels.schedule }}`
               ❗ Severity: `{{ .CommonLabels.severity }}`
               📝 {{ .CommonAnnotations.description }}
+
+      - name: "alerts-test"
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: "#alerts-test"
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Domain:* `{{ .CommonLabels.instance }}`
+              *Alert:* `{{ .CommonLabels.alertname }}`
+              *Status:* `{{ .Status | toUpper }}`
+              *Summary:* `{{ .CommonAnnotations.summary }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
       - name: default-receiver

@@ -240,14 +240,6 @@ prometheus:
               for: 15m
               labels:
                 severity: warning
-            - alert: VeleroBackupSuccess
-              annotations:
-                message: Velero backup {{ $labels.schedule }} completed successfully.
-              expr: |-
-                rate(velero_backup_attempt_total{schedule!=""}[5m]) > 0 and rate(velero_backup_failure_total{schedule!=""}[5m]) == 0
-              for: 1m
-              labels:
-                severity: info
 
     - name: runners.metrics
       groups:
@@ -329,6 +321,35 @@ prometheus:
                 summary: Opensearch no new documents (component {{ $labels.job }})
                 description: "No new documents for 10 min!"
                 template: "automate"
+
+    - name: domain.rules
+      groups:
+        - name: domain.rules
+          rules:
+            - alert: SSLCertificateExpiringSoon
+              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 80 and (probe_ssl_earliest_cert_expiry - time()) > 0
+              for: 30m
+              labels:
+                severity: warning
+              annotations:
+                summary: "SSL certificate is expiring soon"
+                description: "The SSL certificate for {{ $labels.instance }} will expire in less than 80 days. Remaining: {{ $value }} days."
+            - alert: DomainStatusNot200
+              expr: probe_http_status_code != 200
+              for: 2m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Domain is not returning HTTP 200"
+                description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
+            - alert: DomainHttpConnectFailed
+              expr: probe_http_connect_success != 1
+              for: 1m
+              labels:
+                severity: critical
+              annotations:
+                summary: "HTTP connect failed"
+                description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
 
 alertmanager:
   config:
