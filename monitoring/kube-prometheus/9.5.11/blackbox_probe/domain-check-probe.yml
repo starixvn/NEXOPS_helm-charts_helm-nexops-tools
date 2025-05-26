@@ -10,7 +10,7 @@ spec:
   interval: 60s
   module: http_2xx
   prober:
-    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
+    url: prometheus-starix-nexprod-blackbox-exporter.monitoring.svc.starix.nexprod:19115
   targets:
     staticConfig:
       static:
@@ -30,7 +30,7 @@ spec:
   interval: 60s
   module: http_connect
   prober:
-    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
+    url: prometheus-starix-nexprod-blackbox-exporter.monitoring.svc.starix.nexprod:19115
   targets:
     staticConfig:
       static:
@@ -49,7 +49,7 @@ spec:
   interval: 60s
   module: ssl_cert
   prober:
-    url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
+    url: prometheus-starix-nexprod-blackbox-exporter.monitoring.svc.starix.nexprod:19115
   targets:
     staticConfig:
       static:
