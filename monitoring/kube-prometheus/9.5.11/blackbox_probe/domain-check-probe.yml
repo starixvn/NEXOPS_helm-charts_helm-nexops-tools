@@ -14,10 +14,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://zabbix.nexdev.net
-        - https://portainer.lumigame.com
-        - https://dennis-3.nexdev.net
-        - https://abc-3.nexdev.net
+        - https://hrm.nexdev.net
+        - https://dennis-4.nexdev.net
+        - https://abc-4.nexdev.net
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -34,10 +33,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://zabbix.nexdev.net
-        - https://portainer.lumigame.com
-        - https://dennis-3.nexdev.net
-        - https://abc-3.nexdev.net
+        - https://hrm.nexdev.net
+        - https://dennis-4.nexdev.net
+        - https://abc-4.nexdev.net
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -54,7 +52,6 @@ spec:
   targets:
     staticConfig:
       static:
-        - zabbix.nexdev.net:443
-        - portainer.lumigame.com:443
-        - dennis-3.nexdev.net:443
-        - abc-3.nexdev.net:443
+        - hrm.nexdev.net:443
+        - dennis-4.nexdev.net:443
+        - abc-4.nexdev.net:443
