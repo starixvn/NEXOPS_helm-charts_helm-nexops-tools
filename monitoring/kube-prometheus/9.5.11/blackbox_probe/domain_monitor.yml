@@ -14,11 +14,9 @@ spec:
   targets:
     staticConfig:
       static:
-      {{- range .Values.staticDomains }}
-        - https://{{ . }}
-      {{- end }}
-
-
+        - https://hub.nexdev.net
+        - https://hub.lumigame.com
+        - https://gitlab.starixsoft.com
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -35,16 +33,9 @@ spec:
   targets:
     staticConfig:
       static:
-      {{- range .Values.staticDomains }}
-        - {{ . }}:443
-      {{- end }}
-
----
-staticDomains:
-  - ansible.nexdev.net
-  - dennis-10.nexdev.net
-  - abc-10.nexdev.net
-# ---
+        - https://hub.nexdev.net
+        - https://hub.lumigame.com
+        - https://gitlab.starixsoft.com
 # apiVersion: monitoring.coreos.com/v1
 # kind: Probe
 # metadata:
