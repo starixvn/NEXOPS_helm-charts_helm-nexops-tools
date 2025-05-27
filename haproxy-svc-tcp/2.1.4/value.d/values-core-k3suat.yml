@@ -1,0 +1,191 @@
+clusterDomain: "starix.k3suat"
+replicaCount: 3
+
+
+resourcesPreset: "none"
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: "10.99.91.9"
+  ports:
+#NAP
+  - name: redis-nap-m
+    protocol: TCP
+    port: 16379
+    targetPort: redis-nap-m
+
+  - name: redis-nap-r
+    protocol: TCP
+    port: 16879
+    targetPort: redis-nap-r
+#Alpha
+  - name: redis-alpha-m
+    protocol: TCP
+    port: 16380
+    targetPort: redis-alpha-m
+
+  - name: redis-alpha-r
+    protocol: TCP
+    port: 16880
+    targetPort: redis-alpha-r
+##FPS
+#   - name: redis-fps-m
+#     protocol: TCP
+#     port: 16381
+#     targetPort: redis-fps-m
+
+#   - name: redis-fps-r
+#     protocol: TCP
+#     port: 16881
+#     targetPort: redis-fps-r
+#S1
+  - name: redis-s1-m
+    protocol: TCP
+    port: 16382
+    targetPort: redis-s1-m
+
+  - name: redis-s1-r
+    protocol: TCP
+    port: 16882
+    targetPort: redis-s1-r
+
+  - name: http
+    port: 8080
+    targetPort: http
+
+
+containerPorts:
+#NAP
+- name: redis-nap-m
+  containerPort: 16379
+- name: redis-nap-r
+  containerPort: 16879
+##ALPHA
+- name: redis-alpha-m
+  containerPort: 16380
+- name: redis-alpha-r
+  containerPort: 16880
+##FPS
+# - name: redis-nap-m
+#   containerPort: 16381
+# - name: redis-nap-r
+#   containerPort: 16881
+#S1
+- name: redis-s1-m
+  containerPort: 16382
+- name: redis-s1-r
+  containerPort: 16882
+
+- name: http
+  containerPort: 8080
+
+
+configuration: |
+  global
+    log stdout format raw local0
+    maxconn 10240
+
+  defaults
+    log global
+    timeout client 360s
+    timeout connect 360s
+    timeout server 360s
+
+  resolvers k8s
+    nameserver dns1 kube-dns.kube-system:53
+    resolve_retries 3
+    timeout resolve 1s
+    timeout retry 1s
+    hold valid 10s
+    hold obsolete 30s
+
+  frontend fe_main
+    bind :8080
+    mode http
+    stats enable
+    stats uri /stats
+    stats refresh 300s
+    stats show-legends
+    stats show-node
+    stats auth nexcel:NexOps!QAZ
+    default_backend default_backend_nodes
+
+  backend default_backend_nodes
+    mode http
+    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable ! Pls contact NexOps if you think this is a mistake... K3s UAT"
+
+  frontend redis_nap_master_fe
+    bind :16379
+    default_backend redis_nap_master_be
+
+  backend redis_nap_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-nap-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3suat-headless.redis-sentinel-nap.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_alpha_master_fe
+    bind :16380
+    default_backend redis_alpha_master_be
+
+  backend redis_alpha_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-alpha-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-alpha-k3suat-headless.redis-sentinel-alpha.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_nap_replicas_fe
+    bind :16879
+    default_backend redis_nap_replicas_be
+    
+  backend redis_nap_replicas_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-nap-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-nap-k3suat-headless.redis-sentinel-nap.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_s1_master_fe
+    bind :16382
+    default_backend redis_s1_master_be
+
+  backend redis_s1_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-s1-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3suat-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_s1_replicas_fe
+    bind :16882
+    default_backend redis_s1_replicas_be
+    
+  backend redis_s1_replicas_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-s1-k3suat-node- 0-2  _tcp-redis._TCP.redis-sentinel-s1-k3suat-headless.redis-sentinel-s1.svc.starix.k3suat:6379  check inter 1s resolvers k8s init-addr none
