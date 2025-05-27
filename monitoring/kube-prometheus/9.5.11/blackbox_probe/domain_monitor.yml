@@ -14,9 +14,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://nexcel.info
-        - https://dennis-7.nexdev.net
-        - https://abc-7.nexdev.net
+        - https://info.lumiplus.vn
+        - https://dennis-8.nexdev.net
+        - https://abc-8.nexdev.net
 
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -34,9 +34,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - nexcel.info:443
-        - dennis-7.nexdev.net:443
-        - abc-7.nexdev.net:443
+        - info.lumiplus.vn:443
+        - dennis-8.nexdev.net:443
+        - abc-8.nexdev.net:443
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: Probe

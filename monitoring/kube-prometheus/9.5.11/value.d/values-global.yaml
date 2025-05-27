@@ -337,7 +337,7 @@ prometheus:
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: DomainStatusNot200
-              expr: probe_http_status_code != 200
+              expr: probe_http_status_code != 200 and probe_http_status_code > 0
               for: 2m
               labels:
                 severity: critical
