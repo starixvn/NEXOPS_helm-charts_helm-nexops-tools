@@ -1,0 +1,233 @@
+clusterDomain: "starix.nexprod"
+replicaCount: 3
+
+resourcesPreset: "none"
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: "10.18.200.194"
+  ports:
+  - name: redis-master
+    protocol: TCP
+    port: 16379
+    targetPort: redis-master
+
+
+  - name: redis-replicas
+    protocol: TCP
+    port: 16380
+    targetPort: redis-replicas
+
+#Remoting-Redis
+  - name: redis-rem-m
+    protocol: TCP
+    port: 16392
+    targetPort: redis-rem-m
+
+
+  - name: http
+    port: 8080
+    targetPort: http
+
+
+# NexOps Redis
+  - name: redis-nexops-w
+    protocol: TCP
+    port: 16400
+    targetPort: redis-nexops-w
+
+  - name: redis-nexops-r
+    protocol: TCP
+    port: 16401
+    targetPort: redis-nexops-r
+
+  - name: rocketor-proxy
+    protocol: TCP
+    port: 8088
+    targetPort: rocketor-proxy
+
+# ALPHA Redis
+  - name: redis-alpha-m
+    protocol: TCP
+    port: 16410
+    targetPort: redis-alpha-m
+
+  - name: redis-alpha-s
+    protocol: TCP
+    port: 16411
+    targetPort: redis-alpha-s
+
+
+containerPorts:
+- name: redis-master
+  containerPort: 16379
+- name: redis-replicas
+  containerPort: 16380
+#Remoting-Redis
+- name: redis-rem-m
+  containerPort: 16392
+
+# NexOps Redis
+- name: redis-nexops-w
+  containerPort: 16400
+- name: redis-nexops-r
+  containerPort: 16401
+
+- name: rocketor-proxy
+  containerPort: 8088
+
+- name: http
+  containerPort: 8080
+
+# Alpha Redis
+- name: redis-alpha-m
+  containerPort: 16410
+- name: redis-alpha-s
+  containerPort: 16411
+
+
+configuration: |
+  global
+    log stdout format raw local0
+    maxconn 10240
+
+  defaults
+    log global
+    timeout client 60s
+    timeout connect 60s
+    timeout server 60s
+
+  resolvers k8s
+    nameserver dns1 kube-dns.kube-system:53
+    resolve_retries 3
+    timeout resolve 1s
+    timeout retry 1s
+    hold valid 10s
+    hold obsolete 30s
+
+  frontend fe_main
+    bind :8080
+    mode http
+    stats enable
+    stats uri /stats
+    stats refresh 300s
+    stats show-legends
+    stats show-node
+    stats auth nexcel:NexOps!QAZ
+    default_backend default_backend_nodes
+
+
+  backend default_backend_nodes
+    mode http
+    http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable..."
+
+  frontend redis_master_fe
+    bind :16379
+    default_backend redis_master_be
+
+  backend redis_master_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-nexprod-nap-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
+  frontend redis_remoting_master_fe
+    bind :16392
+    default_backend redis_remoting_master_be
+
+  backend redis_remoting_master_be
+    option tcp-check
+    server 10.18.200.192 10.18.200.192:30391 check inter 1s
+
+  frontend redis_replicas_fe
+    bind :16380
+    default_backend redis_replicas_be
+    
+  backend redis_replicas_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
+
+  frontend redis_nexops_write_fe
+    bind :16400
+    default_backend redis_nexops_write_be
+
+  backend redis_nexops_write_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    #server-template redis-sentinel-nexprod-nexops-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
+  frontend redis_nexops_read_fe
+    bind :16401
+    default_backend redis_nexops_read_be
+
+  backend redis_nexops_read_be
+    option tcp-check
+    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    #server-template redis-sentinel-nexprod-nexops-node- 0-3  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
+  frontend rocketor_proxy_fe
+    bind :8088
+    default_backend rocketor_proxy_be
+
+  backend rocketor_proxy_be
+    mode http
+    timeout server 10m
+    option httplog
+    option forwardfor
+    option httpchk GET /
+    http-check expect status 200
+    server 10.18.200.211_http_8088 10.18.200.211:8088 check
+    server 10.18.200.123_http_8088 10.18.200.123:8088 check
+
+
+  # ALPHA Redis Master
+  frontend redis_alpha_master_fe
+    bind :16410
+    default_backend redis_alpha_master_be
+
+  backend redis_alpha_master_be
+    option tcp-check
+    tcp-check send AUTH\ foo1@bared\r\n
+    tcp-check expect string +OK
+    tcp-check send PING\r\n
+    tcp-check expect string PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+    server redis-0 redis-sentinel-alpha-nexprod-node-0.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-sentinel-alpha-nexprod-node-1.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-sentinel-alpha-nexprod-node-2.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
+
