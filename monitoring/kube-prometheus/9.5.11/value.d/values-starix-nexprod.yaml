@@ -168,10 +168,10 @@ alertmanager:
             send_resolved: true
             title: ":fire: Problem :fire:"
             text: |
-              :globe_with_meridians:
-              *Domain:* {{ .CommonLabels.instance }}
-              *Problem:* {{ .CommonAnnotations.problem }}
-              *Status:* {{ .CommonAnnotations.status }}
+              :globe_with_meridians: *DOMAIN:* {{ .CommonLabels.instance }}
+              *SEVERITY:* `{{ .CommonLabels.severity | toUpper }}`
+              *PROBLEM:* {{ .CommonAnnotations.problem }}
+              *STATUS:* {{ .CommonAnnotations.status }}
             color: >
               {{ if eq .Status "firing" }}
                 {{ if eq .CommonLabels.severity "critical" }}#FF0000
