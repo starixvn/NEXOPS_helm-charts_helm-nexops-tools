@@ -194,13 +194,6 @@ blackboxExporter:
           fail_if_ssl: false
           fail_if_not_ssl: false
           preferred_ip_protocol: "ip4"
-
-      http_connect:
-        prober: http
-        timeout: 5s
-        http:
-          method: GET
-
       ssl_cert:
         prober: tcp
         timeout: 5s
