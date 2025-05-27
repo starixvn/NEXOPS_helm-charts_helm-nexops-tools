@@ -333,7 +333,9 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "SSL certificate is expiring soon"
-                description: "The SSL certificate for {{ $labels.instance }} will expire in less than 80 days. Remaining: {{ $value }} days."
+                problem: "The SSL certificate will expire in less than 80 days."
+                status: 'Remaining {{ $value | printf "%.0f" }} days.'
+
             - alert: DomainStatusNot200
               expr: probe_http_status_code != 200
               for: 2m
@@ -341,7 +343,8 @@ prometheus:
                 severity: critical
               annotations:
                 summary: "Domain is not returning HTTP 200"
-                description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
+                problem: 'The domain is returning status code {{ $value | printf "%.0f" }} instead of 200.'
+                status: 'Code {{ $value | printf "%.0f" }}'
             # - alert: DomainHttpConnectFailed
             #   expr: probe_http_connect_success != 1
             #   for: 1m
