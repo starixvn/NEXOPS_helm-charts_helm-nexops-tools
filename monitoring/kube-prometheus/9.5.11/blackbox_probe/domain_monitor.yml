@@ -14,9 +14,10 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://awx.nexdev.net
-        - https://dennis-9.nexdev.net
-        - https://abc-9.nexdev.net
+      {{- range .Values.staticDomains }}
+        - https://{{ . }}
+      {{- end }}
+
 
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -34,9 +35,16 @@ spec:
   targets:
     staticConfig:
       static:
-        - awx.nexdev.net:443
-        - dennis-9.nexdev.net:443
-        - abc-9.nexdev.net:443
+      static:
+      {{- range .Values.staticDomains }}
+        - {{ . }}:443
+      {{- end }}
+
+---
+staticDomains:
+  - ansible.nexdev.net
+  - dennis-10.nexdev.net
+  - abc-10.nexdev.net
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: Probe
