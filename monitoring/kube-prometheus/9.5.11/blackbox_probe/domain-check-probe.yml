@@ -14,9 +14,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://hrm.nexdev.net
-        - https://dennis-4.nexdev.net
-        - https://abc-4.nexdev.net
+        - https://nexdev.net
+        - https://dennis-5.nexdev.net
+        - https://abc-5.nexdev.net
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -33,7 +33,7 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://hrm.nexdev.net
+        - https://nexdev.net
         - https://dennis-5.nexdev.net
         - https://abc-5.nexdev.net
 ---
@@ -52,6 +52,6 @@ spec:
   targets:
     staticConfig:
       static:
-        - hrm.nexdev.net:443
+        - nexdev.net:443
         - dennis-5.nexdev.net:443
         - abc-5.nexdev.net:443
