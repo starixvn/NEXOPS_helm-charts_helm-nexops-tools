@@ -343,8 +343,8 @@ prometheus:
                 severity: critical
               annotations:
                 summary: "Domain is not returning HTTP 200"
-                problem: 'The domain is returning status code {{ $value | printf "%.0f" }} instead of 200.'
-                status: 'Code {{ $value | printf "%.0f" }}'
+                problem: "The domain is returning status code {{ $value }} instead of 200."
+                status: "Code {{ $value }}"
             # - alert: DomainHttpConnectFailed
             #   expr: probe_http_connect_success != 1
             #   for: 1m
