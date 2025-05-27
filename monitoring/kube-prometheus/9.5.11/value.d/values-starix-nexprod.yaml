@@ -83,7 +83,7 @@ alertmanager:
             namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample"
         - receiver: "null"
           match_re:
-            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*packagebuider.*"
+            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*"
         - receiver: "nexpe-services-alert"
           match_re:
             namespace: "nexpe|gosql|tw|nexops"
@@ -100,7 +100,7 @@ alertmanager:
         - receiver: "alerts-test"
           match_re:
             namespace: "monitoring"
-      #group_by: ["alertname", "job", "pod", "description"]
+      group_by: ["alertname", "job", "pod", "description", "instance"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
