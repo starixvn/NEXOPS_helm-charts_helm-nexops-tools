@@ -14,9 +14,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - https://info.lumiplus.vn
-        - https://dennis-8.nexdev.net
-        - https://abc-8.nexdev.net
+        - https://awx.nexdev.net
+        - https://dennis-9.nexdev.net
+        - https://abc-9.nexdev.net
 
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -34,9 +34,9 @@ spec:
   targets:
     staticConfig:
       static:
-        - info.lumiplus.vn:443
-        - dennis-8.nexdev.net:443
-        - abc-8.nexdev.net:443
+        - awx.nexdev.net:443
+        - dennis-9.nexdev.net:443
+        - abc-9.nexdev.net:443
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: Probe
