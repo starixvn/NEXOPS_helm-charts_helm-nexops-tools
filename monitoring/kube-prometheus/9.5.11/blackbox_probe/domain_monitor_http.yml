@@ -1,0 +1,134 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: domain-http-2xx
+  namespace: monitoring
+  labels:
+    prometheus: main
+spec:
+  interval: 60s
+  module: http_2xx
+  prober:
+    url: prometheus-starix-nexprod-blackbox-exporter.monitoring.svc.starix.nexprod:19115
+  targets:
+    staticConfig:
+      static:
+        - https://vn-zabbix.sportsfun.app
+        - https://ansible.starixplay.com
+        - https://deploy.lumigame.com
+        - https://git3.nexdev.net
+        - https://gitlab.nexdev.net
+        - https://gitlab.starixsoft.com
+        - https://hub.lumigame.com
+        - https://hub.nexdev.net
+        - https://logs.starixplay.com
+        - https://lumhub.starixplay.com
+        - https://nexhub.starixplay.com
+        - https://portainer.sportsfun.app
+        - https://portainer.starixplay.com
+        - https://rocketor.nexdev.net
+        - https://rocketorproxy.starixplay.com
+        - https://rocketorproxy2.starixplay.com
+        - https://scdeployapi.starixplay.com
+        - https://scdeployapi2.starixplay.com
+        - https://sentry.starixplay.com
+        - https://skynexapi.starixplay.com
+        - https://stdeployapi.starixplay.com
+        - https://stdeployapi2.starixplay.com
+        - https://zabbix.starixplay.com
+        - https://dailysaba.com
+        - https://gamesaba.com
+        - https://saba.casino
+        - https://saba.club
+        - https://saba.win
+        - https://saba88.mobi
+        - https://saba99.com
+        - https://saba123.com
+        - https://sabaagent.com
+        - https://sabagame.com
+        - https://sabagame.mobi
+        - https://sabamobi.com
+        - https://sabamobi.net
+        - https://v-gaming.net
+        - https://vgaming.io
+        - https://vgaming.win
+        - https://adm.numberx.win
+        - https://adm.sabagame.com
+        - https://adm.v-gaming.net
+        - https://adm2.numberx.win
+        - https://adm2.v-gaming.net
+        - https://api.gamesaba.com
+        - https://api.numberx.win
+        - https://api.sabagame.com
+        - https://api.v-gaming.net
+        - https://api2.gamesaba.com
+        - https://api2.numberx.win
+        - https://api2.sabagame.com
+        - https://api2.v-gaming.net
+        - https://guides.gamesaba.com
+        - https://guides.numberx.win
+        - https://guides.sabagame.com
+        - https://guides.v-gaming.net
+        - https://guides2.numberx.win
+        - https://guides2.v-gaming.net
+        - https://keno.gamesaba.com
+        - https://keno.sabagame.com
+        - https://keno.vgaming.win
+        - https://keno2.vgaming.win
+        - https://m.gamesaba.com
+        - https://m.sabagame.com
+        - https://m.vgaming.win
+        - https://m2.vgaming.win
+        - https://mini.gamesaba.com
+        - https://mini.sabagame.com
+        - https://mini.vgaming.win
+        - https://mini2.vgaming.win
+        - https://proxy.gamesaba.com
+        - https://proxy.sabagame.com
+        - https://proxy.v-gaming.net
+        - https://proxy2.v-gaming.net
+        - https://result.gamesaba.com
+        - https://result.numberx.win
+        - https://result.sabagame.com
+        - https://result.v-gaming.net
+        - https://result2.numberx.win
+        - https://result2.v-gaming.net
+        - https://tolgee.sabagame.com
+        - https://w2.numberx.win
+        - https://w2.vgaming.win
+        - https://www.gamesaba.com
+        - https://www.numberx.win
+        - https://www.sabagame.com
+        - https://www.sabagames.io
+        - https://www.v-gaming.net
+        - https://www.vgaming.io
+        - https://www.vgaming.win
+        - https://www2.v-gaming.net
+        - https://accounting.oneops.net
+        - https://cm.oneops.net
+        - https://cm2.oneops.net
+        - https://cm3.oneops.net
+        - https://go.athena000.com
+        - https://go.bwing.com
+        - https://go.goal123.com
+        - https://go.spondemo.com
+        - https://h1.726872.com
+# apiVersion: monitoring.coreos.com/v1
+# kind: Probe
+# metadata:
+#   name: domain-http-connect
+#   namespace: monitoring
+#   labels:
+#     prometheus: main
+# spec:
+#   interval: 60s
+#   module: http_connect
+#   prober:
+#     url: prometheus-starix-nexprod-blackbox-exporter.monitoring.svc.starix.nexprod:19115
+#   targets:
+#     staticConfig:
+#       static:
+#         - https://nexdev.net
+#         - https://dennis-5.nexdev.net
+#         - https://abc-5.nexdev.net
