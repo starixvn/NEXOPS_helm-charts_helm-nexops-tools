@@ -50,7 +50,7 @@ postgresql:
     nodeModules:
       enabled: true
       size: "5Gi"
-      storageClass: longhorn
+      storageClass: "longhorn"
   nodeSelector:
     n8n: "yes"
 
