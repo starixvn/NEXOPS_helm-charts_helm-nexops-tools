@@ -17,6 +17,7 @@ runners:
       [runners.kubernetes]
         namespace = "{{.Release.Namespace}}"
         image = "hub.lumigame.com/base/docker:24.0.4-bash-jq-jinja"
+        helper_image = "hub.lumigame.com/base/gitlab-runner/gitlab-runner-helper:x86_64-adecbc65"
         privileged = true
         memory_request = "200Mi"
         ephemeral_storage_request = "500Mi"
