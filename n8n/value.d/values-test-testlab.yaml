@@ -58,9 +58,10 @@ ingress:
 
 persistence:
   enabled: true
-  storageClass: longhorn
-  accessMode: ReadWriteOnce
-  size: 1Gi
-  mountPath: /home/node/.n8n
-
+  # Existing persistence settings for /home/node/.n8n remain unchanged
+  nodeModules:
+    enabled: true
+    size: "1Gi"
+    storageClass: "longhorn"
+    mountPath: "/usr/local/lib/node_modules"
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
