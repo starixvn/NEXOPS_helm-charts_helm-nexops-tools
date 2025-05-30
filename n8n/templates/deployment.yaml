@@ -12,13 +12,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: main
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -79,13 +79,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: worker
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -151,13 +151,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -240,13 +240,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -313,13 +313,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -386,13 +386,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -459,13 +459,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -532,13 +532,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -605,13 +605,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -678,13 +678,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -751,13 +751,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -824,13 +824,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -897,13 +897,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -970,13 +970,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1043,13 +1043,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1116,13 +1116,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1189,13 +1189,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1262,13 +1262,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1335,13 +1335,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1408,13 +1408,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1481,13 +1481,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1554,13 +1554,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1627,13 +1627,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1700,13 +1700,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1773,13 +1773,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1846,13 +1846,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1919,13 +1919,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -1992,13 +1992,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -2065,13 +2065,13 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "n8n.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: webhook
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -2138,6 +2138,8 @@ spec:
       {{- include "n8n.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+        {{- include "n8n.selectorLabels" . | nindent 8 }}
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
       {{- with .Values.podAnnotations }}
