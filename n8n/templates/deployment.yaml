@@ -2140,4 +2140,6 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ toJson $.Values.n8n | sha256sum | trunc 63}}
-      {{- with
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
