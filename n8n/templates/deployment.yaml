@@ -31,7 +31,7 @@ spec:
       volumes:
         - name: node-modules
           persistentVolumeClaim:
-            claimName: n8n-k3slocal-node-modules
+            claimName: {{ include "n8n.nodeModulesPvcName" . }}
       containers:
         - name: n8n
           volumeMounts:
