@@ -34,9 +34,9 @@ spec:
             claimName: {{ include "n8n.nodeModulesPvcName" . }}
       containers:
         - name: n8n
-          volumeMounts:
-            - name: node-modules
-              mountPath: /usr/local/lib/node_modules
+          # volumeMounts:
+          #   - name: node-modules
+          #     mountPath: /usr/local/lib/node_modules
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

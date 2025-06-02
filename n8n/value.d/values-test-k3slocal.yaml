@@ -55,11 +55,11 @@ service:
 
 ingress:
   enabled: "false"
-# persistence:
-#   enabled: true
-#   nodeModules:
-#     enabled: true
-#     size: "1Gi"
-#     storageClass: "longhorn"
-#     mountPath: "/usr/local/lib/node_modules"
+persistence:
+  enabled: true
+  nodeModules:
+    enabled: true
+    size: "1Gi"
+    storageClass: "longhorn"
+    mountPath: "/usr/local/lib/node_modules"
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
