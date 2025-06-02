@@ -60,3 +60,7 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "n8n.nodeModulesPvcName" -}}
+{{ printf "%s-node-modules" (include "n8n.fullname" .) }}
+{{- end -}}
