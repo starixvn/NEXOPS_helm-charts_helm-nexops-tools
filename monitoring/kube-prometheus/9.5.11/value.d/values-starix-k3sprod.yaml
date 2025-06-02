@@ -162,6 +162,12 @@ alertmanager:
       - name: default-receiver
 
 blackboxExporter:
+  nodeSelector:
+    directly-monitor: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cicd-tools
+    value: "yes"    
   configuration: |
     modules:
       http_2xx_with_lisaqd:
@@ -174,3 +180,90 @@ blackboxExporter:
         http:
           proxy_url: "http://lisasqd.nebula.prod:8801"
           skip_resolve_phase_with_proxy: true
+      tcp_connect:
+        prober: tcp
+        tcp:
+          preferred_ip_protocol: "ip4"
+      icmp_connect:
+        prober: icmp
+        timeout: 5s
+        icmp:
+          preferred_ip_protocol: "ip4"
+          # source_ip_address: "127.0.0.1"
+      
+
+extraDeploy:
+- |
+  ### TCP Monitor
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: tcp-probe
+    namespace: monitoring
+  spec:
+    interval: 5s
+    module: tcp_connect
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - gitlab.starixsoft.com:443
+        - 202.78.231.43:30882
+
+- |
+  ### ICMP
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: icmp-probe
+    namespace: monitoring
+  spec:
+    interval: 5s
+    module: icmp_connect
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - gitlab.starixsoft.com
+        - 202.78.231.43
+
+- |
+  ### monitor via proxy lisaqd
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: lisaqd-probe
+    namespace: monitoring
+  spec:
+    interval: 60s
+    module: http_2xx_with_lisaqd
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - https://hub.nexdev.net
+        - https://hub.lumigame.com
+        - https://gitlab.starixsoft.com
+
+- |
+  ### monitor via proxy lisaqd-dev
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: lisaqd-dev-probe
+    namespace: monitoring
+  spec:
+    interval: 60s
+    module: http_2xx_with_lisaqd_dev
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - https://hub.nexdev.net
+        - https://hub.lumigame.com
+        - https://gitlab.starixsoft.com
+
