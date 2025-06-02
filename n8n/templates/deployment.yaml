@@ -28,8 +28,15 @@ spec:
       serviceAccountName: {{ include "n8n.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: node-modules
+          persistentVolumeClaim:
+            claimName: n8n-k3slocal-node-modules
       containers:
-        - name: {{ .Chart.Name }}
+        - name: n8n
+          volumeMounts:
+            - name: node-modules
+              mountPath: /usr/local/lib/node_modules
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
