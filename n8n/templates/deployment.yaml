@@ -31,7 +31,7 @@ spec:
       volumes:
         - name: node-modules
           persistentVolumeClaim:
-            claimName: {{ include "n8n.nodeModulesPvcName" . }}
+            claimName: n8n-test-testlab-node-modules #{{ include "n8n.nodeModulesPvcName" . }}
       containers:
         - name: n8n
           volumeMounts:
