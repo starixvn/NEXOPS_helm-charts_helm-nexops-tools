@@ -58,7 +58,6 @@ ingress:
 
 persistence:
   enabled: true
-  # Existing persistence settings for /home/node/.n8n remain unchanged
   nodeModules:
     enabled: true
     size: "1Gi"
