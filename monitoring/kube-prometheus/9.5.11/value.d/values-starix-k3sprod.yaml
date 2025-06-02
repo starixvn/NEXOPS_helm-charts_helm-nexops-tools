@@ -188,6 +188,7 @@ blackboxExporter:
 
 extraDeploy:
 - |
+  ### TCP Monitor
   kind: Probe
   apiVersion: monitoring.coreos.com/v1
   metadata:
@@ -203,3 +204,41 @@ extraDeploy:
         static:
         - gitlab.starixsoft.com:443
         - 202.78.231.43:30882
+
+- |
+  ### monitor via proxy lisaqd
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: lisaqd-probe
+    namespace: monitoring
+  spec:
+    interval: 60s
+    module: http_2xx_with_lisaqd
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - https://hub.nexdev.net
+        - https://hub.lumigame.com
+        - https://gitlab.starixsoft.com
+
+- |
+  ### monitor via proxy lisaqd-dev
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: lisaqd-dev-probe
+    namespace: monitoring
+  spec:
+    interval: 60s
+    module: http_2xx_with_lisaqd_dev
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - https://hub.nexdev.net
+        - https://hub.lumigame.com
+        - https://gitlab.starixsoft.com
