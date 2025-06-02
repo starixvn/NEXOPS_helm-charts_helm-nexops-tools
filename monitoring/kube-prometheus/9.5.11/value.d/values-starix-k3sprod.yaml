@@ -164,6 +164,10 @@ alertmanager:
 blackboxExporter:
   nodeSelector:
     directly-monitor: "yes"
+  tolerations:
+  - effect: NoSchedule
+    key: cicd-tools
+    value: "yes"    
   configuration: |
     modules:
       http_2xx_with_lisaqd:
