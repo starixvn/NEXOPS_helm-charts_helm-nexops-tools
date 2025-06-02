@@ -9,5 +9,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "2Gi"
-  storageClassName: "longhorn"
+      storage: {{ .Values.persistence.nodeModules.size | quote }}
+  storageClassName: {{ .Values.persistence.nodeModules.storageClass | quote }}
