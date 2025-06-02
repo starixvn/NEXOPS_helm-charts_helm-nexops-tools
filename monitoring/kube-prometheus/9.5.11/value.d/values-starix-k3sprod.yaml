@@ -184,3 +184,22 @@ blackboxExporter:
         prober: tcp
         tcp:
           preferred_ip_protocol: "ip4"
+      
+
+extraDeploy:
+- |
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: tcp-probe
+    namespace: monitoring
+  spec:
+    interval: 60s
+    module: tcp_connect
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - gitlab.starixsoft.com:443
+        - 202.78.231.43:30882
