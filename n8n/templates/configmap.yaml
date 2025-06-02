@@ -44,3 +44,4 @@ data:
   N8N_TEMPLATES_ENABLED: "false"
   N8N_TEMPLATES_HOST: "https://gitlab.nexdev.net/NEXOPS/n8n-templates/-/raw/main/templates/workflows/Jira.json"
   N8N_SECURE_COOKIE: "false"
+  N8N_MFA_ENABLED: "false"

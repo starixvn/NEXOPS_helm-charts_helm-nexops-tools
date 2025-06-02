@@ -59,4 +59,12 @@ ingress:
   className: "haproxy"
   host: "n8n-wasa.nexdev.net"
   annotations: {}
+
+persistence:
+  enabled: true
+  nodeModules:
+    enabled: true
+    size: "5Gi"
+    storageClass: "longhorn"
+    mountPath: "/usr/local/lib/node_modules"
 #Admin Login: admin@starixsoft.com/N8nWasa$
