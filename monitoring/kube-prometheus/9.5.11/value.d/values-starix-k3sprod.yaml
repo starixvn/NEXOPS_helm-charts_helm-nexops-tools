@@ -184,6 +184,12 @@ blackboxExporter:
         prober: tcp
         tcp:
           preferred_ip_protocol: "ip4"
+      icmp_connect:
+        prober: icmp
+        timeout: 5s
+        icmp:
+          preferred_ip_protocol: "ip4"
+          source_ip_address: "127.0.0.1"
       
 
 extraDeploy:
@@ -195,7 +201,7 @@ extraDeploy:
     name: tcp-probe
     namespace: monitoring
   spec:
-    interval: 60s
+    interval: 5s
     module: tcp_connect
     prober:
       url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
@@ -204,6 +210,24 @@ extraDeploy:
         static:
         - gitlab.starixsoft.com:443
         - 202.78.231.43:30882
+
+- |
+  ### ICMP
+  kind: Probe
+  apiVersion: monitoring.coreos.com/v1
+  metadata:
+    name: icmp-probe
+    namespace: monitoring
+  spec:
+    interval: 5s
+    module: icmp_connect
+    prober:
+      url: prometheus-starix-k3sprod-blackbox-exporter.monitoring.svc.starix.k3sprod:19115
+    targets:
+      staticConfig:
+        static:
+        - gitlab.starixsoft.com
+        - 202.78.231.43
 
 - |
   ### monitor via proxy lisaqd
@@ -242,3 +266,4 @@ extraDeploy:
         - https://hub.nexdev.net
         - https://hub.lumigame.com
         - https://gitlab.starixsoft.com
+
