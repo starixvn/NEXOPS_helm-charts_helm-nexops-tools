@@ -162,6 +162,8 @@ alertmanager:
       - name: default-receiver
 
 blackboxExporter:
+  nodeSelector:
+    directly-monitor: "yes"
   configuration: |
     modules:
       http_2xx_with_lisaqd:
@@ -174,3 +176,7 @@ blackboxExporter:
         http:
           proxy_url: "http://lisasqd.nebula.prod:8801"
           skip_resolve_phase_with_proxy: true
+      tcp_connect:
+        prober: tcp
+        tcp:
+          preferred_ip_protocol: "ip4"
