@@ -20,7 +20,7 @@ n8n:
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
   timezone: ""
-  webhookUrl: http://10.70.70.140:30080/
+  webhookUrl: http://10.18.200.193:30080/
   auth:
     enabled: true
     username: "n8n"
@@ -55,12 +55,11 @@ service:
 
 ingress:
   enabled: "false"
-
-persistence:
-  enabled: true
-  nodeModules:
-    enabled: true
-    size: "1Gi"
-    storageClass: "longhorn"
-    mountPath: "/usr/local/lib/node_modules"
+# persistence:
+#   enabled: true
+#   nodeModules:
+#     enabled: true
+#     size: "1Gi"
+#     storageClass: "longhorn"
+#     mountPath: "/usr/local/lib/node_modules"
 #Admin Login: admin@starixsoft.com/N8nPassW0r$

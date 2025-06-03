@@ -18,6 +18,12 @@ rabbitCluster:
   resources:
     maxMemory: 2Gi
 
+  service:
+    amqp:
+      nodePort: 30672
+    manager:
+      nodePort: 31672
+
 global:
   imageRegistry: ""
   ## E.g.
