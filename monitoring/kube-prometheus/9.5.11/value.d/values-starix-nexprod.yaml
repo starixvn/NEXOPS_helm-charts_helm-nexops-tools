@@ -181,7 +181,7 @@ blackboxExporter:
     modules:
       http_2xx:
         prober: http
-        timeout: 5s
+        timeout: 30s
         http:
           method: GET
           valid_http_versions: [ "HTTP/1.1", "HTTP/2" ]
@@ -191,7 +191,7 @@ blackboxExporter:
           preferred_ip_protocol: "ip4"
       ssl_cert:
         prober: tcp
-        timeout: 5s
+        timeout: 30s
         tcp:
           preferred_ip_protocol: "ip4"
           tls: true
