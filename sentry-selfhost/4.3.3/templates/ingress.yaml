@@ -16,6 +16,7 @@ metadata:
      {{ $key }}: {{ $value | quote }}
    {{- end }}
 spec:
+  ingressClassName: haproxy
   rules:
     - host: {{ .Values.ingress.hostname }}
       http:
