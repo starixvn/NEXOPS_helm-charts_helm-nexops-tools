@@ -358,7 +358,7 @@ prometheus:
 
             - alert: Domain Status Not 200
               expr: probe_http_status_code != 200 and probe_http_status_code > 0
-              for: 2m
+              for: 5m
               labels:
                 severity: critical
               annotations:
