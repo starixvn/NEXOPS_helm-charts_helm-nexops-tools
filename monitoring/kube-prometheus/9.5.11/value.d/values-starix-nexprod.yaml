@@ -77,7 +77,7 @@ alertmanager:
 
     route:
       receiver: default-receiver
-      group_by: ["alertname", "instance"]
+      group_by: ["alertname", "job", "pod", "description", "instance"]
       routes:
         - receiver: "null"
           match_re:
@@ -88,11 +88,9 @@ alertmanager:
         - receiver: "nexpe-services-alert"
           match_re:
             namespace: "nexpe|gosql|tw|nexops"
-          group_by: ["alertname", "job", "pod", "description"]
         - receiver: "kubernetes_nexprod_lumprod"
           match_re:
             service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
-          group_by: ["alertname", "job", "pod", "description"]
         - receiver: "longhorn_alerts"
           match:
             service: "Longhorn"
@@ -104,7 +102,6 @@ alertmanager:
           match:
             alertname: "DomainStatusNot200|SSLCertificate.*"
           group_by: ["alertname", "instance"]
-      #group_by: ["alertname", "job", "pod", "description", "instance"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
