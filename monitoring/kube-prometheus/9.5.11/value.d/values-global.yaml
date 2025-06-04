@@ -346,7 +346,7 @@ prometheus:
                 problem: "The SSL certificate will expire in less than 1 days."
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
-            - alert: DomainAlreadyExpired
+            - alert: SSLCertificateExpired
               expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 0
               for: 1h
               labels:

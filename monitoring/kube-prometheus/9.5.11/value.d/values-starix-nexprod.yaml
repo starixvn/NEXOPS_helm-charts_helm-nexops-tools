@@ -102,7 +102,7 @@ alertmanager:
             service: ".*velero.*"
         - receiver: "alerts-test"
           match:
-            alertname: "DomainStatusNot200"
+            alertname: "DomainStatusNot200|SSLCertificate.*"
           group_by: ["alertname", "instance"]
       #group_by: ["alertname", "job", "pod", "description", "instance"]
       group_wait: 30s
