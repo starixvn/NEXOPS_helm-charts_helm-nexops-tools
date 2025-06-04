@@ -6,6 +6,10 @@ metadata:
 spec:
   replicas: 3
   terminationGracePeriodSeconds: 30
+  nodeSelector:
+    {{- toYaml .Values.rabbitCluster.nodeSelector | nindent 4 }}
+  tolerations:
+    {{- toYaml .Values.rabbitCluster.tolerations | nindent 4 }}
   rabbitmq:
     additionalConfig: |
       default_user = {{ .Values.rabbitCluster.user }}

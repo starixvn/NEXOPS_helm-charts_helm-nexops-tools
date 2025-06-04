@@ -24,6 +24,9 @@ rabbitCluster:
     manager:
       nodePort: 31672
 
+  nodeSelector: {}
+  tolerations: []
+
 global:
   imageRegistry: ""
   ## E.g.
