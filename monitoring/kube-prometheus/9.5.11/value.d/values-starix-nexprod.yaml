@@ -98,8 +98,8 @@ alertmanager:
           match:
             service: ".*velero.*"
         - receiver: "alerts-test"
-          match_re:
-            namespace: "monitoring"
+          match:
+            alertname: "DomainStatusNot200"
           group_by: ["alertname", "instance"]
       group_by: ["alertname", "job", "pod", "description", "instance"]
       group_wait: 30s
