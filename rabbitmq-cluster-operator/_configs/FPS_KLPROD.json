@@ -1,0 +1,98 @@
+{
+  "rabbit_version": "3.10.5",
+  "rabbitmq_version": "3.10.5",
+  "product_name": "RabbitMQ",
+  "product_version": "3.10.5",
+  "users": [
+    {
+      "name": "admin",
+      "password_hash": "v6p9TJ3E1VRRNeow2XoGHj7CKHc=",
+      "hashing_algorithm": "rabbit_password_hashing_md5",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {
+      }
+    },
+    {
+      "name": "fpsadmin",
+      "password_hash": "Q4v9L4PeF1lkmVHVKdUbzJ5pdTHdz3gshcEchOhjDG9FYRuO",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {
+      }
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/",
+      "default_queue_type": "quorum",
+      "metadata": {
+        "description": "",
+        "tags": [
+        ],
+        "default_queue_type": "quorum"
+      }
+    },
+    {
+      "name": "/FPS_Oneye_Service",
+      "default_queue_type": "quorum",
+      "metadata": {
+        "description": "",
+        "tags": [
+        ],
+        "default_queue_type": "quorum"
+      }
+    }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/FPS_Oneye_Service",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "fpsadmin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "fpsadmin",
+      "vhost": "/FPS_Oneye_Service",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [
+    {
+      "user": "fpsadmin",
+      "vhost": "/",
+      "exchange": "",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [
+  ],
+  "global_parameters": [   
+  ],
+  "policies": [
+  ],
+  "queues": [],
+  "exchanges": [],
+  "bindings": []
+}
