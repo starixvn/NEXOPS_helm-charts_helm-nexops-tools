@@ -1332,9 +1332,9 @@ prometheus:
   ## @param prometheus.additionalArgs Allows setting additional arguments for the Prometheus container
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.Prometheus
   ##
-  additionalArgs: []
+  additionalArgs:
+    []
     #additionalPrometheusRules: []
-  
 
   ## Note that the prometheus will fail to provision if the correct secret does not exist.
   ## @param prometheus.additionalScrapeConfigs.enabled Enable additional scrape configs
@@ -2659,7 +2659,7 @@ blackboxExporter:
   ## @param blackboxExporter.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if blackboxExporter.resources is set (blackboxExporter.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
-  resourcesPreset: "nano"
+  resourcesPreset: "medium"
   ## @param blackboxExporter.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
   ## resources:
