@@ -326,7 +326,7 @@ prometheus:
       groups:
         - name: domain.rules
           rules:
-            - alert: SSL Certificate Expiring Soon < 7 days
+            - alert: SSLCertificateExpiringSoon < 7 days
               expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 7 and (probe_ssl_earliest_cert_expiry - time()) > 0
               for: 1h
               labels:
@@ -336,7 +336,7 @@ prometheus:
                 problem: "The SSL certificate will expire in less than 7 days."
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
-            - alert: SSL Certificate Expiring Soon < 1 days
+            - alert: SSLCertificateExpiringSoon < 1 days
               expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 1 and (probe_ssl_earliest_cert_expiry - time()) > 0
               for: 1h
               labels:
@@ -346,7 +346,7 @@ prometheus:
                 problem: "The SSL certificate will expire in less than 1 days."
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
-            - alert: Domain Already Expired
+            - alert: SSLCertificateExpired
               expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 0
               for: 1h
               labels:
@@ -356,15 +356,17 @@ prometheus:
                 problem: "The SSL certificate has already expired!"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
-            # - alert: Domain Status Not 200
-            #   expr: (probe_http_status_code != 200 and probe_http_status_code > 0) OR absent(probe_http_status_code)
-            #   for: 5m
-            #   labels:
-            #     severity: critical
-            #   annotations:
-            #     summary: "Domain is not returning HTTP 200"
-            #     problem: "The domain is returning status code {{ $value }} instead of 200."
-            #     status: "Code {{ $value }}"
+            - alert: DomainStatusNot200
+              expr: probe_http_status_code != 200 and probe_http_status_code > 0
+              for: 10m
+              labels:
+                severity: critical
+                instance: "{{ $labels.instance }}"
+              annotations:
+                summary: "Domain {{ $labels.instance }} is not returning HTTP 200"
+                problem: "The domain is returning status code {{ $value }} instead of 200."
+                status: "Code {{ $value }}"
+
             # - alert: DomainHttpConnectFailed
             #   expr: probe_http_connect_success != 1
             #   for: 1m
