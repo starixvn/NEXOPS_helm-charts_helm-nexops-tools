@@ -60,9 +60,9 @@ spec:
     protocol: TCP
     targetPort: {{ .Values.collector.service.otlp.http.name }}
 {{- end }}
-  - name: {{ .Values.collector.service.admin.name }}
+  - name: admin
     port: 14269
-    targetPort: {{ .Values.collector.service.admin.targetPort }}
+    targetPort: admin
   selector:
     {{- include "jaeger.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: collector
@@ -70,8 +70,5 @@ spec:
   clusterIP: {{ .Values.collector.service.clusterIP }}
   {{- end }}
   type: {{ .Values.collector.service.type }}
-  {{- if and (eq .Values.collector.service.type "LoadBalancer") .Values.collector.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.collector.service.loadBalancerIP }}
-  {{- end -}}
 {{- template "loadBalancerSourceRanges" .Values.collector }}
 {{- end -}}
