@@ -6,7 +6,7 @@ global:
   imageRegistry:
 
 provisionDataStore:
-  cassandra: false
+  cassandra: true
   elasticsearch: false
   kafka: false
 
@@ -98,7 +98,7 @@ allInOne:
 
 storage:
   # allowed values (cassandra, elasticsearch, grpc-plugin, badger, memory)
-  type: elasticsearch #cassandra
+  type: cassandra
   cassandra:
     host: cassandra
     port: 9042
@@ -135,29 +135,27 @@ storage:
   elasticsearch:
     scheme: http
     host: elasticsearch-master
-    port: 30921
-    anonymous: true
-    #user: elastic
-    usePassword: false
-    #password: changeme
+    port: 9200
+    anonymous: false
+    user: elastic
+    usePassword: true
+    password: changeme
     # indexPrefix: test
     ## Use existing secret (ignores previous password)
     # existingSecret:
     # existingSecretKey:
     nodesWanOnly: false
-    extraEnv: #[]
+    extraEnv: []
     ## ES related env vars to be configured on the concerned components
-     - name: ES_SERVER_URLS
-       value: http://10.99.185.212:30920 
+    # - name: ES_SERVER_URLS
+    #   value: http://elasticsearch-master:9200
     # - name: ES_USERNAME
     #   value: elastic
     # - name: ES_INDEX_PREFIX
     #   value: test
     ## ES related cmd line opts to be configured on the concerned components
     cmdlineParams:
-      {
-        es.server-urls: http://10.99.185.212:30920
-      }
+      {}
       # es.server-urls: http://elasticsearch-master:9200
       # es.username: elastic
       # es.index-prefix: test
@@ -234,6 +232,7 @@ kafka:
 # use by Jaeger
 schema:
   annotations: {}
+  tolerations: []
   image:
     registry: ""
     repository: jaegertracing/jaeger-cassandra-schema
@@ -258,6 +257,7 @@ schema:
   podLabels: {}
   securityContext: {}
   podSecurityContext: {}
+  nodeSelector: {}
   ## Deadline for cassandra schema creation job
   activeDeadlineSeconds: 300
   extraEnv:
@@ -271,26 +271,26 @@ schema:
 
 # For configurable values of the elasticsearch if provisioned, please see:
 # https://github.com/bitnami/charts/tree/main/bitnami/elasticsearch
-elasticsearch:
+elasticsearch: {}
 
 # Example that uses no auth:
- elasticsearch:
-   fullnameOverride: "elasticsearch"
-   image:
-     registry: ""
-     repository: docker.io/bitnami/elasticsearch
-     tag: ""
-   master:
-     masterOnly: false
-     replicaCount: 1
-     extraEnvVars:
-       - name: ES_JAVA_OPTS
-         value: "-Xmx2g -Xms2g"
-     persistence:
-       enabled: true
-       storageClass: "local-path"
-       accessModes: "ReadWriteOnce"
-       size: "2gb"
+# elasticsearch:
+#   fullnameOverride: "elasticsearch"
+#   image:
+#     registry: ""
+#     repository: docker.io/bitnami/elasticsearch
+#     tag: ""
+#   master:
+#     masterOnly: false
+#     replicaCount: 3
+#     extraEnvVars:
+#       - name: ES_JAVA_OPTS
+#         value: "-Xmx20g -Xms20g"
+#     persistence:
+#       enabled: true
+#       storageClass: managed-premium
+#       accessModes: [ "ReadWriteOnce" ]
+#       size: 100gb
 #   extraConfig:
 #     cluster.max_shards_per_node: 3000
 #   sysctlImage:
@@ -303,12 +303,12 @@ elasticsearch:
 #       registry: ""
 #       repository: docker.io/bitnami/os-shell
 #       tag: 12-debian-12-r18
-   #data:
-     #replicaCount: 0
-   #coordinating:
-     #replicaCount: 0
-   #ingest:
-     #replicaCount: 0
+#   data:
+#     replicaCount: 0
+#   coordinating:
+#     replicaCount: 0
+#   ingest:
+#     replicaCount: 0
 
 ingester:
   enabled: false
@@ -354,6 +354,7 @@ ingester:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  topologySpreadContraints: []
   podAnnotations: {}
   ## Additional pod labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -376,7 +377,7 @@ ingester:
 agent:
   podSecurityContext: {}
   securityContext: {}
-  enabled: false
+  enabled: true
   annotations: {}
   image:
     registry: ""
@@ -475,8 +476,8 @@ collector:
   replicaCount: 1
   autoscaling:
     enabled: false
-    minReplicas: 1
-    maxReplicas: 2
+    minReplicas: 2
+    maxReplicas: 10
     behavior: {}
     # targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
@@ -486,7 +487,7 @@ collector:
     loadBalancerIP: ""
     # List of IP ranges that are allowed to access the load balancer (if supported)
     loadBalancerSourceRanges: []
-    type: NodePort
+    type: ClusterIP
     # Cluster IP address to assign to service. Set to None to make service headless
     clusterIP: ""
     grpc:
@@ -503,17 +504,20 @@ collector:
       # nodePort:
     otlp:
       grpc:
-        #{}
-        name: otlp-grpc
-        port: 4317
-        nodePort: 32317
+        {}
+        # name: otlp-grpc
+        # port: 4317
+        # nodePort:
       http:
-        #{}
-        name: otlp-http
-        port: 4318
-        nodePort: 32318
+        {}
+        # name: otlp-http
+        # port: 4318
+        # nodePort:
+    admin:
+      name: admin
+      targetPort: admin
   ingress:
-    enabled: true
+    enabled: false
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
     # ingressClassName: nginx
@@ -524,9 +528,9 @@ collector:
     # hosts:
     #   - chart-example.local
     # or:
-    hosts:
-       - host: vn-sc-jaeger-collector-prod.nebula.prod
-         servicePort: 4317
+    # hosts:
+    #   - host: chart-example.local
+    #     servicePort: grpc
     # annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -555,6 +559,7 @@ collector:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  topologySpreadContraints: []
   podAnnotations: {}
   ## Additional pod labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -649,9 +654,10 @@ query:
     extraEnv: []
     extraConfigmapMounts: []
     extraSecretMounts: []
-  #config: |
-  #  provider = "oidc"
-  #  https_address = ":4180"
+  # config: |-
+  #   provider = "oidc"
+  #   https_address = ":4180"
+  #   upstreams = ["http://localhost:16686"]
   #   redirect_url = "https://jaeger-svc-domain/oauth2/callback"
   #   client_id = "jaeger-query"
   #   oidc_issuer_url = "https://keycloak-svc-domain/auth/realms/Default"
@@ -686,24 +692,27 @@ query:
   replicaCount: 1
   service:
     annotations: {}
-    type: NodePort #ClusterIP
+    type: ClusterIP
     # List of IP ranges that are allowed to access the load balancer (if supported)
     loadBalancerSourceRanges: []
     port: 80
     # Specify a custom target port (e.g. port of auth proxy)
-    targetPort: 16686 #8080
+    # targetPort: 8080
     # Specify a specific node port when type is NodePort
-    nodePort: 31686
+    # nodePort: 32500
+    admin:
+      name: admin
+      targetPort: admin
   ingress:
-    enabled: true
+    enabled: false
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    ingressClassName: haproxy
+    # ingressClassName: nginx
     annotations: {}
     labels: {}
     # Used to create an Ingress record.
-    hosts:
-      - jaeger-k3s.sabagame.com
+    # hosts:
+    #   - chart-example.local
     # annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -716,7 +725,7 @@ query:
     #     - chart-example.local
     pathType:
     health:
-      exposed: true
+      exposed: false
   resources:
     {}
     # limits:
@@ -734,6 +743,7 @@ query:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  topologySpreadContraints: []
   podAnnotations: {}
   ## Additional pod labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -785,6 +795,8 @@ query:
 
 spark:
   enabled: false
+  securityContext: {}
+  podSecurityContext: {}
   annotations: {}
   image:
     registry: ""
@@ -825,7 +837,7 @@ spark:
   # ttlSecondsAfterFinished: 120
 
 esIndexCleaner:
-  enabled: true #false
+  enabled: false
   securityContext:
     runAsUser: 1000
   podSecurityContext:
