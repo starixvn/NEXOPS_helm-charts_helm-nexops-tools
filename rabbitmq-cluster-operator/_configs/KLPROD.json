@@ -55,16 +55,6 @@
       }
     },
     {
-      "name": "guest",
-      "password_hash": "QNPA+tegrlxyyxXvuYrR2FtlgCc=",
-      "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "administrator"
-      ],
-      "limits": {
-      }
-    },
-    {
       "name": "phillip",
       "password_hash": "YFQr+vpcRvOqO7ThKWgjsMYeJ3g1W9vS2VHCGpDENMIePw3/",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
@@ -353,13 +343,6 @@
       "read": ".*"
     },
     {
-      "user": "guest",
-      "vhost": "/FraudSensor",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "admin",
       "vhost": "/fanex_logging",
       "configure": ".*",
@@ -465,20 +448,6 @@
       "read": ".*"
     },
     {
-      "user": "guest",
-      "vhost": "ONEbook.NG2.API",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "guest",
-      "vhost": "/activity_tracking",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "owp",
       "vhost": "/OWP",
       "configure": ".*",
@@ -493,22 +462,8 @@
       "read": ".*"
     },
     {
-      "user": "guest",
-      "vhost": "/fanex_logging",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "phillip",
       "vhost": "ONEbook.NG2.API",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "guest",
-      "vhost": "/NAPGateway-PRO",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -542,29 +497,8 @@
       "read": ".*"
     },
     {
-      "user": "guest",
-      "vhost": "/MailStationHost",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "phillip",
       "vhost": "/MailStationHost",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "guest",
-      "vhost": "/LA",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "guest",
-      "vhost": "/",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
