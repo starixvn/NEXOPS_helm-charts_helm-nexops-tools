@@ -14,6 +14,7 @@ spec:
   targets:
     staticConfig:
       static:
+        - https://dennis.nexdev.net
         - https://bwing15.com
         - https://keno.vgaming.win
         - https://mb.bictown.com

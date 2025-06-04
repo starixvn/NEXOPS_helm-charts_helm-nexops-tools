@@ -170,7 +170,7 @@ alertmanager:
             text: |
               *Domain:* {{ .CommonLabels.instance }}
               *Severity:* `{{ .CommonLabels.severity | toUpper }}`
-              *Problem:* {{ .CommonAnnotations.summary }}
+              *Problem:* {{ .CommonAnnotations.problem }}
               *Status:* {{ .CommonAnnotations.status }}
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
             send_resolved: true
