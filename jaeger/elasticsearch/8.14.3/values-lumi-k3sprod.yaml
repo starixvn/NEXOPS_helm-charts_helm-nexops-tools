@@ -21,8 +21,8 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  defaultStorageClass: longhorn #local-path #longhorn-single
-  storageClass: longhorn #longhorn-single
+  defaultStorageClass: longhorn 
+  storageClass: longhorn 
   elasticsearch:
     service:
       name: elasticsearch
@@ -304,7 +304,7 @@ security:
 service:
   ## @param service.type Elasticsearch service type
   ##
-  type: ClusterIP
+  type: NodePort #ClusterIP
   ## @param service.ports.restAPI Elasticsearch service REST API port
   ## @param service.ports.transport Elasticsearch service transport port
   ##
@@ -317,8 +317,8 @@ service:
   ## NOTE: choose port between <30000-32767>
   ##
   nodePorts:
-    restAPI: ""
-    transport: ""
+    restAPI: "30920"
+    transport: "30930"
   ## @param service.clusterIP Elasticsearch service Cluster IP
   ## e.g.:
   ## clusterIP: None
@@ -371,7 +371,7 @@ ingress:
   apiVersion: ""
   ## @param ingress.hostname Default host for the ingress record
   ##
-  hostname: jaeger-elasticsearch-k3s.lumigame.com
+  hostname: vn-sc-jaeger-elasticsearch-prod.nebula.prod
   ## @param ingress.path Default path for the ingress record
   ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
   ##
@@ -809,7 +809,7 @@ master:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: longhorn #longhorn-single
+    storageClass: longhorn
     ## @param master.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -833,7 +833,7 @@ master:
       - ReadWriteOnce
     ## @param master.persistence.size Persistent Volume Size
     ##
-    size: 2Gi
+    size: 30Gi
   ## Master Persistent Volume Claim Retention Policy
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
   ##
@@ -1215,7 +1215,7 @@ data:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: longhorn #longhorn-single
+    storageClass: longhorn
     ## @param data.persistence.existingClaim Existing Persistent Volume Claim
     ## then accept the value as an existing Persistent Volume Claim to which
     ## the container should be bound
@@ -2006,10 +2006,10 @@ ingest:
   service:
     ## @param ingest.service.enabled Enable Ingest-only service
     ##
-    #enabled: false
+    enabled: false
     ## @param ingest.service.type Elasticsearch ingest-only service type
     ##
-    type: NodePort #ClusterIP
+    type: ClusterIP
     ## @param ingest.service.ports.restAPI Elasticsearch service REST API port
     ## @param ingest.service.ports.transport Elasticsearch service transport port
     ##
@@ -2022,8 +2022,8 @@ ingest:
     ## NOTE: choose port between <30000-32767>
     ##
     nodePorts:
-      restAPI: "30920"
-      transport: "30930"
+      restAPI: ""
+      transport: ""
     ## @param ingest.service.clusterIP Elasticsearch ingest-only service Cluster IP
     ## e.g.:
     ## clusterIP: None
@@ -2067,7 +2067,7 @@ ingest:
   ingress:
     ## @param ingest.ingress.enabled Enable ingress record generation for Elasticsearch
     ##
-    enabled: true
+    enabled: false
     ## @param ingest.ingress.pathType Ingress path type
     ##
     pathType: ImplementationSpecific
@@ -2076,7 +2076,7 @@ ingest:
     apiVersion: ""
     ## @param ingest.ingress.hostname Default host for the ingress record
     ##
-    hostname: jaeger-elasticsearch-k3s.lumigame.com
+    hostname: elasticsearch-ingest.local
     ## @param ingest.ingress.path Default path for the ingress record
     ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
     ##
@@ -2105,7 +2105,7 @@ ingest:
     ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
     ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
     ##
-    ingressClassName: "haproxy"
+    ingressClassName: ""
     ## @param ingest.ingress.extraHosts An array with additional hostname(s) to be covered with the ingress record
     ## e.g:
     ## extraHosts:
