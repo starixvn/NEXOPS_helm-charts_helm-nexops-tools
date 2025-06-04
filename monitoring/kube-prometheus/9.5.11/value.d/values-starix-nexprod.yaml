@@ -76,8 +76,6 @@ alertmanager:
       resolve_timeout: 5m
 
     route:
-      receiver: default-receiver
-      group_by: ["alertname", "job", "pod", "description", "instance"]
       routes:
         - receiver: "null"
           match_re:
@@ -102,6 +100,8 @@ alertmanager:
           match:
             alertname: "DomainStatusNot200|SSLCertificate.*"
           group_by: ["alertname", "instance"]
+      receiver: default-receiver
+      group_by: ["alertname", "job", "pod", "description", "instance"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
