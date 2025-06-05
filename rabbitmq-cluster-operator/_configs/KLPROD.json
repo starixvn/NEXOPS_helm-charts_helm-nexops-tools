@@ -1,319 +1,127 @@
 {
-  "rabbit_version": "3.13.5",
-  "rabbitmq_version": "3.13.5",
-  "product_name": "RabbitMQ",
-  "product_version": "3.13.5",
+  "rabbit_version": "3.7.4",
   "users": [
     {
-      "name": "admin",
-      "password_hash": "v6p9TJ3E1VRRNeow2XoGHj7CKHc=",
+      "name": "activity_tracking",
+      "password_hash": "WYlayE481El1M8REZJxLsOl2WgA=",
       "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "administrator"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "ng2.api",
-      "password_hash": "4cZ/pbZjE6jnJeeHMhLiMrcwAmY=",
-      "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "rabbitclient",
-      "password_hash": "jXRQVsQkRAFJVLfH7FLQPyaKcdw=",
-      "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "zabbix",
-      "password_hash": "KDizGRmKxpOrcFc1UBswfwlxsLX8l7wnJbiWxgDPWY9x6qPB",
-      "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "owp",
-      "password_hash": "wqsgQmUOZxbEZf99xI5fc+FqUXHgEX821qlf+iQ4sqMaKGRH",
-      "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "phillip",
-      "password_hash": "YFQr+vpcRvOqO7ThKWgjsMYeJ3g1W9vS2VHCGpDENMIePw3/",
-      "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
+      "tags": "monitoring"
     },
     {
       "name": "spu",
       "password_hash": "GdaacSHxOKPJSTaUplJoqBE1OawfOd5JgqoA/3qDHts8pHhw",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "settlement",
-      "password_hash": "k+UexIUvQigku0LCN0UISZKYqGqAF4ZFpZ2IhCPhS7Z+hCPV",
-      "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "NAPGateway",
-      "password_hash": "KdXsGm2Y5Jc4U4rkehx8UCMICjQ=",
-      "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
-    },
-    {
-      "name": "activity_tracking",
-      "password_hash": "WYlayE481El1M8REZJxLsOl2WgA=",
-      "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
+      "tags": "monitoring"
     },
     {
       "name": "la",
       "password_hash": "U6fv7H+ZCGz77sZKuDyYCB/ccBsFyJR6J3bM1HNsouyV6apb",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
+      "tags": "monitoring"
+    },
+    {
+      "name": "phillip",
+      "password_hash": "YFQr+vpcRvOqO7ThKWgjsMYeJ3g1W9vS2VHCGpDENMIePw3/",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "monitoring"
+    },
+    {
+      "name": "settlement",
+      "password_hash": "k+UexIUvQigku0LCN0UISZKYqGqAF4ZFpZ2IhCPhS7Z+hCPV",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "monitoring"
+    },
+    {
+      "name": "NAPGateway",
+      "password_hash": "KdXsGm2Y5Jc4U4rkehx8UCMICjQ=",
+      "hashing_algorithm": "rabbit_password_hashing_md5",
+      "tags": "monitoring"
     },
     {
       "name": "fanexlogging",
       "password_hash": "O4WmYRhB6+iWwutbl3L1yNFg7eSfPi4UROcudERy24wH+d+B",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
+      "tags": "monitoring"
+    },
+    {
+      "name": "ng2.api",
+      "password_hash": "4cZ/pbZjE6jnJeeHMhLiMrcwAmY=",
+      "hashing_algorithm": "rabbit_password_hashing_md5",
+      "tags": "monitoring"
+    },
+    {
+      "name": "admin",
+      "password_hash": "v6p9TJ3E1VRRNeow2XoGHj7CKHc=",
+      "hashing_algorithm": "rabbit_password_hashing_md5",
+      "tags": "administrator"
     },
     {
       "name": "data_service",
       "password_hash": "+Cg2IojbpU7rrQblNEO2Wk2tcGNK85OPgY3NdnYnXqALxzzG",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "monitoring"
-      ],
-      "limits": {
-      }
+      "tags": "monitoring"
+    },
+    {
+      "name": "rabbitclient",
+      "password_hash": "jXRQVsQkRAFJVLfH7FLQPyaKcdw=",
+      "hashing_algorithm": "rabbit_password_hashing_md5",
+      "tags": "monitoring"
+    },
+    {
+      "name": "owp",
+      "password_hash": "wqsgQmUOZxbEZf99xI5fc+FqUXHgEX821qlf+iQ4sqMaKGRH",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "monitoring"
+    },
+    {
+      "name": "zabbix",
+      "password_hash": "KDizGRmKxpOrcFc1UBswfwlxsLX8l7wnJbiWxgDPWY9x6qPB",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "monitoring"
     }
   ],
   "vhosts": [
     {
-      "name": "/LA",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/FanexBotServiceHost"
     },
     {
-      "name": "/fanex_logging",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/NAPGateway-PRO"
     },
     {
-      "name": "/MailStationHost",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/FraudSensor"
     },
     {
-      "name": "/NAPGateway-PRO",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "ONEbook.NG2.API"
     },
     {
-      "name": "/settlement",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/"
     },
     {
-      "name": "/Fanex_Data_Service",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/OWP"
     },
     {
-      "name": "/FanexBotServiceHost",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/settlement"
     },
     {
-      "name": "/",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/fanex_logging"
     },
     {
-      "name": "/activity_tracking",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/activity_tracking"
     },
     {
-      "name": "/OWP",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/MailStationHost-12BET"
     },
     {
-      "name": "/FraudSensor",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/MailStationHost"
     },
     {
-      "name": "ONEbook.NG2.API",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/Fanex_Data_Service"
     },
     {
-      "name": "/MailStationHost-12BET",
-      "description": "",
-      "tags": [
-      ],
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/LA"
     }
   ],
   "permissions": [
-    {
-      "user": "admin",
-      "vhost": "/Fanex_Data_Service",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
     {
       "user": "admin",
       "vhost": "/LA",
@@ -322,8 +130,22 @@
       "read": ".*"
     },
     {
-      "user": "admin",
+      "user": "settlement",
       "vhost": "/settlement",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "phillip",
+      "vhost": "ONEbook.NG2.API",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "owp",
+      "vhost": "/OWP",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -337,21 +159,7 @@
     },
     {
       "user": "admin",
-      "vhost": "/FraudSensor",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "admin",
       "vhost": "/fanex_logging",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "admin",
-      "vhost": "/MailStationHost",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -364,29 +172,22 @@
       "read": ".*"
     },
     {
-      "user": "admin",
-      "vhost": "/FanexBotServiceHost",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "phillip",
-      "vhost": "/activity_tracking",
+      "vhost": "/MailStationHost",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
     },
     {
       "user": "admin",
-      "vhost": "/",
+      "vhost": "ONEbook.NG2.API",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
     },
     {
       "user": "admin",
-      "vhost": "/OWP",
+      "vhost": "/MailStationHost",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -394,20 +195,6 @@
     {
       "user": "rabbitclient",
       "vhost": "/FanexBotServiceHost",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "fanexlogging",
-      "vhost": "/fanex_logging",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "rabbitclient",
-      "vhost": "/MailStationHost",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -420,20 +207,6 @@
       "read": ".*"
     },
     {
-      "user": "zabbix",
-      "vhost": "/",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "activity_tracking",
-      "vhost": "/activity_tracking",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "phillip",
       "vhost": "/NAPGateway-PRO",
       "configure": ".*",
@@ -441,29 +214,36 @@
       "read": ".*"
     },
     {
-      "user": "settlement",
-      "vhost": "/settlement",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "owp",
-      "vhost": "/OWP",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
       "user": "admin",
-      "vhost": "/activity_tracking",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "zabbix",
+      "vhost": "/",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
     },
     {
       "user": "phillip",
-      "vhost": "ONEbook.NG2.API",
+      "vhost": "/activity_tracking",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/Fanex_Data_Service",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/MailStationHost-12BET",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -471,6 +251,20 @@
     {
       "user": "ng2.api",
       "vhost": "ONEbook.NG2.API",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "rabbitclient",
+      "vhost": "/MailStationHost",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "la",
+      "vhost": "/LA",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -484,7 +278,49 @@
     },
     {
       "user": "admin",
-      "vhost": "/MailStationHost-12BET",
+      "vhost": "/activity_tracking",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "activity_tracking",
+      "vhost": "/activity_tracking",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "fanexlogging",
+      "vhost": "/fanex_logging",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/FraudSensor",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/FanexBotServiceHost",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/OWP",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/settlement",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -492,27 +328,6 @@
     {
       "user": "rabbitclient",
       "vhost": "/MailStationHost-12BET",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "phillip",
-      "vhost": "/MailStationHost",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "admin",
-      "vhost": "ONEbook.NG2.API",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "la",
-      "vhost": "/LA",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
@@ -530,34 +345,167 @@
   "parameters": [
     {
       "value": {
-        "apply-to": "queues",
+        "pattern": ".*",
         "definition": {
           "expires": 57600000
         },
-        "pattern": ".*",
-        "priority": 0
+        "priority": 0,
+        "apply-to": "queues"
       },
       "vhost": "/MailStationHost",
       "component": "operator_policy",
       "name": "expires"
     }
   ],
-  "global_parameters": [
+  "global_parameters": [],
+  "policies": [
     {
-      "name": "cluster_name",
-      "value": "rabbitmq-cluster"
+      "vhost": "ONEbook.NG2.API",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
     },
     {
-      "name": "internal_cluster_id",
-      "value": "rabbitmq-cluster-id-OpuLoTYqmndCldYn4z1xIw"
+      "vhost": "/NAPGateway-PRO",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/FraudSensor",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/fanex_logging",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/activity_tracking",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/FanexBotServiceHost",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/LA",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/MailStationHost-12BET",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic",
+        "message-ttl": 28800000
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/MailStationHost",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic",
+        "message-ttl": 28800000
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/settlement",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/Fanex_Data_Service",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/OWP",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
     }
   ],
-  "policies": [
-  ],
-  "queues": [
-  ],
-  "exchanges": [
-  ],
-  "bindings": [
-  ]
+  "queues": [],
+  "exchanges": [],
+  "bindings": []
 }

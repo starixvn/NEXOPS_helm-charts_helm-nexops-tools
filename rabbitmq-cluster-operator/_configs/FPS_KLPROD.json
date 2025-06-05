@@ -4,15 +4,11 @@
   "product_name": "RabbitMQ",
   "product_version": "3.10.5",
   "users": [
-    {
+     {
       "name": "admin",
       "password_hash": "v6p9TJ3E1VRRNeow2XoGHj7CKHc=",
       "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": [
-        "administrator"
-      ],
-      "limits": {
-      }
+      "tags": "administrator"
     },
     {
       "name": "fpsadmin",
@@ -27,24 +23,10 @@
   ],
   "vhosts": [
     {
-      "name": "/",
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/"
     },
     {
-      "name": "/FPS_Oneye_Service",
-      "default_queue_type": "quorum",
-      "metadata": {
-        "description": "",
-        "tags": [
-        ],
-        "default_queue_type": "quorum"
-      }
+      "name": "/FPS_Oneye_Service"
     }
   ],
   "permissions": [
@@ -88,9 +70,31 @@
   ],
   "parameters": [
   ],
-  "global_parameters": [   
+  "global_parameters": [
   ],
   "policies": [
+    {
+      "vhost": "/",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    },
+    {
+      "vhost": "/FPS_Oneye_Service",
+      "name": "ha-all",
+      "pattern": ".*",
+      "apply-to": "all",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic"
+      },
+      "priority": 0
+    }
   ],
   "queues": [],
   "exchanges": [],
