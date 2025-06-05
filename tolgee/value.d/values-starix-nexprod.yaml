@@ -38,7 +38,8 @@ tolgee:
     TOLGEE_SMTP_FROM: Tolgee <tolgee@starixsoft.com>
     TOLGEE_SMTP_HOST: smtp.nexdev.net
     TOLGEE_SMTP_PORT: 25
-    TOLGEE_MACHINE_TRANSLATION_AWS: "true"
+    TOLGEE_MACHINE_TRANSLATION_ENABLED: "true"
+    TOLGEE_MACHINE_TRANSLATION_PRIMARY_PROVIDER: "GOOGLE"
   persistence:
     type: pvc
     enabled: true
