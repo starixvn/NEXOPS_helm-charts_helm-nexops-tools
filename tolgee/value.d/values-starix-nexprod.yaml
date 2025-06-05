@@ -1,7 +1,8 @@
 ingress:
   enabled: true
   className: "haproxy"
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -33,14 +34,14 @@ postgresql:
       storageClass: longhorn
 
 tolgee:
-  env: 
+  env:
     TOLGEE_SMTP_FROM: Tolgee <tolgee@starixsoft.com>
     TOLGEE_SMTP_HOST: smtp.nexdev.net
     TOLGEE_SMTP_PORT: 25
+    TOLGEE_MACHINE_TRANSLATION_ENABLED: "true"
+    TOLGEE_MACHINE_TRANSLATION_PRIMARY_PROVIDER: "GOOGLE"
   persistence:
     type: pvc
     enabled: true
     storageClass: longhorn
     size: 1Gi
-
-  
