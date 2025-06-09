@@ -1,7 +1,6 @@
 image:
-  repository: tolgee/tolgee
+  repository: hub.nexdev.net/base/tolgee
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: v3.120.0
 
 ingress:
