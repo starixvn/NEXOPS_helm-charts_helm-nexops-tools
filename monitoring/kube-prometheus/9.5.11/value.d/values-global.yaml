@@ -95,24 +95,6 @@ prometheus:
                 summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
                 description: 'Pod usage is currently {{ printf "%.0f" $value }}% of the total cluster pod capacity.'
 
-            - alert: AlertmanagerDown
-              expr: absent(up{job="alertmanager-.*",namespace="monitoring"} == 1)
-              for: 1m
-              labels:
-                severity: critical
-              annotations:
-                summary: "Alertmanager Down"
-                description: "Alertmanager is down or unreachable."
-
-            - alert: PrometheusDown
-              expr: absent(up{job="prometheus-.*",namespace="monitoring"} == 1)
-              for: 1m
-              labels:
-                severity: critical
-              annotations:
-                summary: "Prometheus Down"
-                description: "Prometheus is down or unreachable."
-
     - name: longhorn.rules
       groups:
         - name: longhorn.rules
@@ -327,38 +309,38 @@ prometheus:
         - name: domain.rules
           rules:
             - alert: SSLCertificateExpiringSoon < 7 days
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 7 and (probe_ssl_earliest_cert_expiry - time()) > 0
-              for: 1h
+              expr: 3 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 7
+              for: 0m
               labels:
                 severity: warning
               annotations:
                 summary: "SSL certificate is expiring soon"
-                problem: "The SSL certificate will expire in less than 7 days."
+                problem: "The SSL certificate will expire soon (instance {{ $labels.instance }})"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: SSLCertificateExpiringSoon < 1 days
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 1 and (probe_ssl_earliest_cert_expiry - time()) > 0
-              for: 1h
+              expr: 0 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 3
+              for: 0m
               labels:
                 severity: critical
               annotations:
                 summary: "SSL certificate is expiring soon"
-                problem: "The SSL certificate will expire in less than 1 days."
+                problem: "The SSL certificate will expire soon (instance {{ $labels.instance }})"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: SSLCertificateExpired
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 0
-              for: 1h
+              expr: round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 0
+              for: 0m
               labels:
                 severity: critical
               annotations:
                 summary: "SSL certificate has expired"
-                problem: "The SSL certificate has already expired!"
+                problem: "The SSL certificate expired (instance {{ $labels.instance }})"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: DomainStatusNot200
-              expr: probe_http_status_code != 200 and probe_http_status_code > 0
-              for: 10m
+              expr: probe_http_status_code <= 199 OR probe_http_status_code >= 400
+              for: 2m
               labels:
                 severity: critical
                 instance: "{{ $labels.instance }}"
@@ -367,14 +349,14 @@ prometheus:
                 problem: "The domain is returning status code {{ $value }} instead of 200."
                 status: "Code {{ $value }}"
 
-            # - alert: DomainHttpConnectFailed
-            #   expr: probe_http_connect_success != 1
-            #   for: 1m
-            #   labels:
-            #     severity: critical
-            #   annotations:
-            #     summary: "HTTP connect failed"
-            #     description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
+            - alert: DomainHttpConnectFailed
+              expr: avg_over_time(probe_http_duration_seconds[1m]) > 1
+              for: 1m
+              labels:
+                severity: critical
+              annotations:
+                summary: "HTTP connect failed"
+                description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
 
 alertmanager:
   config:
