@@ -1,7 +1,7 @@
-image:
-  repository: hub.nexdev.net/base/tolgee
-  pullPolicy: IfNotPresent
-  tag: v3.120.0
+# image:
+#   repository: hub.nexdev.net/base/tolgee
+#   pullPolicy: IfNotPresent
+#   tag: v3.120.0
 
 ingress:
   enabled: true
