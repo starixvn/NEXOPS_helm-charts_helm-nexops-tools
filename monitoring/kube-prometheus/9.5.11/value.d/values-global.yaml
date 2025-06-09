@@ -14,13 +14,13 @@ prometheus:
                 description: "Node {{ $labels.node }} is not ready."
 
             - alert: High Node CPU Usage
-              expr: (min by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m]))) > 0.8
+              expr: (1 - avg by (instance)(rate(node_cpu_seconds_total{mode="idle"}[2m]))) * 100 > 80
               for: 5m
               labels:
                 severity: warning
               annotations:
                 summary: "High CPU Usage on Node"
-                description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% CPU.'
+                description: 'Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU.'
 
             - alert: High Node Memory Usage
               expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 80
