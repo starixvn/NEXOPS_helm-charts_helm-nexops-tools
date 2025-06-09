@@ -20,7 +20,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "High CPU Usage on Node"
-                description: 'Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% CPU.'
+                description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% CPU.'
 
             - alert: High Node Memory Usage
               expr: (100 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) >= 80
@@ -29,7 +29,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "High Memory Usage on Node"
-                description: 'Node {{ $labels.instance }} is using more than {{ printf \"%.0f\" $value }}% of its memory.'
+                description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% of its memory.'
 
             - alert: Node Disk Usage High > 80%
               expr: (node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} - node_filesystem_free_bytes{fstype!~"tmpfs|overlay"}) / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} * 100 > 80
