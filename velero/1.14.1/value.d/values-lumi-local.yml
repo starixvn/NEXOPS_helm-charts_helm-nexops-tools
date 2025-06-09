@@ -69,7 +69,7 @@ schedules:
       - kube-node-lease
       - kube-public
       - kube-system
-      - local
+      - locall
       - local-path-storage
       - monitoring
       - trivy-operator-lumi
