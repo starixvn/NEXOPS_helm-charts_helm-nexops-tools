@@ -94,7 +94,7 @@ alertmanager:
           namespace: "nexpe|gosql|tw|nexops"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
-          service: "prometheus-lumprod-kube-state-metrics|prometheus-lumprod-node-exporter"
+          service: "prometheus-lumi-lumprod-kube-state-metrics|prometheus-lumi-lumprod-node-exporter"
       - receiver: 'longhorn_alerts'
         match:
           service: "Longhorn"
