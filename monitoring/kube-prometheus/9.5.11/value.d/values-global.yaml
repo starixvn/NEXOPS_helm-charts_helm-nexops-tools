@@ -14,7 +14,7 @@ prometheus:
                 description: "Node {{ $labels.node }} is not ready."
 
             - alert: High Node CPU Usage
-              expr: (100 - (avg by (node) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+              expr: (min by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m]))) > 0.8
               for: 5m
               labels:
                 severity: warning
