@@ -1,3 +1,8 @@
+# image:
+#   repository: hub.nexdev.net/base/tolgee
+#   pullPolicy: IfNotPresent
+#   tag: v3.120.0
+
 ingress:
   enabled: true
   className: "haproxy"
@@ -41,7 +46,10 @@ tolgee:
     TOLGEE_MACHINE_TRANSLATION_ENABLED: "true"
     TOLGEE_MACHINE_TRANSLATION_PRIMARY_PROVIDER: "GOOGLE"
     TOLGEE_MACHINE_TRANSLATION_GOOGLE_API_KEY: "AIzaSyAIfRDyF06SVY0fvERHHKiGNPjw4JWBYjU"
-    TOLGEE_MACHINE_TRANSLATION_AWS_ACCESS_KEY: "AKIAZLALYIO7DXH7ZX5K][secret=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"
+    TOLGEE_MACHINE_TRANSLATION_AWS_ACCESS_KEY: "AKIAZLALYIO7DXH7ZX5K"
+    TOLGEE_MACHINE_TRANSLATION_AWS_SECRET_KEY: "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"
+    TOLGEE_MACHINE_TRANSLATION_AWS_REGION: "us-east-1"
+
   persistence:
     type: pvc
     enabled: true
