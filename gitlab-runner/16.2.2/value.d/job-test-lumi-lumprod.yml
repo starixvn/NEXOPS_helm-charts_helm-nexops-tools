@@ -8,7 +8,7 @@ replicas: 2
 gitlabUrl: https://git3.nexdev.net
 # runnerRegistrationToken: "9JzG2oJKAmYBHzgygxfW"
 runnerToken: "glrt-BPW9t---h7CZkqJGKykq"
-concurrent: 15
+concurrent: 20
 
 runners:
   config: |
@@ -41,10 +41,10 @@ runners:
         namespace = "{{.Release.Namespace}}"
         image = "hub.lumigame.com/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
-        cpu_request = "2"
-        memory_request = "4Gi"
+        # cpu_request = "2"
+        memory_request = "1Gi"
         # cpu_limit = "0.5"
-        # memory_limit = "500Mi"
+        memory_limit = "5Gi"
         poll_timeout = 3600
         poll_interval = 5
         # service_cpu_limit = "1"
