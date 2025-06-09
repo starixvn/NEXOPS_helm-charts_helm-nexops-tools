@@ -350,7 +350,7 @@ prometheus:
                 status: "Code {{ $value }}"
 
             - alert: DomainHttpConnectFailed
-              expr: avg_over_time(probe_http_duration_seconds[1m]) > 1
+              expr: probe_http_connect_success != 1
               for: 1m
               labels:
                 severity: critical
