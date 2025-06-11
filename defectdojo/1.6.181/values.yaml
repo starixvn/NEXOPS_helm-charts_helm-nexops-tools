@@ -257,10 +257,10 @@ django:
     resources:
       requests:
         cpu: 100m
-        memory: 256Gi
+        memory: 256Mi
       limits:
         cpu: 2000m
-        memory: 512Gi
+        memory: 512Mi
     appSettings:
       processes: 4
       threads: 2
