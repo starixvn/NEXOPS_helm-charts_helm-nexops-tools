@@ -54,7 +54,10 @@ service:
       nodePort: 30080
 
 ingress:
-  enabled: "false"
+  enabled: true
+  className: "haproxy"
+  host: "n8n-test.nexdev.net"
+  annotations: {}
 # persistence:
 #   enabled: true
 #   nodeModules:
