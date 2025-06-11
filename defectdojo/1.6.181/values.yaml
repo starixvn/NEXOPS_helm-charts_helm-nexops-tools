@@ -221,10 +221,10 @@ django:
     resources:
       requests:
         cpu: 100m
-        memory: 128Mi
+        memory: 256Mi
       limits:
         cpu: 2000m
-        memory: 256Mi
+        memory: 512Mi
   nodeSelector: {}
   replicas: 1
   strategy: {}
@@ -257,10 +257,10 @@ django:
     resources:
       requests:
         cpu: 100m
-        memory: 512Mi
+        memory: 1Gi
       limits:
         cpu: 2000m
-        memory: 1Gi
+        memory: 4Gi
     appSettings:
       processes: 2
       threads: 2
