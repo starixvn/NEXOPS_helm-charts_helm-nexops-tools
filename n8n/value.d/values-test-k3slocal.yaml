@@ -1,7 +1,7 @@
 image:
   repository: n8nio/n8n #hub.nexdev.net/base/n8n
   pullPolicy: IfNotPresent
-  tag: "1.97.1"
+  tag: "1.94.0"
 
 redis:
   architecture: standalone
@@ -15,7 +15,7 @@ redis:
     persistence:
       size: 1Gi
 
-# values for N8N
+## values for N8N
 n8n:
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
