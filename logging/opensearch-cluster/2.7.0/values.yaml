@@ -1,0 +1,60 @@
+opensearchCluster:
+  enabled: true
+#  bootstrap:
+#    Configure settings for the bootstrap pod
+  general:
+    httpPort: "9200"
+    version: 2.3.0
+    serviceName: "my-cluster"
+    drainDataNodes: true
+    setVMMaxMapCount: true
+#    securityContext:
+#       Specify container security context for OpenSearch pods
+#    podSecurityContext:
+#       Specify pod security context for OpenSearch pods
+  dashboards:
+    enable: true
+    replicas: 1
+    version: 2.3.0
+#        securityContext:
+#           Specify container security context for OSD pods
+#        podSecurityContext:
+#           Specify pod security context for OSD pods
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+  initHelper:
+    imagePullSecrets: []
+    # - registryKeySecretName
+    imagePullPolicy: IfNotPresent
+    resources: {}
+    # requests:
+    #   memory: "1Gi"
+    #   cpu: "500m"
+    # limits:
+    #   memory: "1Gi"
+    #   cpu: "500m"
+  nodePools:
+    - component: masters
+      diskSize: "30Gi"
+      replicas: 3
+      roles:
+        - "master"
+        - "data"
+      resources:
+        requests:
+          memory: "2Gi"
+          cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "500m"
+  security:
+    tls:
+      transport:
+        generate: true
+      http:
+        generate: true
