@@ -391,6 +391,9 @@ postgresql:
       replicationPasswordKey: postgresql-replication-password
   architecture: standalone
   primary:
+    extendedConfiguration: |
+      shared_buffers = 1GB
+      work_mem = 16MB
     name: primary
     persistence:
       enabled: true
