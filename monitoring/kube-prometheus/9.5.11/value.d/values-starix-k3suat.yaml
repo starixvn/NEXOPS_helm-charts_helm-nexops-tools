@@ -73,6 +73,7 @@ alertmanager:
       - receiver: 'kubernetes_devops_uat'
         match_re:
           service: "prometheus-starix-k3suat-kube-state-metrics|prometheus-starix-k3suat-node-exporter"
+          alertname: ".*CPU.*"
       - receiver: 'longhorn_alerts'
         match:
           service: "longhorn-backend"
