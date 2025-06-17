@@ -86,7 +86,7 @@ alertmanager:
             pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*"
         - receiver: "nexpe-services-alert"
           match_re:
-            namespace: "nexpe|gosql|tw|nexops|strarix"
+            namespace: "nexpe|gosql|tw|nexops|starix"
         - receiver: "kubernetes_nexprod_lumprod"
           match_re:
             service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
