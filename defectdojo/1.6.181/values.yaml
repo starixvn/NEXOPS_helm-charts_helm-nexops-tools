@@ -394,7 +394,6 @@ postgresql:
     extendedConfiguration: |
       shared_buffers = 1GB
       work_mem = 16MB
-      max_connections = 100
     name: primary
     persistence:
       enabled: true
