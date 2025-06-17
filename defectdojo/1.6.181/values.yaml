@@ -215,6 +215,8 @@ django:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-set-headers: |
+        Connection: keep-alive
   nginx:
     tls:
       enabled: false
@@ -235,7 +237,7 @@ django:
       # Enable liveness checks on uwsgi container.
       enabled: true
       failureThreshold: 6
-      initialDelaySeconds: 0
+      initialDelaySeconds: 180
       periodSeconds: 10
       successThreshold: 1
       timeoutSeconds: 5
@@ -243,7 +245,7 @@ django:
       # Enable readiness checks on uwsgi container.
       enabled: true
       failureThreshold: 6
-      initialDelaySeconds: 0
+      initialDelaySeconds: 180
       periodSeconds: 10
       successThreshold: 1
       timeoutSeconds: 5
