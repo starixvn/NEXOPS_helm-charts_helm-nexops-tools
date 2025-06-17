@@ -62,7 +62,9 @@ alertmanager:
        - receiver: 'kubernetes_sc_uat'
          match_re:
            service: "prometheus-lumi-eksuat-kube-state-metrics|prometheus-lumi-eksuat-node-exporter"
-           alertname: ".*CPU.*"
+       - receiver: 'kubernetes_sc_uat'
+         match_re:
+           alertname: ".*CPU.*" 
       group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
       group_wait: 30s
       group_interval: 5m

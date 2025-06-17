@@ -65,7 +65,9 @@ alertmanager:
        - receiver: 'kubernetes_sc_local'
          match_re:
            service: "prometheus-lumi-local-kube-state-metrics|prometheus-lumi-local-node-exporter"
-           alertname: ".*CPU.*"
+       - receiver: 'kubernetes_sc_local'
+         match_re:
+           alertname: ".*CPU.*" 
        - receiver: "velero_alerts"
          match:
            service: ".*velero.*"
