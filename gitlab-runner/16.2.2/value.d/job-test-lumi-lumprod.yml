@@ -44,7 +44,7 @@ runners:
         # cpu_request = "2"
         memory_request = "1Gi"
         # cpu_limit = "0.5"
-        memory_limit = "5Gi"
+        memory_limit = "8Gi"
         poll_timeout = 3600
         poll_interval = 5
         # service_cpu_limit = "1"
