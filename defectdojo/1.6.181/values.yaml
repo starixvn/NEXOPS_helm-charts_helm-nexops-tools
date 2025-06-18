@@ -396,10 +396,10 @@ postgresql:
     extendedConfiguration: |-
       max_connections = 500
       shared_buffers = 512MB
-      effective_cache_size = 1024MB
+      # effective_cache_size = 1024MB
       work_mem = 64MB
-      min_wal_size = 1GB
-      max_wal_size = 4GB
+      # min_wal_size = 1GB
+      # max_wal_size = 4GB
       maintenance_work_mem = 512MB
       checkpoint_completion_target = 0.9
       tcp_keepalives_idle = 180
