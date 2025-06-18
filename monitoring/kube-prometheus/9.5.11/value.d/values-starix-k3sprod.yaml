@@ -72,10 +72,13 @@ alertmanager:
             pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*|cpuad.*"
         - receiver: "nexpe-services-alert"
           match_re:
-            namespace: "nexpe|gosql|tw|nexops"
+            namespace: "nexpe|gosql|tw|nexops|starix"
         - receiver: "kubernetes_devops_prod"
           match_re:
             service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
+        - receiver: "kubernetes_devops_prod"
+          match_re:
+            alertname: ".*CPU.*"
         - receiver: "longhorn_alerts"
           match:
             service: "Longhorn"
