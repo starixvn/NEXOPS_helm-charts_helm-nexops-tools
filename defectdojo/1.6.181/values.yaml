@@ -134,7 +134,7 @@ celery:
     annotations: {}
     affinity: {}
     nodeSelector: {}
-    replicas: 2
+    replicas: 1
     resources:
       requests:
         cpu: 100m
@@ -147,7 +147,7 @@ celery:
     annotations: {}
     affinity: {}
     nodeSelector: {}
-    replicas: 2
+    replicas: 1
     resources:
       requests:
         cpu: 100m
@@ -395,10 +395,16 @@ postgresql:
   primary:
     extendedConfiguration: |-
       max_connections = 500
-      shared_buffers = 1GB
+      shared_buffers = 512MB
+      effective_cache_size = 1024MB
       work_mem = 64MB
+      min_wal_size = 1GB
+      max_wal_size = 4GB
       maintenance_work_mem = 512MB
       checkpoint_completion_target = 0.9
+      tcp_keepalives_idle = 180
+      tcp_keepalives_interval = 10
+      tcp_keepalives_count = 3
     name: primary
     persistence:
       enabled: true
