@@ -398,9 +398,6 @@ postgresql:
       shared_buffers = 512MB
       work_mem = 128MB
       checkpoint_completion_target = 0.9
-      tcp_keepalives_idle = 180
-      tcp_keepalives_interval = 10
-      tcp_keepalives_count = 3
     name: primary
     persistence:
       enabled: true
