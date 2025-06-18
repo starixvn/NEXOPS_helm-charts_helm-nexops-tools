@@ -198,8 +198,6 @@ celery:
   # @type: array<map>
   extraVolumes: []
 django:
-  createMigrations: true
-  runMigrations: true
   annotations: {}
   service:
     annotations: {}
