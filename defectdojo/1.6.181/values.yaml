@@ -134,7 +134,7 @@ celery:
     annotations: {}
     affinity: {}
     nodeSelector: {}
-    replicas: 2
+    replicas: 1
     resources:
       requests:
         cpu: 100m
@@ -147,7 +147,7 @@ celery:
     annotations: {}
     affinity: {}
     nodeSelector: {}
-    replicas: 2
+    replicas: 1
     resources:
       requests:
         cpu: 100m
@@ -229,7 +229,7 @@ django:
         cpu: 2000m
         memory: 512Mi
   nodeSelector: {}
-  replicas: 2
+  replicas: 1
   strategy: {}
   tolerations: []
   uwsgi:
