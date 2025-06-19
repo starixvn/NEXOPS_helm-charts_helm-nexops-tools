@@ -66,7 +66,7 @@ alertmanager:
       routes:
         - receiver: "null"
           match_re:
-            namespace: "zabbix-proxy-devops|zabbix-server-devops|nexpe"
+            namespace: "zabbix-proxy-devops|zabbix-server-devops"
         - receiver: "null"
           match_re:
             pod: "backup-.*|c-.*|.*-cleaner-.*|.*snapshot-.*|.*-cleanup-.*|.*-cron-.*|.*-update-.*|cpuad.*"
