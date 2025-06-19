@@ -32,7 +32,7 @@ configuration:
       config:
         region: minio
         s3ForcePathStyle: true
-        s3Url: https://s3-api.nexdev.nett
+        s3Url: https://s3-api.starixsoft.com
 credentials:
   existingSecret: velero-secret
 # Disable VolumeSnapshotLocation CRD. It is not needed for CSI integration
