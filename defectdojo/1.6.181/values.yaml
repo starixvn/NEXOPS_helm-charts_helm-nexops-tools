@@ -229,7 +229,7 @@ django:
         cpu: 2000m
         memory: 512Mi
   nodeSelector: {}
-  replicas: 2
+  replicas: 1
   strategy: {}
   tolerations: []
   uwsgi:
