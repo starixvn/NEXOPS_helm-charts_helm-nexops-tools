@@ -215,6 +215,9 @@ django:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+      nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
       nginx.ingress.kubernetes.io/proxy-set-headers: |
         Connection: keep-alive
   nginx:
@@ -233,6 +236,14 @@ django:
   strategy: {}
   tolerations: []
   uwsgi:
+    env:
+      DD_UWSGI_HARAKIRI: "300"
+      DD_UWSGI_BUFFER_SIZE: "33554432"  # 32MB
+      DD_UWSGI_POST_BUFFERING: "32768"   # 32KB
+      DD_UWSGI_PROCESSES: "8"
+      DD_UWSGI_THREADS: "4"
+      DD_ASYNC_FINDING_IMPORT: "true"
+      
     livenessProbe:
       # Enable liveness checks on uwsgi container.
       enabled: true
@@ -263,7 +274,7 @@ django:
         memory: 512Mi
       limits:
         cpu: 2000m
-        memory: 3Gi
+        memory: 6Gi
     appSettings:
       processes: 4
       threads: 2
