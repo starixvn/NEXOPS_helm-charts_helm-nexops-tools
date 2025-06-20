@@ -125,7 +125,6 @@ secrets:
   annotations: {}
 # Components
 celery:
-  enabled: true
   broker: redis
   # To use an external celery broker, set the hostname here
   brokerHost: ""
@@ -199,8 +198,6 @@ celery:
   # @type: array<map>
   extraVolumes: []
 django:
-  env:
-    DD_ASYNC_FINDING_IMPORT: "true"
   annotations: {}
   service:
     annotations: {}
