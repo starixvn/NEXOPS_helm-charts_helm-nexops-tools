@@ -201,7 +201,6 @@ celery:
 django:
   env:
     DD_ASYNC_FINDING_IMPORT: "true"
-    DD_CELERY_BROKER_HEARTBEAT: "0"
   annotations: {}
   service:
     annotations: {}
