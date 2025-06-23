@@ -88,7 +88,7 @@ alertmanager:
           namespace: "gitlab-runner|zabbix-proxy-lumprod|fleet-default|sentry-lumi|trivy-operator-lumi|sample"
       - receiver: 'null'
         match_re:
-          pod: "scan-vulnerabilityreport-.*|c-.*|.*\\.rollover.*|.*\\.cleaner.*|.*\\.cleanup.*|.*\\.node-exporter.*|.*packagebuider.*"
+          pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*cleaner.*|.*cleanup.*|.*node-exporter.*|.*packagebuider.*"
       - receiver: 'nexpe-services-alert'
         match_re:
           namespace: "nexpe|gosql|tw|nexops|starix"
