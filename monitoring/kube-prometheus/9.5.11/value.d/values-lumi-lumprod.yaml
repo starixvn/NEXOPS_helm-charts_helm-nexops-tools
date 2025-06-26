@@ -89,6 +89,10 @@ alertmanager:
       - receiver: 'null'
         match_re:
           pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*cleaner.*|.*cleanup.*|.*node-exporter.*|.*packagebuider.*"
+      - receiver: "null" #ignore Runner alert (CPU/Memory)
+        match_re:
+          instance: "10.10.50.91.*|10.10.50.90.*|10.10.50.43.*|10.10.50.88.*|10.10.50.29.*|10.10.50.30.*|10.10.50.84.*"
+          alertname: ".*[Mm]emory.*|.*CPU.*"
       - receiver: 'nexpe-services-alert'
         match_re:
           namespace: "nexpe|gosql|tw|nexops|starix"

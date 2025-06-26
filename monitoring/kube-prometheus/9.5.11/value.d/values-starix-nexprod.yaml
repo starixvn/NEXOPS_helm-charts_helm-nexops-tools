@@ -83,7 +83,11 @@ alertmanager:
             namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample"
         - receiver: "null"
           match_re:
-            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*"
+            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*|.*worker.*"
+        - receiver: "null" #ignore Runner alert (CPU/Memory)
+          match_re:
+            instance: "10.18.200.134.*|10.18.200.153.*|10.18.200.187.*|10.18.200.189.*|10.17.200.65.*|10.17.200.65.*|10.18.200.205.*|10.18.200.214.*"
+            alertname: ".*[Mm]emory.*|.*CPU.*"
         - receiver: "nexpe-services-alert"
           match_re:
             namespace: "nexpe|gosql|tw|nexops|starix"
