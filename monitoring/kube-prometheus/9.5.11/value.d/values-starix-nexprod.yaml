@@ -80,7 +80,7 @@ alertmanager:
       routes:
         - receiver: "null"
           match_re:
-            namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample"
+            namespace: "gitlab-runner|defectdojo-starix|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample|gitlab-server"
         - receiver: "null"
           match_re:
             pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*|.*worker.*"
