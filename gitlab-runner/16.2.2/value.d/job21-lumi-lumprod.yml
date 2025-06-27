@@ -6,7 +6,7 @@ image:
 replicas: 1
 
 gitlabUrl: https://git21.lumigame.com
-runnerRegistrationToken: "glrt-JRBh2u_AxsmyJ16TE9dz"
+runnerRegistrationToken: "glrt-7MzvoopUQeH2ZAeTxjKE"
 concurrent: 30
 
 runners:
