@@ -45,7 +45,7 @@ schedules:
     labels:
       env: hrm
       org: starix
-    schedule: "0 */2 * * *"
+    schedule: "0 19 * * *"
     useOwnerReferencesInBackup: false
     paused: false
     template:
