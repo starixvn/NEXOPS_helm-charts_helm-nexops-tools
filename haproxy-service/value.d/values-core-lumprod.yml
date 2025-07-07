@@ -1,8 +1,16 @@
 clusterDomain: "lumi.lumprod"
+
+# setting HA for service
 replicaCount: 3
+podAntiAffinityPreset: hard
+resources:
+  requests:
+    memory: 2Gi
+  limits:
+    memory: 2Gi
+priorityClassName: "critical-service"
 
 
-resourcesPreset: "none"
 
 service:
   type: NodePort
