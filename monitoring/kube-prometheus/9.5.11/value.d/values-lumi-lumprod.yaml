@@ -181,7 +181,7 @@ alertmanager:
           fallback: '{{ template "sre.slack.fallback" . }}'
           icon_emoji: ":opensearch-ico:"
           send_resolved: true
-          username: "FPS OpenSearch - PROD"
+          username: "OpenSearch STD - LUMPROD"
           title: '{{ template "sre.slack.title" . }}'
           text: '{{ template "sre.slack.body" . }}'
 
