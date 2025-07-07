@@ -49,7 +49,7 @@ spec:
             {{- end }}
             {{- if .backend }}
             backend: 
-              {{- toYaml .backend nindent 14 }}
+              {{- toYaml .backend | nindent 14 }}
             {{- else  }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
