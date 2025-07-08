@@ -41,23 +41,23 @@ prometheus:
     name: ""
     key: ""
 
-  # additionalPrometheusRules:
-  #   - name: test.rules
-  #     groups:
-  #       - name: test.rules
-  #         rules:
-  #           #Unusual network receive
-  #           - alert: HostUnusualNetworkReceive
-  #             expr: (rate(node_network_receive_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / (1024*1024)) > 50
-  #             for: 15m
-  #             labels:
-  #               severity: warning
-  #             annotations:
-  #               summary: "Unusual network throughput received on {{ $labels.instance }}"
-  #               description: |
-  #                 Host {{ $labels.instance }} is receiving network traffic at an unusual rate.
-  #                 Current inbound traffic on device {{ $labels.device }} is {{ printf "%.2f" $value }} MiB/s.
-  #                 This has been sustained for the last 15 minutes.
+  additionalPrometheusRules:
+    - name: test.rules
+      groups:
+        - name: test.rules
+          rules:
+            #Unusual network receive
+            - alert: HostUnusualNetworkReceive
+              expr: (rate(node_network_receive_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / (1024*1024)) > 50
+              for: 15m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Unusual network throughput received on {{ $labels.instance }}"
+                description: |
+                  Host {{ $labels.instance }} is receiving network traffic at an unusual rate.
+                  Current inbound traffic on device {{ $labels.device }} is {{ printf "%.2f" $value }} MiB/s.
+                  This has been sustained for the last 15 minutes.
 
   #           #Unusual network Transmit
   #           - alert: HostUnusualNetworkTransmit
