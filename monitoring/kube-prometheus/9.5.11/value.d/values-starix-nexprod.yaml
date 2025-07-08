@@ -182,6 +182,17 @@ alertmanager:
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
             send_resolved: true
 
+      - name: dev-services
+        slack_configs:
+          - channel: "#dev-services"
+            color: '{{ template "sre.slack.color" . }}'
+            fallback: '{{ template "sre.slack.fallback" . }}'
+            icon_emoji: ":opensearch-ico:"
+            send_resolved: true
+            username: "OpenSearch STD - NEXPROD"
+            title: '{{ template "sre.slack.title" . }}'
+            text: '{{ template "sre.slack.body" . }}'
+
       - name: default-receiver
 
 blackboxExporter:
