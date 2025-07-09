@@ -199,7 +199,7 @@ prometheus:
                 summary: "High 5xx error rate on HAProxy frontend {{ $labels.frontend }}"
                 description: |
                   The HAProxy frontend '{{ $labels.frontend }}' is experiencing a high rate of 5xx errors on more than 20% of requests.
-                  The current error rate is {{ printf \"%.2f\" $value }}% and has been sustained for over 15 minutes.
+                  The current error rate is {{ printf "%.2f" $value }}% and has been sustained for over 15 minutes.
 
 
 kube-state-metrics:
