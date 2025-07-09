@@ -183,7 +183,7 @@ prometheus:
                 summary: "Disk utilization is high on {{ $labels.instance }}"
                 description: |
                   The disk '{{ $labels.device }}' on host '{{ $labels.instance }}' has been more than 90% busy for the last 15 minutes.
-                  Current utilization is {{ printf \"%.2f\" ($value * 100) }}%.
+                  Current utilization is {{ printf "%.2f" ($value * 100) }}%.
             #HAProxy High HTTP 5xx Error Rate
             - alert: HAProxyHighHttp5xxErrorRate
               expr: |
