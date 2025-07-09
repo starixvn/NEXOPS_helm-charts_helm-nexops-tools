@@ -107,9 +107,9 @@ prometheus:
               annotations:
                 summary: "High memory usage in Kubernetes container"
                 description: |
-                  "Container {{ $labels.container }} in pod {{ $labels.pod }} 
+                  Container {{ $labels.container }} in pod {{ $labels.pod }} 
                   (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }} 
-                  is using {{ $value | humanize }}% of its memory limit."
+                  is using {{ $value | humanize }}% of its memory limit.
 
             #CPU usage exceeds 90% of the limit
             - alert: KubernetesContainerHighCPUUsage
