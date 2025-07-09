@@ -54,9 +54,9 @@ prometheus:
               labels:
                 severity: warning
               annotations:
-                summary: "Disk utilization is high on {{ $labels.instance }}"
+                summary: "Disk utilization is high on {{$labels.instance}}"
                 description: |
-                  The disk '{{ $labels.device }}' on host '{{ $labels.instance }}' has been more than 90% busy for the last 15 minutes.
+                  The disk '{{$labels.device}}' on host '{{$labels.instance}}' has been more than 90% busy for the last 15 minutes.
 
             # #Unusual network receive
             # - alert: HostUnusualNetworkReceive
