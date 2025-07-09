@@ -46,6 +46,133 @@ prometheus:
       groups:
         - name: test.rules
           rules:
+            #Unusual network receive
+            - alert: HostUnusualNetworkReceive
+              expr: (rate(node_network_receive_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / (1024*1024)) > 50
+              for: 15m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Unusual network throughput received on {{ $labels.instance }}"
+                description: |
+                  Host {{ $labels.instance }} is receiving network traffic at an unusual rate.
+                  Current inbound traffic on device {{ $labels.device }} is {{ printf "%.2f" $value }} MiB/s.
+                  This has been sustained for the last 15 minutes.
+
+            #Unusual network Transmit  
+            - alert: HostUnusualNetworkTransmit
+              expr: (rate(node_network_transmit_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / (1024*1024)) > 100
+              for: 15m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Unusual network throughput transmitted from {{ $labels.instance }}"
+                description: |
+                  Host {{ $labels.instance }} is transmitting network traffic at an unusual rate.
+                  Current outbound traffic on device {{ $labels.device }} is {{ printf "%.2f" $value }} MiB/s.
+                  This has been sustained for the last 15 minutes.
+
+            #Pod missing CPU/Memory limits:
+            - alert: PodMissingResourceLimits
+              expr: |
+                (
+                kube_pod_container_resource_limits{resource="cpu"} == 0
+                or absent(kube_pod_container_resource_limits{resource="cpu"})
+                )
+                or
+                (
+                kube_pod_container_resource_limits{resource="memory"} == 0
+                or absent(kube_pod_container_resource_limits{resource="memory"})
+                )
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Pod {{ $labels.pod }} is missing resource limits"
+                description: "Container {{ $labels.container }} in pod {{ $labels.pod }} (namespace: {{ $labels.namespace }}) is missing {{ $labels.resource }} limits."
+
+            #CPU memory exceeds 90% of the limit
+            - alert: KubernetesContainerHighMemoryUsage
+              expr: |
+                (
+                sum(container_memory_working_set_bytes{name!="", container!="POD"}) BY (namespace, pod, container, instance)
+                /
+                sum(container_spec_memory_limit_bytes{container!="POD"} > 0) BY (namespace, pod, container, instance)
+                * 100
+                ) > 90
+              for: 2m
+              labels:
+                severity: warning
+                component: kubernetes
+              annotations:
+                summary: "High memory usage in Kubernetes container"
+                description: |
+                  Container {{ $labels.container }} in pod {{ $labels.pod }} 
+                  (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }} 
+                  is using {{ $value | humanize }}% of its memory limit.
+
+            #CPU usage exceeds 90% of the limit
+            - alert: KubernetesContainerHighCPUUsage
+              expr: |
+                (
+                sum(rate(container_cpu_usage_seconds_total{container!="POD",container!=""}[5m])) BY (namespace, pod, container, instance)
+                /
+                sum(container_spec_cpu_quota{container!="POD",container!=""} / container_spec_cpu_period{container!="POD",container!=""}) BY (namespace, pod, container, instance)
+                * 100
+                ) > 90
+              for: 2m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Container {{ $labels.container }} in pod {{ $labels.pod }} has high CPU usage"
+                description: "Container {{ $labels.container }} in pod {{ $labels.pod }} (namespace: {{ $labels.namespace }}) on {{ $labels.instance }} has been using {{ $value | humanize }}% of its CPU limit for more than 2 minutes."
+
+            #Disk latency is growing (write operations > 100ms)
+            - alert: HostUnusualDiskWriteLatency
+              expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
+              for: 2m
+              labels:
+                severity: warning
+              annotations:
+                summary: Host unusual disk write latency (instance {{ $labels.instance }})
+                description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            #Disk latency is growing (read operations > 100ms)
+            - alert: HostUnusualDiskReadLatency
+              expr: (rate(node_disk_read_time_seconds_total[1m]) / rate(node_disk_reads_completed_total[1m]) > 0.1 and rate(node_disk_reads_completed_total[1m]) > 0)
+              for: 2m
+              labels:
+                severity: warning
+              annotations:
+                summary: Host unusual disk read latency (instance {{ $labels.instance }})
+                description: "Disk latency is growing (read operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            
+            #High disk read Throughput
+            - alert: HighDiskReadThroughput
+              expr: (rate(node_disk_read_bytes_total[5m]) / 1024 / 1024) > 30
+              for: 2m
+              labels:
+                severity: warning
+                cluster: "{{ $labels.cluster }}"
+              annotations:
+                summary: "High disk read throughput on node {{ $labels.instance }}"
+                description: |
+                  Node {{ $labels.instance }} disk {{ $labels.device }} has high read throughput.
+                  Current read throughput: {{ $value | printf "%.2f" }}MB/s (Threshold: > 30 MB/s).
+
+            #High disk write Throughput
+            - alert: HighDiskWriteThroughput
+              expr: |
+                (rate(node_disk_written_bytes_total[5m]) / 1024 / 1024) > 50
+              for: 5m
+              labels:
+                severity: critical
+                cluster: "{{ $labels.cluster }}"
+              annotations:
+                summary: "High disk write throughput on node {{ $labels.instance }}"
+                description: |
+                  Node {{ $labels.instance }} disk {{ $labels.device }} has high write throughput.
+                  Current write throughput: {{ $value | printf "%.2f" }} MB/s (Threshold: > 50 MB/s).
+                        
             # Disk is too busy (IO wait > 90%)
             - alert: HostDiskHighUtilization
               expr: 'rate(node_disk_io_time_seconds_total{device=~"(sd|hd|xvd|nvme)[a-z]"}[5m]) > 0.9'
@@ -57,23 +184,23 @@ prometheus:
                 description: |
                   The disk '{{ $labels.device }}' on host '{{ $labels.instance }}' has been more than 90% busy for the last 15 minutes.
                   Current utilization is {{ printf "%.2f" ($value * 100) }}%.
-  #          #HAProxy High HTTP 5xx Error Rate
-
-  #           - alert: HAProxyHighHttp5xxErrorRate
-  #             expr: |
-  #               (
-  #                 sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
-  #                 /
-  #                 sum(rate(haproxy_frontend_http_responses_total[5m])) by (frontend)
-  #               ) * 100 > 20
-  #             for: 15m
-  #             labels:
-  #               severity: critical
-  #             annotations:
-  #               summary: "High 5xx error rate on HAProxy frontend {{ $labels.frontend }}"
-  #               description: |
-  #                 The HAProxy frontend '{{ $labels.frontend }}' is experiencing a high rate of 5xx errors on more than 20% of requests.
-  #                 The current error rate is {{ printf "%.2f" $value }}% and has been sustained for over 15 minutes.
+           
+            # #HAProxy High HTTP 5xx Error Rate
+            # - alert: HAProxyHighHttp5xxErrorRate
+            #   expr: |
+            #     (
+            #       sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
+            #       /
+            #       sum(rate(haproxy_frontend_http_responses_total[5m])) by (frontend)
+            #     ) * 100 > 20
+            #   for: 15m
+            #   labels:
+            #     severity: critical
+            #   annotations:
+            #     summary: "High 5xx error rate on HAProxy frontend {{ $labels.frontend }}"
+            #     description: |
+            #       The HAProxy frontend '{{ $labels.frontend }}' is experiencing a high rate of 5xx errors on more than 20% of requests.
+            #       The current error rate is {{ printf "%.2f" $value }}% and has been sustained for over 15 minutes.
 
 
 kube-state-metrics:
