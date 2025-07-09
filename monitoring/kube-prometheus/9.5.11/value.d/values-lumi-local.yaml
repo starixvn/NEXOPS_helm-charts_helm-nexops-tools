@@ -173,17 +173,18 @@ prometheus:
                   Node {{ $labels.instance }} disk {{ $labels.device }} has high write throughput.
                   Current write throughput: {{ $value | printf "%.2f" }} MB/s (Threshold: > 50 MB/s).
             
-            # #Disk is too busy (IO wait > 90%)
-            # - alert: HostDiskHighUtilization
-            #   expr: rate(node_disk_io_time_seconds_total{device=~"(sd|hd|xvd|nvme)[a-z]"}[5m]) > 0.9
-            #   for: 15m
-            #   labels:
-            #     severity: warning
-            #   annotations:
-            #     summary: "Disk utilization is high on {{ $labels.instance }}"
-            #     description: |
-            #       The disk '{{ $labels.device }}' on host '{{ $labels.instance }}' has been more than 90% busy for the last 15 minutes.
-            #       Current utilization is {{ printf "%.2f" ($value * 100) }}%.
+            # Disk is too busy (IO wait > 90%)
+            - alert: HostDiskHighUtilization
+              expr: |
+                rate(node_disk_io_time_seconds_total{device=~"(sd|hd|xvd|nvme)[a-z]"}[5m]) > 0.9
+              for: 15m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Disk utilization is high on {{ $labels.instance }}"
+                description: |
+                  The disk '{{ $labels.device }}' on host '{{ $labels.instance }}' has been more than 90% busy for the last 15 minutes.
+                  Current utilization is {{ printf "%.2f" ($value * 100) }}%.
             #HAProxy High HTTP 5xx Error Rate
             - alert: HAProxyHighHttp5xxErrorRate
               expr: |
