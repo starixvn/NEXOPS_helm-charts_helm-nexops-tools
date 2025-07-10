@@ -65,7 +65,7 @@ prometheus:
                 summary: Host unusual network throughput in (instance {{ $labels.instance }})
                 description: "Host receive bandwidth is high (>90%).\n  VALUE = {{ $value }}%\n  LABELS = {{ $labels }}"
             #HAProxy High HTTP 5xx Error Rate
-            - alert: HAProxyHighHttp5xxErrorRate
+            - alert: HAProxyHighHttp5xxErrorRateWarning
               expr: |
                 (
                   sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
@@ -82,7 +82,7 @@ prometheus:
                   The current error rate is {{ printf "%.2f" $value}}% and has been sustained for over 15 minutes.	 
 
             #HAProxy Critical HTTP 5xx Error Rate
-            - alert: HAProxyHighHttp5xxErrorRate
+            - alert: HAProxyHighHttp5xxErrorRateCritical
               expr: |
                 (
                   sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
@@ -99,7 +99,7 @@ prometheus:
                   The current error rate is {{ printf "%.2f" $value}}% and has been sustained for over 15 minutes.
 
             # Disk latency is growing (read operations > 100ms)
-            - alert: HostUnusualDiskReadLatency
+            - alert: HostUnusualDiskReadLatencyCritical
               expr: (rate(node_disk_read_time_seconds_total[1m]) / rate(node_disk_reads_completed_total[1m]) > 0.1 and rate(node_disk_reads_completed_total[1m]) > 0)
               for: 2m
               labels:
@@ -108,7 +108,7 @@ prometheus:
                 summary: Host unusual disk read latency (instance {{ $labels.instance }})
                 description: "Disk latency is growing (read operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"            
             # Disk latency is growing (read operations > 50ms)
-            - alert: HostUnusualDiskReadLatency
+            - alert: HostUnusualDiskReadLatencyWarning
               expr: (rate(node_disk_read_time_seconds_total[1m]) / rate(node_disk_reads_completed_total[1m]) > 0.05 and rate(node_disk_reads_completed_total[1m]) > 0)
               for: 2m
               labels:
@@ -117,16 +117,16 @@ prometheus:
                 summary: Host unusual disk read latency (instance {{ $labels.instance }})
                 description: "Disk latency is growing (read operations > 50ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
             #Disk latency is growing (write operations > 100ms)
-            - alert: HostUnusualDiskWriteLatency
+            - alert: HostUnusualDiskWriteLatencyWarning
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
               for: 2m
               labels:
-                severity: critical
+                severity: warning
               annotations:
                 summary: Host unusual disk write latency (instance {{$labels.instance}})
                 description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
             #Disk latency is growing (write operations > 50ms)
-            - alert: HostUnusualDiskWriteLatency
+            - alert: HostUnusualDiskWriteLatencyCritical
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.05 and rate(node_disk_writes_completed_total[1m]) > 0)
               for: 2m
               labels:
