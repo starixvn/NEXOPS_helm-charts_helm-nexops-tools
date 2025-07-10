@@ -358,12 +358,12 @@ prometheus:
                 summary: "HTTP connect failed"
                 description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
 
-    - name: haproxy.rules
+    - name: haproxyingress.rules
       groups:
-        - name: haproxy.rules
+        - name: haproxyingress.rules
           rules:
-            - alert: HAProxyIngressHighTotalConnections
-              expr: sum(haproxy_frontend_current_sessions{namespace="haproxy-ingress"}) > 20
+            - alert: HAProxy Ingress High Connections
+              expr: sum(haproxy_frontend_current_sessions{namespace="haproxy-ingress"}) > 10000
               for: 1m
               labels:
                 severity: warning
