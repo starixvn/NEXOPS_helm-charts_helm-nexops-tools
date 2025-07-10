@@ -63,7 +63,7 @@ prometheus:
                 severity: Critical
               annotations:
                 summary: Host unusual network throughput in (instance {{ $labels.instance }})
-                description: "Host receive bandwidth is high (>90%).\n  VALUE = {{ $value }}%\n  LABELS = {{ $labels }}"
+                description: "Host receive bandwidth is high (>90%).\n  VALUE = {{ $value }}%"
             #HAProxy High HTTP 5xx Error Rate
             - alert: HAProxyHighHttp5xxErrorRateWarning
               expr: |
@@ -106,7 +106,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: Host unusual disk read latency (instance {{ $labels.instance }})
-                description: "Disk latency is growing (read operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"            
+                description: "Disk latency is growing (read operations > 100ms)\n  VALUE = {{ $value }}"            
             # Disk latency is growing (read operations > 50ms)
             - alert: HostUnusualDiskReadLatencyWarning
               expr: (rate(node_disk_read_time_seconds_total[1m]) / rate(node_disk_reads_completed_total[1m]) > 0.05 and rate(node_disk_reads_completed_total[1m]) > 0)
@@ -115,7 +115,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: Host unusual disk read latency (instance {{ $labels.instance }})
-                description: "Disk latency is growing (read operations > 50ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+                description: "Disk latency is growing (read operations > 50ms)\n  VALUE = {{ $value }}"
             #Disk latency is growing (write operations > 100ms)
             - alert: HostUnusualDiskWriteLatencyWarning
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
@@ -223,29 +223,29 @@ prometheus:
               annotations:
                 summary: "Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
                 description: "Container {{$labels.container}} in pod {{$labels.pod}} (namespace: {{$labels.namespace}}) on {{$labels.instance}} has been using {{$value | humanize}}% of its CPU limit for more than 5 minutes."
-            # Warning alert - 20% threshold
+            # Warning alert - 80% threshold
             - alert: HostHighDiskIOWait
               expr: |
-                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.20
+                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.8
               for: 5m
               labels:
                 severity: warning
                 component: system
               annotations:
                 summary: "Host {{$labels.instance}} has high disk I/O wait time"
-                description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Monitor closely.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+                description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Monitor closely.\n  VALUE = {{ $value }}"
 
-            # Critical alert - 40% threshold
+            # Critical alert - 90% threshold
             - alert: HostCriticalDiskIOWait
               expr: |
-                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.40
+                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.9
               for: 5m
               labels:
                 severity: critical
                 component: system
               annotations:
                 summary: "Host {{ $labels.instance }} has critical disk I/O wait time"
-                description: "CRITICAL: Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Immediate investigation required!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}" 
+                description: "CRITICAL: Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Immediate investigation required!\n  VALUE = {{ $value }}" 
 
     - name: kubernetes.rules
       groups:
