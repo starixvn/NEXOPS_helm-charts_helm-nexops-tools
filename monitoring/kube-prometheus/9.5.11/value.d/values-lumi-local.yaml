@@ -54,7 +54,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: Node unusual network throughput out (instance {{ $labels.instance }})
-                description: 'Node {{ $labels.instance }} interface {{ $labels.device }} transmit bandwidth is high (>90%)\n  Current: {{ $value | humanizePercentage }}\n  Interface: {{ $labels.device }}'
+                description: "Node {{ $labels.instance }} interface {{ $labels.device }} transmit bandwidth is high (>90%)\n  Current: {{ $value | humanizePercentage }}\n  Interface: {{ $labels.device }}"
             # Node receive bandwidth is high (>90%)
             - alert: Node receive bandwidth is high (>90%)
               expr: ((rate(node_network_receive_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / on(instance, device) node_network_speed_bytes) * 100) > 90
@@ -63,7 +63,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: Node unusual network throughput in (instance {{ $labels.instance }})
-                description: 'Node receive bandwidth is high (>90%).\n  VALUE = {{ $value }}%'
+                description: "Node receive bandwidth is high (>90%).\n  VALUE = {{ $value }}%"
             #HAProxy High HTTP 5xx Error Rate
             - alert: High HTTP 5xx Error Rate
               expr: |
@@ -105,7 +105,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: Host unusual disk write latency (instance {{$labels.instance}})
-                description: 'Disk latency is growing (write operations > 100ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}'
+                description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
             #Disk latency is growing (write operations > 50ms)
             - alert: Disk latency is growing (write operations > 50ms)
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.05 and rate(node_disk_writes_completed_total[1m]) > 0)
@@ -114,7 +114,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: Host unusual disk write latency (instance {{$labels.instance}})
-                description: 'Disk latency is growing (write operations > 50ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}'
+                description: "Disk latency is growing (write operations > 50ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
             #Pod missing CPU/Memory limits
             - alert: Pod missing CPU/Memory limits
               expr: |
@@ -204,29 +204,29 @@ prometheus:
               annotations:
                 summary: "Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
                 description: 'Container {{$labels.container}} in pod {{$labels.pod}} (namespace: {{$labels.namespace}}) on {{$labels.instance}} has been using {{$value | humanize}}% of its CPU limit for more than 5 minutes.'
-            # Warning alert - 80% threshold
-            - alert: Disk is too busy (IO wait > 20%)
+            # Warning alert - 60% threshold
+            - alert: Disk is too busy (IO wait > 60%)
               expr: |
-                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.2
+                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.60
               for: 5m
               labels:
                 severity: warning
                 component: system
               annotations:
                 summary: "Host {{$labels.instance}} has high disk I/O wait time"
-                description: 'Disk {{$labels.device}} on {{$labels.instance}} has been busy for 20% of time for more than 5 minutes.\n  VALUE = {{ $value }}'
+                description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for 60% of time for more than 5 minutes.\n  VALUE = {{ $value }}"
 
-            # Critical alert - 90% threshold
-            - alert: Disk is too busy (IO wait > 40%)
+            # Critical alert - 85% threshold
+            - alert: Disk is too busy (IO wait > 85%)
               expr: |
-                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.4
+                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.85
               for: 5m
               labels:
                 severity: critical
                 component: system
               annotations:
                 summary: "Host {{ $labels.instance }} has critical disk I/O wait time"
-                description: 'CRITICAL: Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for 40% of time for more than 5 minutes.\n  VALUE = {{ $value }}'
+                description: "Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for 85% of time for more than 5 minutes.\n  VALUE = {{ $value }}"
 
     - name: kubernetes.rules
       groups:
