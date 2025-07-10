@@ -194,9 +194,8 @@ alertmanager:
             title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
             text: |
               *Cluster:* `Kubernetes-NexProd`
-              *Problem:* `{{ .CommonAnnotations.summary }}`
+              *Problem:* `{{ .CommonAnnotations.description }}`
               *Value:* `{{ .CommonAnnotations.value }}`
-              *Description:* `{{ .CommonAnnotations.description }}`
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
       - name: dev-services

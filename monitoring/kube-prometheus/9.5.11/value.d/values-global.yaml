@@ -363,7 +363,7 @@ prometheus:
         - name: haproxy.rules
           rules:
             - alert: HAProxyIngressHighTotalConnections
-              expr: sum(haproxy_frontend_current_sessions{namespace="haproxy-ingress"}) > 10
+              expr: sum(haproxy_frontend_current_sessions{namespace="haproxy-ingress"}) > 20
               for: 1m
               labels:
                 severity: warning
