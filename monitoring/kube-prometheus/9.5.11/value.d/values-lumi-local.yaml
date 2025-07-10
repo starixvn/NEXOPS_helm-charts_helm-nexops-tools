@@ -229,8 +229,8 @@ prometheus:
                 (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.20
               for: 5m
               labels:
-              severity: warning
-              component: system
+                severity: warning
+                component: system
               annotations:
                 summary: "Host {{$labels.instance}} has high disk I/O wait time"
                 description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Monitor closely.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
@@ -241,8 +241,8 @@ prometheus:
                 (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.40
               for: 5m
               labels:
-              severity: critical
-              component: system
+                severity: critical
+                component: system
               annotations:
                 summary: "Host {{ $labels.instance }} has critical disk I/O wait time"
                 description: "CRITICAL: Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Immediate investigation required!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}" 
