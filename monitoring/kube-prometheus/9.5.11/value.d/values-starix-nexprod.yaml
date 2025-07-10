@@ -90,7 +90,7 @@ alertmanager:
             alertname: ".*[Mm]emory.*|.*CPU.*"
         - receiver: "nexpe-services-alert"
           match_re:
-            namespace: "nexpe|gosql|tw|nexops|starix"
+            namespace: "nexpe|gosql|tw|starix"
         - receiver: "kubernetes_nexprod_lumprod"
           match_re:
             service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
