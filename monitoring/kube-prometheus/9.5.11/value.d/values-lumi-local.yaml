@@ -192,7 +192,7 @@ prometheus:
                   Container {{ $labels.container }} in pod {{ $labels.pod }}
                   (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }}
                   is using {{ $value | printf "%.1f" }}% of its memory limit.
-                  CRITICAL: Memory usage is above 90% - immediate action required!
+                  CRITICAL: Memory usage is above 90%!
             #CPU usage exceeds 75% of the limit
             - alert: KubernetesContainerHighCPUUsage
               expr: |
@@ -245,7 +245,7 @@ prometheus:
                 component: system
               annotations:
                 summary: "Host {{ $labels.instance }} has critical disk I/O wait time"
-                description: "CRITICAL: Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes. Immediate investigation required!\n  VALUE = {{ $value }}" 
+                description: "CRITICAL: Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for {{ $value | printf \"%.1f\" }}% of time for more than 5 minutes.\n  VALUE = {{ $value }}" 
 
     - name: kubernetes.rules
       groups:
