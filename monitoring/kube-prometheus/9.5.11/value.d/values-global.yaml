@@ -150,21 +150,22 @@ prometheus:
             #Disk latency is growing (write operations > 100ms)
             - alert: Disk latency is growing (write operations > 100ms)
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
-              for: 2m
-              labels:
-                severity: warning
-              annotations:
-                summary: Host unusual disk write latency (instance {{$labels.instance}})
-                description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
-            #Disk latency is growing (write operations > 50ms)
-            - alert: Disk latency is growing (write operations > 50ms)
-              expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.05 and rate(node_disk_writes_completed_total[1m]) > 0)
-              for: 2m
+              for: 5m
               labels:
                 severity: critical
               annotations:
                 summary: Host unusual disk write latency (instance {{$labels.instance}})
-                description: "Disk latency is growing (write operations > 50ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
+                description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{$value}}\n"
+
+            # #Disk latency is growing (write operations > 50ms)
+            # - alert: Disk latency is growing (write operations > 50ms)
+            #   expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.05 and rate(node_disk_writes_completed_total[1m]) > 0)
+            #   for: 5m
+            #   labels:
+            #     severity: critical
+            #   annotations:
+            #     summary: Host unusual disk write latency (instance {{$labels.instance}})
+            #     description: "Disk latency is growing (write operations > 50ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
             #Pod missing CPU/Memory limits
             - alert: Pod missing CPU/Memory limits
               expr: |
