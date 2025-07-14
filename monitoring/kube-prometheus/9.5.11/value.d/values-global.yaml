@@ -200,11 +200,7 @@ prometheus:
                 component: kubernetes
               annotations:
                 summary: "High memory usage in Kubernetes container (Warning)"
-                description: |
-                  'Container {{ $labels.container }} in pod {{ $labels.pod }}
-                  (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }}
-                  is using {{ $value | printf "%.1f" }}% of its memory limit.
-                  Current usage is above 75% threshold.'
+                description: 'Container {{ $labels.container }} in pod {{ $labels.pod }} (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }} is above 75% threshold'
             # Container memory usage exceeds 90% of the resource limit 
             - alert: Container memory usage exceeds 90% of the resource limit 
               expr: |
@@ -220,11 +216,7 @@ prometheus:
                 component: kubernetes
               annotations:
                 summary: "Critical memory usage in Kubernetes container"
-                description: |
-                  'Container {{ $labels.container }} in pod {{ $labels.pod }}
-                  (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }}
-                  is using {{ $value | printf "%.1f" }}% of its memory limit.
-                  CRITICAL: Memory usage is above 90%!'
+                description: 'Container {{ $labels.container }} in pod {{ $labels.pod }} (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }} is above 90% threshold'
             #Container CPU usage exceeds 75% of the resource limit 
             - alert: Container CPU usage exceeds 75% of the resource limit 
               expr: |
