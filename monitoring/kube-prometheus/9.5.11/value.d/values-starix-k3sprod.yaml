@@ -75,16 +75,13 @@ alertmanager:
             namespace: "nexpe|gosql|tw|nexops|starix"
         - receiver: "kubernetes_devops_prod"
           match_re:
-            service: "prometheus-starix-k3sprod-kube-state-metrics|prometheus-starix-k3sprod-node-exporter"
-        - receiver: "kubernetes_devops_prod"
-          match_re:
-            alertname: ".*CPU.*"
+            alertname: "Kubernetes.*"
         - receiver: "longhorn_alerts"
           match:
             service: "Longhorn"
         - receiver: "velero_alerts"
           match:
-            service: ".*velero.*"
+            alertname: "Velero.*"
           group_by: ["alertname", "job", "pvc"]
         - receiver: dev-services
           match:

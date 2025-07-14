@@ -93,23 +93,17 @@ alertmanager:
             namespace: "nexpe|gosql|tw|starix"
         - receiver: "kubernetes_nexprod_lumprod"
           match_re:
-            service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
-        - receiver: "kubernetes_nexprod_lumprod"
-          match_re:
-            alertname: ".*CPU.*"
+            alertname: "Kubernetes.*"
         - receiver: "longhorn_alerts"
           match:
             service: "Longhorn"
           group_by: ["alertname", "job", "pvc"]
         - receiver: "velero_alerts"
           match:
-            service: ".*velero.*"
+            alertname: "Velero.*"
         - receiver: "domains"
           match_re:
             alertname: "DomainStatusNot200|SSLCertificate.*|DomainHttpConnectFailed"
-        - receiver: "alerts-test"
-          match_re:
-            alertname: "HAProxy.*"
           group_by: ["alertname", "instance"]
       group_by: ["alertname", "job", "pod", "description", "instance"]
       group_wait: 30s
@@ -184,19 +178,6 @@ alertmanager:
               *Status:* {{ .CommonAnnotations.status }}
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
             send_resolved: true
-
-      - name: "alerts-test"
-        slack_configs:
-          - api_url: "https://hooks.slack.com/services/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"
-            channel: "#alerts-test"
-            send_resolved: true
-            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
-            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
-            text: |
-              *Cluster:* `Kubernetes-NexProd`
-              *Problem:* `{{ .CommonAnnotations.description }}`
-              *Value:* `{{ .CommonAnnotations.value }}`
-            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
       - name: dev-services
         slack_configs:
