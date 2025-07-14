@@ -4,118 +4,118 @@ prometheus:
       groups:
         - name: kubernetes.rules
           rules:
-            - alert: Node Not Ready
+            - alert: Kubernetes Node Not Ready
               expr: kube_node_status_condition{condition="Ready", status="false"} == 1
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: "Node Not Ready"
+                summary: "Kubernetes - Node Not Ready"
                 description: "Node {{ $labels.node }} is not ready."
 
-            - alert: High Node CPU Usage
+            - alert: Kubernetes High Node CPU Usage
               expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
               for: 5m
               labels:
                 severity: warning
               annotations:
-                summary: "High CPU Usage on Node"
+                summary: "Kubernetes - High CPU Usage on Node"
                 description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% CPU.'
 
-            - alert: High Node Memory Usage
+            - alert: Kubernetes High Node Memory Usage
               expr: (100 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) >= 80
               for: 5m
               labels:
                 severity: warning
               annotations:
-                summary: "High Memory Usage on Node"
+                summary: "Kubernetes - High Memory Usage on Node"
                 description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% of its memory.'
 
-            - alert: Node Disk Usage High > 80%
+            - alert: Kubernetes Node Disk Usage High > 80%
               expr: (node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} - node_filesystem_free_bytes{fstype!~"tmpfs|overlay"}) / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} * 100 > 80
               for: 5m
               labels:
                 severity: warning
               annotations:
-                summary: "High Node Disk Usage"
+                summary: "Kubernetes - High Node Disk Usage"
                 description: 'Node {{ $labels.instance }} has more than {{ printf "%.0f" $value }}% disk usage.'
 
-            - alert: Node Disk Usage High > 90%
+            - alert: Kubernetes Node Disk Usage High > 90%
               expr: (node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} - node_filesystem_free_bytes{fstype!~"tmpfs|overlay"}) / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} * 100 > 90
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: "High Node Disk Usage"
+                summary: "Kubernetes - High Node Disk Usage"
                 description: 'Node {{ $labels.instance }} has more than {{ printf "%.0f" $value }}% disk usage.'
 
-            - alert: Node Disk Pressure
+            - alert: Kubernetes Node Disk Pressure
               expr: kube_node_status_condition{condition="DiskPressure", status="true"} == 1
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: "Node Disk Pressure"
+                summary: "Kubernetes - Node Disk Pressure"
                 description: "Node {{ $labels.node }} is under disk pressure."
 
-            - alert: Pod Not Running
+            - alert: Kubernetes Pod Not Running
               expr: kube_pod_status_phase{phase!~"Running|Succeeded"} == 1
               for: 5m
               labels:
                 severity: warning
               annotations:
-                summary: "Pod Not Running"
+                summary: "Kubernetes - Pod Not Running"
                 description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running."
 
-            - alert: Pod Restart Detected
+            - alert: Kubernetes Pod Restart Detected
               expr: increase(kube_pod_container_status_restarts_total[5m]) > 0
               for: 1m
               labels:
                 severity: warning
               annotations:
-                summary: "Pod {{ $labels.pod }} restarted"
+                summary: "Kubernetes - Pod {{ $labels.pod }} restarted"
                 description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} just restarted!"
 
-            - alert: API Server Down
+            - alert: Kubernetes API Server Down
               expr: up{job="apiserver"} == 0
               for: 1m
               labels:
                 severity: critical
               annotations:
-                summary: "API Server Down"
+                summary: "Kubernetes - API Server Down"
                 description: "The Kubernetes API server is down."
 
-            - alert: Cluster Pod Usage Above 80%
+            - alert: Kubernetes Cluster Pod Usage Above 80%
               expr: |
                 (sum(kube_pod_info{node=~".*"}) / sum(kube_node_status_allocatable{resource="pods", node=~".*"})) * 100 > 80
               for: 5m
               labels:
                 severity: warning
               annotations:
-                summary: "Pod usage exceeds 80% of total allocatable pods in the cluster"
+                summary: "Kubernetes - Pod usage exceeds 80% of total allocatable pods in the cluster"
                 description: 'Pod usage is currently {{ printf "%.0f" $value }}% of the total cluster pod capacity.'
 
           #new_rules:
             # Node transmit bandwidth is high (>90%)
-            - alert: Node transmit bandwidth is high (>90%)
+            - alert: Kubernetes Node transmit bandwidth is high (>90%)
               expr: ((rate(node_network_transmit_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / on(instance, device) node_network_speed_bytes) * 100)  > 90
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: Node unusual network throughput out (instance {{ $labels.instance }})
+                summary: Kubernetes - Node unusual network throughput out (instance {{ $labels.instance }})
                 description: "Node {{ $labels.instance }} interface {{ $labels.device }} transmit bandwidth is high (>90%)\n  Current: {{ $value | humanizePercentage }}\n  Interface: {{ $labels.device }}"
             # Node receive bandwidth is high (>90%)
-            - alert: Node receive bandwidth is high (>90%)
+            - alert: Kubernetes Node receive bandwidth is high (>90%)
               expr: ((rate(node_network_receive_bytes_total{device!~"lo|veth.*|docker.*|cbr.*"}[5m]) / on(instance, device) node_network_speed_bytes) * 100) > 90
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: Node unusual network throughput in (instance {{ $labels.instance }})
+                summary: Kubernetes - Node unusual network throughput in (instance {{ $labels.instance }})
                 description: "Node receive bandwidth is high (>90%).\n  VALUE = {{ $value }}%"
             #HAProxy High HTTP 5xx Error Rate
-            - alert: High HTTP 5xx Error Rate
+            - alert: Kubernetes High HTTP 5xx Error Rate
               expr: |
                 (
                   sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
@@ -126,13 +126,13 @@ prometheus:
               labels:
                 severity: warning
               annotations:
-                summary: "High 5xx error rate on HAProxy frontend {{$labels.frontend}}"
+                summary: "Kubernetes - High 5xx error rate on HAProxy frontend {{$labels.frontend}}"
                 description: |
                   'The HAProxy frontend '{{$labels.frontend}}' is experiencing a high rate of 5xx errors on more than 1% of requests.
                   The current error rate is {{ printf "%.2f" $value}}% and has been sustained for over 15 minutes.'
 
             #HAProxy Critical HTTP 5xx Error Rate
-            - alert: Critical HTTP 5xx Error Rate
+            - alert: Kubernetes Critical HTTP 5xx Error Rate
               expr: |
                 (
                   sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
@@ -143,18 +143,18 @@ prometheus:
               labels:
                 severity: critical
               annotations:
-                summary: "High 5xx error rate on HAProxy frontend {{$labels.frontend}}"
+                summary: "Kubernetes - High 5xx error rate on HAProxy frontend {{$labels.frontend}}"
                 description: |
                   'The HAProxy frontend '{{$labels.frontend}}' is experiencing a high rate of 5xx errors on more than 5% of requests.
                   The current error rate is {{ printf "%.2f" $value}}% and has been sustained for over 15 minutes.'
             #Disk latency is growing (write operations > 100ms)
-            - alert: Disk latency is growing (write operations > 100ms)
+            - alert: Kubernetes Disk latency is growing (write operations > 100ms)
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
               for: 5m
               labels:
                 severity: critical
               annotations:
-                summary: Host unusual disk write latency (instance {{$labels.instance}})
+                summary: Kubernetes - Host unusual disk write latency (instance {{$labels.instance}})
                 description: 'Disk latency is growing (write operations > 100ms) on node {{ $labels.instance }}'
 
             # #Disk latency is growing (write operations > 50ms)
@@ -167,7 +167,7 @@ prometheus:
             #     summary: Host unusual disk write latency (instance {{$labels.instance}})
             #     description: "Disk latency is growing (write operations > 50ms)\n  VALUE = {{$value}}\n  LABELS = {{$labels}}"
             #Pod missing CPU/Memory limits
-            - alert: Pod missing CPU/Memory limits
+            - alert: Kubernetes Pod missing CPU/Memory limits
               expr: |
                 (
                 kube_pod_container_resource_limits{resource="cpu"} == 0
@@ -182,11 +182,11 @@ prometheus:
               labels:
                 severity: warning
               annotations:
-                summary: "Pod {{$labels.pod}} is missing resource limits"
+                summary: "Kubernetes - Pod {{$labels.pod}} is missing resource limits"
                 description: 'Container {{$labels.container}} in pod {{$labels.pod}} (namespace: {{$labels.namespace}}) is missing {{$labels.resource}} limits.'
 
             # Container memory usage exceeds 75% of the resource limit
-            - alert: Container memory usage exceeds 75% of the resource limit
+            - alert: Kubernetes Container memory usage exceeds 75% of the resource limit
               expr: |
                 (
                   sum(container_memory_working_set_bytes{name!="", container!="POD"}) BY (namespace, pod, container, instance)
@@ -199,14 +199,14 @@ prometheus:
                 severity: warning
                 component: kubernetes
               annotations:
-                summary: "High memory usage in Kubernetes container (Warning)"
+                summary: "Kubernetes - High memory usage in Kubernetes container (Warning)"
                 description: |
                   'Container {{ $labels.container }} in pod {{ $labels.pod }}
                   (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }}
                   is using {{ $value | printf "%.1f" }}% of its memory limit.
                   Current usage is above 75% threshold.'
             # Container memory usage exceeds 90% of the resource limit 
-            - alert: Container memory usage exceeds 90% of the resource limit 
+            - alert: Kubernetes Container memory usage exceeds 90% of the resource limit 
               expr: |
                 (
                   sum(container_memory_working_set_bytes{name!="", container!="POD"}) BY (namespace, pod, container, instance)
@@ -219,14 +219,14 @@ prometheus:
                 severity: critical
                 component: kubernetes
               annotations:
-                summary: "Critical memory usage in Kubernetes container"
+                summary: "Kubernetes - Critical memory usage in Kubernetes container"
                 description: |
                   'Container {{ $labels.container }} in pod {{ $labels.pod }}
                   (namespace: {{ $labels.namespace }}) on node {{ $labels.instance }}
                   is using {{ $value | printf "%.1f" }}% of its memory limit.
                   CRITICAL: Memory usage is above 90%!'
             #Container CPU usage exceeds 75% of the resource limit 
-            - alert: Container CPU usage exceeds 75% of the resource limit 
+            - alert: Kubernetes Container CPU usage exceeds 75% of the resource limit 
               expr: |
                 (
                 sum(rate(container_cpu_usage_seconds_total{container!="POD",container!=""}[5m])) BY (namespace, pod, container, instance)
@@ -238,10 +238,10 @@ prometheus:
               labels:
                 severity: warning
               annotations:
-                summary: "Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
+                summary: "Kubernetes - Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
                 description: 'Container {{$labels.container}} in pod {{$labels.pod}} (namespace: {{$labels.namespace}}) on {{$labels.instance}} has been using {{$value | humanize}}% of its CPU limit for more than 10 minutes.'
             # Container CPU usage exceeds 90% of the resource limit 
-            - alert: Container CPU usage exceeds 90% of the resource limit 
+            - alert: Kubernetes Container CPU usage exceeds 90% of the resource limit 
               expr: |
                 (
                 sum(rate(container_cpu_usage_seconds_total{container!="POD",container!=""}[5m])) BY (namespace, pod, container, instance)
@@ -253,10 +253,10 @@ prometheus:
               labels:
                 severity: critical
               annotations:
-                summary: "Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
+                summary: "Kubernetes - Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
                 description: 'Container {{$labels.container}} in pod {{$labels.pod}} (namespace: {{$labels.namespace}}) on {{$labels.instance}} has been using {{$value | humanize}}% of its CPU limit for more than 5 minutes.'
             # Warning alert - 60% threshold
-            - alert: Disk is too busy (IO wait > 60%)
+            - alert: Kubernetes Disk is too busy (IO wait > 60%)
               expr: |
                 (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.60
               for: 5m
@@ -264,11 +264,11 @@ prometheus:
                 severity: warning
                 component: system
               annotations:
-                summary: "Host {{$labels.instance}} has high disk I/O wait time"
+                summary: "Kubernetes - Host {{$labels.instance}} has high disk I/O wait time"
                 description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for 60% of time for more than 5 minutes.\n  VALUE = {{ $value }}"
 
             # Critical alert - 85% threshold
-            - alert: Disk is too busy (IO wait > 85%)
+            - alert: Kubernetes Disk is too busy (IO wait > 85%)
               expr: |
                 (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.85
               for: 5m
@@ -276,7 +276,7 @@ prometheus:
                 severity: critical
                 component: system
               annotations:
-                summary: "Host {{ $labels.instance }} has critical disk I/O wait time"
+                summary: "Kubernetes - Host {{ $labels.instance }} has critical disk I/O wait time"
                 description: "Disk {{ $labels.device }} on {{ $labels.instance }} has been busy for 85% of time for more than 5 minutes.\n  VALUE = {{ $value }}"
 
 
@@ -391,7 +391,7 @@ prometheus:
       groups:
         - name: velero.rules
           rules:
-            - alert: VeleroBackupPartialFailures
+            - alert: Velero Backup Partial Failures
               annotations:
                 message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
               expr: |-
@@ -399,7 +399,7 @@ prometheus:
               for: 15m
               labels:
                 severity: warning
-            - alert: VeleroBackupFailures
+            - alert: Velero Backup Failures
               annotations:
                 message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
               expr: |-
@@ -547,13 +547,13 @@ prometheus:
       groups:
         - name: haproxyingress.rules
           rules:
-            - alert: HAProxy Ingress High Connections
+            - alert: Kubernetes HAProxy Ingress High Connections
               expr: sum(haproxy_frontend_current_sessions{namespace="haproxy-ingress"}) > 10000
               for: 1m
               labels:
                 severity: warning
               annotations:
-                summary: "HAProxy Ingress total concurrent connections too high"
+                summary: "Kubernetes - HAProxy Ingress total concurrent connections too high"
                 value: '{{ $value }}'
                 description: "HAProxy Ingress has over {{ $value }} concurrent connections."
 
