@@ -99,16 +99,13 @@ alertmanager:
           namespace: "nexpe|gosql|tw|starix"
       - receiver: 'kubernetes_nexprod_lumprod'
         match_re:
-          service: "prometheus-lumi-lumprod-kube-state-metrics|prometheus-lumi-lumprod-node-exporter"
-      - receiver: 'kubernetes_nexprod_lumprod'
-        match_re:
-          alertname: ".*CPU.*"
+          alertname: "Kubernetes.*"
       - receiver: 'longhorn_alerts'
         match:
           service: "Longhorn"
       - receiver: "velero_alerts"
         match:
-          service: ".*velero.*"
+          service: "Velero.*"
         group_by: ['alertname', 'job', 'pvc']
       - receiver: dev-services
         match:
