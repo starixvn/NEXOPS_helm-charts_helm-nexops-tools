@@ -93,20 +93,17 @@ alertmanager:
             namespace: "nexpe|gosql|tw|starix"
         - receiver: "kubernetes_nexprod_lumprod"
           match_re:
-            service: "prometheus-starix-nexprod-kube-state-metrics|prometheus-starix-nexprod-node-exporter"
-        - receiver: "kubernetes_nexprod_lumprod"
-          match_re:
-            alertname: ".*CPU.*"
+            alertname: "Kubernetes.*"
         - receiver: "longhorn_alerts"
           match:
             service: "Longhorn"
           group_by: ["alertname", "job", "pvc"]
         - receiver: "velero_alerts"
           match:
-            service: ".*velero.*"
+            service: "Velero.*"
         - receiver: "domains"
           match_re:
-            alertname: "DomainStatusNot200|SSLCertificate.*|DomainHttpConnectFailed"
+            alertname: "SSLCertificate.*"
         - receiver: "alerts-test"
           match_re:
             alertname: "HAProxy.*"

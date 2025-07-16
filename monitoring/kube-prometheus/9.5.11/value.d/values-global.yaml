@@ -494,7 +494,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "SSL certificate is expiring soon"
-                problem: "The SSL certificate will expire soon (instance {{ $labels.instance }})"
+                problem: "The SSL certificate will expire soon"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: SSLCertificateExpiringSoon < 3 days
@@ -504,7 +504,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: "SSL certificate is expiring soon"
-                problem: "The SSL certificate will expire soon (instance {{ $labels.instance }})"
+                problem: "The SSL certificate will expire soon"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: SSLCertificateExpired
@@ -514,7 +514,7 @@ prometheus:
                 severity: critical
               annotations:
                 summary: "SSL certificate has expired"
-                problem: "The SSL certificate expired (instance {{ $labels.instance }})"
+                problem: "The SSL certificate expired"
                 status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             # - alert: DomainStatusNot200
