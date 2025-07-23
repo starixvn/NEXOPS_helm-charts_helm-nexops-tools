@@ -108,8 +108,9 @@ alertmanager:
           service: "Velero.*"
         group_by: ['alertname', 'job', 'pvc']
       - receiver: dev-services
-        match:
-          service: "OpenSearch"
+        matchers:
+        - service="OpenSearch"
+        - alertname!="OpensearchClusterYellow"
         group_by: ["alertname", "job"]
       group_by: ['alertname','job','pod', 'description']
       group_wait: 30s
