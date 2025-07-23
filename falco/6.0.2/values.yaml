@@ -5,9 +5,9 @@
 
 image:
   pullPolicy: IfNotPresent
-  registry: $DOCKER_REG_LOCAL_URL/docker-hub
-  repository: falcosecurity/falco
-  tag: ""
+  registry: hub.nexdev.net
+  repository: base/falcosecurity/falco
+  tag: "0.41.3"
 
 
 podAnnotations: {}
@@ -126,9 +126,9 @@ driver:
     initContainer:
       image:
         pullPolicy: IfNotPresent
-        registry: $DOCKER_REG_LOCAL_URL/docker-hub
-        repository: falcosecurity/falco-driver-loader
-        tag: ""
+        registry: hub.nexdev.net
+        repository: base/falcosecurity/falco-driver-loader
+        tag: "0.41.3"
       env: []
       args: []
       resources: {}
@@ -213,9 +213,9 @@ falcoctl:
     # -- The image pull policy.
     pullPolicy: IfNotPresent
     # -- The image registry to pull from.
-    registry: $DOCKER_REG_LOCAL_URL/docker-hub
+    registry: hub.nexdev.net
     # -- The image repository to pull from.
-    repository: falcosecurity/falcoctl
+    repository: base/falcosecurity/falcoctl
     # -- The image tag to pull.
     tag: "0.11.2"
   artifact:
