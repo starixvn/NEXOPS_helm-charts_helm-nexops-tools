@@ -104,6 +104,11 @@ alertmanager:
         - receiver: "domains"
           match_re:
             alertname: "SSLCertificate.*"
+        - receiver: dev-services
+          matchers:
+          - service="OpenSearch"
+          - alertname!="OpensearchClusterYellow"
+          group_by: ["alertname", "job"]
         - receiver: "alerts-test"
           match_re:
             alertname: "HAProxy.*"
