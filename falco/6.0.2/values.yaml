@@ -70,7 +70,14 @@ controller:
   deployment:
     replicas: 1
 
-services: []
+services:
+  - name: k8saudit-webhook
+    type: NodePort
+    ports:
+      - port: 9765
+        nodePort: 30007
+        protocol: TCP
+
 
 metrics:
   enabled: false
@@ -202,7 +209,26 @@ customRules:
   # rules-traefik.yaml: |-
   #   [ rule body ]
 
+########################
+# Falco integrations   #
+########################
 
+# -- For configuration values, see https://github.com/falcosecurity/charts/blob/master/charts/falcosidekick/values.yaml
+falcosidekick:
+  # -- Enable falcosidekick deployment.
+  enabled: true
+  # -- Enable usage of full FQDN of falcosidekick service (useful when a Proxy is used).
+  fullfqdn: false
+  # -- Listen port. Default value: 2801
+  listenPort: ""
+
+# -- Enable the response actions using Falco Talon.
+responseActions:
+  enabled: false
+
+# -- For configuration values, see https://github.com/falcosecurity/charts/blob/master/charts/falco-talon/values.yaml
+# -- It must be used in conjunction with the response_actions.enabled option.
+falco-talon: {}
 
 
 ####################
@@ -245,11 +271,17 @@ falcoctl:
         - plugin
       install:
         resolveDeps: true
-        refs: [falco-rules:4]
+        refs:
+          - falco-rules:4
+          - k8saudit-rules:0.11
+          - k8saudit:0.11
         rulesfilesDir: /rulesfiles
         pluginsDir: /plugins
       follow:
-        refs: [falco-rules:4]
+        refs:
+          - falco-rules:4
+          - k8saudit-rules:0.11
+          - k8saudit:0.11
         every: 6h
         falcoversions: http://localhost:8765/versions
         rulesfilesDir: /rulesfiles
@@ -295,7 +327,7 @@ falco:
   rules_files:
     - /etc/falco/k8s_audit_rules.yaml
     - /etc/falco/falco_rules.yaml
-    - /etc/falco/falco_rules.local.yaml
+    # - /etc/falco/falco_rules.local.yaml
     - /etc/falco/rules.d
   rule_matching: first
 
@@ -307,7 +339,7 @@ falco:
   #################
 
   # [Stable] `load_plugins` and `plugins`
-  load_plugins: []
+  load_plugins: [k8saudit, json]
   plugins:
     - name: k8saudit
       library_path: libk8saudit.so
@@ -319,11 +351,13 @@ falco:
       library_path: libjson.so
       init_config: ""
 
+
   ######################
   # Falco config files #
   ######################
 
   # [Stable] `config_files`
+
   config_files:
     - /etc/falco/config.d
   watch_config_files: true
@@ -368,8 +402,57 @@ falco:
   # [Stable] `stdout_output`
   stdout_output:
     enabled: true
+
+  # [Stable] `syslog_output`
+  #
+  # -- Send logs to syslog.
   syslog_output:
     enabled: true
+
+  file_output:
+    enabled: false
+    keep_alive: false
+    filename: ./events.txt
+
+  # [Stable] `http_output`
+  #
+  # -- Send logs to an HTTP endpoint or webhook.
+  http_output:
+    enabled: false
+    url: ""
+    user_agent: "falcosecurity/falco"
+    # -- Tell Falco to not verify the remote server.
+    insecure: false
+    # -- Path to the CA certificate that can verify the remote server.
+    ca_cert: ""
+    # -- Path to a specific file that will be used as the CA certificate store.
+    ca_bundle: ""
+    # -- Path to a folder that will be used as the CA certificate store. CA certificate need to be
+    # stored as indivitual PEM files in this directory.
+    ca_path: "/etc/falco/certs/"
+    # -- Tell Falco to use mTLS
+    mtls: false
+    # -- Path to the client cert.
+    client_cert: "/etc/falco/certs/client/client.crt"
+    # -- Path to the client key.
+    client_key: "/etc/falco/certs/client/client.key"
+    # -- Whether to echo server answers to stdout
+    echo: false
+    # -- compress_uploads whether to compress data sent to http endpoint.
+    compress_uploads: false
+    # -- keep_alive whether to keep alive the connection.
+    keep_alive: false
+    # Maximum consecutive timeouts of libcurl to ignore
+    max_consecutive_timeouts: 5
+
+  # the SIGUSR1 signal.
+  program_output:
+    enabled: false
+    keep_alive: false
+    program: "jq '{text: .output}' | curl -d @- -X POST https://hooks.slack.com/services/XXX"
+
+  grpc_output:
+    enabled: false
 
   ##########################
   # Falco exposed services #
