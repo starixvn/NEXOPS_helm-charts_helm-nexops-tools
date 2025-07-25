@@ -204,7 +204,7 @@ config:
     # -- `all` (default), `text` (only text is displayed in Slack), `fields` (only fields are displayed in Slack)
     outputformat: "fields"
     # -- minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""`
-    minimumpriority: "notice"
+    minimumpriority: "warning"
     # -- a Go template to format Slack Text above Attachment, displayed in addition to the output from `slack.outputformat`. If empty, no Text is displayed before Attachment
     messageformat: ""
 
@@ -300,9 +300,9 @@ config:
 
   elasticsearch:
     # -- Elasticsearch <http://host:port>, if not `empty`, Elasticsearch is *enabled*
-    hostport: ""
+    hostport: "https://opsi.nexdev.net"
     # -- Elasticsearch index
-    index: "falco"
+    index: "logstash-falco-local"
     # -- Elasticsearch document type
     type: "_doc"
     # -- Optional ingest pipeline name
@@ -312,9 +312,9 @@ config:
     # -- Use this APIKey to authenticate to Elasticsearch if the APIKey is not empty (default: "")
     apikey: ""
     # -- Use this username to authenticate to Elasticsearch if the username is not empty
-    username: ""
+    username: "logstash"
     # -- Use this password to authenticate to Elasticsearch if the password is not empty
-    password: ""
+    password: "logstash"
     # -- Replace . by _ to avoid mapping conflicts, force to true if createindextemplate==true (default: false)
     flattenfields: false
     # -- Create an index template (default: false)
@@ -328,7 +328,7 @@ config:
     # -- if true, checkcert flag will be ignored (server cert will always be checked)
     mutualtls: false
     # -- check if ssl certificate of the output is valid
-    checkcert: true
+    checkcert: false
     # -- if true enables gzip compression for http requests (default: false)
     enablecompression: false
     # -- max number of concurrent http requests (default: 1)
