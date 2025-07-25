@@ -192,7 +192,7 @@ config:
 
   slack:
     # -- Slack Webhook URL (ex: <https://hooks.slack.com/services/XXXX/YYYY/ZZZZ>), if not `empty`, Slack output is *enabled*
-    webhookurl: ""
+    webhookurl: "https://hooks.slack.com/services/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"
     # -- Slack channel (optionnal)
     channel: ""
     # -- Slack Footer
@@ -202,9 +202,9 @@ config:
     # -- Slack username
     username: ""
     # -- `all` (default), `text` (only text is displayed in Slack), `fields` (only fields are displayed in Slack)
-    outputformat: "all"
+    outputformat: "fields"
     # -- minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""`
-    minimumpriority: ""
+    minimumpriority: "notice"
     # -- a Go template to format Slack Text above Attachment, displayed in addition to the output from `slack.outputformat`. If empty, no Text is displayed before Attachment
     messageformat: ""
 
