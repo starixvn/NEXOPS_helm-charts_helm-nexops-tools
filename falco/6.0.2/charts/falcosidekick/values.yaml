@@ -342,7 +342,7 @@ config:
       # -- batch fush interval (default: 1s)
       flushinterval: 1s
     # -- minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""`
-    minimumpriority: ""
+    minimumpriority: "warning"
 
   influxdb:
     # -- Influxdb <http://host:port>, if not `empty`, Influxdb is *enabled*
