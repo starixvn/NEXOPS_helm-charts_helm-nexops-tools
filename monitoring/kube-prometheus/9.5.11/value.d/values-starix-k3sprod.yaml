@@ -84,8 +84,9 @@ alertmanager:
             service: "Velero.*"
           group_by: ["alertname", "job", "pvc"]
         - receiver: dev-services
-          match:
-            service: "OpenSearch"
+          matchers:
+          - service="OpenSearch"
+          - alertname!="OpensearchClusterYellow"
           group_by: ["alertname", "job"]
       group_by: ["alertname", "job", "pod", "description"]
       group_wait: 30s
@@ -155,7 +156,7 @@ alertmanager:
             fallback: '{{ template "sre.slack.fallback" . }}'
             icon_emoji: ":opensearch-ico:"
             send_resolved: true
-            username: "FPS OpenSearch - PROD"
+            username: "FPS OpenSearch - AK PROD"
             title: '{{ template "sre.slack.title" . }}'
             text: '{{ template "sre.slack.body" . }}'
 
