@@ -1209,7 +1209,7 @@ webui:
   # -- number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10)
   # revisionHistoryLimit: 1
   # -- Log level ("debug", "info", "warning", "error")
-  loglevel: "info"
+  loglevel: "warning"
   # -- TTL for keys, the syntax in X<unit>, with <unit>: s, m, d, w (0 for no ttl)
   ttl: 0
   # -- User in format <login>:<password>
