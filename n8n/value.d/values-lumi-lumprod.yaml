@@ -15,7 +15,7 @@ redis:
     persistence:
       size: 1Gi
   nodeSelector:
-    nexops-tools: "yes"
+    n8n: "yes"
 
 # values for N8N
 n8n:
@@ -33,7 +33,7 @@ n8n:
       # prune old executions data after X hours
       max_age: "72"
   nodeSelector:
-    nexops-tools: "yes"
+    n8n: "yes"
 
 # values for PostgreSql helm chart
 postgresql:
@@ -50,7 +50,7 @@ postgresql:
       - ReadWriteOnce
     size: 8Gi
   nodeSelector:
-    nexops-tools: "yes"
+    n8n: "yes"
 
 ingress:
   enabled: true
