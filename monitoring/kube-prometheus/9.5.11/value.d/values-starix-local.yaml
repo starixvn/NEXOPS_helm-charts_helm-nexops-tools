@@ -40,35 +40,6 @@ prometheus:
   #   name: ""
   #   key: ""
   # additionalPrometheusRules: []
-  additionalPrometheusRules:
-    - name: domain.rules
-      groups:
-        - name: domain.rules
-          rules:
-            - alert: SSLCertificateExpiringSoon
-              expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 80 and (probe_ssl_earliest_cert_expiry - time()) > 0
-              for: 30m
-              labels:
-                severity: warning
-              annotations:
-                summary: "SSL certificate is expiring soon"
-                description: "The SSL certificate for {{ $labels.instance }} will expire in less than 80 days. Remaining: {{ $value }} days."
-            - alert: DomainStatusNot200
-              expr: probe_http_status_code != 200
-              for: 2m
-              labels:
-                severity: critical
-              annotations:
-                summary: "Domain is not returning HTTP 200"
-                description: "The domain {{ $labels.instance }} is returning status code {{ $value }} instead of 200."
-            - alert: DomainHttpConnectFailed
-              expr: probe_http_connect_success != 1
-              for: 1m
-              labels:
-                severity: critical
-              annotations:
-                summary: "HTTP connect failed"
-                description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
 
 kube-state-metrics:
   resourcesPreset: "none"
@@ -114,3 +85,33 @@ alertmanager:
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
 
       - name: default-receiver
+
+blackboxExporter:
+  configuration: |
+    modules:
+      dns_probe:
+        prober: dns
+        dns:
+          query_name: "gitlab.nexdev.net"
+          query_type: "A"
+          valid_rcodes:
+            - NOERROR
+          preferred_ip_protocol: "ip4"
+
+  extraDeploy:
+    - |
+      ### DNS Monitor
+      kind: Probe
+      apiVersion: monitoring.coreos.com/v1
+      metadata:
+        name: dns-probe
+        namespace: monitoring
+      spec:
+        interval: 30s
+        module: dns_probe
+        prober:
+          url: prometheus-starix-local-ku-blackbox-exporter.monitoring.svc.starix.local:19115
+        targets:
+          staticConfig:
+            static:
+            - gitlab.nexdev.net
