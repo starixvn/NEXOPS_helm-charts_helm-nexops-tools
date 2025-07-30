@@ -50,7 +50,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "Runner - Average Node Memory Usage"
-                description: 'Runner {{ $labels.instance }} has average memory usage over {{ printf "%.0f" $value }}%.'
+                description: 'Runner {{ $labels.nodename }} has average memory usage over {{ printf "%.0f" $value }}%.'
 
             - alert: Kubernetes Node Disk Usage High > 80%
               expr: (node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} - node_filesystem_free_bytes{fstype!~"tmpfs|overlay"}) / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} * 100 > 80
