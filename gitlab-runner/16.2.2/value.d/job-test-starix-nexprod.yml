@@ -10,7 +10,7 @@ gitlabUrl: https://gitlab.nexdev.net
 # runnerToken: "glrt-A5s63SQkC1xSV6JKbYmF"
 runnerToken: "glrt-UsyyPE9enMzzrr_ZjJPP"
 concurrent: 25
-
+checkInterval: 1
 runners:
   config: |
     [[runners]]
@@ -42,10 +42,7 @@ runners:
         namespace = "{{.Release.Namespace}}"
         image = "hub.nexdev.net/base/docker:24.0.4-bash-jq-jinja"
         privileged = true
-        cpu_request = "1"
-        memory_request = "2Gi"
-        # cpu_limit = "0.5"
-        # memory_limit = "500Mi"
+        memory_request = "500Mi"
         poll_timeout = 3600
         poll_interval = 5
         # service_cpu_limit = "1"
