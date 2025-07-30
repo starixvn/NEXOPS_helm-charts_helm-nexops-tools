@@ -49,7 +49,7 @@ prometheus:
               labels:
                 severity: warning
               annotations:
-                summary: "Runner - Average Node Memory Usage"
+                summary: "Runner-Average Node Memory Usage"
                 description: 'Runner {{ $labels.nodename }} has average memory usage over {{ printf "%.0f" $value }}%.'
 
             - alert: Kubernetes Node Disk Usage High > 80%
