@@ -235,3 +235,31 @@ blackboxExporter:
         tcp:
           preferred_ip_protocol: "ip4"
           tls: true
+      dns_probe:
+        prober: dns
+        dns:
+          query_name: "gitlab.nexdev.net"
+          query_type: "A"
+          valid_rcodes:
+            - NOERROR
+          preferred_ip_protocol: "ip4"
+
+  extraDeploy: 
+    - |
+      ### DNS Monitor
+      kind: Probe
+      apiVersion: monitoring.coreos.com/v1
+      metadata:
+        name: dns-probe
+        namespace: monitoring
+        labels:
+          prometheus: main
+      spec:
+        interval: 30s
+        module: dns_probe
+        prober:
+          url: prometheus-starix-nexprod-blackbox-exporter.monitoring.svc.starix.nexprod:19115
+        targets:
+          staticConfig:
+            static:
+            - gitlab.nexdev.net
