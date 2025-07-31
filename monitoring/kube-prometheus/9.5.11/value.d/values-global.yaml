@@ -44,7 +44,7 @@ prometheus:
                     * on(instance) group_left(nodename) node_uname_info
                   ) by (nodename)
                   * 100
-                ) >= 2
+                ) >= 80
               for: 5m
               labels:
                 severity: warning
