@@ -33,15 +33,15 @@ prometheus:
 
             - alert: Runner High Average Node Memory Usage
               expr: |
-                (
+                avg(
                   sum(
                     (node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes - node_memory_Slab_bytes) 
                     * on(instance) group_left(nodename) node_uname_info
                   ) by (nodename)
-                  /
+                  / 
                   sum(
-                    node_memory_MemTotal_bytes
-                    * on(instance) group_left(nodename) node_uname_info
+                    node_memory_MemTotal_bytes 
+                    * on(instance) group_left(nodename) node_uname_info{nodename=~".*18-187.*|.*18-189.*|.*17-65.*|.*17-66.*"}
                   ) by (nodename)
                   * 100
                 ) >= 80
@@ -50,7 +50,7 @@ prometheus:
                 severity: warning
               annotations:
                 summary: "Runner-Average Node Memory Usage"
-                description: 'Runner {{ $labels.nodename }} has average memory usage over {{ printf "%.0f" $value }}%.'
+                description: 'Runner CI has average memory usage over {{ printf "%.0f" $value }}%.'
 
             - alert: Kubernetes Node Disk Usage High > 80%
               expr: (node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} - node_filesystem_free_bytes{fstype!~"tmpfs|overlay"}) / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} * 100 > 80

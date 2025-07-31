@@ -86,7 +86,6 @@ alertmanager:
             pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*|.*worker.*"
         - receiver: "kubernetes_nexprod_lumprod" #Runner CI alert (AVG Memory)
           match_re:
-            nodename: ".*18-187.*|.*18-189.*|.*17-65.*|.*17-66.*"
             alertname: "Runner High Average Node Memory Usage"
         - receiver: "null" #ignore Runner alert (CPU/Memory)
           match_re:
