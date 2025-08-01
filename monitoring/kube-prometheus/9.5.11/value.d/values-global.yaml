@@ -35,16 +35,24 @@ prometheus:
               expr: |
                 avg(
                   sum(
-                    (node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes - node_memory_Slab_bytes) 
+                    (
+                      node_memory_MemTotal_bytes
+                      - node_memory_MemFree_bytes
+                      - node_memory_Cached_bytes
+                      - node_memory_Buffers_bytes
+                      - node_memory_Slab_bytes
+                    )
                     * on(instance) group_left(nodename) node_uname_info
+                    * on(nodename) group_left(node) label_replace(kube_node_role{role="runner"}, "nodename", "$1", "node", "(.*)")
                   ) by (nodename)
-                  / 
+                  /
                   sum(
-                    node_memory_MemTotal_bytes 
-                    * on(instance) group_left(nodename) node_uname_info{nodename=~".*18-187.*|.*18-189.*|.*17-65.*|.*17-66.*"}
+                    node_memory_MemTotal_bytes
+                    * on(instance) group_left(nodename) node_uname_info
+                    * on(nodename) group_left(node) label_replace(kube_node_role{role="runner"}, "nodename", "$1", "node", "(.*)")
                   ) by (nodename)
                   * 100
-                ) >= 2
+                ) >= 80
               for: 5m
               labels:
                 severity: warning
