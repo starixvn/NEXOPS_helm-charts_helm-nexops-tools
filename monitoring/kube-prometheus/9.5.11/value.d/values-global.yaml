@@ -44,7 +44,7 @@ prometheus:
                     * on(instance) group_left(nodename) node_uname_info{nodename=~".*18-187.*|.*18-189.*|.*17-65.*|.*17-66.*"}
                   ) by (nodename)
                   * 100
-                ) >= 80
+                ) >= 5
               for: 5m
               labels:
                 severity: warning
