@@ -188,7 +188,7 @@ alertmanager:
               *Problem:* {{ .CommonAnnotations.problem }}
               *Status:* {{ .CommonAnnotations.status }}
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
-            send_resolved: true
+            send_resolved: false
 
       - name: "alerts-test"
         slack_configs:
