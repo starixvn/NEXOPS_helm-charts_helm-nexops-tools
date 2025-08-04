@@ -516,15 +516,15 @@ prometheus:
       groups:
         - name: domain.rules
           rules:
-            - alert: SSLCertificateExpiringSoon < 7 days
-              expr: 3 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 7
-              for: 24h
-              labels:
-                severity: warning
-              annotations:
-                summary: "SSL certificate is expiring soon"
-                problem: "The SSL certificate will expire soon"
-                status: 'Remaining {{ $value | printf "%.0f" }} days.'
+            # - alert: SSLCertificateExpiringSoon < 7 days
+            #   expr: 3 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 7
+            #   for: 24h
+            #   labels:
+            #     severity: warning
+            #   annotations:
+            #     summary: "SSL certificate is expiring soon"
+            #     problem: "The SSL certificate will expire soon"
+            #     status: 'Remaining {{ $value | printf "%.0f" }} days.'
 
             - alert: SSLCertificateExpiringSoon < 3 days
               expr: 0 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 3
