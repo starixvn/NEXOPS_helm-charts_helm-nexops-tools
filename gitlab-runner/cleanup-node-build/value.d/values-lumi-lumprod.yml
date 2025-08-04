@@ -14,7 +14,7 @@ prune:
   image:
     until: "12h"
   builder:
-    until: "8h"
+    until: "4h"
   volumes:
     enabled: false
 
