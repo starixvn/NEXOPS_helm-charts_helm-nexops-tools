@@ -241,7 +241,13 @@ data:
     {{- if .Values.replica.command }}
     exec {{ .Values.replica.command }} "${ARGS[@]}"
     {{- else }}
-    exec redis-server "${ARGS[@]}"
+    exec /opt/redis-stack/bin/redis-server \ 
+    --loadmodule /opt/redis-stack/lib/redisearch.so MAXSEARCHRESULTS 10000 MAXAGGREGATERESULTS 10000 \ 
+    --loadmodule /opt/redis-stack/lib/rejson.so \
+    --loadmodule /opt/redis-stack/lib/redistimeseries.so  \
+    --loadmodule /opt/redis-stack/lib/redisbloom.so \
+    --loadmodule /opt/redis-stack/lib/redistimeseries.so \
+    "${ARGS[@]}"
     {{- end }}
 
   start-sentinel.sh: |
