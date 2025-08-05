@@ -62,6 +62,9 @@ alertmanager:
        - receiver: 'null'
          match_re:
            namespace: "l1|l2|gn|hd|sk|sp|tg|mg"
+       - receiver: 'alert-nx-atomix'
+         match_re:
+           alertname: "Kubernetes Cluster Pod Usage Above 80%"
        - receiver: 'kubernetes_sc_local'
          match_re:
            alertname: "Kubernetes.*"
@@ -87,6 +90,20 @@ alertmanager:
               *Summary:* `{{ .CommonLabels.alertname }}`
               *Description:* `{{ .CommonAnnotations.description }}`
             color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
+      - name: 'alert-nx-atomix'
+        slack_configs:
+          - api_url: "https://hooks.slack.com/services/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"
+            channel: '#alert-nx-atomix'
+            send_resolved: true
+            icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
+            title: '{{ if eq .Status "firing" }} 🔥 PROBLEM 🔥 {{ else }} ✅ RESOLVED ✅ {{ end }}'
+            text: |
+              *Cluster:* `Kubernetes-SC-Local`
+              *Summary:* `{{ .CommonLabels.alertname }}`
+              *Description:* `{{ .CommonAnnotations.description }}`
+            color: '{{ if eq .Status "firing" }}#FF4500{{ else }}#2ECC71{{ end }}'
+
 
       - name: "velero_alerts"
         slack_configs:
