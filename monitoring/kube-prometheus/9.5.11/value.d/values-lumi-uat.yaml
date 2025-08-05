@@ -96,7 +96,7 @@ alertmanager:
             icon_emoji: '{{ if eq .Status "firing" }}:warning:{{ else }}:white_check_mark:{{ end }}'
             title: '{{ if eq .Status "firing" }}🔥 PROBLEM 🔥 {{ .CommonLabels.alertname }}{{ else }}✅ RESOLVED ✅ {{ .CommonLabels.alertname }}{{ end }}'
             text: |
-              *Cluster:* `Kubernetes-NexProd`
+              *Cluster:* `Kubernetes-SC-UAT`
               🚨 *{{ .CommonLabels.alertname }}* ({{ .Status | toUpper }})
               🔁 Schedule: `{{ .CommonLabels.schedule }}`
               ❗ Severity: `{{ .CommonLabels.severity }}`
