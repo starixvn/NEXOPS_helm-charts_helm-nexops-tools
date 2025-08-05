@@ -557,14 +557,14 @@ prometheus:
             #     problem: "The domain is returning status code {{ $value }} instead of 200."
             #     status: "Code {{ $value }}"
 
-            - alert: DomainHttpConnectFailed
-              expr: probe_http_connect_success != 1
-              for: 1m
-              labels:
-                severity: critical
-              annotations:
-                summary: "HTTP connect failed"
-                description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
+            # - alert: DomainHttpConnectFailed
+            #   expr: probe_http_connect_success != 1
+            #   for: 1m
+            #   labels:
+            #     severity: critical
+            #   annotations:
+            #     summary: "HTTP connect failed"
+            #     description: "The domain {{ $labels.instance }} failed to establish HTTP connection."
 
     - name: haproxyingress.rules
       groups:
