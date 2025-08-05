@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+name: cost-exporter
+description: A Helm chart to deploy https://github.com/grem11n/cost-exporter
+type: application
+version: 0.0.1
+appVersion: "0.0.1"
