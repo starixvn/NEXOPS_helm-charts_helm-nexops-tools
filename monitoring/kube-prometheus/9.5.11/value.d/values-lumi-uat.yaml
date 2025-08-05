@@ -68,7 +68,7 @@ alertmanager:
       - receiver: "velero_alerts"
         match:
           service: "Velero.*"
-      group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description']
+      group_by: ['alertname', 'cluster', 'namespace', 'pod', 'description', 'instance']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h

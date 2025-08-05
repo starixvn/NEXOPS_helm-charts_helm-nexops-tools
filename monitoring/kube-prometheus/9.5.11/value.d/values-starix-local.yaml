@@ -62,7 +62,7 @@ alertmanager:
         - receiver: "alerts-test"
           match_re:
             namespace: "monitoring"
-      group_by: ["alertname", "cluster", "namespace", "pod", "description"]
+      group_by: ["alertname", "cluster", "namespace", "pod", "description", 'instance']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h

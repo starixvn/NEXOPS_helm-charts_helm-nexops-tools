@@ -115,7 +115,7 @@ alertmanager:
         - service="OpenSearch"
         - alertname!="OpensearchClusterYellow"
         group_by: ["alertname", "job"]
-      group_by: ['alertname','job','pod', 'description']
+      group_by: ['alertname','job','pod', 'description', 'instance']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
