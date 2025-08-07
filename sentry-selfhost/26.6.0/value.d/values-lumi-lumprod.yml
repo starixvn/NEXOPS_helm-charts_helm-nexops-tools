@@ -131,6 +131,9 @@ clickhouse:
 
 zookeeper:
   clusterDomain: lumi.lumprod
+  autopurge:
+    snapRetainCount: 3
+    purgeInterval: 1
   image:
     registry: hub.nexdev.net
     repository: base/bitnami/zookeeper
