@@ -14,19 +14,19 @@ prometheus:
                 description: "Node {{ $labels.node }} is not ready."
 
             - alert: Kubernetes High Node CPU Usage
-              expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+              expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 90
               for: 5m
               labels:
-                severity: warning
+                severity: critical
               annotations:
                 summary: "High CPU Usage on Node"
                 description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% CPU.'
 
             - alert: Kubernetes High Node Memory Usage
-              expr: (100 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) >= 80
+              expr: (100 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) > 90
               for: 5m
               labels:
-                severity: warning
+                severity: critical
               annotations:
                 summary: "High Memory Usage on Node"
                 description: 'Node {{ $labels.instance }} is using more than {{ printf "%.0f" $value }}% of its memory.'
@@ -279,16 +279,16 @@ prometheus:
                 summary: "Container {{$labels.container}} in pod {{$labels.pod}} has high CPU usage"
                 description: 'Container {{$labels.container}} in pod {{$labels.pod}} (namespace: {{$labels.namespace}}) on {{$labels.instance}} has been using {{$value | humanize}}% of its CPU limit for more than 5 minutes.'
             # Warning alert - 60% threshold
-            - alert: Kubernetes Disk is too busy (IO wait > 60%)
-              expr: |
-                (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.60
-              for: 5m
-              labels:
-                severity: warning
-                component: system
-              annotations:
-                summary: "Host {{$labels.instance}} has high disk I/O wait time"
-                description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for 60% of time for more than 5 minutes.\n  VALUE = {{ $value }}"
+            # - alert: Kubernetes Disk is too busy (IO wait > 60%)
+            #   expr: |
+            #     (rate(node_disk_io_time_seconds_total{device!~"dm-.*|loop.*|ram.*"}[5m])) > 0.60
+            #   for: 5m
+            #   labels:
+            #     severity: warning
+            #     component: system
+            #   annotations:
+            #     summary: "Host {{$labels.instance}} has high disk I/O wait time"
+            #     description: "Disk {{$labels.device}} on {{$labels.instance}} has been busy for 60% of time for more than 5 minutes.\n  VALUE = {{ $value }}"
 
             # Critical alert - 85% threshold
             - alert: Kubernetes Disk is too busy (IO wait > 85%)
