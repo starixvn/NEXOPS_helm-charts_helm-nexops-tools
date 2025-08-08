@@ -62,7 +62,7 @@ node-exporter:
     collector.filesystem.fs-types-exclude: "^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs|squashfs|nsfs|tmpfs)$"
 
 alertmanager:
-  enabled: true
+  enabled: false
   config:
     global:
       resolve_timeout: 15m
