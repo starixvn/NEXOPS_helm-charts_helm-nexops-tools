@@ -46,28 +46,28 @@ cache:
 
 portal:
   nodeSelector:
-    harbor-workload: "yes"
+    node-role.kubernetes.io/control-plane: "true"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
     value: harbor-workload
 core:
   nodeSelector:
-    harbor-workload: "yes"
+    node-role.kubernetes.io/control-plane: "true"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
     value: harbor-workload
 jobservice:
   nodeSelector:
-    harbor-workload: "yes"
+    node-role.kubernetes.io/control-plane: "true"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
     value: harbor-workload
 registry:
   nodeSelector:
-    harbor-workload: "yes"
+    node-role.kubernetes.io/control-plane: "true"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
@@ -78,7 +78,7 @@ trivy:
 database:
   internal:
     nodeSelector:
-      harbor-workload: "yes"
+      node-role.kubernetes.io/control-plane: "true"
     tolerations:
     - effect: NoSchedule
       key: cattle.io/os
@@ -86,14 +86,14 @@ database:
 redis:
   internal:
     nodeSelector:
-      harbor-workload: "yes"
+      node-role.kubernetes.io/control-plane: "true"
     tolerations:
     - effect: NoSchedule
       key: cattle.io/os
       value: harbor-workload
 exporter:
   nodeSelector:
-    harbor-workload: "yes"
+    node-role.kubernetes.io/control-plane: "true"
   tolerations:
   - effect: NoSchedule
     key: cattle.io/os
