@@ -308,7 +308,7 @@ config:
     # -- Optional ingest pipeline name
     pipeline: ""
     # -- Date suffix for index rotation : daily, monthly, annually, none
-    suffix: "daily"
+    suffix: "none"
     # -- Use this APIKey to authenticate to Elasticsearch if the APIKey is not empty (default: "")
     apikey: ""
     # -- Use this username to authenticate to Elasticsearch if the username is not empty
