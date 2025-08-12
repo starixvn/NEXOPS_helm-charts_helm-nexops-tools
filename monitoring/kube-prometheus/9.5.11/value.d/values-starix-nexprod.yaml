@@ -47,6 +47,12 @@ prometheus:
           scheme: "https"
           static_configs:
             - targets: ["n8n.nexdev.net"]
+        - job_name: opencost
+          scrape_interval: 1m
+          scrape_timeout: 10s
+          metrics_path: /metrics
+          static_configs:
+            - targets: ['opencost-atx-nexprod.monitoring.svc.starix.nexprod:9003']
   ##
 
   #additionalPrometheusRules: []
@@ -83,7 +89,7 @@ alertmanager:
             namespace: "gitlab-runner|zabbix-proxy-nexprod|cert-manager|trivy-operator-starix|sample|sentry-starix"
         - receiver: "null"
           match_re:
-            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*|.*worker.*"
+            pod: "scan-vulnerabilityreport-.*|c-.*|.*-rollover-.*|.*-cleaner-.*|.*-cleanup-.*|.*-nodesclean-.*|.*-snapshot-.*|.*-zabbix-server-.*|.*ken.*|.*test.*|.*worker.*|opencost.*"
         - receiver: "kubernetes_nexprod_lumprod" #Runner CI alert (AVG Memory)
           match_re:
             alertname: "Runner High Average Node Memory Usage"
@@ -119,7 +125,7 @@ alertmanager:
           match_re:
             alertname: "HAProxy.*"
           group_by: ["alertname", "instance"]
-      group_by: ["alertname", "job", "pod", "description", "instance", "nodename", "instance"]
+      group_by: ["alertname", "job", "pod", "description", "instance", "nodename"]
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 9999h
