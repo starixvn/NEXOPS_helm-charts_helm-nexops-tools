@@ -47,6 +47,12 @@ prometheus:
           scheme: "https"
           static_configs:
             - targets: ["n8n.nexdev.net"]
+        - job_name: opencost
+          scrape_interval: 1m
+          scrape_timeout: 10s
+          metrics_path: /metrics
+          static_configs:
+            - targets: ['opencost-atx-nexprod.monitoring.svc.starix.nexprod:9003']
   ##
 
   #additionalPrometheusRules: []
