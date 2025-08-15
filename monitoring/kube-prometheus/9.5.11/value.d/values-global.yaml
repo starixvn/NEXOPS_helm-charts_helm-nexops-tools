@@ -147,35 +147,36 @@ prometheus:
             - alert: Kubernetes High HTTP 5xx Error Rate
               expr: |
                 (
-                  sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
-                  /
-                  sum(rate(haproxy_frontend_http_responses_total[5m])) by (frontend)
-                ) * 100 > 1
+                sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (service)
+                /
+                sum(rate(haproxy_frontend_http_responses_total[5m])) by (service)
+                ) * 100 > 1 
+                and sum(rate(haproxy_frontend_http_responses_total[5m])) by (service) > 0
               for: 15m
               labels:
                 severity: warning
               annotations:
-                summary: "High 5xx error rate on HAProxy frontend {{$labels.frontend}}"
+                summary: "High 5xx error rate on service {{$labels.service}}"
                 description: |
-                  'The HAProxy frontend '{{$labels.frontend}}' is experiencing a high rate of 5xx errors on more than 1% of requests.
-                  The current error rate is {{ printf "%.2f" $value}}% and has been sustained for over 15 minutes.'
+                  "Service '{{$labels.service}}' has >1% HTTP 5xx errors for over 15 minutes (current: {{ printf "%.2f" $value }}%)."
 
             #HAProxy Critical HTTP 5xx Error Rate
             - alert: Kubernetes Critical HTTP 5xx Error Rate
               expr: |
                 (
-                  sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (frontend)
-                  /
-                  sum(rate(haproxy_frontend_http_responses_total[5m])) by (frontend)
-                ) * 100 > 5
+                sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (service)
+                /
+                sum(rate(haproxy_frontend_http_responses_total[5m])) by (service)
+                ) * 100 > 5 
+                and sum(rate(haproxy_frontend_http_responses_total[5m])) by (service) > 0
               for: 15m
               labels:
                 severity: critical
               annotations:
-                summary: "High 5xx error rate on HAProxy frontend {{$labels.frontend}}"
+                summary: "High 5xx error rate on service {{$labels.service}}"
                 description: |
-                  'The HAProxy frontend '{{$labels.frontend}}' is experiencing a high rate of 5xx errors on more than 5% of requests.
-                  The current error rate is {{ printf "%.2f" $value}}% and has been sustained for over 15 minutes.'
+                  'Service '{{$labels.service}}' has >5% HTTP 5xx errors for over 15 minutes (current: {{ printf "%.2f" $value }}%).'
+            
             #Disk latency is growing (write operations > 100ms)
             - alert: Kubernetes Disk latency is growing (write operations > 100ms)
               expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
