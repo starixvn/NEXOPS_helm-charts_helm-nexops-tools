@@ -1,0 +1,32 @@
+{{- if .Values.rabbitCluster.service.headless.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.names.fullname" . }}-headless
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels:
+    {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: rabbitmq
+    app.kubernetes.io/name: rabbitmq-cluster
+    app.kubernetes.io/part-of: {{ include "common.names.name" . }}
+  annotations:
+    {{- include "common.annotations.standard" . | nindent 4 }}
+spec:
+  clusterIP: None
+  selector:
+    app.kubernetes.io/name: rabbitmq-cluster
+  ports:
+    - name: amqp
+      port: 5672
+      targetPort: 5672
+      protocol: TCP
+    - name: manager
+      port: 15672
+      targetPort: 15672
+      protocol: TCP
+    - name: metrics
+      port: 15692
+      targetPort: 15692
+      protocol: TCP
+  publishNotReadyAddresses: true
+{{- end }}
