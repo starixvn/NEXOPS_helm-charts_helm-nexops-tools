@@ -5,12 +5,9 @@ metadata:
   name: {{ include "common.names.fullname" . }}-headless
   namespace: {{ include "common.names.namespace" . | quote }}
   labels:
-    {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: rabbitmq
     app.kubernetes.io/name: rabbitmq-cluster
     app.kubernetes.io/part-of: {{ include "common.names.name" . }}
-  annotations:
-    {{- include "common.annotations.standard" . | nindent 4 }}
 spec:
   clusterIP: None
   selector:
