@@ -29,6 +29,10 @@ rabbitCluster:
   nodeSelector: {}
   tolerations: []
 
+  metrics:
+    serviceMonitor:
+      enabled: false
+
 global:
   imageRegistry: ""
   ## E.g.
