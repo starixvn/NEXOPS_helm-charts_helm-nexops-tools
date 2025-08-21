@@ -42,6 +42,7 @@ filestore:
       storageClass: "longhorn-rwx"
       accessMode: ReadWriteMany
       size: 20Gi
+      persistentWorkers: true
 
 
 relay:
