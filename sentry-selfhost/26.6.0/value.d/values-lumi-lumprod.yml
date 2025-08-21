@@ -39,7 +39,8 @@ filestore:
   filesystem:
     persistence:
       enabled: true
-      storageClass: "local-path"
+      storageClass: "longhorn-rwx"
+      accessMode: ReadWriteMany
       size: 20Gi
 
 
