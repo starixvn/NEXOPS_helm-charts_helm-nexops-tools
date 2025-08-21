@@ -116,7 +116,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: healthz
+              port: 5679 #healthz
             initialDelaySeconds: 30
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
