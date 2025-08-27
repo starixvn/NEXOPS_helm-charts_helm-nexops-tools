@@ -64,7 +64,7 @@ spec:
             - name: pg_user
               value: '{{ .Values.global.postgresql.postgresqlUser }}'
             - name: pg_password
-              {{- if .Values.global.postgresql.existingSecret }}
+              {{- if .Values.global.postgresql.existingSecret | default "" | ne "" }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.global.postgresql.existingSecret }}
