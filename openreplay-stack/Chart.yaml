@@ -1,0 +1,20 @@
+apiVersion: v2
+name: openreplay-stack
+description: Umbrella chart for OpenReplay + Databases
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: databases
+    alias: databases
+    version: 0.1.0
+    repository: "file://./charts/databases"
+    condition: databases.enabled
+    tags: ["db"]
+
+  - name: openreplay
+    alias: openreplay
+    version: 0.1.0
+    repository: "file://./charts/openreplay"
+    condition: openreplay.enabled
+    tags: ["app"]
