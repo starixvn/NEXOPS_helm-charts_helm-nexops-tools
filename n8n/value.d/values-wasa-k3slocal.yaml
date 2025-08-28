@@ -4,7 +4,7 @@ image:
   tag: "1.107.4"
 
 nodeSelector:    
-  n8n: "yes"
+  n8n-wasa: "yes"
 
 redis:
   architecture: standalone
@@ -14,13 +14,13 @@ redis:
     persistence:
       size: 1Gi
     nodeSelector:
-      n8n: "yes"
+      n8n-wasa: "yes"
   replica:
     replicaCount: 1
     persistence:
       size: 1Gi
     nodeSelector:
-      n8n: "yes"
+      n8n-wasa: "yes"
 
 # values for N8N
 n8n:
@@ -38,7 +38,7 @@ n8n:
       # prune old executions data after X hours
       max_age: "72"
   nodeSelector:
-    n8n: "yes"
+    n8n-wasa: "yes"
 
 # values for PostgreSql helm chart
 postgresql:
@@ -59,7 +59,7 @@ postgresql:
       size: "5Gi"
       storageClass: "longhorn"
   nodeSelector:
-    n8n: "yes"
+    n8n-wasa: "yes"
 
 ingress:
   enabled: true
