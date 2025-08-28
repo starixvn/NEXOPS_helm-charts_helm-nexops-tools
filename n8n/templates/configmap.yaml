@@ -49,9 +49,5 @@ data:
   NODES_EXCLUDE: "[\"n8n-nodes-base.executeCommand\", \"n8n-nodes-base.readWriteFile\", \"n8n-nodes-base.ssh\", \"n8n-nodes-base.writeBinaryFile\"]"
   N8N_LISTEN_ADDRESS: "0.0.0.0"
   N8N_WORKER_SERVER_ADDRESS: "0.0.0.0"
-  NODE_PATH: /.n8n/nodes:/.n8n/custom
-  #N8N_RUNNERS_ENABLED: "true"
-  #N8N_RUNNERS_MODE: "external"
-  #N8N_RUNNERS_BROKER_LISTEN_ADDRESS: "0.0.0.0"
-  #N8N_RUNNERS_AUTH_TOKEN: "n8n_task_runner"
-  #N8N_MFA_ENABLED: "false"
+  #NODE_PATH: "/home/node/.n8n/nodes:/usr/local/lib/node_modules/n8n"
+ 
