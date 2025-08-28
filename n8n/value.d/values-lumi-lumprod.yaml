@@ -3,6 +3,9 @@ image:
   pullPolicy: IfNotPresent
   tag: "1.107.4"
 
+nodeSelector:    
+  n8n: "yes"
+
 redis:
   architecture: standalone
   auth:
