@@ -31,11 +31,11 @@ n8n:
       # prune old executions data after X hours
       max_age: "72"
   persistence:
-  nodeModules:
-    enabled: true
-    size: 1Gi
-    storageClass: local-path
-    mountPath: /usr/local/lib/node_modules
+    nodeModules:
+      enabled: true
+      size: 1Gi
+      storageClass: local-path
+      mountPath: /usr/local/lib/node_modules
 
 # values for PostgreSql helm chart
 postgresql:
