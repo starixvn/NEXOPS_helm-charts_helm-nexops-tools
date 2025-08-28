@@ -10,10 +10,14 @@ redis:
   master:
     persistence:
       size: 1Gi
+    nodeSelector:
+      n8n: "yes"
   replica:
     replicaCount: 1
     persistence:
       size: 1Gi
+    nodeSelector:
+      n8n: "yes"
 
 # values for N8N
 n8n:
