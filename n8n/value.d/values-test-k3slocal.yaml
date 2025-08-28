@@ -30,6 +30,12 @@ n8n:
       enabled: true
       # prune old executions data after X hours
       max_age: "72"
+  persistence:
+  nodeModules:
+    enabled: true
+    size: 1Gi
+    storageClass: local-path
+    mountPath: /usr/local/lib/node_modules
 
 # values for PostgreSql helm chart
 postgresql:
@@ -58,12 +64,5 @@ ingress:
   className: "haproxy"
   host: "n8n-test.nexdev.net"
   annotations: {}
-
-persistence:
-  nodeModules:
-    enabled: true
-    size: 5Gi
-    storageClass: local-path
-    mountPath: /usr/local/lib/node_modules
 
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
