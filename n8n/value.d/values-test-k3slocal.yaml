@@ -30,16 +30,25 @@ n8n:
       enabled: true
       # prune old executions data after X hours
       max_age: "72"
-  
-  extraVolumes:
-    - name: n8n-node-modules
-      persistentVolumeClaim:
-        claimName: n8n-node-modules-pvc
 
+  extraVolumes:
+    - name: n8n-license
+      configMap:
+        name: n8n-license-cm
   extraVolumeMounts:
-    - name: n8n-node-modules
-      mountPath: /home/node/.n8n
-      #subPath: data
+    - name: n8n-license
+      mountPath: /usr/local/lib/node_modules/n8n/dist/license.js
+      subPath: license.js
+  
+  # extraVolumes:
+  #   - name: n8n-node-modules
+  #     persistentVolumeClaim:
+  #       claimName: n8n-node-modules-pvc
+
+  # extraVolumeMounts:
+  #   - name: n8n-node-modules
+  #     mountPath: /home/node/.n8n
+  #     #subPath: data
 
 # values for PostgreSql helm chart
 postgresql:
