@@ -53,13 +53,6 @@ spec:
             initialDelaySeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-            - name: n8n-modules
-              mountPath: /usr/local/lib/node_modules/
-      volumes:
-        - name: n8n-modules
-          configMap:
-            name: n8n-modules
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
