@@ -30,7 +30,7 @@ n8n:
       enabled: true
       # prune old executions data after X hours
       max_age: "72"
-
+  
   extraVolumes:
     - name: n8n-node-modules
       persistentVolumeClaim:
