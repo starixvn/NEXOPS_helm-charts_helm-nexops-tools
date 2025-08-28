@@ -495,7 +495,7 @@ spec:
           mountPath: /opt/migrations/
         {{- end}}
       - name: clickhouse
-        image: clickhouse/clickhouse-server:22.12-alpine
+        image: hub.nexdev.net/base/clickhouse/clickhouse-server:22.12-alpine
         env:
           - name: OPENREPLAY_VERSION
             valueFrom:
