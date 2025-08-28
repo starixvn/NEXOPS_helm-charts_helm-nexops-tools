@@ -33,8 +33,11 @@ n8n:
   persistence:
     nodeModules:
       enabled: true
+      type: pvc
       size: 1Gi
-      storageClass: local-path
+      accessModes:
+        - ReadWriteOnce
+      storageClass: longhorn
       mountPath: /usr/local/lib/node_modules
 
 # values for PostgreSql helm chart
