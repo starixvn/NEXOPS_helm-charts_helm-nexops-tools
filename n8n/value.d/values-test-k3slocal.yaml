@@ -35,6 +35,7 @@ n8n:
     - name: n8n-license
       configMap:
         name: n8n-license-cm
+
   extraVolumeMounts:
     - name: n8n-license
       mountPath: /usr/local/lib/node_modules/n8n/dist/license.js
