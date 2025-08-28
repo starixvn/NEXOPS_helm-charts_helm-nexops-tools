@@ -30,10 +30,6 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          volumeMounts:
-            {{- with .Values.n8n.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -57,6 +53,10 @@ spec:
             initialDelaySeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- with .Values.n8n.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -69,10 +69,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    volumes:
-      {{- with .Values.n8n.extraVolumes }}
-      {{- toYaml . | nindent 8 }}
-      {{- end }}
+      volumes:
+        {{- with .Values.n8n.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    
 ---
 apiVersion: apps/v1
 kind: Deployment
