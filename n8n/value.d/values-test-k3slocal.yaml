@@ -31,6 +31,10 @@ n8n:
       # prune old executions data after X hours
       max_age: "72"
   
+  extraVolumes:
+    - name: n8n-node-modules
+      persistentVolumeClaim:
+        claimName: n8n-node-modules-pvc
   extraVolumeMounts:
     - name: n8n-node-modules
       mountPath: /usr/local/lib/node_modules
@@ -64,18 +68,12 @@ ingress:
   annotations: {}
 
 persistence:
-  - name: n8n-node-modules
-    enabled: true
-    type: pvc
-    storageClass: longhorn
-    accessModes:
-      - ReadWriteOnce
-    size: 1Gi
-    mountPath: /usr/local/lib/node_modules
-
-volumes:
-  - name: n8n-node-modules
-    persistentVolumeClaim:
-      claimName: n8n-node-modules-pvc
+  extra:
+    - name: n8n-node-modules
+      enabled: true
+      type: pvc
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 1Gi
 
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
