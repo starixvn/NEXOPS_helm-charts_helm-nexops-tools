@@ -91,6 +91,10 @@ alertmanager:
           match_re:
             instance: "10.18.200.134.*|10.18.200.153.*|10.18.200.187.*|10.18.200.189.*|10.17.200.65.*|10.17.200.66.*|10.18.200.205.*|10.18.200.214.*"
             alertname: ".*[Mm]emory.*|.*CPU.*"
+        - receiver: 'null'
+          match_re:
+            namespace: "logging"
+            alertname: "Kubernetes Service Restart"
         - receiver: "nexpe-services-alert"
           match_re:
             namespace: "nexpe|gosql|tw|starix"
