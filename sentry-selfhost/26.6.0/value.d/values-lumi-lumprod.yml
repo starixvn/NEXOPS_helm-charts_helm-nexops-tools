@@ -805,12 +805,12 @@ extraManifests:
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
-    name: '{{ printf "%sentry-backup-sa" .Release.Name }}'
+    name: '{{ printf "%s-sentry-backup-sa" .Release.Name }}'
     namespace: '{{ .Release.Namespace }}'
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
-    name: '{{ printf "%sentry-pods-exec" .Release.Name }}'
+    name: '{{ printf "%s-sentry-pods-exec" .Release.Name }}'
   rules:
     - apiGroups: [""]
       resources: ["pods"]
@@ -821,12 +821,12 @@ extraManifests:
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRoleBinding
   metadata:
-    name: '{{ printf "%sentry-pods-exec-binding" .Release.Name }}'
+    name: '{{ printf "%s-sentry-pods-exec-binding" .Release.Name }}'
   roleRef:
     apiGroup: rbac.authorization.k8s.io
     kind: ClusterRole
-    name: '{{ printf "%sentry-pods-exec" .Release.Name }}'
+    name: '{{ printf "%s-sentry-pods-exec" .Release.Name }}'
   subjects:
     - kind: ServiceAccount
-      name: '{{ printf "%sentry-backup-sa" .Release.Name }}'
+      name: '{{ printf "%s-sentry-backup-sa" .Release.Name }}'
       namespace: '{{ .Release.Namespace }}'
