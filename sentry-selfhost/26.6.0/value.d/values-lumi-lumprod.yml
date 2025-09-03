@@ -880,6 +880,7 @@ extraManifests:
                 args:
                   - |
                     set -eu pipefail
+                    export PATH="/opt/bitnami/kubectl/bin:$PATH"
                     userVerify="dev@sabawork.com"
                     podName="$(kubectl get pod | grep web | awk '{print $1}')"
                     date="$(date +%F)"
