@@ -118,6 +118,7 @@ alertmanager:
         matchers:
         - service="OpenSearch"
         - alertname!="OpensearchClusterYellow"
+        - job!="opensearch-cluster-master-headless"
         group_by: ["alertname", "job"]
       group_by: ['alertname','job','pod', 'description', 'instance']
       group_wait: 30s
