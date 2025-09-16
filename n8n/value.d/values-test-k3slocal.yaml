@@ -76,7 +76,7 @@ service:
 ingress:
   enabled: true
   className: "haproxy"
-  host: "n8n-test.nexdev.net"
+  host: "n8n-test1.nexdev.net"
   annotations: {}
 
 #Admin Login: admin@starixsoft.com/N8nPassW0r$
