@@ -1,0 +1,35 @@
+remove backup and drop step for "sentry_projectoptions" if want to disable webhook
+
+after install with init database, run script to restore db
+
+
+#!/bin/bash
+
+
+containerID=$(docker ps | grep  {{toolName}} | awk '{print $1}')
+restoreDir={{RestoreFileTemp}}
+
+# return $fileName Variable is fileName of backup file
+{% include "files/scriptFunction/getFileName"  %}
+
+function scriptRestore () {
+    # get file after unzip
+    unzipfile=$(ls $restoreDir | grep sentry | cut -d "." -f1-2)
+
+    # unzip backup zip file
+    gunzip $restoreDir/$fileName
+
+    # run command import data
+    cat drop_tables.sql | /usr/bin/docker exec -i $containerID psql -U postgres
+    /usr/bin/docker exec -i $containerID psql -U postgres -d postgres < $restoreDir/$unzipfile
+}
+
+# call function to get $FileName
+getFileName $restoreDir
+
+scriptRestore
+
+
+
+
+
