@@ -17,6 +17,10 @@ ingress:
 
 redis:
   clusterDomain: "starix.nexprod"
+  image:
+    registry: hub.nexdev.net
+    repository: base/bitnamilegacy/redis
+    tag: 5.0.7-r32
   cluster:
     enabled: false
   master:
