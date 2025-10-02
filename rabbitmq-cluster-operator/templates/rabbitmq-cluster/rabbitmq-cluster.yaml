@@ -5,6 +5,7 @@ metadata:
   namespace: {{ include "common.names.namespace" . | quote }}
 spec:
   replicas: 3
+  image: {{ .Values.rabbitCluster.image | quote }}
   terminationGracePeriodSeconds: 30
   rabbitmq:
     additionalConfig: |

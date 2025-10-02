@@ -4,11 +4,7 @@ global:
 rabbitCluster:
   user: admin
   password: rabbitadmin!@
-
-rabbitmqImage:
-  registry: hub.nexdev.net
-  repository: base/bitnamilegacy/rabbitmq
-  tag: 3.13.5-debian-12-r1
+  image: hub.nexdev.net/base/bitnamilegacy/rabbitmq:3.13.5-debian-12-r1
 
 clusterOperator:
   image:
