@@ -7,6 +7,10 @@ nodeSelector:
   n8n-wasa: "yes"
 
 redis:
+  image:
+    repository: hub.nexdev.net/base/bitnamilegacy/redis
+    pullPolicy: IfNotPresent
+    tag: "6.2.7-debian-11-r11"
   architecture: standalone
   auth:
     enabled: false
