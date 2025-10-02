@@ -17,6 +17,7 @@ service:
 postgresql:
   enabled: true
   image:
+    #registry: nexhub.ops-klprod.gamora.prod/kbt/base
     repository: bitnami/postgresql
     tag: 13.18.0
   architecture: "standalone"
