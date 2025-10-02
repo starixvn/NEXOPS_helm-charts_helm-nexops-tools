@@ -8,7 +8,8 @@ nodeSelector:
 
 redis:
   image:
-    repository: hub.nexdev.net/base/bitnamilegacy/redis
+    registry: hub.nexdev.net
+    repository: base/bitnamilegacy/redis
     pullPolicy: IfNotPresent
     tag: "6.2.7-debian-11-r11"
   architecture: standalone
