@@ -4,6 +4,11 @@ image:
   tag: "1.107.4"
 
 redis:
+  image:
+    registry: hub.nexdev.net
+    repository: base/bitnamilegacy/redis
+    pullPolicy: IfNotPresent
+    tag: "6.2.7-debian-11-r11"
   architecture: standalone
   auth:
     enabled: false
@@ -53,6 +58,11 @@ n8n:
 
 # values for PostgreSql helm chart
 postgresql:
+  image:
+    registry: hub.nexdev.net
+    repository: base/bitnami/postgresql
+    pullPolicy: IfNotPresent
+    tag: "15.4.0-debian-11-r45"
   enabled: true
   auth:
     database: "n8n"
