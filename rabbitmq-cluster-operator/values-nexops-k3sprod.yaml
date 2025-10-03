@@ -1,6 +1,0 @@
-global:
-  storageClass: longhorn
-  storageSize: 15Gi
-rabbitCluster:
-  user: admin
-  password: rabbitadmin!@
