@@ -12,7 +12,7 @@ data:
     URL = "http://localhost:9003/cloudCost?window=30d"
 
     cost_gauge = Gauge(
-        'kubecost_cloud_cost',
+        'kubecost_cloud_cost_aws',
         'Cloud cost by resource',
         ['provider', 'service', 'environment', 'dept', 'region', 'team']
     )
