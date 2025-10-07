@@ -10,20 +10,50 @@ data:
     from prometheus_client import start_http_server, Gauge
 
     URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d"
-    cost_gauge = Gauge('opencost_cloud_cost_total_usd', 'Total Cloud Cost in USD')
+
+    cost_gauge = Gauge(
+        'opencost_cloud_cost_usd',
+        'Cloud cost by resource',
+        ['provider', 'service', 'category', 'dept', 'region', 'account']
+    )
 
     def fetch_cost():
         try:
-            r = requests.get(URL, timeout=10)
+            r = requests.get(URL, timeout=15)
             r.raise_for_status()
             data = r.json()
-            total = data.get('totalCost', 0)
-            cost_gauge.set(total)
+            cost_gauge.clear()      
+
+            sets = data.get('data', {}).get('sets', [])
+            for s in sets:
+                cloud_costs = s.get('cloudCosts', {})
+                for _, item in cloud_costs.items():
+                    props = item.get('properties', {})
+                    labels = props.get('labels', {})
+
+                    provider = props.get('provider', 'unknown')
+                    service = props.get('service', 'unknown')
+                    category = props.get('category', 'unknown')
+                    dept = labels.get('dept', labels.get('team', 'unknown'))
+                    region = labels.get('region', props.get('regionID', 'unknown'))
+                    account = props.get('accountID', 'unknown')
+
+                    cost_val = item.get('netCost', {}).get('cost', 0.0)
+
+                    cost_gauge.labels(
+                        provider=provider,
+                        service=service,
+                        category=category,
+                        dept=dept,
+                        region=region,
+                        account=account
+                    ).set(cost_val)
+
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error fetching cost: {e}")
 
     if __name__ == "__main__":
-        start_http_server(8080)
+        start_http_server(8080)  # expose endpoint /metrics
         while True:
             fetch_cost()
             time.sleep(300)
