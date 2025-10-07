@@ -14,7 +14,7 @@ data:
     cost_gauge = Gauge(
         'kubecost_cloud_cost',
         'Cloud cost by resource',
-        ['provider', 'service', 'category', 'dept', 'region', 'account']
+        ['provider', 'service', 'environment', 'dept', 'region', 'team']
     )
 
     def fetch_cost():
@@ -33,20 +33,20 @@ data:
 
                     provider = props.get('provider', 'unknown')
                     service = props.get('service', 'unknown')
-                    environment = props.get('environment', 'unknown')
+                    environment = labels.get('environment', labels.get('environment', 'unknown'))
                     dept = labels.get('dept', labels.get('team', 'unknown'))
                     region = labels.get('region', props.get('regionID', 'unknown'))
-                    team = props.get('team', 'unknown')
+                    team = labels.get('team', props.get('team', 'unknown'))
 
                     cost_val = item.get('netCost', {}).get('cost', 0.0)
 
                     cost_gauge.labels(
                         provider=provider,
                         service=service,
-                        category=category,
+                        environment=environment,
                         dept=dept,
                         region=region,
-                        account=account
+                        team=team
                     ).set(cost_val)
 
         except Exception as e:
