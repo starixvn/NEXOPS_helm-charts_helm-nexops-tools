@@ -15,60 +15,36 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: alpine:latest
+        image: python:3.9-alpine
         command: ["/bin/sh"]
         args:
           - -c
           - |
-            # Install dependencies
-            apk add --no-cache curl jq netcat-openbsd
-            echo "Cloud Costs Exporter started on port 8080"
-            
-            # Function để test các endpoints
-            generate_metrics() {
-              echo "HTTP/1.1 200 OK"
-              echo "Content-Type: text/plain; version=0.0.4"
-              echo "Connection: close"
-              echo ""
-              
-              echo "# DEBUG: Testing different OpenCost endpoints"
-              
-              # Thử các endpoints khác nhau
-              ENDPOINTS=(
-                "/allocation/compute"
-                "/allocation"
-                "/assets"
-                "/metrics"
-                "/model"
-                "/healthz"
-              )
-              
-              for endpoint in "${ENDPOINTS[@]}"; do
-                echo "# DEBUG: Testing $endpoint"
-                RESPONSE=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003${endpoint}?window=2d")
-                CODE=$(echo "$RESPONSE" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")
-                echo "# DEBUG: $endpoint -> code: $CODE"
-              done
-              
-              # Thử endpoint cloud costs đúng
-              echo "# DEBUG: Testing cloud costs endpoints..."
-              
-              # Endpoint 1: /cloudCost
-              RESPONSE1=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d")
-              echo "# DEBUG: /cloudCost -> $(echo "$RESPONSE1" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")"
-              
-              # Endpoint 2: /cloudCosts (có 's')
-              RESPONSE2=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d")
-              echo "# DEBUG: /cloudCosts -> $(echo "$RESPONSE2" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")"
-              
-              # Endpoint 3: /cloudCosts (không có window)
-              RESPONSE3=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts")
-              echo "# DEBUG: /cloudCosts (no window) -> $(echo "$RESPONSE3" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")"
-            }
-            
-            # Start HTTP server
-            while true; do
-              generate_metrics | nc -l -p 8080 -q 1
-            done
+            pip install requests prometheus_client
+            cat > /app.py << 'EOF'
+import time
+import requests
+from prometheus_client import start_http_server, Gauge
+
+URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d"
+cost_gauge = Gauge('opencost_cloud_cost_total_usd', 'Total Cloud Cost in USD')
+
+def fetch_cost():
+    try:
+        r = requests.get(URL, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+        total = data.get('totalCost', 0)
+        cost_gauge.set(total)
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    start_http_server(8080)  # expose /metrics
+    while True:
+        fetch_cost()
+        time.sleep(300)
+EOF
+            python /app.py
         ports:
         - containerPort: 8080
