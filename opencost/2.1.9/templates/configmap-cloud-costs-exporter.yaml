@@ -9,7 +9,7 @@ data:
     import requests
     from prometheus_client import start_http_server, Gauge
 
-    URL = "http://localhost:9003/cloudCost?window=2d"
+    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d"
 
     cost_gauge = Gauge(
         'opencost_cloud_cost',
