@@ -15,104 +15,42 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: python:3.9-alpine
+        image: alpine:latest
         command: ["/bin/sh"]
         args:
           - -c
           - |
-            # Install dependencies
-            pip install requests
-            cat > /app/exporter.py << 'EOF'
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import requests
-import json
-import time
-
-class CloudCostsHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        if self.path == '/metrics':
-            try:
-                # Get data from OpenCost API
-                response = requests.get(
-                    "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d",
-                    timeout=30
-                )
-                data = response.json()
-                
-                metrics = []
-                metrics.append("# HELP cloud_cost_total Total cloud cost from OpenCost")
-                metrics.append("# TYPE cloud_cost_total gauge")
-                metrics.append("# HELP cloud_cost_net_cost Net cloud cost from OpenCost")
-                metrics.append("# TYPE cloud_cost_net_cost gauge")
-                metrics.append("# HELP cloud_cost_amortized_cost Amortized cloud cost from OpenCost")
-                metrics.append("# TYPE cloud_cost_amortized_cost gauge")
-                metrics.append("# HELP cloud_cost_invoiced_cost Invoiced cloud cost from OpenCost")
-                metrics.append("# TYPE cloud_cost_invoiced_cost gauge")
-                
-                # Process cloud costs data
-                cloud_costs = data.get('data', {}).get('sets', [{}])[0].get('cloudCosts', {})
-                
-                for cost_key, cost_data in cloud_costs.items():
-                    props = cost_data.get('properties', {})
-                    labels = props.get('labels', {})
-                    
-                    service = props.get('service', 'unknown')
-                    account = props.get('accountID', 'unknown')
-                    category = props.get('category', 'unknown')
-                    region = props.get('regionID', 'unknown')
-                    provider = props.get('provider', 'unknown')
-                    dept = labels.get('dept', 'unknown')
-                    project = labels.get('project', 'unknown')
-                    team = labels.get('team', 'unknown')
-                    
-                    # Create labels string
-                    label_str = f'service="{service}",account="{account}",category="{category}",region="{region}",provider="{provider}",dept="{dept}",project="{project}",team="{team}"'
-                    
-                    # Add metrics
-                    list_cost = cost_data.get('listCost', {}).get('cost', 0)
-                    net_cost = cost_data.get('netCost', {}).get('cost', 0)
-                    amortized_cost = cost_data.get('amortizedCost', {}).get('cost', 0)
-                    invoiced_cost = cost_data.get('invoicedCost', {}).get('cost', 0)
-                    
-                    metrics.append(f'cloud_cost_total{{{label_str}}} {list_cost}')
-                    metrics.append(f'cloud_cost_net_cost{{{label_str}}} {net_cost}')
-                    metrics.append(f'cloud_cost_amortized_cost{{{label_str}}} {amortized_cost}')
-                    metrics.append(f'cloud_cost_invoiced_cost{{{label_str}}} {invoiced_cost}')
-                
-                # Send HTTP response
-                self.send_response(200)
-                self.send_header('Content-Type', 'text/plain; version=0.0.4')
-                self.end_headers()
-                self.wfile.write('\n'.join(metrics).encode())
-                
-            except Exception as e:
-                self.send_response(500)
-                self.end_headers()
-                self.wfile.write(f"Error: {str(e)}".encode())
-        else:
-            self.send_response(404)
-            self.end_headers()
-            self.wfile.write(b"Not Found")
-
-        def log_message(self, format, *args):
-            # Suppress access logs
-            return
-
-            print(f"Starting Cloud Costs Exporter on port 8080")
-            server = HTTPServer(('0.0.0.0', 8080), CloudCostsHandler)
-            server.serve_forever()
-
-            if __name__ == '__main__':
-                run_server()
+            apk add --no-cache curl jq
+            cat > /app/exporter.sh << 'EOF'
+            #!/bin/sh
+            
+            generate_metrics() {
+              echo "HTTP/1.1 200 OK"
+              echo "Content-Type: text/plain; version=0.0.4"
+              echo "Connection: close"
+              echo ""
+              
+              echo "# HELP cloud_cost_total Total cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_total gauge"
+              echo "# HELP cloud_cost_net_cost Net cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_net_cost gauge"
+              
+              curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d" | \
+              jq -r '.data.sets[0].cloudCosts | to_entries[] | 
+                .value as $cost |
+                $cost.properties as $p |
+                $cost.properties.labels as $l |
+                "cloud_cost_total{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\"} \($cost.listCost.cost)"
+                "\ncloud_cost_net_cost{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\"} \($cost.netCost.cost)"'
+            }
+            
+            echo "Starting exporter on port 8080"
+            while true; do
+              generate_metrics | nc -l -p 8080 -q 1
+            done
             EOF
             
-            python /app/exporter.py
+            chmod +x /app/exporter.sh
+            /app/exporter.sh
         ports:
         - containerPort: 8080
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "200m"
