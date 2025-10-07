@@ -9,12 +9,12 @@ data:
     import requests
     from prometheus_client import start_http_server, Gauge
 
-    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d"
+    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=30d"
 
     cost_gauge = Gauge(
         'opencost_cloud_cost',
         'Cloud cost by resource',
-        ['provider', 'service', 'category', 'dept', 'region', 'account']
+        ['provider', 'service', 'environment', 'dept', 'region', 'team']
     )
 
     def fetch_cost():
@@ -37,6 +37,7 @@ data:
                     dept = labels.get('dept', labels.get('team', 'unknown'))
                     region = labels.get('region', props.get('regionID', 'unknown'))
                     account = props.get('accountID', 'unknown')
+                    environment = labels.get('environment', 'unknown')
 
                     cost_val = item.get('netCost', {}).get('cost', 0.0)
 
