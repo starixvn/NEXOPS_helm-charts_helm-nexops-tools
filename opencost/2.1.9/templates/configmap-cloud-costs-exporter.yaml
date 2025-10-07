@@ -9,12 +9,12 @@ data:
     import requests
     from prometheus_client import start_http_server, Gauge
 
-    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=30d"
+    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=7d"
 
     cost_gauge = Gauge(
         'opencost_cloud_cost',
         'Cloud cost by resource',
-        ['provider', 'service', 'environment', 'dept', 'region', 'team']
+        ['provider', 'service', 'category', 'dept', 'region', 'account', 'environment']
     )
 
     def fetch_cost():
@@ -23,7 +23,7 @@ data:
             r.raise_for_status()
             data = r.json()
             cost_gauge.clear()       
-
+            
             sets = data.get('data', {}).get('sets', [])
             for s in sets:
                 cloud_costs = s.get('cloudCosts', {})
@@ -47,7 +47,8 @@ data:
                         category=category,
                         dept=dept,
                         region=region,
-                        account=account
+                        account=account,
+                        environment=environment
                     ).set(cost_val)
 
         except Exception as e:
