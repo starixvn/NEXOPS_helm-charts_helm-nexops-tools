@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-costs-exporter
+  namespace: tf-atx-opencost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-costs-exporter
+  template:
+    metadata:
+      labels:
+        app: cloud-costs-exporter
+    spec:
+      containers:
+      - name: exporter
+        image: alpine:latest
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - |
+            # Install dependencies
+            apk add --no-cache curl jq netcat-openbsd
+            echo "Cloud Costs Exporter started on port 8080"
+            
+            # Function to generate metrics
+            generate_metrics() {
+              echo "# HELP cloud_cost_total Total cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_total gauge"
+              echo "# HELP cloud_cost_net_cost Net cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_net_cost gauge"
+              echo "# HELP cloud_cost_amortized_cost Amortized cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_amortized_cost gauge"
+              echo "# HELP cloud_cost_invoiced_cost Invoiced cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_invoiced_cost gauge"
+              
+              # Get data from OpenCost API
+              curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d" | \
+              jq -r '.data.sets[0].cloudCosts | to_entries[] | 
+                .value as $cost |
+                "cloud_cost_total{service=\"\($cost.properties.service)\",account=\"\($cost.properties.accountID)\",category=\"\($cost.properties.category)\",region=\"\($cost.properties.regionID // "unknown")\",provider=\"\($cost.properties.provider)\",dept=\"\($cost.properties.labels.dept // "unknown")\",project=\"\($cost.properties.labels.project // "unknown")\",team=\"\($cost.properties.labels.team // "unknown")\"} \($cost.listCost.cost)"
+                "\ncloud_cost_net_cost{service=\"\($cost.properties.service)\",account=\"\($cost.properties.accountID)\",category=\"\($cost.properties.category)\",region=\"\($cost.properties.regionID // "unknown")\",provider=\"\($cost.properties.provider)\"} \($cost.netCost.cost)"
+                "\ncloud_cost_amortized_cost{service=\"\($cost.properties.service)\",account=\"\($cost.properties.accountID)\",category=\"\($cost.properties.category)\",region=\"\($cost.properties.regionID // "unknown")\",provider=\"\($cost.properties.provider)\"} \($cost.amortizedCost.cost)"
+                "\ncloud_cost_invoiced_cost{service=\"\($cost.properties.service)\",account=\"\($cost.properties.accountID)\",category=\"\($cost.properties.category)\",region=\"\($cost.properties.regionID // "unknown")\",provider=\"\($cost.properties.provider)\"} \($cost.invoicedCost.cost)"'
+            }
+            
+            # Start HTTP server
+            while true; do
+              generate_metrics | nc -l -p 8080 -q 1
+            done
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
