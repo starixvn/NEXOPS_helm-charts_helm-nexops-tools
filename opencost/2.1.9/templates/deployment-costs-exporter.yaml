@@ -24,40 +24,46 @@ spec:
             apk add --no-cache curl jq netcat-openbsd
             echo "Cloud Costs Exporter started on port 8080"
             
-            # Function để debug API response
+            # Function để test các endpoints
             generate_metrics() {
               echo "HTTP/1.1 200 OK"
               echo "Content-Type: text/plain; version=0.0.4"
               echo "Connection: close"
               echo ""
               
-              echo "# DEBUG: Testing OpenCost API response"
+              echo "# DEBUG: Testing different OpenCost endpoints"
               
-              # Test API response
-              RESPONSE=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d")
-              echo "# DEBUG: Response code: $(echo "$RESPONSE" | jq -r '.code // "unknown"')"
-              echo "# DEBUG: Response keys: $(echo "$RESPONSE" | jq 'keys')"
+              # Thử các endpoints khác nhau
+              ENDPOINTS=(
+                "/allocation/compute"
+                "/allocation"
+                "/assets"
+                "/metrics"
+                "/model"
+                "/healthz"
+              )
               
-              # Kiểm tra cấu trúc data
-              if echo "$RESPONSE" | jq -e '.data' > /dev/null 2>&1; then
-                echo "# DEBUG: Data exists, checking structure..."
-                echo "$RESPONSE" | jq -e '.data.sets' > /dev/null 2>&1 && echo "# DEBUG: Has .data.sets" || echo "# DEBUG: No .data.sets"
-                echo "$RESPONSE" | jq -e '.data.sets[0]' > /dev/null 2>&1 && echo "# DEBUG: Has .data.sets[0]" || echo "# DEBUG: No .data.sets[0]"
-                echo "$RESPONSE" | jq -e '.data.sets[0].cloudCosts' > /dev/null 2>&1 && echo "# DEBUG: Has .data.sets[0].cloudCosts" || echo "# DEBUG: No .data.sets[0].cloudCosts"
-                
-                # Thử extract một vài metrics nếu có data
-                if echo "$RESPONSE" | jq -e '.data.sets[0].cloudCosts' > /dev/null 2>&1; then
-                  echo "# HELP cloud_cost_test Test metric"
-                  echo "# TYPE cloud_cost_test gauge"
-                  echo "$RESPONSE" | jq -r '.data.sets[0].cloudCosts | to_entries[0] | .value | "cloud_cost_test{service=\"\(.properties.service)\"} \(.listCost.cost)"'
-                else
-                  echo "# DEBUG: No cloudCosts found"
-                fi
-              else
-                echo "# DEBUG: No data field in response"
-                echo "# DEBUG: Full response:"
-                echo "$RESPONSE" | head -5
-              fi
+              for endpoint in "${ENDPOINTS[@]}"; do
+                echo "# DEBUG: Testing $endpoint"
+                RESPONSE=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003${endpoint}?window=2d")
+                CODE=$(echo "$RESPONSE" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")
+                echo "# DEBUG: $endpoint -> code: $CODE"
+              done
+              
+              # Thử endpoint cloud costs đúng
+              echo "# DEBUG: Testing cloud costs endpoints..."
+              
+              # Endpoint 1: /cloudCost
+              RESPONSE1=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d")
+              echo "# DEBUG: /cloudCost -> $(echo "$RESPONSE1" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")"
+              
+              # Endpoint 2: /cloudCosts (có 's')
+              RESPONSE2=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d")
+              echo "# DEBUG: /cloudCosts -> $(echo "$RESPONSE2" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")"
+              
+              # Endpoint 3: /cloudCosts (không có window)
+              RESPONSE3=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts")
+              echo "# DEBUG: /cloudCosts (no window) -> $(echo "$RESPONSE3" | jq -r '.code // "N/A"' 2>/dev/null || echo "Invalid JSON")"
             }
             
             # Start HTTP server
