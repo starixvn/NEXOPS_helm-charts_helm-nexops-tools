@@ -9,12 +9,12 @@ data:
     import requests
     from prometheus_client import start_http_server, Gauge
 
-    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=3d"
+    URL = "http://localhost:9003/cloudCost?window=2d"
 
     cost_gauge = Gauge(
-        'kubecost_cloud_cost_aws',
+        'opencost_cloud_cost',
         'Cloud cost by resource',
-        ['provider', 'service', 'environment', 'dept', 'region', 'team']
+        ['provider', 'service', 'category', 'dept', 'region', 'account']
     )
 
     def fetch_cost():
@@ -22,47 +22,38 @@ data:
             r = requests.get(URL, timeout=15)
             r.raise_for_status()
             data = r.json()
-            cost_gauge.clear()  # reset trước mỗi lần scrape
+            cost_gauge.clear()       
 
             sets = data.get('data', {}).get('sets', [])
             for s in sets:
                 cloud_costs = s.get('cloudCosts', {})
                 for _, item in cloud_costs.items():
                     props = item.get('properties', {})
-                    labels = props.get('labels', {}) or {}
+                    labels = props.get('labels', {})
 
                     provider = props.get('provider', 'unknown')
                     service = props.get('service', 'unknown')
-                    environment = labels.get('environment', 'unknown')
-                    dept = labels.get('dept', 'unknown')
+                    category = props.get('category', 'unknown')
+                    dept = labels.get('dept', labels.get('team', 'unknown'))
                     region = labels.get('region', props.get('regionID', 'unknown'))
-                    team = labels.get('team', 'unknown')
+                    account = props.get('accountID', 'unknown')
 
-                    cost_val = (
-                        item.get('netCost', {}).get('cost')
-                        or item.get('netCost', 0.0)
-                    )
-                    try:
-                        cost_val = float(cost_val)
-                    except:
-                        cost_val = 0.0
+                    cost_val = item.get('netCost', {}).get('cost', 0.0)
 
                     cost_gauge.labels(
                         provider=provider,
                         service=service,
-                        environment=environment,
+                        category=category,
                         dept=dept,
                         region=region,
-                        team=team
+                        account=account
                     ).set(cost_val)
 
-            print(f"Fetched {len(sets)} sets of costs.")
         except Exception as e:
             print(f"Error fetching cost: {e}")
 
     if __name__ == "__main__":
         start_http_server(8080)  # expose endpoint /metrics
-        print("Exporter started on :8080/metrics")
         while True:
             fetch_cost()
             time.sleep(300)
