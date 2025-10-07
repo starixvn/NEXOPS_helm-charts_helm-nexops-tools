@@ -33,10 +33,10 @@ data:
 
                     provider = props.get('provider', 'unknown')
                     service = props.get('service', 'unknown')
-                    category = props.get('category', 'unknown')
+                    environment = props.get('environment', 'unknown')
                     dept = labels.get('dept', labels.get('team', 'unknown'))
                     region = labels.get('region', props.get('regionID', 'unknown'))
-                    account = props.get('accountID', 'unknown')
+                    team = props.get('team', 'unknown')
 
                     cost_val = item.get('netCost', {}).get('cost', 0.0)
 
