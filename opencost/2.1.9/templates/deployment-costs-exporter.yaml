@@ -15,49 +15,47 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: busybox:latest
+        image: alpine:latest
         command: ["/bin/sh"]
         args:
           - -c
           - |
             # Install dependencies
-            apk update && apk add --no-cache curl jq
-            mkdir -p /tmp
-            cd /tmp
+            apk add --no-cache curl jq netcat-openbsd
+            echo "Cloud Costs Exporter started on port 8080"
             
-            # Create a simple HTTP server script
-            cat > server.sh << 'EOF'
-#!/bin/sh
-
-generate_metrics() {
-  echo "HTTP/1.1 200 OK"
-  echo "Content-Type: text/plain; version=0.0.4"
-  echo "Connection: close"
-  echo ""
-  
-  echo "# HELP cloud_cost_total Total cloud cost from OpenCost"
-  echo "# TYPE cloud_cost_total gauge"
-  echo "# HELP cloud_cost_net_cost Net cloud cost from OpenCost"
-  echo "# TYPE cloud_cost_net_cost gauge"
-  
-  # Get data from OpenCost API
-  response=$(curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d")
-  echo "$response" | jq -r '.data.sets[0].cloudCosts | to_entries[] | 
-    .value as $cost |
-    $cost.properties as $p |
-    ($p.labels // {}) as $l |
-    "cloud_cost_total{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\"} \($cost.listCost.cost)"
-    "\ncloud_cost_net_cost{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\"} \($cost.netCost.cost)"'
-}
-
-echo "Starting Cloud Costs Exporter on port 8080"
-while true; do
-  generate_metrics | nc -l -p 8080
-done
-EOF
-
-            chmod +x server.sh
-            ./server.sh
+            # Function to generate metrics với HTTP headers
+            generate_metrics() {
+              echo "HTTP/1.1 200 OK"
+              echo "Content-Type: text/plain; version=0.0.4"
+              echo "Connection: close"
+              echo ""
+              
+              echo "# HELP cloud_cost_total Total cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_total gauge"
+              echo "# HELP cloud_cost_net_cost Net cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_net_cost gauge"
+              echo "# HELP cloud_cost_amortized_cost Amortized cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_amortized_cost gauge"
+              echo "# HELP cloud_cost_invoiced_cost Invoiced cloud cost from OpenCost"
+              echo "# TYPE cloud_cost_invoiced_cost gauge"
+              
+              # Get data from OpenCost API
+              curl -s "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCosts?window=2d" | \
+              jq -r '.data.sets[0].cloudCosts | to_entries[] | 
+                .value as $cost |
+                $cost.properties as $p |
+                ($p.labels // {}) as $l |
+                "cloud_cost_total{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\",provider=\"\($p.provider)\",dept=\"\($l.dept // "unknown")\",project=\"\($l.project // "unknown")\",team=\"\($l.team // "unknown")\"} \($cost.listCost.cost)"
+                "\ncloud_cost_net_cost{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\",provider=\"\($p.provider)\"} \($cost.netCost.cost)"
+                "\ncloud_cost_amortized_cost{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\",provider=\"\($p.provider)\"} \($cost.amortizedCost.cost)"
+                "\ncloud_cost_invoiced_cost{service=\"\($p.service)\",account=\"\($p.accountID)\",category=\"\($p.category)\",region=\"\($p.regionID // "unknown")\",provider=\"\($p.provider)\"} \($cost.invoicedCost.cost)"'
+            }
+            
+            # Start HTTP server
+            while true; do
+              generate_metrics | nc -l -p 8080 -q 1
+            done
         ports:
         - containerPort: 8080
         resources:
