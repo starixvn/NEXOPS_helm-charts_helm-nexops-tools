@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-costs-exporter-script
+  namespace: tf-atx-opencost
+data:
+  app.py: |
+    import time
+    import requests
+    from prometheus_client import start_http_server, Gauge
+
+    URL = "http://opencost-atx-sgprod.tf-atx-opencost.svc:9003/cloudCost?window=2d"
+    cost_gauge = Gauge('opencost_cloud_cost_total_usd', 'Total Cloud Cost in USD')
+
+    def fetch_cost():
+        try:
+            r = requests.get(URL, timeout=10)
+            r.raise_for_status()
+            data = r.json()
+            total = data.get('totalCost', 0)
+            cost_gauge.set(total)
+        except Exception as e:
+            print(f"Error: {e}")
+
+    if __name__ == "__main__":
+        start_http_server(8080)
+        while True:
+            fetch_cost()
+            time.sleep(300)
