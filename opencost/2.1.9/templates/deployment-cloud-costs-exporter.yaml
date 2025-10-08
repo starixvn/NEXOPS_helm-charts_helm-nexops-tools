@@ -1,3 +1,4 @@
+{{- if .Values.cloudCost.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,3 +31,5 @@ spec:
       - name: script
         configMap:
           name: cloud-costs-exporter-script
+{{- end }}
+  

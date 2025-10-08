@@ -1,3 +1,4 @@
+{{- if .Values.cloudCost.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -59,3 +60,4 @@ data:
         while True:
             fetch_cost()
             time.sleep(300)
+{{- end }}
