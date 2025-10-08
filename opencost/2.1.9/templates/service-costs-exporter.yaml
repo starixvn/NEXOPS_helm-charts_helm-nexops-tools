@@ -1,3 +1,4 @@
+{{- if .Values.opencost.cloudCost.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -13,3 +14,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   type: ClusterIP
+{{- end }}
