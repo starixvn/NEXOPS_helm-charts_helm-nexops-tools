@@ -1,0 +1,29 @@
+apiVersion: v2
+name: Redis-Repl-Sentinel
+maintainers:
+  - name: Ken Nguyen (NexOps)
+description: A Helm chart for deploying a Redis replication with Sentinel setup on Kubernetes.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
+keywords:
+  - redis
+  - sentinel
+  - replication
+  - opstree
+
+dependencies:
+  - name: redis-replication
+    alias: replication
+    repository: "file://./charts/replication"
+    version: "*"
+    condition: replication.enabled
+    tags: [redis-replication]
+
+  - name: redis-sentinel
+    alias: sentinel
+    repository: "file://./charts/sentinel"
+    version: "*"
+    condition: sentinel.enabled
+    tags: [redis-sentinel]
