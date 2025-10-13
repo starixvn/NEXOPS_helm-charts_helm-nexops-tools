@@ -131,13 +131,25 @@ configuration: |
     mode http
     http-request return status 503 content-type "text/plain"  lf-string "503 Service Unavailable..."
 
-  frontend redis_master_fe
+  frontend redis_nap_master_fe
     bind :16379
-    default_backend redis_master_be
+    default_backend redis_nap_master_be
 
-  backend redis_master_be
+  # backend redis_master_be
+  #   option tcp-check
+  #   tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+  #   tcp-check expect string +OK
+  #   tcp-check send PING\r\n
+  #   tcp-check expect string PONG
+  #   tcp-check send info\ replication\r\n
+  #   tcp-check expect string role:master
+  #   tcp-check send QUIT\r\n
+  #   tcp-check expect string +OK
+  #   server-template redis-sentinel-nexprod-nap-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
+  backend redis_nap_master_be
     option tcp-check
-    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+    tcp-check send AUTH\ foo1@bared\r\n
     tcp-check expect string +OK
     tcp-check send PING\r\n
     tcp-check expect string PONG
@@ -145,7 +157,11 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server-template redis-sentinel-nexprod-nap-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-nap-repl-0.redis-nap-repl-headless.tf-atx-redis-nap.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-nap-repl-1.redis-nap-repl-headless.tf-atx-redis-nap.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-nap-repl-2.redis-nap-repl-headless.tf-atx-redis-nap.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
+
 
   frontend redis_remoting_master_fe
     bind :16392
@@ -155,24 +171,44 @@ configuration: |
     option tcp-check
     server 10.18.200.192 10.18.200.192:30391 check inter 1s
 
-  frontend redis_replicas_fe
-    bind :16380
-    default_backend redis_replicas_be
+
+  # frontend redis_replicas_fe
+  #   bind :16380
+  #   default_backend redis_replicas_be
     
-  backend redis_replicas_be
-    option tcp-check
-    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
-    tcp-check expect string +OK
-    tcp-check send PING\r\n
-    tcp-check expect string PONG
-    tcp-check send QUIT\r\n
-    tcp-check expect string +OK
-    server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+  # backend redis_replicas_be
+  #   option tcp-check
+  #   tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+  #   tcp-check expect string +OK
+  #   tcp-check send PING\r\n
+  #   tcp-check expect string PONG
+  #   tcp-check send QUIT\r\n
+  #   tcp-check expect string +OK
+  #   server-template redis-sentinel-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nap-headless.redis-sentinel-nap.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+
 
 
   frontend redis_nexops_write_fe
     bind :16400
     default_backend redis_nexops_write_be
+
+
+
+  # backend redis_nexops_write_be
+  #   option tcp-check
+  #   tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+  #   tcp-check expect string +OK
+  #   tcp-check send PING\r\n
+  #   tcp-check expect string PONG
+  #   tcp-check send info\ replication\r\n
+  #   tcp-check expect string role:master
+  #   tcp-check send QUIT\r\n
+  #   tcp-check expect string +OK
+  #   #server-template redis-sentinel-nexprod-nexops-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+  #   server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+  #   server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+  #   server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
 
   backend redis_nexops_write_be
     option tcp-check
@@ -184,27 +220,29 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    #server-template redis-sentinel-nexprod-nexops-node- 0-2  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
-    server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-nexpe-repl-0.redis-nexpe-repl-headless.tf-atx-redis-nexpe.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-nexpe-repl-1.redis-nexpe-repl-headless.tf-atx-redis-nexpe.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-nexpe-repl-2.redis-nexpe-repl-headless.tf-atx-redis-nexpe.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
 
-  frontend redis_nexops_read_fe
-    bind :16401
-    default_backend redis_nexops_read_be
 
-  backend redis_nexops_read_be
-    option tcp-check
-    tcp-check send AUTH\ qdT2!aC-DZc3\r\n
-    tcp-check expect string +OK
-    tcp-check send PING\r\n
-    tcp-check expect string PONG
-    tcp-check send QUIT\r\n
-    tcp-check expect string +OK
-    #server-template redis-sentinel-nexprod-nexops-node- 0-3  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
-    server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
+
+  # frontend redis_nexops_read_fe
+  #   bind :16401
+  #   default_backend redis_nexops_read_be
+
+  # backend redis_nexops_read_be
+  #   option tcp-check
+  #   tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+  #   tcp-check expect string +OK
+  #   tcp-check send PING\r\n
+  #   tcp-check expect string PONG
+  #   tcp-check send QUIT\r\n
+  #   tcp-check expect string +OK
+  #   #server-template redis-sentinel-nexprod-nexops-node- 0-3  _tcp-redis._TCP.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379  check inter 1s resolvers k8s init-addr none
+  #   server redis-0 redis-sentinel-nexprod-nexops-node-0.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+  #   server redis-1 redis-sentinel-nexprod-nexops-node-1.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+  #   server redis-2 redis-sentinel-nexprod-nexops-node-2.redis-sentinel-nexprod-nexops-headless.redis-sentinel-nexops.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
 
   frontend rocketor_proxy_fe
     bind :8088
@@ -226,6 +264,20 @@ configuration: |
     bind :16410
     default_backend redis_alpha_master_be
 
+  # backend redis_alpha_master_be
+  #   option tcp-check
+  #   tcp-check send AUTH\ foo1@bared\r\n
+  #   tcp-check expect string +OK
+  #   tcp-check send PING\r\n
+  #   tcp-check expect string PONG
+  #   tcp-check send info\ replication\r\n
+  #   tcp-check expect string role:master
+  #   tcp-check send QUIT\r\n
+  #   tcp-check expect string +OK
+  #   server redis-0 redis-sentinel-alpha-nexprod-node-0.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+  #   server redis-1 redis-sentinel-alpha-nexprod-node-1.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+  #   server redis-2 redis-sentinel-alpha-nexprod-node-2.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
   backend redis_alpha_master_be
     option tcp-check
     tcp-check send AUTH\ foo1@bared\r\n
@@ -236,8 +288,9 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server redis-0 redis-sentinel-alpha-nexprod-node-0.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-1 redis-sentinel-alpha-nexprod-node-1.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
-    server redis-2 redis-sentinel-alpha-nexprod-node-2.redis-sentinel-alpha-nexprod-headless.redis-sentinel-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-alpha-repl-0.redis-alpha-repl-headless.tf-atx-redis-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-alpha-repl-1.redis-alpha-repl-headless.tf-atx-redis-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-alpha-repl-2.redis-alpha-repl-headless.tf-atx-redis-alpha.svc.starix.nexprod:6379 check inter 1s resolvers k8s init-addr none
+
 
 
