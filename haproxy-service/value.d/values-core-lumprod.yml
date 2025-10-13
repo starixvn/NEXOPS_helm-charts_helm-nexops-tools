@@ -90,6 +90,20 @@ configuration: |
     bind :16379
     default_backend redis_rocketor_master_be
 
+  # backend redis_rocketor_master_be
+  #   option tcp-check
+  #   tcp-check send AUTH\ qdT2!aC-DZc3\r\n
+  #   tcp-check expect string +OK
+  #   tcp-check send PING\r\n
+  #   tcp-check expect string PONG
+  #   tcp-check send info\ replication\r\n
+  #   tcp-check expect string role:master
+  #   tcp-check send QUIT\r\n
+  #   tcp-check expect string +OK
+  #   server redis-0 redis-sentinel-lumi-lumprod-node-0.redis-sentinel-lumi-lumprod-headless.redis-sentinel-lumi.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+  #   server redis-1 redis-sentinel-lumi-lumprod-node-1.redis-sentinel-lumi-lumprod-headless.redis-sentinel-lumi.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+  #   server redis-2 redis-sentinel-lumi-lumprod-node-2.redis-sentinel-lumi-lumprod-headless.redis-sentinel-lumi.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+
   backend redis_rocketor_master_be
     option tcp-check
     tcp-check send AUTH\ qdT2!aC-DZc3\r\n
@@ -100,9 +114,10 @@ configuration: |
     tcp-check expect string role:master
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
-    server redis-0 redis-sentinel-lumi-lumprod-node-0.redis-sentinel-lumi-lumprod-headless.redis-sentinel-lumi.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
-    server redis-1 redis-sentinel-lumi-lumprod-node-1.redis-sentinel-lumi-lumprod-headless.redis-sentinel-lumi.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
-    server redis-2 redis-sentinel-lumi-lumprod-node-2.redis-sentinel-lumi-lumprod-headless.redis-sentinel-lumi.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-0 redis-nexpe-repl-0.redis-nexpe-repl-headless.tf-atx-redis-nexpe.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-1 redis-nexpe-repl-1.redis-nexpe-repl-headless.tf-atx-redis-nexpe.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+    server redis-2 redis-nexpe-repl-2.redis-nexpe-repl-headless.tf-atx-redis-nexpe.svc.lumi.lumprod:6379  check inter 1s resolvers k8s init-addr none
+
 
 
 
