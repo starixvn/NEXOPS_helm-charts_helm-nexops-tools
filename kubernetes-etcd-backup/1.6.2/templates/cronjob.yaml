@@ -17,6 +17,10 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         spec:
+          nodeSelector:
+            {{- toYaml .Values.nodeSelector | nindent 12 }}
+          tolerations:
+            {{- toYaml .Values.tolerations | nindent 12 }}
           securityContext:
             {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
