@@ -46,10 +46,15 @@ spec:
             resources:
               {{- toYaml .Values.resources | nindent 14 }}
             volumeMounts:
+            {{- if .Values.customEtcdPath.enabled }}
+            - name: etcd-certs
+              mountPath: {{ .Values.customEtcdPath.mountPath }}
+            {{- else }}
             - name: etcd-peer-tls
-              mountPath: /etc/ssl/etcd/ssl
+              mountPath: /etc/kubernetes/pki/etcd-peer
             - name: etcd-server-ca
-              mountPath: /etc/ssl/etcd/ssl
+              mountPath: /etc/kubernetes/pki/etcd-ca
+            {{- end }}
             - name: volume-backup
               mountPath: /backup
             {{- if and (.Values.persistence.s3.enabled) (.Values.persistence.s3.ca.enabled) }}
