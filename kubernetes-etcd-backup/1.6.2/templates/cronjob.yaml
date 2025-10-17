@@ -48,9 +48,9 @@ spec:
             volumeMounts:
             {{- if not .Values.disableDefaultEtcdMounts }}
             - name: etcd-peer-tls
-              mountPath: /etc/ssl/etcd/ssl/member-k8snode-17-80.spvn.local.pem #/etc/kubernetes/pki/etcd-peer
+              mountPath: /etc/ssl/etcd/ssl #/etc/kubernetes/pki/etcd-peer
             - name: etcd-server-ca
-              mountPath: /etc/ssl/etcd/ssl/ca.pem #/etc/kubernetes/pki/etcd-ca
+              mountPath: /etc/ssl/etcd/ssl #/etc/kubernetes/pki/etcd-ca
             {{- end }}
             - name: volume-backup
               mountPath: /backup
