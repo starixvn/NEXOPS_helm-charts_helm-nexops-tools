@@ -63,12 +63,12 @@ spec:
             {{- end }}
           restartPolicy: Never
           volumes:
-          - name: etcd-peer-tls
-            secret:
-              secretName: {{ .Values.etcdCertification.etcdPeerTlsName }}
-          - name: etcd-server-ca
-            secret:
-              secretName: {{ .Values.etcdCertification.etcdServerCaName }}
+          # - name: etcd-peer-tls
+          #   secret:
+          #     secretName: {{ .Values.etcdCertification.etcdPeerTlsName }}
+          # - name: etcd-server-ca
+          #   secret:
+          #     secretName: {{ .Values.etcdCertification.etcdServerCaName }}
           {{- if and (.Values.persistence.s3.enabled) (.Values.persistence.s3.ca.enabled) }}
           - name: s3-ca
             secret:
