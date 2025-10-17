@@ -44,13 +44,10 @@ spec:
               {{- end }}
             {{- end }}
             resources:
-              {{- toYaml .Values.resources | nindent 14 }}
-            volumeMounts:
-            {{- if not .Values.disableDefaultEtcdMounts }}
             - name: etcd-peer-tls
-              mountPath: /etc/ssl/etcd/ssl #/etc/kubernetes/pki/etcd-peer
+              mountPath: /etc/kubernetes/pki/etcd-peer
             - name: etcd-server-ca
-              mountPath: /etc/ssl/etcd/ssl #/etc/kubernetes/pki/etcd-ca
+              mountPath: /etc/kubernetes/pki/etcd-ca
             {{- end }}
             - name: volume-backup
               mountPath: /backup

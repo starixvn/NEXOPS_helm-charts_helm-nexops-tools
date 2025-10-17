@@ -13,11 +13,6 @@ data:
   ETCD_BACKUP_KEEP_COUNT: {{ .Values.backup.keepcount | quote }}
   ETCD_BACKUP_UMASK: {{ .Values.backup.umask | quote }}
   ENDPOINT: {{ .Values.etcdConfiguration.endpoint | quote }}
-  # ETCDCTL_API: {{ .Values.etcdConfiguration.apiVersion | default "3" | quote }}
-  # ETCDCTL_ENDPOINTS: {{ .Values.etcdConfiguration.endpoint | quote }}
-  # ETCDCTL_CACERT: {{ .Values.etcdConfiguration.cacert | quote }}
-  # ETCDCTL_CERT: {{ .Values.etcdConfiguration.cert | quote }}
-  # ETCDCTL_KEY: {{ .Values.etcdConfiguration.key | quote }}
   {{- if .Values.etcdConfiguration.insecureSkipTlsVerify }}
   ETCDCTL_INSECURE_SKIP_TLS_VERIFY: "true"
   {{- end }}
