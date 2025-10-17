@@ -103,9 +103,9 @@ configuration: |
 
   defaults
     log global
-    timeout client 60s
-    timeout connect 60s
-    timeout server 60s
+    timeout connect 5s
+    timeout client 1h
+    timeout server 1h
 
   resolvers k8s
     nameserver dns1 kube-dns.kube-system:53
