@@ -3,8 +3,15 @@ kind: ConfigMap
 metadata:
   name: etcd-backup-env
 data:
-  ETCDCTL_API: "3"
-  ETCDCTL_ENDPOINTS: "https://10.17.200.80:2379"
-  ETCDCTL_CACERT: "/etc/ssl/etcd/ssl/ca.pem"
-  ETCDCTL_CERT: "/etc/ssl/etcd/ssl/member-k8snode-17-80.spvn.local.pem"
-  ETCDCTL_KEY: "/etc/ssl/etcd/ssl/member-k8snode-17-80.spvn.local-key.pem"
+  backup.sh: |
+    #!/bin/sh
+    set -e
+
+    BACKUP_DIR="/tmp/etcd-backup/$(date +etcd-backup-%FT%T%:z)"
+    mkdir -p "${BACKUP_DIR}"
+
+    echo "==> Starting etcd backup..."
+    echo "==> Using endpoints: ${ETCDCTL_ENDPOINTS}"
+
+    ETCDCTL_API="${ETCDCTL_API:-3}" etcdctl snapshot save "${BACKUP_DIR}/snapshot.db"
+    echo "==> Backup completed successfully at ${BACKUP_DIR}"
