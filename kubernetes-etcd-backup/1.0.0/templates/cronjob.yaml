@@ -29,6 +29,7 @@ spec:
                   CERT=$(grep "^ETCD_CERT_FILE=" /etc/etcd.env | cut -d= -f2)
                   KEY=$(grep "^ETCD_KEY_FILE=" /etc/etcd.env | cut -d= -f2)
 
+                  mkdir /backup
                   SNAPSHOT_FILE="/backup/etcd-$(date +%Y%m%d).db"
                   echo "Backing up etcd to ${SNAPSHOT_FILE}"
 
