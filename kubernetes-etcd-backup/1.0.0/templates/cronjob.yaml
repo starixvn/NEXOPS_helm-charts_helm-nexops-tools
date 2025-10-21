@@ -1,0 +1,84 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etcd-backup
+  namespace: etcd-backup
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            {{- toYaml .Values.nodeSelector | nindent 12 }}
+          tolerations:
+            {{- toYaml .Values.tolerations | nindent 12 }}
+          restartPolicy: OnFailure
+          containers:
+            - name: etcd-backup
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+                  unset $(env | grep '^ETCDCTL_' | cut -d= -f1 || true)
+                  ENDPOINT=$(grep "^ETCD_ADVERTISE_CLIENT_URLS=" /etc/etcd.env | cut -d= -f2)
+                  CACERT=$(grep "^ETCD_TRUSTED_CA_FILE=" /etc/etcd.env | cut -d= -f2)
+                  CERT=$(grep "^ETCD_CERT_FILE=" /etc/etcd.env | cut -d= -f2)
+                  KEY=$(grep "^ETCD_KEY_FILE=" /etc/etcd.env | cut -d= -f2)
+
+                  SNAPSHOT_FILE="/backup/etcd-$(date +%Y%m%d).db"
+                  echo "Backing up etcd to ${SNAPSHOT_FILE}"
+
+                  ETCDCTL_API=3 etcdctl \
+                    --endpoints="${ENDPOINT}" \
+                    --cacert="${CACERT}" \
+                    --cert="${CERT}" \
+                    --key="${KEY}" \
+                    snapshot save "${SNAPSHOT_FILE}"
+
+                  echo "Backup completed successfully"
+
+                  echo "🧹 Cleaning up old local backups..."
+                  ls -1t /backup/etcd-*.db | tail -n +2 | xargs -r rm -f || true
+
+                  echo "☁️ Uploading to MinIO..."
+                  mc alias set backup {{ .Values.minio.endpoint }} \
+                    $(cat /etc/minio/accessKey) $(cat /etc/minio/secretKey)
+                  mc put ${SNAPSHOT_FILE} backup/{{ .Values.minio.bucket }}/etcd-$(date +%Y%m%d).db
+                  mc ilm rule add backup/{{ .Values.minio.bucket }} --expire-days "{{ .Values.retentionDays }}"
+
+              volumeMounts:
+                - name: etcd-env
+                  mountPath: /etc/etcd.env
+                - name: etcd-certs
+                  mountPath: /etc/ssl/etcd
+                - name: etcd-backup
+                  mountPath: /backup
+                - name: minio-secret
+                  mountPath: /etc/minio
+                  readOnly: true
+
+          volumes:
+            - name: etcd-env
+              hostPath:
+                path: {{ .Values.volumes.etcdEnvPath }}
+                type: File
+            - name: etcd-certs
+              hostPath:
+                path: {{ .Values.volumes.etcdCertsPath }}
+                type: Directory
+            - name: etcd-backup
+              hostPath:
+                path: {{ .Values.volumes.backupPath }}
+                type: DirectoryOrCreate
+            - name: minio-secret
+              secret:
+                secretName: {{ .Values.minio.secretName }}
+                items:
+                  - key: accessKey
+                    path: accessKey
+                  - key: secretKey
+                    path: secretKey
