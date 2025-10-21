@@ -48,7 +48,6 @@ spec:
                   echo "☁️ Uploading to MinIO..."
                   {{- if .Values.proxy.enabled }}
                   HTTP_PROXY={{ .Values.proxy.http }} HTTPS_PROXY={{ .Values.proxy.https }} \
-                  NO_PROXY={{ .Values.proxy.noProxy }} \
                   {{- end }}
                   mc alias set backup {{ .Values.minio.endpoint }} \
                     $(cat /etc/minio/accessKey) $(cat /etc/minio/secretKey)
