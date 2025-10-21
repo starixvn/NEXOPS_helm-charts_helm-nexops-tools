@@ -24,3 +24,6 @@ minio:
   secretName: etcd-backup-minio
 
 retentionDays: 3
+
+proxy:
+  enabled: false

@@ -18,6 +18,15 @@ spec:
             - name: etcd-backup
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
+              {{- if .Values.proxy.enabled }}
+              env:
+                - name: HTTP_PROXY
+                  value: "{{ .Values.proxy.http }}"
+                - name: HTTPS_PROXY
+                  value: "{{ .Values.proxy.https }}"
+                - name: NO_PROXY
+                  value: "{{ .Values.proxy.noProxy }}"
+              {{- end }}
               command:
                 - /bin/sh
                 - -c
