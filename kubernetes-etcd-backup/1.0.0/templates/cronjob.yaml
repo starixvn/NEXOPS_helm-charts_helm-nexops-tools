@@ -3,6 +3,8 @@ kind: CronJob
 metadata:
   name: etcd-backup
   namespace: etcd-backup
+  annotations:
+    cronjob.kubernetes.io/timezone: "Asia/Ho_Chi_Minh"  
 spec:
   schedule: {{ .Values.schedule | quote }}
   jobTemplate:
