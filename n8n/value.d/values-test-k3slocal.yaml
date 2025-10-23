@@ -24,7 +24,7 @@ redis:
 n8n:
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
-  timezone: ""
+  timezone: "Asia/Bangkok"
   webhookUrl: http://10.18.200.193:30080/
   auth:
     enabled: true
