@@ -27,7 +27,7 @@ data:
   N8N_BASIC_AUTH_PASSWORD: {{ .Values.n8n.auth.password }}
   {{ end }}
 
-  GENERIC_TIMEZONE: {{ .Values.n8n.timezone | default "UTC" }}
+  GENERIC_TIMEZONE: {{ .Values.n8n.timezone | default "Asia/Bangkok" }}
   
   WEBHOOK_URL: {{ .Values.n8n.webhookUrl | default "https://n8n.lumigame.com/" }}
   EXECUTIONS_MODE: "queue"
