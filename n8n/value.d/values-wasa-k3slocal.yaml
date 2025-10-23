@@ -31,7 +31,7 @@ redis:
 n8n:
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
-  timezone: "Asia/Ho Chi Minh"
+  timezone: "Asia/Ho_Chi_Minh"
   webhookUrl: https://n8n-wasa.nexdev.net/
   auth:
     enabled: true
