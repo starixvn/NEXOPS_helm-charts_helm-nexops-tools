@@ -5,6 +5,10 @@ user:
   password: "?nxhrJ3kfAsK"
 
 config:
+  configYml:
+    slack.client-id: "8352731735536.9782073096773"
+    slack.client-secret: "77d724dc04a34083d6c85c3297be96fe"
+    slack.signing-secret: "ba7dd5011ca89f5db48e0601ca20c284"
   relay: |
     cache:
       envelope_buffer_size: 500000
