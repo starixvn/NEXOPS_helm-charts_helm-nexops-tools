@@ -543,13 +543,14 @@ sentry:
 
   cleanup:
     days: 2
+    activeDeadlineSeconds: 1000
 
 
 
 snuba:
   api:
     enabled: true
-    replicas: 1
+    replicas: 3
 
     nodeSelector:
       sc-sentry: "yes"
