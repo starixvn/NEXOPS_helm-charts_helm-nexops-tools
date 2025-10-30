@@ -150,15 +150,13 @@ prometheus:
                 sum(rate(haproxy_frontend_http_responses_total{code=~"5.."}[5m])) by (service)
                 /
                 sum(rate(haproxy_frontend_http_responses_total[5m])) by (service)
-                ) * 100 > 1 
-                and sum(rate(haproxy_frontend_http_responses_total[5m])) by (service) > 0
-              for: 15m
+                ) * 100 > 1
+              for: 10m
               labels:
                 severity: warning
               annotations:
                 summary: "High 5xx error rate on service {{$labels.service}}"
-                description: |
-                  "Service '{{$labels.service}}' has >1% HTTP 5xx errors for over 15 minutes (current: {{ printf "%.2f" $value }}%)."
+                description: "HAProxy frontend has service {{$labels.service}} has >1% HTTP 5xx errors for over 10 minutes (current: {{ printf \"%.2f\" $value }}%)"
 
             #HAProxy Critical HTTP 5xx Error Rate
             - alert: Kubernetes Critical HTTP 5xx Error Rate
@@ -175,7 +173,7 @@ prometheus:
               annotations:
                 summary: "High 5xx error rate on service {{$labels.service}}"
                 description: |
-                  'Service '{{$labels.service}}' has >5% HTTP 5xx errors for over 15 minutes (current: {{ printf "%.2f" $value }}%).'
+                  'Service '{{$labels.service}}' has >5% HTTP 5xx errors for over 15 minutes (current: {{ printf "%.2f" $value }}%)'
             
             #Disk latency is growing (write operations > 100ms)
             - alert: Kubernetes Disk latency is growing (write operations > 100ms)
