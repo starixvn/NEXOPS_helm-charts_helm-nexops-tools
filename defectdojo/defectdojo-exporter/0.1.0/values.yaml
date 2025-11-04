@@ -1,8 +1,7 @@
 ---
 image:
   pullPolicy: IfNotPresent
-  registry: hub.nexdev.net
-  repository: base/defectdojo/defectdojo-exporter
+  repository: hub.nexdev.net/base/defectdojo/defectdojo-exporter
   tag: "v2.0.7"
 
 
