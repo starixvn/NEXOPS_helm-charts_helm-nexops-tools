@@ -113,10 +113,10 @@ admin:
   credentialAes256Key:
   metricsHttpAuthPassword:
 monitoring:
-  enabled: true
+  enabled: false
   # Add the nginx prometheus exporter sidecar
   prometheus:
-    enabled: true
+    enabled: false
     image: nginx/nginx-prometheus-exporter:1.4.1
     imagePullPolicy: IfNotPresent
 annotations: {}
