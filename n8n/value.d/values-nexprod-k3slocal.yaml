@@ -45,6 +45,15 @@ n8n:
   nodeSelector:
     n8n: "yes"
 
+  extraVolumes:
+    - name: n8n-node-modules
+      persistentVolumeClaim:
+        claimName: n8n-node-modules-pvc
+
+  extraVolumeMounts:
+    - name: n8n-node-modules
+      mountPath: /home/node/.n8n
+
 # values for PostgreSql helm chart
 postgresql:
   image:
