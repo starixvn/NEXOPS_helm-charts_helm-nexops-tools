@@ -107,9 +107,6 @@ volumeClaimTemplates:
   - metadata:
       name: default-chi-openreplay-clickhouse-replicated-0-0-0
     spec:
-      {{- if .Values.storageClass }}
-      storageClassName: {{ .Values.storageClass | quote }}
-      {{- end }}
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
