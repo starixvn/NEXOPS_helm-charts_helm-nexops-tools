@@ -83,6 +83,7 @@ tolerations: []
 
 affinity: {}
 storageSize: 100Gi
+# storageClass: ""
 
 configOverride:
   serverConfig:

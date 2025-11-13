@@ -103,11 +103,15 @@ spec:
           configMap:
             name: clickhouse-user-override
             optional: true
-  volumeClaimTemplates:
+volumeClaimTemplates:
   - metadata:
       name: default-chi-openreplay-clickhouse-replicated-0-0-0
     spec:
+      {{- if .Values.storageClass }}
+      storageClassName: {{ .Values.storageClass | quote }}
+      {{- end }}
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: {{ .Values.storageSize }}
+          storage: {{ .Values.storageSize | quote }}
+
