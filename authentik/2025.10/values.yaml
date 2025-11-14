@@ -504,7 +504,7 @@ server:
     # -- authentik server service labels
     labels: {}
     # -- authentik server service type
-    type: ClusterIP
+    type: NodePort
     # -- authentik server service http port for NodePort service type (only if `server.service.type` is set to `NodePort`)
     nodePortHttp: 30080
     # -- authentik server service https port for NodePort service type (only if `server.service.type` is set to `NodePort`)
