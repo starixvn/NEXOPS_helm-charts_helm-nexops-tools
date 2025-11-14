@@ -1087,10 +1087,10 @@ prometheus:
 postgresql:
   # -- enable the Bitnami PostgreSQL chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/postgresql/ for possible values.
   enabled: false
-  # image:
-  #   registry: docker.io
-  #   repository: library/postgres
-  #   tag: "17.6-bookworm"
+  image:
+    registry: docker.io
+    repository: library/postgres
+    tag: "17.6-bookworm"
   auth:
     username: authentik
     database: authentik
@@ -1146,10 +1146,10 @@ postgresql:
 redis:
   # -- enable the Bitnami Redis chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/redis/ for possible values.
   enabled: false
-  # image:
-  #   registry: docker.io
-  #   repository: library/redis
-  #   tag: "8.2.1"
+  image:
+    registry: docker.io
+    repository: library/redis
+    tag: "8.2.1"
   architecture: standalone
   auth:
     enabled: false
