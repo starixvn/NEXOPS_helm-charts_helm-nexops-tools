@@ -854,7 +854,16 @@ dashboardsConfigMaps: {}
 ##
 grafana.ini:
   auth.generic_oauth:
-    enabled: false
+    enabled: true
+    allow_sign_up: false
+    scopes: user:email,read:org
+    auth_url: https://github.com/login/oauth/authorize
+    token_url: https://github.com/login/oauth/access_token
+    api_url: https://api.github.com/user
+    team_ids:
+    allowed_organizations:
+    client_id:
+    client_secret:
   paths:
     data: /var/lib/grafana/
     logs: /var/log/grafana
