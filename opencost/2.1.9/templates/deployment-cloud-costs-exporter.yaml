@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: python:3.9-alpine
+        image: lumhub.sc-t1prod.gamora.prod/aws/base/python:3.9-alpine
         command: ["/bin/sh"]
         args:
           - -c
