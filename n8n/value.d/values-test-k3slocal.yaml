@@ -22,6 +22,11 @@ redis:
 
 ## values for N8N
 n8n:
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+
   persistence:
     enabled: true
     existingClaim: n8n-node-modules-pvc
