@@ -26,13 +26,6 @@ redis:
       size: 1Gi
     nodeSelector:
       n8n-wasa: "yes"
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "256Mi"
-    limits:
-      cpu: "250m"
-      memory: "512Mi"
 
 # values for N8N
 n8n:
@@ -51,14 +44,6 @@ n8n:
       max_age: "72"
   nodeSelector:
     n8n-wasa: "yes"
-
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "500m"
-      memory: "1Gi"
 
   extraVolumes:
     - name: n8n-node-modules
@@ -94,14 +79,6 @@ postgresql:
       storageClass: "longhorn"
   nodeSelector:
     n8n-wasa: "yes"
-  
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "500m"
-      memory: "1Gi"
 
 ingress:
   enabled: true
