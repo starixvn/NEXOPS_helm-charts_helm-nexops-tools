@@ -6,13 +6,35 @@ rabbitCluster:
   password: rabbitadmin!@
   image: hub.nexdev.net/base/bitnamilegacy/rabbitmq:3.13.5-debian-12-r1
 
+  nodeSelector:
+    cicd-tools: "yes"
+  tolerations:
+    - key: cicd-tools
+      operator: "Equal"
+      value: "yes"
+      effect: "NoSchedule"
+
 clusterOperator:
+  nodeSelector:
+    cicd-tools: "yes"
+  tolerations:
+    - key: cicd-tools
+      operator: "Equal"
+      value: "yes"
+      effect: "NoSchedule"
   image:
     registry: hub.nexdev.net
     repository: base/bitnami/rabbitmq-cluster-operator
     tag: 2.9.0-debian-12-r5
 
 msgTopologyOperator:
+  nodeSelector:
+    cicd-tools: "yes"
+  tolerations:
+    - key: cicd-tools
+      operator: "Equal"
+      value: "yes"
+      effect: "NoSchedule"
   image:
     registry: hub.nexdev.net
     repository: base/bitnami/rmq-messaging-topology-operator
