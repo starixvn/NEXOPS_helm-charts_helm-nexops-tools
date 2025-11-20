@@ -57,5 +57,6 @@ data:
   N8N_DIAGNOSTICS_CONFIG_BACKEND: ""
   N8N_COMMUNITY_PACKAGES_ENABLED: "true"
   N8N_ALLOW_ROOT: "true"
+  N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
   #NODE_PATH: "/home/node/.n8n/nodes:/usr/local/lib/node_modules/n8n"
  
