@@ -41,7 +41,7 @@ n8n:
     prune:
       enabled: true
       # prune old executions data after X hours
-      max_age: "6"
+      max_age: "72"
   nodeSelector:
     n8n: "yes"
 
