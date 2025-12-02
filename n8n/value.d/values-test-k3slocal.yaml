@@ -30,7 +30,7 @@ n8n:
   persistence:
     enabled: true
     existingClaim: n8n-node-modules-pvc
-    mountPath: /home/node/.n8n
+    mountPath: /home/node
     
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
@@ -59,7 +59,7 @@ n8n:
       mountPath: /usr/local/lib/node_modules/n8n/dist/license.js
       subPath: license.js
     - name: n8n-node-modules
-      mountPath: /home/node/.n8n
+      mountPath: /home/node
 
 # values for PostgreSql helm chart
 postgresql:
