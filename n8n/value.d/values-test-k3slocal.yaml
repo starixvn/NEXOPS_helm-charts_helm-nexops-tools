@@ -27,10 +27,10 @@ n8n:
   readinessProbe:
     enabled: false
 
-  # persistence:
-  #   enabled: true
-  #   existingClaim: n8n-node-modules-pvc
-  #   mountPath: /home/node
+  persistence:
+    enabled: true
+    existingClaim: n8n-node-modules-pvc
+    mountPath: /home/node
     
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
