@@ -100,5 +100,4 @@ ingress:
   className: "haproxy"
   host: "n8n.lumigame.com"
   annotations: {}
-#Admin Login: admin@sabawork.com/N8nPassW0r$
-#378465
+#Admin Login: admin@starixsoft.com/N8nPassW0r$
