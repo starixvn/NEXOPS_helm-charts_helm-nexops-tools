@@ -53,7 +53,7 @@ n8n:
 
   extraVolumeMounts:
     - name: n8n-node-modules
-      mountPath: /home/node/.n8n
+      mountPath: /home/node
 
 # values for PostgreSql helm chart
 postgresql:
