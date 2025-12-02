@@ -1,7 +1,7 @@
 image:
   repository: n8nio/n8n
   pullPolicy: IfNotPresent
-  tag: "1.118.0"
+  tag: "1.119.0"
 
 redis:
   image:
