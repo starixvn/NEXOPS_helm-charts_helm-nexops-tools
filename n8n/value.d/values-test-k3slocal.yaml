@@ -88,13 +88,13 @@ service:
       targetPort: 80
       nodePort: 30080
 
-resources:
-  requests:
-    cpu: "250m"
-    memory: "512Mi"
-  limits:
-    cpu: "500m"
-    memory: "1Gi"
+# resources:
+#   requests:
+#     cpu: "250m"
+#     memory: "512Mi"
+#   limits:
+#     cpu: "500m"
+#     memory: "1Gi"
 
 ingress:
   enabled: true
