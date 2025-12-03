@@ -29,10 +29,10 @@ redis:
 
 # values for N8N
 n8n:
-  persistence:
-    enabled: true
-    existingClaim: n8n-node-modules-pvc
-    mountPath: /home/node
+  # persistence:
+  #   enabled: true
+  #   existingClaim: n8n-node-modules-pvc
+  #   mountPath: /home/node
 
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
@@ -57,7 +57,7 @@ n8n:
 
   extraVolumeMounts:
     - name: n8n-node-modules
-      mountPath: /home/node
+      mountPath: /home/node/.n8n
 
 # values for PostgreSql helm chart
 postgresql:
