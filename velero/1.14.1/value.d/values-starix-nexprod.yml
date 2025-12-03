@@ -28,11 +28,12 @@ initContainers:
 configuration:
   backupStorageLocation:
     - provider: aws
-      bucket: minio-st-backup
+      bucket: k8slumi-uat-backup
       config:
         region: minio
         s3ForcePathStyle: true
-        s3Url: https://s3-api.nexdev.net
+        s3Url: https://s3-api.starixsoft.com
+        # s3Url: https://s3-api.nexdev.net
   # Enable CSI snapshot support
   features: EnableCSI
 credentials:
