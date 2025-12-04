@@ -34,7 +34,7 @@ n8n:
   #   existingClaim: n8n-node-modules-pvc
   #   mountPath: /home/node
 
-  progressDeadlineSeconds: 1800
+  progressDeadlineSeconds: 18000
   encryptionKey: d9d8f70c3165f6393b7df462b09f73e2
   log_level: "debug"
   timezone: "Asia/Ho_Chi_Minh"
@@ -92,12 +92,12 @@ ingress:
   host: "n8n-wasa.nexdev.net"
   annotations: {}
 
-resources:
-  requests:
-    cpu: "250m"
-    memory: "512Mi"
-  limits:
-    cpu: "500m"
-    memory: "1Gi"
-    
+# resources:
+#   requests:
+#     cpu: "250m"
+#     memory: "512Mi"
+#   limits:
+#     cpu: "500m"
+#     memory: "1Gi"
+
 #Admin Login: admin@starixsoft.com/N8nWasa$
