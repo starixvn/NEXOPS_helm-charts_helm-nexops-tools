@@ -76,13 +76,13 @@ postgresql:
   nodeSelector:
     n8n: "yes"
 
-# resources:
-#   requests:
-#     cpu: "300m"
-#     memory: "1Gi"
-#   limits:
-#     cpu: "600m"
-#     memory: "2Gi"
+resources:
+  requests:
+    cpu: "300m"
+    memory: "1Gi"
+  limits:
+    cpu: "600m"
+    memory: "2Gi"
 
 ingress:
   enabled: true
